@@ -250,8 +250,8 @@
             // Don't use this for live tv programs because this is contained in mediaInfo.getPrimaryMediaInfoHtml
             var displayName = displayItem.Type === 'Program' && isShowingParentName ? '' :
                 itemHelper.getDisplayName(displayItem, {
-                    includeParentInfo: false,
-                    includeIndexNumber: false
+                    includeParentInfo: displayItem.Type !== 'Program',
+                    includeIndexNumber: displayItem.Type !== 'Program'
                 });
             titleElement.innerHTML = displayName;
 
@@ -267,8 +267,8 @@
                 tomatoes: false,
                 endsAt: false,
                 episodeTitle: true,
-                originalAirDate: false,
-                episodeTitleIndexNumber: false,
+                originalAirDate: displayItem.Type !== 'Program',
+                episodeTitleIndexNumber: displayItem.Type !== 'Program',
                 programIndicator: false
             });
 

@@ -21,10 +21,6 @@
     color: #fff !important;
 }
 
-.pageWithAbsoluteTabs {
-    background-color: transparent !important;
-}
-
 .backdropContainer {
     position: fixed;
     top: 0;
@@ -57,11 +53,6 @@
 .pageWithAbsoluteTabs .pageTabContent {
     padding-top: 2.1em;
 }
-
-/*.pageWithAbsoluteTabs .pageTabContent {
-    padding-left: .5em !important;
-    padding-right: .5em !important;
-}*/
 
 .flexPageTabContent.is-active {
     display: flex !important;
@@ -401,9 +392,9 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
     left: 50%;
     margin: -2.4em 0 0 -2.4em;
     border: 2.4px solid #eee;
-    border: 2.4px solid rgba(255,255,255,.7);
+    border: 2.4px solid rgba(255,255,255,.84);
     padding: .4em !important;
-    color: rgba(255, 255, 255, .8);
+    color: rgba(255, 255, 255, .84);
 }
 
     .emby-button.detailFloatingButton i {

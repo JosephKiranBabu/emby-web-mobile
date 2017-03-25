@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'fnchecked', 'jqmlistview', 'emby-select', 'emby-button', 'emby-input', 'emby-checkbox', 'listViewStyle'], function ($) {
+﻿define(['jQuery', 'loading', 'fnchecked', 'jqmlistview', 'emby-select', 'emby-button', 'emby-input', 'emby-checkbox', 'listViewStyle'], function ($, loading) {
     'use strict';
 
     var currentProfile;
@@ -10,7 +10,7 @@
 
     function loadProfile(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var promise1 = getProfile();
         var promise2 = ApiClient.getUsers();
@@ -21,7 +21,7 @@
 
             renderProfile(page, currentProfile, responses[1]);
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
 
         });
     }
@@ -891,7 +891,7 @@
 
         }
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function updateProfile(page, profile) {
@@ -1089,7 +1089,7 @@
     window.DlnaProfilePage = {
         onSubmit: function () {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             var form = this;
             var page = $(form).parents('.page');

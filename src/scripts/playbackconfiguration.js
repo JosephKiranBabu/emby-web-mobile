@@ -1,4 +1,4 @@
-﻿define(['jQuery'], function ($) {
+﻿define(['jQuery', 'loading'], function ($, loading) {
     'use strict';
 
     function loadPage(page, config) {
@@ -7,11 +7,11 @@
         $('#txtMaxResumePct', page).val(config.MaxResumePct);
         $('#txtMinResumeDuration', page).val(config.MinResumeDurationSeconds);
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function onSubmit() {
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var form = this;
 
@@ -51,7 +51,7 @@
     }).on('pageshow', "#playbackConfigurationPage", function () {
 
         LibraryMenu.setTabs('playback', 1, getTabs);
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var page = this;
 

@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'cardStyle'], function ($) {
+﻿define(['jQuery', 'loading', 'cardStyle'], function ($, loading) {
     'use strict';
 
     function deletePlugin(page, uniqueid, name) {
@@ -7,7 +7,7 @@
 
         require(['confirm'], function (confirm) {
             confirm(msg, Globalize.translate('UninstallPluginHeader')).then(function () {
-                Dashboard.showLoadingMsg();
+                loading.show();
 
                 ApiClient.uninstallPlugin(uniqueid).then(function () {
 
@@ -165,7 +165,7 @@
             });
         }
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function showPluginMenu(page, elem) {
@@ -217,7 +217,7 @@
 
     function reloadList(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         ApiClient.getInstalledPlugins().then(function (plugins) {
 

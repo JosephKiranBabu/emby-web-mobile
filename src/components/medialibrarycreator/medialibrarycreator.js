@@ -1,12 +1,15 @@
-﻿define(['dialogHelper', 'jQuery', 'components/libraryoptionseditor/libraryoptionseditor', 'emby-input', 'emby-select', 'paper-icon-button-light', 'listViewStyle', 'formDialogStyle'], function (dialogHelper, $, libraryoptionseditor) {
+﻿define(['loading', 'dialogHelper', 'dom', 'jQuery', 'components/libraryoptionseditor/libraryoptionseditor', 'emby-input', 'emby-select', 'paper-icon-button-light', 'listViewStyle', 'formDialogStyle'], function (loading, dialogHelper, dom, $, libraryoptionseditor) {
     'use strict';
 
-    var currentDeferred;
+    var currentResolve;
     var hasChanges;
     var currentOptions;
     var pathInfos = [];
 
-    function onSubmit() {
+    function onSubmit(e) {
+
+        e.preventDefault();
+        e.stopPropagation();
 
         if (pathInfos.length == 0) {
             require(['alert'], function (alert) {
@@ -100,13 +103,15 @@
 
         });
 
-        $('.btnAddFolder', page).on('click', onAddButtonClick);
-        $('form', page).off('submit', onSubmit).on('submit', onSubmit);
+        page.querySelector('.btnAddFolder').addEventListener('click', onAddButtonClick);
+        page.querySelector('form').addEventListener('submit', onSubmit);
+
+        page.querySelector('.folderList').addEventListener('click', onRemoveClick);
     }
 
     function onAddButtonClick() {
 
-        var page = $(this).parents('.dlg-librarycreator')[0];
+        var page = dom.parentWithClass(this, 'dlg-librarycreator');
 
         require(['directorybrowser'], function (directoryBrowser) {
 
@@ -145,7 +150,7 @@
         }
         html += '</div>';
 
-        html += '<button is="paper-icon-button-light"" class="listItemButton btnRemovePath" data-index="' + index + '"><i class="md-icon">remove_circle</i></button>';
+        html += '<button type="button" is="paper-icon-button-light"" class="listItemButton btnRemovePath" data-index="' + index + '"><i class="md-icon">remove_circle</i></button>';
 
         html += '</div>';
 
@@ -163,15 +168,15 @@
         } else {
             folderList.classList.add('hide');
         }
-
-        $(page.querySelectorAll('.btnRemovePath')).on('click', onRemoveClick);
     }
 
     function addMediaLocation(page, path, networkSharePath) {
 
+        var pathLower = path.toLowerCase();
+
         if (pathInfos.filter(function (p) {
 
-            return p.Path.toLowerCase() == path.toLowerCase();
+            return p.Path.toLowerCase() == pathLower;
 
         }).length == 0) {
 
@@ -186,24 +191,26 @@
         }
     }
 
-    function onRemoveClick() {
+    function onRemoveClick(e) {
 
-        var button = this;
+        var button = dom.parentWithClass(e.target, 'btnRemovePath');
         var index = parseInt(button.getAttribute('data-index'));
 
-        var location = pathInfos[index];
+        var location = pathInfos[index].Path;
+        var locationLower = location.toLowerCase();
+
         pathInfos = pathInfos.filter(function (p) {
 
-            return p.Path.toLowerCase() != location.toLowerCase();
+            return p.Path.toLowerCase() != locationLower;
         });
-        var page = $(this).parents('.dlg-librarycreator')[0];
+        var page = dom.parentWithClass(button, 'dlg-librarycreator');
         renderPaths(page);
     }
 
     function onDialogClosed() {
 
-        Dashboard.hideLoadingMsg();
-        currentDeferred.resolveWith(null, [hasChanges]);
+        loading.hide();
+        currentResolve(hasChanges);
     }
 
     function initLibraryOptions(dlg) {
@@ -218,54 +225,53 @@
 
         self.show = function (options) {
 
-            var deferred = jQuery.Deferred();
+            return new Promise(function (resolve, reject) {
 
-            currentOptions = options;
-            currentDeferred = deferred;
-            hasChanges = false;
+                currentOptions = options;
+                currentResolve = resolve;
+                hasChanges = false;
 
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', 'components/medialibrarycreator/medialibrarycreator.template.html', true);
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'components/medialibrarycreator/medialibrarycreator.template.html', true);
 
-            xhr.onload = function (e) {
+                xhr.onload = function (e) {
 
-                var template = this.response;
-                var dlg = dialogHelper.createDialog({
-                    size: 'medium',
+                    var template = this.response;
+                    var dlg = dialogHelper.createDialog({
+                        size: 'medium',
 
-                    // In (at least) chrome this is causing the text field to not be editable
-                    modal: false,
+                        // In (at least) chrome this is causing the text field to not be editable
+                        modal: false,
 
-                    removeOnClose: true,
-                    scrollY: false
-                });
+                        removeOnClose: true,
+                        scrollY: false
+                    });
 
-                dlg.classList.add('ui-body-a');
-                dlg.classList.add('background-theme-a');
-                dlg.classList.add('dlg-librarycreator');
-                dlg.classList.add('formDialog');
+                    dlg.classList.add('ui-body-a');
+                    dlg.classList.add('background-theme-a');
+                    dlg.classList.add('dlg-librarycreator');
+                    dlg.classList.add('formDialog');
 
-                dlg.innerHTML = Globalize.translateDocument(template);
+                    dlg.innerHTML = Globalize.translateDocument(template);
 
-                initEditor(dlg, options.collectionTypeOptions);
+                    initEditor(dlg, options.collectionTypeOptions);
 
-                dlg.addEventListener('close', onDialogClosed);
+                    dlg.addEventListener('close', onDialogClosed);
 
-                dialogHelper.open(dlg);
+                    dialogHelper.open(dlg);
 
-                dlg.querySelector('.btnCancel').addEventListener('click', function () {
+                    dlg.querySelector('.btnCancel').addEventListener('click', function () {
 
-                    dialogHelper.close(dlg);
-                });
+                        dialogHelper.close(dlg);
+                    });
 
-                pathInfos = [];
-                renderPaths(dlg);
-                initLibraryOptions(dlg);
-            }
+                    pathInfos = [];
+                    renderPaths(dlg);
+                    initLibraryOptions(dlg);
+                }
 
-            xhr.send();
-
-            return deferred.promise();
+                xhr.send();
+            });
         };
     }
 

@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'fnchecked'], function ($) {
+﻿define(['jQuery', 'loading', 'fnchecked'], function ($, loading) {
     'use strict';
 
     function loadPage(page, config) {
@@ -8,11 +8,11 @@
         $('#txtCpuCoreLimit', page).val(config.TranscodingCpuCoreLimit);
         $('#chkEnableFullSpeedConversion', page).checked(config.EnableFullSpeedTranscoding);
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function onSubmit() {
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var form = this;
 
@@ -73,7 +73,7 @@
 
     }).on('pageshow', "#syncSettingsPage", function () {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         LibraryMenu.setTabs('syncadmin', 2, getTabs);
         var page = this;

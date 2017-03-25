@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'scripts/taskbutton', 'dom', 'layoutManager', 'listViewStyle', 'flexStyles', 'emby-itemscontainer', 'cardStyle', 'material-icons'], function ($, taskButton, dom, layoutManager) {
+﻿define(['jQuery', 'scripts/taskbutton', 'dom', 'layoutManager', 'loading', 'listViewStyle', 'flexStyles', 'emby-itemscontainer', 'cardStyle', 'material-icons'], function ($, taskButton, dom, layoutManager, loading) {
     'use strict';
 
     function resetTuner(page, id) {
@@ -9,11 +9,11 @@
 
             confirm(message, Globalize.translate('HeaderResetTuner')).then(function () {
 
-                Dashboard.showLoadingMsg();
+                loading.show();
 
                 ApiClient.resetLiveTvTuner(id).then(function () {
 
-                    Dashboard.hideLoadingMsg();
+                    loading.hide();
 
                     reload(page);
                 });
@@ -183,7 +183,7 @@
             renderProviders(page, config.ListingProviders);
         });
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function getDeviceHtml(device) {
@@ -246,7 +246,7 @@
 
             confirm(message, Globalize.translate('HeaderDeleteDevice')).then(function () {
 
-                Dashboard.showLoadingMsg();
+                loading.show();
 
                 ApiClient.ajax({
                     type: "DELETE",
@@ -264,7 +264,7 @@
 
     function reload(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         ApiClient.getLiveTvInfo().then(function (liveTvInfo) {
 
@@ -282,7 +282,7 @@
     function submitAddDeviceForm(page) {
 
         page.querySelector('.dlgAddDevice').close();
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         ApiClient.ajax({
             type: "POST",
@@ -402,7 +402,7 @@
 
             confirm(message, Globalize.translate('HeaderDeleteProvider')).then(function () {
 
-                Dashboard.showLoadingMsg();
+                loading.show();
 
                 ApiClient.ajax({
                     type: "DELETE",

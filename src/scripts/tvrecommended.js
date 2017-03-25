@@ -1,4 +1,4 @@
-﻿define(['libraryBrowser', 'dom', 'components/categorysyncbuttons', 'cardBuilder', 'apphost', 'playbackManager', 'mainTabsManager', 'scrollStyles', 'emby-itemscontainer', 'emby-button'], function (libraryBrowser, dom, categorysyncbuttons, cardBuilder, appHost, playbackManager, mainTabsManager) {
+﻿define(['loading', 'libraryBrowser', 'dom', 'components/categorysyncbuttons', 'cardBuilder', 'apphost', 'playbackManager', 'mainTabsManager', 'scrollStyles', 'emby-itemscontainer', 'emby-button'], function (loading, libraryBrowser, dom, categorysyncbuttons, cardBuilder, appHost, playbackManager, mainTabsManager) {
     'use strict';
 
     function getTabs() {
@@ -33,7 +33,7 @@
 
         function reload() {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             loadResume();
             loadNextUp();
@@ -78,7 +78,7 @@
                     vibrant: supportsImageAnalysis
                 });
 
-                Dashboard.hideLoadingMsg();
+                loading.hide();
             });
         }
 

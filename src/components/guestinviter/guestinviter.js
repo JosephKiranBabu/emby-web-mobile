@@ -1,4 +1,4 @@
-﻿define(['dialogHelper', 'jQuery', 'emby-input', 'emby-button', 'emby-checkbox', 'paper-icon-button-light', 'formDialogStyle'], function (dialogHelper, $) {
+﻿define(['dialogHelper', 'jQuery', 'loading', 'emby-input', 'emby-button', 'emby-checkbox', 'paper-icon-button-light', 'formDialogStyle'], function (dialogHelper, $, loading) {
     'use strict';
 
     function renderLibrarySharingList(context, result) {
@@ -22,7 +22,7 @@
 
     function inviteUser(dlg) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var shareExcludes = $(".chkShareFolder", dlg).get().filter(function (i) {
 
@@ -44,8 +44,10 @@
                     SendingUserId: Dashboard.getCurrentUserId(),
                     EnableLiveTv: false
                 }
-            }).then(function() {
-                
+            }).then(function () {
+
+                loading.hide();
+
                 dlg.submitted = true;
                 dialogHelper.close(dlg);
             });

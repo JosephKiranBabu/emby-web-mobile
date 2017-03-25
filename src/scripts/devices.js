@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'listViewStyle'], function ($) {
+﻿define(['jQuery', 'loading', 'listViewStyle'], function ($, loading) {
     'use strict';
 
     function deleteDevice(page, id) {
@@ -9,7 +9,7 @@
 
             confirm(msg, Globalize.translate('HeaderDeleteDevice')).then(function () {
 
-                Dashboard.showLoadingMsg();
+                loading.show();
 
                 ApiClient.ajax({
                     type: "DELETE",
@@ -88,7 +88,7 @@
     }
 
     function loadData(page) {
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         ApiClient.getJSON(ApiClient.getUrl('Devices', {
             
@@ -98,7 +98,7 @@
 
             load(page, result.Items);
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
 

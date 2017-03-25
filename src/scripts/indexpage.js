@@ -1,4 +1,4 @@
-﻿define(['libraryBrowser', 'libraryMenu', 'playbackManager', 'mainTabsManager', 'emby-button'], function (libraryBrowser, libraryMenu, playbackManager, mainTabsManager) {
+﻿define(['loading', 'libraryBrowser', 'libraryMenu', 'playbackManager', 'mainTabsManager', 'emby-button'], function (loading, libraryBrowser, libraryMenu, playbackManager, mainTabsManager) {
     'use strict';
 
     var defaultFirstSection = 'smalllibrarytiles';
@@ -130,7 +130,7 @@
             page.querySelector('.welcomeMessage').classList.add('hide');
         } else {
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
 
             var elem = page.querySelector('.welcomeMessage');
             elem.classList.remove('hide');
@@ -198,7 +198,7 @@
 
         if (window.ApiClient) {
             var userId = Dashboard.getCurrentUserId();
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             var promises = [
                 getDisplayPreferences('home', userId),
@@ -216,7 +216,7 @@
                     if (!AppInfo.isNativeApp) {
                         showWelcomeIfNeeded(page, displayPreferences);
                     }
-                    Dashboard.hideLoadingMsg();
+                    loading.hide();
                 });
             });
         }

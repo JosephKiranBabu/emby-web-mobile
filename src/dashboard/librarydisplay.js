@@ -1,4 +1,4 @@
-﻿define(['globalize', 'emby-checkbox', 'emby-button'], function (globalize) {
+﻿define(['globalize', 'loading', 'emby-checkbox', 'emby-button'], function (globalize, loading) {
     'use strict';
 
     function getTabs() {
@@ -31,7 +31,7 @@
 
         view.querySelector('form').addEventListener('submit', function (e) {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             var form = this;
 

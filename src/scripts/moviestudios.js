@@ -1,4 +1,4 @@
-﻿define(['libraryBrowser', 'cardBuilder'], function (libraryBrowser, cardBuilder) {
+﻿define(['libraryBrowser', 'cardBuilder', 'loading'], function (libraryBrowser, cardBuilder, loading) {
     'use strict';
 
     // The base query options
@@ -34,7 +34,7 @@
 
         var query = getQuery(params);
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         return ApiClient.getStudios(Dashboard.getCurrentUserId(), query);
     }
@@ -53,7 +53,7 @@
                 overlayMoreButton: true
             });
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
     return function (view, params, tabContent) {

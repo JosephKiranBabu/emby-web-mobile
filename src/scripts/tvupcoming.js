@@ -1,9 +1,9 @@
-﻿define(['datetime', 'libraryBrowser', 'cardBuilder', 'apphost', 'imageLoader', 'scrollStyles', 'emby-itemscontainer'], function (datetime, libraryBrowser, cardBuilder, appHost, imageLoader) {
+﻿define(['loading', 'datetime', 'libraryBrowser', 'cardBuilder', 'apphost', 'imageLoader', 'scrollStyles', 'emby-itemscontainer'], function (loading, datetime, libraryBrowser, cardBuilder, appHost, imageLoader) {
     'use strict';
 
     function getUpcomingPromise(context, params) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var query = {
 
@@ -35,7 +35,7 @@
             var elem = context.querySelector('#upcomingItems');
             renderUpcoming(elem, items);
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
 

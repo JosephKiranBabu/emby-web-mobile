@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'humanedate', 'listViewStyle'], function ($) {
+﻿define(['jQuery', 'loading', 'humanedate', 'listViewStyle'], function ($, loading) {
     'use strict';
 
     function reloadList(page) {
@@ -7,7 +7,7 @@
 
             populateList(page, tasks);
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
 
@@ -280,7 +280,7 @@
 
         var page = this;
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         startInterval();
 

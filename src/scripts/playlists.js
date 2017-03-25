@@ -1,4 +1,4 @@
-﻿define(['listView', 'cardBuilder', 'libraryBrowser', 'apphost', 'imageLoader', 'emby-itemscontainer'], function (listView, cardBuilder, libraryBrowser, appHost, imageLoader) {
+﻿define(['loading', 'listView', 'cardBuilder', 'libraryBrowser', 'apphost', 'imageLoader', 'emby-itemscontainer'], function (loading, listView, cardBuilder, libraryBrowser, appHost, imageLoader) {
     'use strict';
 
     return function (view, params) {
@@ -43,11 +43,11 @@
 
         function showLoadingMessage() {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
         }
 
         function hideLoadingMessage() {
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         }
 
         function onViewStyleChange() {

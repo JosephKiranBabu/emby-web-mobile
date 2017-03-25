@@ -1,9 +1,9 @@
-﻿define(['jQuery'], function ($) {
+﻿define(['jQuery', 'loading'], function ($, loading) {
     'use strict';
 
     function reloadList(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var promise1 = ApiClient.getAvailablePlugins({
             TargetSystems: 'Server'

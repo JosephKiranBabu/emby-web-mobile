@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'fnchecked', 'emby-checkbox'], function ($) {
+﻿define(['jQuery', 'loading', 'fnchecked', 'emby-checkbox'], function ($, loading) {
     'use strict';
 
     function onSubmit() {
@@ -8,7 +8,7 @@
 
         confirmSelections(localAddress, enableUpnp, function () {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             ApiClient.getServerConfiguration().then(function (config) {
 
@@ -85,7 +85,7 @@
 
             onCertPathChange.call(txtCertificatePath);
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         }
 
         function onCertPathChange() {
@@ -127,7 +127,7 @@
 
         view.addEventListener('viewshow', function (e) {
             LibraryMenu.setTabs('adminadvanced', 0, getTabs);
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             ApiClient.getServerConfiguration().then(function (config) {
 

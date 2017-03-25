@@ -1,4 +1,4 @@
-﻿define(['datetime', 'jQuery', 'dom', 'humanedate', 'cardStyle', 'listViewStyle'], function (datetime, $, dom) {
+﻿define(['datetime', 'jQuery', 'dom', 'loading', 'humanedate', 'cardStyle', 'listViewStyle'], function (datetime, $, dom, loading) {
     'use strict';
 
     function renderNoHealthAlertsMessage(page) {
@@ -37,7 +37,7 @@
 
             }).then(function (value) {
 
-                Dashboard.showLoadingMsg();
+                loading.show();
 
                 ApiClient.getServerConfiguration().then(function (config) {
 
@@ -45,7 +45,7 @@
 
                     ApiClient.updateServerConfiguration(config).then(function () {
                         page.querySelector('.serverNameHeader').innerHTML = value;
-                        Dashboard.hideLoadingMsg();
+                        loading.hide();
                     });
                 });
             });
@@ -79,7 +79,7 @@
 
             DashboardPage.newsStartIndex = 0;
 
-            Dashboard.showLoadingMsg();
+            loading.show();
             DashboardPage.pollForInfo(page);
             DashboardPage.startInterval(apiClient);
 
@@ -334,7 +334,7 @@
             DashboardPage.renderActiveConnections(page, sessions);
             DashboardPage.renderPluginUpdateInfo(page, forceUpdate);
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         },
 
         renderActiveConnections: function (page, sessions) {
@@ -1008,11 +1008,11 @@
             var version = button.getAttribute('data-version');
             var classification = button.getAttribute('data-classification');
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             ApiClient.installPlugin(name, guid, classification, version).then(function () {
 
-                Dashboard.hideLoadingMsg();
+                loading.hide();
             });
         },
 
@@ -1021,7 +1021,7 @@
             var page = $.mobile.activePage;
             $('#btnUpdateApplication', page).buttonEnabled(false);
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             ApiClient.getScheduledTasks().then(function (tasks) {
 
@@ -1034,7 +1034,7 @@
 
                     DashboardPage.pollForInfo(page);
 
-                    Dashboard.hideLoadingMsg();
+                    loading.hide();
                 });
             });
         },

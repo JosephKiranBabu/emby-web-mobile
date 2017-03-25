@@ -1,4 +1,4 @@
-﻿define(['jQuery'], function ($) {
+﻿define(['jQuery', 'loading'], function ($, loading) {
     'use strict';
 
     function populateHistory(packageInfo, page) {
@@ -209,7 +209,7 @@
             $('#pCurrentVersion', page).hide().html("");
         }
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function performInstallation(page, packageName, guid, updateClass, version) {
@@ -220,20 +220,20 @@
 
             if (confirmed) {
 
-                Dashboard.showLoadingMsg();
+                loading.show();
 
                 page.querySelector('#btnInstall').disabled = true;
 
                 ApiClient.installPlugin(packageName, guid, updateClass, version).then(function () {
 
-                    Dashboard.hideLoadingMsg();
+                    loading.hide();
                 });
             }
         };
 
         if (developer != 'luke' && developer != 'ebr') {
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
 
             var msg = Globalize.translate('MessagePluginInstallDisclaimer');
             msg += '<br/>';
@@ -289,7 +289,7 @@
 
         var onSubmit = function () {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             var page = $(this).parents('#addPluginPage')[0];
 
@@ -308,7 +308,7 @@
 
                 if (installedPlugin && installedPlugin.Version == version) {
 
-                    Dashboard.hideLoadingMsg();
+                    loading.hide();
 
                     Dashboard.alert({
                         message: Globalize.translate('MessageAlreadyInstalled'),
@@ -337,7 +337,7 @@
 
             var page = this;
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             var name = params.name;
             var guid = params.guid;

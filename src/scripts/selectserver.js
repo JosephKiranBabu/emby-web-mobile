@@ -1,4 +1,4 @@
-﻿define(['loading', 'layoutManager', 'appSettings', 'apphost', 'focusManager', 'connectionManager', 'backdrop', 'globalize', 'staticBackdrops', 'actionsheet', 'dom', 'material-icons', 'flexStyles', 'emby-scroller', 'emby-itemscontainer', 'cardStyle', 'emby-button'], function (loading, layoutManager, appSettings, appHost, focusManager, connectionManager, backdrop, globalize, staticBackdrops, actionSheet, dom) {
+﻿define(['loading', 'embyRouter', 'layoutManager', 'appSettings', 'apphost', 'focusManager', 'connectionManager', 'backdrop', 'globalize', 'staticBackdrops', 'actionsheet', 'dom', 'material-icons', 'flexStyles', 'emby-scroller', 'emby-itemscontainer', 'cardStyle', 'emby-button'], function (loading, embyRouter, layoutManager, appSettings, appHost, focusManager, connectionManager, backdrop, globalize, staticBackdrops, actionSheet, dom) {
     'use strict';
 
     function getRandomInt(min, max) {
@@ -359,7 +359,7 @@
 
             var isRestored = e.detail.isRestored;
 
-            Emby.Page.setTitle(null);
+            embyRouter.setTitle(null);
             backdrop.setBackdrop(backdropUrl);
 
             if (!isRestored) {
@@ -370,17 +370,17 @@
 
         view.querySelector('.btnAddServer').addEventListener("click", function (e) {
 
-            Emby.Page.show('/connectlogin.html?mode=manualserver');
+            embyRouter.show('/connectlogin.html?mode=manualserver');
         });
 
         view.querySelector('.btnConnect').addEventListener("click", function (e) {
 
-            Emby.Page.show('/connectlogin.html?mode=connect');
+            embyRouter.show('/connectlogin.html?mode=connect');
         });
 
         view.querySelector('.btnOffline').addEventListener("click", function (e) {
 
-            Emby.Page.show('/offline/offline.html');
+            embyRouter.show('/offline/offline.html');
         });
 
         view.querySelector('.servers').addEventListener('click', function (e) {
@@ -391,7 +391,7 @@
                 var url = card.getAttribute('data-url');
 
                 if (url) {
-                    Emby.Page.show(url);
+                    embyRouter.show(url);
                 } else {
 
                     var id = card.getAttribute('data-id');

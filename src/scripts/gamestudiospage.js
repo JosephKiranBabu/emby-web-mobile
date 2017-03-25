@@ -1,4 +1,4 @@
-define(['jQuery', 'imageLoader'], function ($, imageLoader) {
+define(['jQuery', 'imageLoader', 'loading'], function ($, imageLoader, loading) {
     'use strict';
 
     // The base query options
@@ -19,7 +19,7 @@ define(['jQuery', 'imageLoader'], function ($, imageLoader) {
 
     function reloadItems(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         ApiClient.getStudios(Dashboard.getCurrentUserId(), query).then(function (result) {
 
@@ -61,7 +61,7 @@ define(['jQuery', 'imageLoader'], function ($, imageLoader) {
 
             LibraryBrowser.saveQueryValues(getSavedQueryKey(), query);
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
 

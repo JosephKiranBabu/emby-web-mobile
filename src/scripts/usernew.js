@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'fnchecked', 'emby-checkbox'], function ($) {
+﻿define(['jQuery', 'loading', 'fnchecked', 'emby-checkbox'], function ($, loading) {
     'use strict';
 
     function loadMediaFolders(page, mediaFolders) {
@@ -59,7 +59,7 @@
 
         $('#txtUserName', page).val('');
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var promise4 = ApiClient.getJSON(ApiClient.getUrl("Library/MediaFolders", { IsHidden: false }));
 
@@ -70,7 +70,7 @@
             loadMediaFolders(page, responses[0].Items);
             loadChannels(page, responses[1].Items);
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
 
@@ -116,14 +116,14 @@
                 });
             }
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
 
     function onSubmit() {
         var page = $(this).parents('.page')[0];
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         saveUser(page);
 

@@ -1,4 +1,4 @@
-﻿define(['jQuery'], function ($) {
+﻿define(['jQuery', 'loading'], function ($, loading) {
     'use strict';
 
     function getApiClient() {
@@ -7,7 +7,7 @@
 
     function onUpdateUserComplete(result) {
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
 
         if (result.UserLinkResult) {
 
@@ -30,7 +30,7 @@
 
     function submit(form) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var apiClient = getApiClient();
 
@@ -86,7 +86,7 @@
 
     }).on('pageshow', "#wizardUserPage", function () {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var page = this;
 
@@ -97,7 +97,7 @@
             page.querySelector('#txtUsername').value = user.Name || '';
             page.querySelector('#txtConnectUserName').value = user.ConnectUserName || '';
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     });
 

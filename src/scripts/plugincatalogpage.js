@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'cardStyle'], function ($) {
+﻿define(['jQuery', 'loading', 'cardStyle'], function ($, loading) {
     'use strict';
 
     // The base query options
@@ -9,7 +9,7 @@
 
     function reloadList(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         if (AppInfo.enableAppStorePolicy) {
             $('.optionAdultContainer', page).hide();
@@ -176,7 +176,7 @@
 
         $(options.catalogElement).html(html);
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function getPluginHtml(plugin, options, installedPlugins) {

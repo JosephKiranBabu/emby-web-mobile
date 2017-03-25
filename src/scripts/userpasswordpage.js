@@ -1,4 +1,4 @@
-﻿define([], function () {
+﻿define(['loading'], function (loading) {
     'use strict';
 
     function loadUser(page, params) {
@@ -88,7 +88,7 @@
 
                 ApiClient.updateUserConfiguration(user.Id, user.Configuration).then(function () {
 
-                    Dashboard.hideLoadingMsg();
+                    loading.hide();
 
                     require(['toast'], function (toast) {
                         toast(Globalize.translate('MessageSettingsSaved'));
@@ -107,7 +107,7 @@
 
             ApiClient.updateUserPassword(userId, currentPassword, newPassword).then(function () {
 
-                Dashboard.hideLoadingMsg();
+                loading.hide();
 
                 require(['toast'], function (toast) {
                     toast(Globalize.translate('PasswordSaved'));
@@ -116,7 +116,7 @@
 
             }, function () {
 
-                Dashboard.hideLoadingMsg();
+                loading.hide();
 
                 Dashboard.alert({
                     title: Globalize.translate('HeaderLoginFailure'),
@@ -138,7 +138,7 @@
                 });
             } else {
 
-                Dashboard.showLoadingMsg();
+                loading.show();
                 savePassword();
             }
 
@@ -149,7 +149,7 @@
 
         function onLocalAccessSubmit(e) {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             saveEasyPassword();
 
@@ -168,11 +168,11 @@
 
                     var userId = params.userId;
 
-                    Dashboard.showLoadingMsg();
+                    loading.show();
 
                     ApiClient.resetUserPassword(userId).then(function () {
 
-                        Dashboard.hideLoadingMsg();
+                        loading.hide();
 
                         Dashboard.alert({
                             message: Globalize.translate('PasswordResetComplete'),
@@ -196,11 +196,11 @@
 
                     var userId = params.userId;
 
-                    Dashboard.showLoadingMsg();
+                    loading.show();
 
                     ApiClient.resetEasyPassword(userId).then(function () {
 
-                        Dashboard.hideLoadingMsg();
+                        loading.hide();
 
                         Dashboard.alert({
                             message: Globalize.translate('PinCodeResetComplete'),

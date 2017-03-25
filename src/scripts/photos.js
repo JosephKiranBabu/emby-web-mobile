@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'cardBuilder', 'imageLoader', 'emby-itemscontainer'], function ($, cardBuilder, imageLoader) {
+﻿define(['jQuery', 'cardBuilder', 'imageLoader', 'loading', 'emby-itemscontainer'], function ($, cardBuilder, imageLoader, loading) {
     'use strict';
 
     var view = 'Poster';
@@ -38,7 +38,7 @@
 
     function reloadItems(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var query = getQuery();
         ApiClient.getItems(Dashboard.getCurrentUserId(), query).then(function (result) {
@@ -87,7 +87,7 @@
 
             LibraryBrowser.saveQueryValues(getSavedQueryKey(), query);
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
 

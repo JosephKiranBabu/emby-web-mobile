@@ -77,7 +77,7 @@
         }
 
         if (!devices.length) {
-            html = '<p>'+globalize.translate('NoNewDevicesFound') + '</p>';
+            html = '<p><br/>'+globalize.translate('NoNewDevicesFound') + '</p>';
             view.querySelector('.devicesHeader').classList.add('hide');
         } else {
             view.querySelector('.devicesHeader').classList.remove('hide');

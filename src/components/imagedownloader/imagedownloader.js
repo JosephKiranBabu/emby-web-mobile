@@ -1,4 +1,4 @@
-﻿define(['dialogHelper', 'imageLoader', 'emby-checkbox', 'emby-button', 'paper-icon-button-light', 'css!css/metadataeditor.css'], function (dialogHelper, imageLoader) {
+﻿define(['loading', 'dialogHelper', 'imageLoader', 'emby-checkbox', 'emby-button', 'paper-icon-button-light', 'css!css/metadataeditor.css'], function (loading, dialogHelper, imageLoader) {
     'use strict';
 
     var currentItemId;
@@ -25,7 +25,7 @@
 
     function reloadBrowsableImages(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var options = getBaseRemoteOptions();
 
@@ -54,7 +54,7 @@
             selectImageProvider.innerHTML = '<option value="">' + Globalize.translate('LabelAll') + '</option>' + providersHtml;
             selectImageProvider.value = provider;
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
 
     }
@@ -145,7 +145,7 @@
         options.ImageUrl = url;
         options.ProviderName = provider;
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         ApiClient.downloadRemoteImage(options).then(function () {
 
@@ -288,7 +288,7 @@
 
     function showEditor(itemId, itemType) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var xhr = new XMLHttpRequest();
         xhr.open('GET', 'components/imagedownloader/imagedownloader.template.html', true);
@@ -343,7 +343,7 @@
 
     function onDialogClosed() {
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
         if (hasChanges) {
             currentResolve();
         } else {

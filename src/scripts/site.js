@@ -162,56 +162,54 @@ var Dashboard = {
             url += queryString;
         }
 
-        return Emby.Page.show(url);
+        return new Promise(function (resolve, reject) {
+
+            require(['embyRouter'], function (embyRouter) {
+                return embyRouter.show(url).then(resolve, reject);
+            });
+        });
     },
 
     showLoadingMsg: function () {
 
-        Dashboard.loadingVisible = true;
-
         require(['loading'], function (loading) {
-            if (Dashboard.loadingVisible) {
-                loading.show();
-            } else {
-                loading.hide();
-            }
+            loading.show();
         });
     },
 
     hideLoadingMsg: function () {
 
-        Dashboard.loadingVisible = false;
-
         require(['loading'], function (loading) {
-            if (Dashboard.loadingVisible) {
-                loading.show();
-            } else {
-                loading.hide();
-            }
+            loading.hide();
         });
     },
 
     processPluginConfigurationUpdateResult: function () {
 
-        Dashboard.hideLoadingMsg();
+        require(['loading', 'toast'], function (loading, toast) {
 
-        require(['toast'], function (toast) {
+            loading.hide();
+
             toast(Globalize.translate('MessageSettingsSaved'));
         });
     },
 
     processServerConfigurationUpdateResult: function (result) {
 
-        Dashboard.hideLoadingMsg();
+        require(['loading', 'toast'], function (loading, toast) {
 
-        require(['toast'], function (toast) {
+            loading.hide();
+
             toast(Globalize.translate('MessageSettingsSaved'));
         });
     },
 
     processErrorResponse: function (response) {
 
-        Dashboard.hideLoadingMsg();
+        require(['loading'], function (loading) {
+
+            loading.hide();
+        });
 
         var status = '' + response.status;
 
@@ -257,7 +255,10 @@ var Dashboard = {
         }
 
         Dashboard.suppressAjaxErrors = true;
-        Dashboard.showLoadingMsg();
+
+        require(['loading'], function (loading) {
+            loading.show();
+        });
 
         apiClient.restartServer().then(function () {
 
@@ -1246,7 +1247,9 @@ var AppInfo = {};
             return {
                 loadUserSkin: function () {
 
-                    Emby.Page.show('/home.html');
+                    require(['embyRouter'], function (embyRouter) {
+                        embyRouter.goHome();
+                    });
                 }
             };
         });
@@ -1338,7 +1341,7 @@ var AppInfo = {};
                     }
 
                     var context = options ? options.context : null;
-                    Emby.Page.show('/' + LibraryBrowser.getHref(item, context), { item: item });
+                    embyRouter.show('/' + LibraryBrowser.getHref(item, context), { item: item });
                 }
             }
 
@@ -2566,7 +2569,7 @@ var AppInfo = {};
             postInitDependencies.push('scripts/nowplayingbar');
 
             if (appHost.supports('remotecontrol')) {
-                
+
                 // For now this is needed because it also performs the mirroring function
                 postInitDependencies.push('playerSelectionMenu');
                 postInitDependencies.push('bower_components/emby-webcomponents/playback/remotecontrolautoplay');

@@ -1,4 +1,4 @@
-﻿define(['events', 'libraryBrowser', 'imageLoader', 'listView', 'cardBuilder', 'emby-itemscontainer'], function (events, libraryBrowser, imageLoader, listView, cardBuilder) {
+﻿define(['loading', 'events', 'libraryBrowser', 'imageLoader', 'listView', 'cardBuilder', 'emby-itemscontainer'], function (loading, events, libraryBrowser, imageLoader, listView, cardBuilder) {
     'use strict';
 
     return function (view, params, tabContent) {
@@ -70,7 +70,7 @@
 
         function reloadItems(page) {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             var query = getQuery(page);
 
@@ -159,7 +159,7 @@
 
                 libraryBrowser.saveQueryValues(getSavedQueryKey(page), query);
 
-                Dashboard.hideLoadingMsg();
+                loading.hide();
             });
         }
 

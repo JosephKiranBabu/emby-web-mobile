@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'libraryBrowser', 'imageLoader', 'indicators'], function ($, libraryBrowser, imageLoader, indicators) {
+﻿define(['jQuery', 'libraryBrowser', 'imageLoader', 'indicators', 'loading'], function ($, libraryBrowser, imageLoader, indicators, loading) {
     'use strict';
 
     var currentItem;
@@ -7,7 +7,7 @@
 
         var id = getParameterByName('id');
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         ApiClient.getJSON(ApiClient.getUrl('Social/Shares/Public/' + id + '/Item')).then(function (item) {
 
@@ -28,7 +28,7 @@
         setInitialCollapsibleState(page, item);
         ItemDetailPage.renderDetails(page, item, null, true);
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function setInitialCollapsibleState(page, item) {

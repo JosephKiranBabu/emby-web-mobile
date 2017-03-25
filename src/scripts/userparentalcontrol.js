@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'datetime', 'listViewStyle', 'paper-icon-button-light'], function ($, datetime) {
+﻿define(['jQuery', 'datetime', 'loading', 'listViewStyle', 'paper-icon-button-light'], function ($, datetime, loading) {
     'use strict';
 
     function populateRatings(allParentalRatings, page) {
@@ -106,7 +106,7 @@
 
         renderAccessSchedule(page, user.Policy.AccessSchedules || []);
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function loadBlockedTags(page, tags) {
@@ -193,7 +193,7 @@
 
     function onSaveComplete(page) {
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
 
         require(['toast'], function (toast) {
             toast(Globalize.translate('SettingsSaved'));
@@ -229,7 +229,7 @@
 
             var page = $(this).parents('.page');
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             var userId = getParameterByName("userId");
 
@@ -339,7 +339,7 @@
 
         var page = this;
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var userId = getParameterByName("userId");
         var promise1 = ApiClient.getUser(userId);

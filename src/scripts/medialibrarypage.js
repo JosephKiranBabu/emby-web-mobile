@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'apphost', 'scripts/taskbutton', 'cardStyle'], function ($, appHost, taskButton) {
+﻿define(['jQuery', 'apphost', 'scripts/taskbutton', 'loading', 'cardStyle'], function ($, appHost, taskButton, loading) {
     'use strict';
 
     function changeCollectionType(page, virtualFolder) {
@@ -166,7 +166,7 @@
 
     function reloadLibrary(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         ApiClient.getVirtualFolders().then(function (result) {
             reloadVirtualFolders(page, result);
@@ -224,7 +224,7 @@
             editVirtualFolder(page, virtualFolder);
         });
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function editImages(page, virtualFolder) {
@@ -417,7 +417,7 @@
 
         next: function () {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             var apiClient = ApiClient;
 
@@ -427,7 +427,7 @@
 
             }).then(function () {
 
-                Dashboard.hideLoadingMsg();
+                loading.hide();
                 Dashboard.navigate('wizardsettings.html');
             });
         }

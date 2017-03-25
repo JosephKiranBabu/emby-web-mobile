@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'libraryBrowser', 'fnchecked'], function ($, libraryBrowser) {
+﻿define(['jQuery', 'libraryBrowser', 'loading', 'fnchecked'], function ($, libraryBrowser, loading) {
     'use strict';
 
     var defaultSortBy = "SortName";
@@ -341,7 +341,7 @@
     }
 
     function reloadItems(page) {
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         query.UserId = Dashboard.getCurrentUserId();
         var url = "";
@@ -363,7 +363,7 @@
         });
 
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function updateFilterControls(page) {

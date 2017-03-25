@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'fnchecked'], function ($) {
+﻿define(['jQuery', 'loading', 'fnchecked'], function ($, loading) {
     'use strict';
 
     function load(page, config) {
@@ -10,12 +10,12 @@
 
     function loadData(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         ApiClient.getNamedConfiguration("devices").then(function (config) {
             load(page, config);
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
 

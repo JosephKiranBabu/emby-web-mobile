@@ -1,4 +1,4 @@
-﻿define(['userSettingsBuilder', 'appStorage'], function (userSettingsBuilder, appStorage) {
+﻿define(['userSettingsBuilder', 'appStorage', 'loading'], function (userSettingsBuilder, appStorage, loading) {
     'use strict';
 
     return function (view, params) {
@@ -19,7 +19,7 @@
 
                 page.querySelector('#selectLanguage').value = userSettingsInstance.language() || '';
 
-                Dashboard.hideLoadingMsg();
+                loading.hide();
             });
         }
 
@@ -55,14 +55,14 @@
         function save(page) {
 
             if (!AppInfo.enableAutoSave) {
-                Dashboard.showLoadingMsg();
+                loading.show();
             }
 
             ApiClient.getUser(userId).then(function (user) {
 
                 saveUser(page, user).then(function () {
 
-                    Dashboard.hideLoadingMsg();
+                    loading.hide();
                     if (!AppInfo.enableAutoSave) {
                         require(['toast'], function (toast) {
                             toast(Globalize.translate('SettingsSaved'));
@@ -70,7 +70,7 @@
                     }
 
                 }, function () {
-                    Dashboard.hideLoadingMsg();
+                    loading.hide();
                 });
 
             });
@@ -92,7 +92,7 @@
         view.addEventListener('viewshow', function () {
             var page = this;
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             ApiClient.getUser(userId).then(function (user) {
 

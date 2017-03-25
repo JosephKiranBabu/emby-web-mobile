@@ -1,4 +1,4 @@
-﻿define(['cardBuilder', 'apphost', 'imageLoader', 'scripts/livetvcomponents', 'emby-button', 'emby-itemscontainer'], function (cardBuilder, appHost, imageLoader) {
+﻿define(['cardBuilder', 'apphost', 'imageLoader', 'loading', 'scripts/livetvcomponents', 'emby-button', 'emby-itemscontainer'], function (cardBuilder, appHost, imageLoader, loading) {
     'use strict';
 
     function enableScrollX() {
@@ -93,7 +93,7 @@
         promise.then(function (result) {
 
             renderTimers(context.querySelector('#upcomingRecordings'), result.Items);
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
 
@@ -125,7 +125,7 @@
         };
 
         self.renderTab = function () {
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             renderActiveRecordings(tabContent, activeRecordingsPromise);
             renderUpcomingRecordings(tabContent, upcomingRecordingsPromise);

@@ -1,4 +1,4 @@
-﻿define(['libraryBrowser', 'cardBuilder', 'dom', 'apphost', 'imageLoader', 'scrollStyles', 'emby-itemscontainer'], function (libraryBrowser, cardBuilder, dom, appHost, imageLoader) {
+﻿define(['loading', 'libraryBrowser', 'cardBuilder', 'dom', 'apphost', 'imageLoader', 'scrollStyles', 'emby-itemscontainer'], function (loading, libraryBrowser, cardBuilder, dom, appHost, imageLoader) {
     'use strict';
 
     function enableScrollX() {
@@ -119,7 +119,7 @@
 
     function loadSections(page, userId, topParentId, types) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var sections = getSections();
 
@@ -165,7 +165,7 @@
         }
 
         Promise.all(promises).then(function () {
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
 

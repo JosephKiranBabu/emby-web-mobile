@@ -1,4 +1,4 @@
-﻿define(['jQuery'], function ($) {
+﻿define(['jQuery', 'loading'], function ($, loading) {
     'use strict';
 
     function loadUser(page, user) {
@@ -13,12 +13,12 @@
             $('.connectMessage', page).hide();
         }
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function loadData(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var userId = getParameterByName("userId");
 

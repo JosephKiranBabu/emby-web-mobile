@@ -1,4 +1,4 @@
-﻿define(['serverNotifications', 'events', 'scripts/taskbutton', 'datetime', 'paper-icon-button-light'], function (serverNotifications, events, taskButton, datetime) {
+﻿define(['serverNotifications', 'events', 'scripts/taskbutton', 'datetime', 'loading', 'paper-icon-button-light'], function (serverNotifications, events, taskButton, datetime, loading) {
     'use strict';
 
     var query = {
@@ -50,11 +50,11 @@
 
             confirm(message, Globalize.translate('HeaderDeleteFile')).then(function () {
 
-                Dashboard.showLoadingMsg();
+                loading.show();
 
                 ApiClient.deleteOriginalFileFromOrganizationResult(id).then(function () {
 
-                    Dashboard.hideLoadingMsg();
+                    loading.hide();
 
                     reloadItems(page, true);
 
@@ -108,11 +108,11 @@
 
             confirm(message, Globalize.translate('HeaderOrganizeFile')).then(function () {
 
-                Dashboard.showLoadingMsg();
+                loading.show();
 
                 ApiClient.performOrganization(id).then(function () {
 
-                    Dashboard.hideLoadingMsg();
+                    loading.hide();
 
                     reloadItems(page, true);
 
@@ -124,7 +124,7 @@
     function reloadItems(page, showSpinner) {
 
         if (showSpinner) {
-            Dashboard.showLoadingMsg();
+            loading.show();
         }
 
         ApiClient.getFileOrganizationResults(query).then(function (result) {
@@ -132,7 +132,7 @@
             currentResult = result;
             renderResults(page, result);
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         }, Dashboard.processErrorResponse);
     }
 

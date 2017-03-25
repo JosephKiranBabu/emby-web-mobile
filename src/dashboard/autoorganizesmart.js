@@ -1,4 +1,4 @@
-﻿define(['listViewStyle'], function () {
+﻿define(['loading', 'listViewStyle'], function (loading) {
     'use strict';
 
     var query = {
@@ -24,7 +24,7 @@
 
     function reloadList(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         ApiClient.getSmartMatchInfos(query).then(function (infos) {
 
@@ -32,11 +32,11 @@
 
             populateList(page, infos);
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
 
         }, function () {
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
 
@@ -165,7 +165,7 @@
         view.addEventListener('viewshow', function (e) {
 
             LibraryMenu.setTabs('autoorganize', 2, getTabs);
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             reloadList(view);
         });

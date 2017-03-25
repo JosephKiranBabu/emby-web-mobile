@@ -1,8 +1,8 @@
-﻿define(['fetchHelper', 'jQuery', 'registrationServices'], function (fetchHelper, $, registrationServices) {
+﻿define(['fetchHelper', 'jQuery', 'registrationServices', 'loading'], function (fetchHelper, $, registrationServices, loading) {
     'use strict';
 
     function load(page) {
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         ApiClient.getPluginSecurityInfo().then(function (info) {
 
@@ -16,7 +16,7 @@
                 $('.notSupporter', page).hide();
             }
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
 
@@ -33,7 +33,7 @@
     }
 
     function retrieveSupporterKey() {
-        Dashboard.showLoadingMsg();
+        loading.show();
         var form = this;
 
         var email = $('#txtEmail', form).val();
@@ -48,7 +48,7 @@
 
         }).then(function (result) {
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
             if (result.Success) {
                 require(['toast'], function (toast) {
                     toast(Globalize.translate('MessageKeyEmailedTo').replace("{0}", email));
@@ -69,7 +69,7 @@
 
         updateSupporterKey: function () {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
             var form = this;
 
             var key = $('#txtSupporterKey', form).val();
@@ -81,7 +81,7 @@
             ApiClient.updatePluginSecurityInfo(info).then(function () {
 
                 Dashboard.resetPluginSecurityInfo();
-                Dashboard.hideLoadingMsg();
+                loading.hide();
 
                 if (key) {
 
@@ -107,7 +107,7 @@
 
         linkSupporterKeys: function () {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
             var form = this;
 
             var email = $('#txtNewEmail', form).val();
@@ -129,7 +129,7 @@
 
             }).then(function (result) {
 
-                Dashboard.hideLoadingMsg();
+                loading.hide();
                 if (result.Success) {
                     require(['toast'], function (toast) {
                         toast(Globalize.translate('MessageKeysLinked'));

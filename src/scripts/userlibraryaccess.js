@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'fnchecked'], function ($) {
+﻿define(['jQuery', 'loading', 'fnchecked'], function ($, loading) {
     'use strict';
 
     function loadMediaFolders(page, user, mediaFolders) {
@@ -97,12 +97,12 @@
         loadMediaFolders(page, user, mediaFolders);
         loadDevices(page, user, devices);
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function onSaveComplete(page) {
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
 
         require(['toast'], function (toast) {
             toast(Globalize.translate('SettingsSaved'));
@@ -150,7 +150,7 @@
     function onSubmit() {
         var page = $(this).parents('.page');
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var userId = getParameterByName("userId");
 
@@ -202,7 +202,7 @@
 
         var page = this;
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var userId = getParameterByName("userId");
 

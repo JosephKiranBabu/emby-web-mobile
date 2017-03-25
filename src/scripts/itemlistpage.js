@@ -1,4 +1,4 @@
-﻿define(['libraryBrowser', 'alphaPicker', 'listView', 'cardBuilder', 'imageLoader', 'emby-itemscontainer'], function (libraryBrowser, alphaPicker, listView, cardBuilder, imageLoader) {
+﻿define(['loading', 'libraryBrowser', 'alphaPicker', 'listView', 'cardBuilder', 'imageLoader', 'emby-itemscontainer'], function (loading, libraryBrowser, alphaPicker, listView, cardBuilder, imageLoader) {
     'use strict';
 
     return function (view, params) {
@@ -68,7 +68,7 @@
 
         function reloadItems() {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             var query = getQuery();
             var userId = Dashboard.getCurrentUserId();
@@ -209,7 +209,7 @@
                     bubbles: true
                 }));
 
-                Dashboard.hideLoadingMsg();
+                loading.hide();
             });
         }
 

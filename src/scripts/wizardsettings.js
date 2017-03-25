@@ -1,9 +1,9 @@
-﻿define(['jQuery'], function ($) {
+﻿define(['jQuery', 'loading'], function ($, loading) {
     'use strict';
 
     function save(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var apiClient = ApiClient;
 
@@ -21,6 +21,7 @@
 
             }).then(function () {
 
+                loading.hide();
                 navigateToNextPage();
 
             });
@@ -68,12 +69,12 @@
         $('#selectLanguage', page).val(config.PreferredMetadataLanguage);
         $('#selectCountry', page).val(config.MetadataCountryCode);
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function reload(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var apiClient = ApiClient;
 

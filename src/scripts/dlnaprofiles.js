@@ -1,16 +1,16 @@
-﻿define(['jQuery', 'listViewStyle'], function ($) {
+﻿define(['jQuery', 'loading', 'listViewStyle'], function ($, loading) {
     'use strict';
 
     function loadProfiles(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         ApiClient.getJSON(ApiClient.getUrl("Dlna/ProfileInfos")).then(function (result) {
 
             renderUserProfiles(page, result);
             renderSystemProfiles(page, result);
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
 
     }
@@ -82,7 +82,7 @@
 
             confirm(Globalize.translate('MessageConfirmProfileDeletion'), Globalize.translate('HeaderConfirmProfileDeletion')).then(function () {
 
-                Dashboard.showLoadingMsg();
+                loading.show();
 
                 ApiClient.ajax({
                     type: "DELETE",
@@ -90,7 +90,7 @@
 
                 }).then(function () {
 
-                    Dashboard.hideLoadingMsg();
+                    loading.hide();
 
                     loadProfiles(page);
                 });

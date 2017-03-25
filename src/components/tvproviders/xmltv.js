@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'registrationServices', 'emby-checkbox', 'emby-input', 'listViewStyle', 'paper-icon-button-light'], function ($, registrationServices) {
+﻿define(['jQuery', 'registrationServices', 'loading', 'emby-checkbox', 'emby-input', 'listViewStyle', 'paper-icon-button-light'], function ($, registrationServices, loading) {
     'use strict';
 
     return function (page, providerId, options) {
@@ -25,7 +25,7 @@
 
         function reload() {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             ApiClient.getNamedConfiguration("livetv").then(function (config) {
 
@@ -46,7 +46,7 @@
                     }
 
                     refreshTunerDevices(page, info, config.TunerHosts);
-                    Dashboard.hideLoadingMsg();
+                    loading.hide();
                 });
             });
         }
@@ -60,7 +60,7 @@
 
         function submitListingsForm() {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             var id = providerId;
 
@@ -98,14 +98,14 @@
 
                 }).then(function (result) {
 
-                    Dashboard.hideLoadingMsg();
+                    loading.hide();
                     if (options.showConfirmation !== false) {
                         Dashboard.processServerConfigurationUpdateResult();
                     }
                     Events.trigger(self, 'submitted');
 
                 }, function () {
-                    Dashboard.hideLoadingMsg();
+                    loading.hide();
                     Dashboard.alert({
                         message: Globalize.translate('ErrorAddingXmlTvFile')
                     });

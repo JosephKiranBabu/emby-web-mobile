@@ -1,9 +1,9 @@
-﻿define(['jQuery', 'listViewStyle'], function ($) {
+﻿define(['jQuery', 'loading', 'listViewStyle'], function ($, loading) {
     'use strict';
 
     function reload(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         ApiClient.getJSON(ApiClient.getUrl("Notifications/Types")).then(function (list) {
 
@@ -59,7 +59,7 @@
 
             $('.notificationList', page).html(html).trigger('create');
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
 

@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'humanedate', 'paper-icon-button-light', 'cardStyle'], function ($) {
+﻿define(['jQuery', 'loading', 'humanedate', 'paper-icon-button-light', 'cardStyle'], function ($, loading) {
     'use strict';
 
     function deleteUser(page, id) {
@@ -16,7 +16,7 @@
 
             }).then(function () {
 
-                Dashboard.showLoadingMsg();
+                loading.show();
 
                 ApiClient.deleteUser(id).then(function () {
 
@@ -322,7 +322,7 @@
 
     function cancelAuthorization(page, id) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         // Add/Update connect info
         ApiClient.ajax({
@@ -343,11 +343,11 @@
 
     function loadData(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         ApiClient.getUsers().then(function (users) {
             renderUsers(page, users);
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
 
         ApiClient.getJSON(ApiClient.getUrl('Connect/Pending')).then(function (pending) {

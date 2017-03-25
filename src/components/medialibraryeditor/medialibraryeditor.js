@@ -1,4 +1,4 @@
-﻿define(['dialogHelper', 'dom', 'components/libraryoptionseditor/libraryoptionseditor', 'emby-button', 'listViewStyle', 'paper-icon-button-light', 'formDialogStyle'], function (dialogHelper, dom, libraryoptionseditor) {
+﻿define(['loading', 'dialogHelper', 'dom', 'components/libraryoptionseditor/libraryoptionseditor', 'emby-button', 'listViewStyle', 'paper-icon-button-light', 'formDialogStyle'], function (loading, dialogHelper, dom, libraryoptionseditor) {
     'use strict';
 
     var currentDeferred;
@@ -119,7 +119,7 @@
         }
         html += '</div>';
 
-        html += '<button is="paper-icon-button-light" class="listItemButton btnRemovePath" data-index="' + index + '"><i class="md-icon">remove_circle</i></button>';
+        html += '<button type="button" is="paper-icon-button-light" class="listItemButton btnRemovePath" data-index="' + index + '"><i class="md-icon">remove_circle</i></button>';
 
         html += '</div>';
 
@@ -158,11 +158,6 @@
         var foldersHtml = pathInfos.map(getFolderHtml).join('');
 
         page.querySelector('.folderList').innerHTML = foldersHtml;
-
-        var listItems = page.querySelectorAll('.listItem');
-        for (var i = 0, length = listItems.length; i < length; i++) {
-            listItems[i].addEventListener('click', onListItemClick);
-        }
     }
 
     function onAddButtonClick() {
@@ -211,6 +206,8 @@
 
         dlg.querySelector('.btnAddFolder').addEventListener('click', onAddButtonClick);
 
+        dlg.querySelector('.folderList').addEventListener('click', onListItemClick);
+
         libraryoptionseditor.embed(dlg.querySelector('.libraryOptions'), options.library.CollectionType, options.library.LibraryOptions);
     }
 
@@ -227,7 +224,7 @@
 
     function onDialogClosed() {
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
 
         // hardcoding this to true for now until libraryOptions are taken into account
         hasChanges = true;

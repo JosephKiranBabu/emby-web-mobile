@@ -1,4 +1,4 @@
-﻿define(['globalize', 'emby-input', 'emby-button', 'emby-checkbox', 'emby-select'], function (globalize) {
+﻿define(['globalize', 'loading', 'emby-input', 'emby-button', 'emby-checkbox', 'emby-select'], function (globalize, loading) {
     'use strict';
 
     function fillTypes(view, currentId) {
@@ -10,7 +10,7 @@
 
                 return '<option value="' + t.Id + '">' + t.Name + '</option>';
 
-            }).join('');
+            }).join('') + '<option value="other">' + globalize.translate('TabOther') + '</option>';
 
             selectType.disabled = currentId != null;
 
@@ -49,7 +49,7 @@
 
     function submitForm(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var info = {
             Type: page.querySelector('.selectType').value,
@@ -102,6 +102,22 @@
         });
     }
 
+    function getTabs() {
+        return [
+        {
+            href: 'livetvstatus.html',
+            name: Globalize.translate('TabDevices')
+        },
+         {
+             href: 'livetvsettings.html',
+             name: Globalize.translate('TabSettings')
+         },
+         {
+             href: 'appservices.html?context=livetv',
+             name: Globalize.translate('TabServices')
+         }];
+    }
+
     return function (view, params) {
 
         function onTypeChange() {
@@ -114,6 +130,8 @@
 
             var supportsTunerIpAddress = value === 'hdhomerun';
             var supportsTunerFileOrUrl = value === 'm3u';
+
+            var suppportsSubmit = value !== 'other';
 
             if (supportsTunerIpAddress) {
                 view.querySelector('.txtDevicePath').label(globalize.translate('LabelTunerIpAddress'));
@@ -148,6 +166,15 @@
             else {
                 view.querySelector('.drmMessage').classList.add('hide');
             }
+
+            if (suppportsSubmit) {
+                view.querySelector('.button-submit').classList.remove('hide');
+                view.querySelector('.otherOptionsMessage').classList.add('hide');
+            }
+            else {
+                view.querySelector('.button-submit').classList.add('hide');
+                view.querySelector('.otherOptionsMessage').classList.remove('hide');
+            }
         }
 
         if (!params.id) {
@@ -155,6 +182,8 @@
         }
 
         view.addEventListener('viewshow', function () {
+
+            LibraryMenu.setTabs('livetvadmin', 0, getTabs);
 
             var currentId = params.id;
             fillTypes(view, currentId).then(function () {

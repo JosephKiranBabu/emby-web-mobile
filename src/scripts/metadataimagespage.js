@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'dom', 'listViewStyle'], function ($, dom) {
+﻿define(['jQuery', 'dom', 'loading', 'listViewStyle'], function ($, dom, loading) {
     'use strict';
 
     var currentType;
@@ -56,12 +56,12 @@
 
         $('#selectItemType', page).html(html).trigger('change');
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function loadType(page, type) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         currentType = type;
 
@@ -81,7 +81,7 @@
 
                 renderType(page, type, config, metadataPlugins);
 
-                Dashboard.hideLoadingMsg();
+                loading.hide();
 
             } else {
 
@@ -92,7 +92,7 @@
 
                     renderType(page, type, config, metadataPlugins);
 
-                    Dashboard.hideLoadingMsg();
+                    loading.hide();
                 });
 
             }
@@ -512,7 +512,7 @@
 
         var form = this;
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         ApiClient.getServerConfiguration().then(function (config) {
 
@@ -614,7 +614,7 @@
     }).on('pageshow', "#metadataImagesConfigurationPage", function () {
 
         LibraryMenu.setTabs('metadata', 2, getTabs);
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var page = this;
 

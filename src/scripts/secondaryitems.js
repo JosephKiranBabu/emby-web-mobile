@@ -1,4 +1,4 @@
-﻿define(['libraryBrowser', 'listView', 'cardBuilder', 'imageLoader', 'apphost', 'globalize', 'emby-itemscontainer'], function (libraryBrowser, listView, cardBuilder, imageLoader, appHost, globalize) {
+﻿define(['loading', 'libraryBrowser', 'listView', 'cardBuilder', 'imageLoader', 'apphost', 'globalize', 'emby-itemscontainer'], function (loading, libraryBrowser, listView, cardBuilder, imageLoader, appHost, globalize) {
     'use strict';
 
     return function (view, params) {
@@ -150,7 +150,7 @@
 
         function reloadItems(parentItem) {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             getPromise(parentItem).then(function (result) {
 
@@ -267,7 +267,7 @@
                     elems[i].addEventListener('click', onPreviousPageClick);
                 }
 
-                Dashboard.hideLoadingMsg();
+                loading.hide();
             });
         }
 

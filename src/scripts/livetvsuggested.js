@@ -1,4 +1,4 @@
-﻿define(['libraryBrowser', 'mainTabsManager', 'cardBuilder', 'apphost', 'imageLoader', 'scrollStyles', 'emby-itemscontainer', 'emby-tabs', 'emby-button'], function (libraryBrowser, mainTabsManager, cardBuilder, appHost, imageLoader) {
+﻿define(['loading', 'libraryBrowser', 'mainTabsManager', 'cardBuilder', 'apphost', 'imageLoader', 'scrollStyles', 'emby-itemscontainer', 'emby-tabs', 'emby-button'], function (loading, libraryBrowser, mainTabsManager, cardBuilder, appHost, imageLoader) {
     'use strict';
 
     function enableScrollX() {
@@ -78,7 +78,7 @@
 
     function loadRecommendedPrograms(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var limit = getLimit();
         if (enableScrollX()) {
@@ -101,7 +101,7 @@
                 showAirDateTime: false,
                 showAirEndTime: true
             });
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
 

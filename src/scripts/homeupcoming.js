@@ -1,9 +1,9 @@
-﻿define(['datetime', 'cardBuilder', 'apphost', 'imageLoader', 'emby-itemscontainer', 'scrollStyles'], function (datetime, cardBuilder, appHost, imageLoader) {
+﻿define(['datetime', 'cardBuilder', 'apphost', 'imageLoader', 'loading', 'emby-itemscontainer', 'scrollStyles'], function (datetime, cardBuilder, appHost, imageLoader, loading) {
     'use strict';
 
     function getUpcomingPromise() {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var query = {
 
@@ -33,7 +33,7 @@
             var elem = page.querySelector('#upcomingItems');
             renderUpcoming(elem, items);
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
 
@@ -147,7 +147,7 @@
 
         self.renderTab = function () {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
             loadUpcoming(view, upcomingPromise);
         };
     };

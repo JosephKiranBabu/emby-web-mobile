@@ -1,9 +1,9 @@
-﻿define(['appSettings', 'dom', 'connectionManager', 'cardStyle', 'emby-checkbox'], function (appSettings, dom, connectionManager) {
+﻿define(['appSettings', 'dom', 'connectionManager', 'loading', 'cardStyle', 'emby-checkbox'], function (appSettings, dom, connectionManager, loading) {
     'use strict';
 
     function authenticateUserByName(page, apiClient, username, password) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         apiClient.authenticateUserByName(username, password).then(function (result) {
 
@@ -19,7 +19,7 @@
                 newUrl = "home.html";
             }
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
 
             Dashboard.onServerChanged(user.Id, result.AccessToken, apiClient);
             Dashboard.navigate(newUrl);
@@ -29,7 +29,7 @@
             page.querySelector('#txtManualName').value = '';
             page.querySelector('#txtManualPassword').value = '';
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
 
             if (response.status == 401) {
                 require(['toast'], function (toast) {
@@ -216,7 +216,7 @@
         });
 
         view.addEventListener('viewshow', function (e) {
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             var apiClient = getApiClient();
             apiClient.getPublicUsers().then(function (users) {
@@ -236,7 +236,7 @@
                     }
                 }
 
-                Dashboard.hideLoadingMsg();
+                loading.hide();
             });
 
             apiClient.getJSON(apiClient.getUrl('Branding/Configuration')).then(function (options) {

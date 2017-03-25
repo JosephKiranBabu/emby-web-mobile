@@ -1,4 +1,4 @@
-﻿define(['libraryBrowser', 'cardBuilder', 'imageLoader', 'scripts/sections', 'emby-itemscontainer', 'emby-button'], function (libraryBrowser, cardBuilder, imageLoader) {
+﻿define(['loading', 'libraryBrowser', 'cardBuilder', 'imageLoader', 'scripts/sections', 'emby-itemscontainer', 'emby-button'], function (loading, libraryBrowser, cardBuilder, imageLoader) {
     'use strict';
 
     // The base query options
@@ -9,7 +9,7 @@
 
     function reloadItems(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         query.UserId = Dashboard.getCurrentUserId();
 
@@ -55,7 +55,7 @@
 
             libraryBrowser.saveQueryValues('channels', query);
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
 

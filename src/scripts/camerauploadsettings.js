@@ -1,4 +1,4 @@
-﻿define(['appSettings', 'emby-checkbox'], function (appSettings) {
+﻿define(['appSettings', 'loading', 'emby-checkbox'], function (appSettings, loading) {
     'use strict';
 
     function loadForm(page, user) {
@@ -14,7 +14,7 @@
 
         }).join('');
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function saveUser(page) {
@@ -35,14 +35,14 @@
             MainActivity.authorizeStorage();
         }
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     return function (view, params) {
 
         view.querySelector('form').addEventListener('submit', function (e) {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             saveUser(view);
 
@@ -54,7 +54,7 @@
         view.addEventListener('viewshow', function () {
             var page = this;
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             var userId = params.userId || Dashboard.getCurrentUserId();
 

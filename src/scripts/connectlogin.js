@@ -1,20 +1,20 @@
-﻿define(['appSettings'], function (appSettings) {
+﻿define(['appSettings', 'loading'], function (appSettings, loading) {
     'use strict';
 
     function login(page, username, password) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         appSettings.enableAutoLogin(true);
 
         ConnectionManager.loginToConnect(username, password).then(function () {
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
             Dashboard.navigate('selectserver.html');
 
         }, function () {
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
 
             Dashboard.alert({
                 message: Globalize.translate('MessageInvalidUser'),
@@ -29,7 +29,7 @@
 
     function handleConnectionResult(page, result) {
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
 
         switch (result.State) {
 
@@ -78,7 +78,7 @@
 
     function loadAppConnection(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         ConnectionManager.connect({
 
@@ -182,7 +182,7 @@
             host += ':' + port;
         }
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         ConnectionManager.connectToAddress(host, {
 

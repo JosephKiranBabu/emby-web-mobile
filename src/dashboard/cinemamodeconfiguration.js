@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'fnchecked'], function ($) {
+﻿define(['jQuery', 'loading', 'fnchecked'], function ($, loading) {
     'use strict';
 
     function loadPage(page, config) {
@@ -20,11 +20,11 @@
         $('#txtCodecIntrosPath', page).val(config.MediaInfoIntroPath || '');
         $('#txtNumTrailers', page).val(config.TrailerLimit);
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function onSubmit() {
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var form = this;
 
@@ -130,7 +130,7 @@
 
         LibraryMenu.setTabs('playback', 0, getTabs);
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var page = this;
 

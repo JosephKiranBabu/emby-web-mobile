@@ -1,4 +1,4 @@
-﻿define(['events', 'libraryBrowser', 'imageLoader', 'alphaPicker', 'listView', 'cardBuilder', 'apphost', 'emby-itemscontainer'], function (events, libraryBrowser, imageLoader, alphaPicker, listView, cardBuilder, appHost) {
+﻿define(['loading', 'events', 'libraryBrowser', 'imageLoader', 'alphaPicker', 'listView', 'cardBuilder', 'apphost', 'emby-itemscontainer'], function (loading, events, libraryBrowser, imageLoader, alphaPicker, listView, cardBuilder, appHost) {
     'use strict';
 
     return function (view, params, tabContent) {
@@ -68,7 +68,7 @@
 
         function reloadItems(page) {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             var query = getQuery(page);
 
@@ -196,7 +196,7 @@
 
                 libraryBrowser.saveQueryValues(getSavedQueryKey(page), query);
 
-                Dashboard.hideLoadingMsg();
+                loading.hide();
             });
         }
 

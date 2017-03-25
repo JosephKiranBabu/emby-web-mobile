@@ -1,4 +1,4 @@
-﻿define(['jQuery'], function ($) {
+﻿define(['jQuery', 'loading'], function ($, loading) {
     'use strict';
 
     var metadataKey = "xbmcmetadata";
@@ -18,11 +18,11 @@
         page.querySelector('#chkEnablePathSubstitution').checked = config.EnablePathSubstitution;
         page.querySelector('#chkEnableExtraThumbs').checked = config.EnableExtraThumbsDuplication;
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function onSubmit() {
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var form = this;
 
@@ -90,7 +90,7 @@
     }).on('pageshow', "#metadataNfoPage", function () {
 
         LibraryMenu.setTabs('metadata', 3, getTabs);
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var page = this;
 

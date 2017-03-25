@@ -1,4 +1,4 @@
-﻿define(['dialogHelper', 'dom', 'listViewStyle', 'emby-input', 'emby-button', 'paper-icon-button-light', 'css!./directorybrowser', 'formDialogStyle'], function (dialogHelper, dom) {
+﻿define(['loading', 'dialogHelper', 'dom', 'listViewStyle', 'emby-input', 'emby-button', 'paper-icon-button-light', 'css!./directorybrowser', 'formDialogStyle'], function (loading, dialogHelper, dom) {
     'use strict';
 
     var systemInfo;
@@ -16,7 +16,7 @@
 
     function onDialogClosed() {
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function refreshDirectoryBrowser(page, path, fileOptions) {
@@ -24,7 +24,7 @@
         if (path && typeof (path) !== 'string') {
             throw new Error('invalid path');
         }
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var promises = [];
 
@@ -68,14 +68,14 @@
 
             page.querySelector('.results').innerHTML = html;
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
 
         }, function () {
 
             page.querySelector('#txtDirectoryPickerPath').value = "";
             page.querySelector('.results').innerHTML = '';
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
 

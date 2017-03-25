@@ -1,4 +1,4 @@
-﻿define(['components/categorysyncbuttons', 'cardBuilder', 'apphost', 'imageLoader', 'scripts/livetvcomponents', 'emby-button', 'listViewStyle', 'emby-itemscontainer'], function (categorysyncbuttons, cardBuilder, appHost, imageLoader) {
+﻿define(['loading', 'components/categorysyncbuttons', 'cardBuilder', 'apphost', 'imageLoader', 'scripts/livetvcomponents', 'emby-button', 'listViewStyle', 'emby-itemscontainer'], function (loading, categorysyncbuttons, cardBuilder, appHost, imageLoader) {
     'use strict';
 
     function getRecordingGroupHtml(group) {
@@ -52,7 +52,7 @@
 
         context.querySelector('#recordingGroupItems').innerHTML = html;
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function enableScrollX() {
@@ -137,7 +137,7 @@
                 lines: 2
             });
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
 
@@ -310,7 +310,7 @@
             renderActiveRecordings(tabContent, activeRecordingsPromise);
 
             if (enableFullRender()) {
-                Dashboard.showLoadingMsg();
+                loading.show();
 
                 renderLatestRecordings(tabContent, latestPromise);
                 renderMovieRecordings(tabContent, moviesPromise);

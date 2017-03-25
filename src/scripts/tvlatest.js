@@ -1,4 +1,4 @@
-﻿define(['components/categorysyncbuttons', 'components/groupedcards', 'cardBuilder', 'apphost', 'imageLoader'], function (categorysyncbuttons, groupedcards, cardBuilder, appHost, imageLoader) {
+﻿define(['loading', 'components/categorysyncbuttons', 'components/groupedcards', 'cardBuilder', 'apphost', 'imageLoader'], function (loading, categorysyncbuttons, groupedcards, cardBuilder, appHost, imageLoader) {
     'use strict';
 
     function getView() {
@@ -8,7 +8,7 @@
 
     function getLatestPromise(context, params) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var userId = Dashboard.getCurrentUserId();
 
@@ -58,7 +58,7 @@
             elem.innerHTML = html;
             imageLoader.lazyChildren(elem);
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
     return function (view, params, tabContent) {

@@ -1,4 +1,4 @@
-﻿define(['jQuery'], function ($) {
+﻿define(['jQuery', 'loading'], function ($, loading) {
     'use strict';
 
     function loadPage(page, config, systemInfo) {
@@ -24,12 +24,12 @@
             bubbles: true
         }));
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function onSaveEncodingPathFailure(response) {
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
 
         var msg = '';
 
@@ -61,7 +61,7 @@
         var form = this;
 
         var onDecoderConfirmed = function () {
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             ApiClient.getNamedConfiguration("encoding").then(function (config) {
 
@@ -180,7 +180,7 @@
 
     }).on('pageshow', "#encodingSettingsPage", function () {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var page = this;
 

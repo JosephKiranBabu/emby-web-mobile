@@ -1,4 +1,4 @@
-﻿define(['libraryBrowser', 'focusManager', 'embyRouter', 'cardBuilder', 'imageLoader', 'emby-input', 'paper-icon-button-light', 'material-icons', 'emby-itemscontainer'], function (libraryBrowser, focusManager, embyRouter, cardBuilder, imageLoader) {
+﻿define(['loading', 'libraryBrowser', 'focusManager', 'embyRouter', 'cardBuilder', 'imageLoader', 'emby-input', 'paper-icon-button-light', 'material-icons', 'emby-itemscontainer'], function (loading, libraryBrowser, focusManager, embyRouter, cardBuilder, imageLoader) {
     'use strict';
 
     function loadSuggestions(page) {
@@ -137,7 +137,7 @@
         function requestSearchHintsForOverlay(searchTerm) {
 
             var currentTimeout = searchHintTimeout;
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             ApiClient.getSearchHints({
 
@@ -151,9 +151,9 @@
                     renderSearchResultsInOverlay(result.SearchHints);
                 }
 
-                Dashboard.hideLoadingMsg();
+                loading.hide();
             }, function () {
-                Dashboard.hideLoadingMsg();
+                loading.hide();
             });
         }
 

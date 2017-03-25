@@ -1,4 +1,4 @@
-﻿define(['userSettingsBuilder', 'dom', 'globalize', 'listViewStyle'], function (userSettingsBuilder, dom, globalize) {
+﻿define(['userSettingsBuilder', 'dom', 'globalize', 'loading', 'listViewStyle'], function (userSettingsBuilder, dom, globalize, loading) {
     'use strict';
 
     function renderViews(page, user, result) {
@@ -132,7 +132,7 @@
             renderLatestItems(page, user, responses[0]);
             renderViewOrder(page, user, responses[0]);
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
 
@@ -196,17 +196,17 @@
 
     function save(page, userId, userSettings) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         if (!AppInfo.enableAutoSave) {
-            Dashboard.showLoadingMsg();
+            loading.show();
         }
 
         ApiClient.getUser(userId).then(function (user) {
 
             saveUser(page, user, userSettings).then(function () {
 
-                Dashboard.hideLoadingMsg();
+                loading.hide();
                 if (!AppInfo.enableAutoSave) {
                     require(['toast'], function (toast) {
                         toast(globalize.translate('SettingsSaved'));
@@ -214,7 +214,7 @@
                 }
 
             }, function () {
-                Dashboard.hideLoadingMsg();
+                loading.hide();
             });
         });
     }
@@ -326,7 +326,7 @@
         view.addEventListener('viewshow', function () {
             var page = this;
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             var userId = params.userId || Dashboard.getCurrentUserId();
 

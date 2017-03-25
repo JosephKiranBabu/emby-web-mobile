@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'listView', 'imageLoader'], function ($, listView, imageLoader) {
+﻿define(['jQuery', 'loading', 'listView', 'imageLoader'], function ($, loading, listView, imageLoader) {
     'use strict';
 
     var data = {};
@@ -35,7 +35,7 @@
 
     function reloadItems(page, item) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var query = getQuery();
 
@@ -86,7 +86,7 @@
                 reloadItems(page, item);
             });
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
 

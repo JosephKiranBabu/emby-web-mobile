@@ -1,4 +1,4 @@
-﻿define(['dialogHelper', 'jQuery', 'emby-button', 'emby-select'], function (dialogHelper, $) {
+﻿define(['dialogHelper', 'jQuery', 'loading', 'emby-button', 'emby-select'], function (dialogHelper, $, loading) {
     'use strict';
 
     var currentItemId;
@@ -8,7 +8,7 @@
 
     function onFileReaderError(evt) {
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
 
         switch (evt.target.error.code) {
             case evt.target.error.NOT_FOUND_ERR:
@@ -46,7 +46,7 @@
             $('#fldUpload', page).hide();
         };
         reader.onabort = function () {
-            Dashboard.hideLoadingMsg();
+            loading.hide();
             console.log('File read cancelled');
         };
 
@@ -84,7 +84,7 @@
             return false;
         }
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var page = $(this).parents('.dialog');
 
@@ -93,7 +93,7 @@
         ApiClient.uploadItemImage(currentItemId, imageType, file).then(function () {
 
             $('#uploadImage', page).val('').trigger('change');
-            Dashboard.hideLoadingMsg();
+            loading.hide();
             processImageChangeResult(page);
         });
 
@@ -181,7 +181,7 @@
     function onDialogClosed() {
 
         $(this).remove();
-        Dashboard.hideLoadingMsg();
+        loading.hide();
         currentDeferred.resolveWith(null, [hasChanges]);
     }
 

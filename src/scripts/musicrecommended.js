@@ -1,4 +1,4 @@
-﻿define(['libraryBrowser', 'cardBuilder', 'dom', 'apphost', 'imageLoader', 'libraryMenu', 'mainTabsManager', 'scrollStyles', 'emby-itemscontainer', 'emby-tabs', 'emby-button'], function (libraryBrowser, cardBuilder, dom, appHost, imageLoader, libraryMenu, mainTabsManager) {
+﻿define(['loading', 'libraryBrowser', 'cardBuilder', 'dom', 'apphost', 'imageLoader', 'libraryMenu', 'mainTabsManager', 'scrollStyles', 'emby-itemscontainer', 'emby-tabs', 'emby-button'], function (loading, libraryBrowser, cardBuilder, dom, appHost, imageLoader, libraryMenu, mainTabsManager) {
     'use strict';
 
     function itemsPerRow() {
@@ -18,7 +18,7 @@
 
     function loadLatest(page, parentId) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var userId = Dashboard.getCurrentUserId();
 
@@ -55,7 +55,7 @@
             });
             imageLoader.lazyChildren(elem);
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
 
@@ -256,7 +256,7 @@
 
         function reload() {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             var tabContent = view.querySelector('.pageTabContent[data-index=\'' + 0 + '\']');
             loadSuggestionsTab(view, tabContent, params.topParentId);

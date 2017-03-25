@@ -1,4 +1,4 @@
-﻿define(['layoutManager', 'cardBuilder', 'datetime', 'mediaInfo', 'backdrop', 'listView', 'itemContextMenu', 'itemHelper', 'userdataButtons', 'dom', 'indicators', 'apphost', 'imageLoader', 'libraryMenu', 'globalize', 'browser', 'events', 'scrollHelper', 'playbackManager', 'scrollStyles', 'emby-itemscontainer', 'emby-checkbox'], function (layoutManager, cardBuilder, datetime, mediaInfo, backdrop, listView, itemContextMenu, itemHelper, userdataButtons, dom, indicators, appHost, imageLoader, libraryMenu, globalize, browser, events, scrollHelper, playbackManager) {
+﻿define(['loading', 'embyRouter', 'layoutManager', 'cardBuilder', 'datetime', 'mediaInfo', 'backdrop', 'listView', 'itemContextMenu', 'itemHelper', 'userdataButtons', 'dom', 'indicators', 'apphost', 'imageLoader', 'libraryMenu', 'globalize', 'browser', 'events', 'scrollHelper', 'playbackManager', 'scrollStyles', 'emby-itemscontainer', 'emby-checkbox'], function (loading, embyRouter, layoutManager, cardBuilder, datetime, mediaInfo, backdrop, listView, itemContextMenu, itemHelper, userdataButtons, dom, indicators, appHost, imageLoader, libraryMenu, globalize, browser, events, scrollHelper, playbackManager) {
     'use strict';
 
     function getPromise(params) {
@@ -46,7 +46,7 @@
 
     function reload(page, params) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         getPromise(params).then(function (item) {
 
@@ -358,7 +358,7 @@
             bubbles: true
         }));
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function logoImageUrl(item, apiClient, options) {
@@ -1478,7 +1478,7 @@
                 action: 'programdialog'
             });
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
 
@@ -2194,7 +2194,7 @@
 
             confirm("Are you sure you wish to split the media sources into separate items?", "Split Media Apart").then(function () {
 
-                Dashboard.showLoadingMsg();
+                loading.show();
 
                 ApiClient.ajax({
                     type: "DELETE",
@@ -2202,7 +2202,7 @@
 
                 }).then(function () {
 
-                    Dashboard.hideLoadingMsg();
+                    loading.hide();
 
                     reload(page, params);
                 });
@@ -2257,7 +2257,7 @@
 
             confirm(globalize.translate('MessageConfirmRecordingCancellation'), globalize.translate('HeaderConfirmRecordingCancellation')).then(function () {
 
-                Dashboard.showLoadingMsg();
+                loading.show();
 
                 ApiClient.cancelLiveTvTimer(id).then(function () {
 
@@ -2333,7 +2333,7 @@
             itemContextMenu.show(getContextMenuOptions(currentItem, button)).then(function (result) {
 
                 if (result.deleted) {
-                    Emby.Page.goHome();
+                    embyRouter.goHome();
 
                 } else if (result.updated) {
                     reload(view, params);

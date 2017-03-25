@@ -1,4 +1,4 @@
-﻿define(['cardBuilder', 'apphost', 'imageLoader', 'libraryBrowser', 'emby-itemscontainer'], function (cardBuilder, appHost, imageLoader, libraryBrowser) {
+﻿define(['cardBuilder', 'apphost', 'imageLoader', 'libraryBrowser', 'loading', 'emby-itemscontainer'], function (cardBuilder, appHost, imageLoader, libraryBrowser, loading) {
     'use strict';
 
     return function (view, params) {
@@ -33,7 +33,7 @@
 
         function reloadItems(page) {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             var promise = params.type == 'Recordings' ?
                 ApiClient.getLiveTvRecordings(query) :
@@ -107,7 +107,7 @@
 
                 libraryBrowser.saveQueryValues(getSavedQueryKey(), query);
 
-                Dashboard.hideLoadingMsg();
+                loading.hide();
             });
         }
 

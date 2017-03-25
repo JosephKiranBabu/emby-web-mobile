@@ -1,4 +1,4 @@
-﻿define(['datetime', 'listView'], function (datetime, listView) {
+﻿define(['datetime', 'listView', 'loading'], function (datetime, listView, loading) {
     'use strict';
 
     function isSameDay(date1, date2) {
@@ -62,7 +62,7 @@
         }).then(function (result) {
 
             renderPrograms(page, result);
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
 

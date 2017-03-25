@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'fnchecked', 'emby-checkbox', 'emby-collapse', 'emby-textarea', 'emby-input', 'emby-select'], function ($) {
+﻿define(['jQuery', 'loading', 'fnchecked', 'emby-checkbox', 'emby-collapse', 'emby-textarea', 'emby-input', 'emby-select'], function ($, loading) {
     'use strict';
 
     var brandingConfigKey = "branding";
@@ -55,11 +55,11 @@
             $('.autoUpdatesContainer', page).addClass('hide');
         }
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function onSubmit() {
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var form = this;
         var page = $(form).parents('.page');

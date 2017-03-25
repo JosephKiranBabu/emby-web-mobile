@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'cardBuilder', 'imageLoader', 'emby-itemscontainer'], function ($, cardBuilder, imageLoader) {
+﻿define(['jQuery', 'cardBuilder', 'imageLoader', 'loading', 'emby-itemscontainer'], function ($, cardBuilder, imageLoader, loading) {
     'use strict';
 
     var data = {};
@@ -85,7 +85,7 @@
 
     function reloadItems(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var channelId = getParam(page, 'id');
         var folderId = getParam(page, 'folderId');
@@ -169,11 +169,11 @@
                 showSortMenu(page);
             });
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
 
         }, function () {
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
 

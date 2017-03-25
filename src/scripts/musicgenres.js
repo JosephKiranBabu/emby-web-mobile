@@ -1,4 +1,4 @@
-﻿define(['libraryBrowser', 'cardBuilder', 'apphost', 'imageLoader'], function (libraryBrowser, cardBuilder, appHost, imageLoader) {
+﻿define(['libraryBrowser', 'cardBuilder', 'apphost', 'imageLoader', 'loading'], function (libraryBrowser, cardBuilder, appHost, imageLoader, loading) {
     'use strict';
 
     return function (view, params, tabContent) {
@@ -40,7 +40,7 @@
 
         function getPromise() {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
             var query = getQuery();
 
             return ApiClient.getGenres(Dashboard.getCurrentUserId(), query);
@@ -106,7 +106,7 @@
 
                 libraryBrowser.saveQueryValues(getSavedQueryKey(), query);
 
-                Dashboard.hideLoadingMsg();
+                loading.hide();
             });
         }
         self.getViewStyles = function () {

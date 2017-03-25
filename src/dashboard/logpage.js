@@ -1,4 +1,4 @@
-﻿define(['datetime', 'listViewStyle'], function (datetime) {
+﻿define(['datetime', 'loading', 'listViewStyle'], function (datetime, loading) {
     'use strict';
 
     return function (view, params) {
@@ -15,7 +15,7 @@
 
         view.addEventListener('viewbeforeshow', function () {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             var apiClient = ApiClient;
 
@@ -66,7 +66,7 @@
                 html += '</div>';
 
                 view.querySelector('.serverLogs').innerHTML = html;
-                Dashboard.hideLoadingMsg();
+                loading.hide();
             });
 
             apiClient.getServerConfiguration().then(function (config) {

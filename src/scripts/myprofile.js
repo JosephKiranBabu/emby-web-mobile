@@ -1,4 +1,4 @@
-﻿define(['scripts/userpasswordpage'], function (Userpasswordpage) {
+﻿define(['scripts/userpasswordpage', 'loading'], function (Userpasswordpage, loading) {
     'use strict';
 
     var currentFile;
@@ -7,7 +7,7 @@
 
         var userId = getParameterByName("userId");
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         ApiClient.getUser(userId).then(function (user) {
 
@@ -63,14 +63,14 @@
                 }
             });
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
 
     }
 
     function onFileReaderError(evt) {
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
 
         switch (evt.target.error.code) {
             case evt.target.error.NOT_FOUND_ERR:
@@ -97,7 +97,7 @@
 
     function onFileReaderAbort(evt) {
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
         require(['toast'], function (toast) {
             toast(Globalize.translate('FileReadCancelled'));
         });
@@ -170,13 +170,13 @@
 
                 confirm(Globalize.translate('DeleteImageConfirmation'), Globalize.translate('DeleteImage')).then(function () {
 
-                    Dashboard.showLoadingMsg();
+                    loading.show();
 
                     var userId = getParameterByName("userId");
 
                     ApiClient.deleteUserImage(userId, "primary").then(function () {
 
-                        Dashboard.hideLoadingMsg();
+                        loading.hide();
 
                         reloadUser(view);
                     });
@@ -196,13 +196,13 @@
                 return false;
             }
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             var userId = getParameterByName("userId");
 
             ApiClient.uploadUserImage(userId, 'Primary', file).then(function () {
 
-                Dashboard.hideLoadingMsg();
+                loading.hide();
 
                 reloadUser(view);
             });

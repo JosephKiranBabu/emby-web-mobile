@@ -1,4 +1,4 @@
-﻿define(['jQuery'], function ($) {
+﻿define(['jQuery', 'loading'], function ($, loading) {
     'use strict';
 
     function loadPage(page, config, languageOptions) {
@@ -9,12 +9,12 @@
 
         })).val(config.UICulture);
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function save(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var apiClient = ApiClient;
 
@@ -52,7 +52,7 @@
 
     }).on('pageshow', "#wizardStartPage", function () {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
         var page = this;
 
         var apiClient = ApiClient;

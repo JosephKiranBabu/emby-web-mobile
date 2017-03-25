@@ -1,4 +1,4 @@
-﻿define(['libraryBrowser', 'cardBuilder', 'lazyLoader', 'apphost', 'globalize', 'dom'], function (libraryBrowser, cardBuilder, lazyLoader, appHost, globalize, dom) {
+﻿define(['loading', 'libraryBrowser', 'cardBuilder', 'lazyLoader', 'apphost', 'globalize', 'dom'], function (loading, libraryBrowser, cardBuilder, lazyLoader, appHost, globalize, dom) {
     'use strict';
 
     return function (view, params, tabContent) {
@@ -40,7 +40,7 @@
 
         function getPromise() {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
             var query = getQuery();
 
             return ApiClient.getGenres(Dashboard.getCurrentUserId(), query);
@@ -207,7 +207,7 @@
 
                 libraryBrowser.saveQueryValues(getSavedQueryKey(), query);
 
-                Dashboard.hideLoadingMsg();
+                loading.hide();
             });
         }
         self.getViewStyles = function () {

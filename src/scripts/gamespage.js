@@ -1,4 +1,4 @@
-define(['jQuery', 'listView', 'imageLoader'], function ($, listView, imageLoader) {
+define(['jQuery', 'listView', 'imageLoader', 'loading'], function ($, listView, imageLoader, loading) {
     'use strict';
 
     var data = {};
@@ -44,7 +44,7 @@ define(['jQuery', 'listView', 'imageLoader'], function ($, listView, imageLoader
 
     function reloadItems(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var query = getQuery(page);
 
@@ -114,7 +114,7 @@ define(['jQuery', 'listView', 'imageLoader'], function ($, listView, imageLoader
 
             LibraryBrowser.saveQueryValues(getSavedQueryKey(page), query);
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
 

@@ -1,4 +1,4 @@
-﻿define(['jQuery'], function ($) {
+﻿define(['jQuery', 'loading'], function ($, loading) {
     'use strict';
 
     function loadPage(page, config) {
@@ -11,11 +11,11 @@
 
         });
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function onSubmit() {
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var form = this;
 
@@ -85,7 +85,7 @@
 
     }).on('pageshow', "#streamingSettingsPage", function () {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         LibraryMenu.setTabs('playback', 2, getTabs);
         var page = this;

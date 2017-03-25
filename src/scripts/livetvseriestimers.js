@@ -1,4 +1,4 @@
-﻿define(['datetime', 'cardBuilder', 'imageLoader', 'apphost', 'paper-icon-button-light', 'emby-button'], function (datetime, cardBuilder, imageLoader, appHost) {
+﻿define(['datetime', 'cardBuilder', 'imageLoader', 'apphost', 'loading', 'paper-icon-button-light', 'emby-button'], function (datetime, cardBuilder, imageLoader, appHost, loading) {
     'use strict';
 
     var query = {
@@ -34,12 +34,12 @@
 
         imageLoader.lazyChildren(elem);
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function reload(context, promise) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         promise.then(function (result) {
 

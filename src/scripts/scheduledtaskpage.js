@@ -1,4 +1,4 @@
-﻿define(['jQuery'], function ($) {
+﻿define(['jQuery', 'loading'], function ($, loading) {
     'use strict';
 
     // Array Remove - By John Resig (MIT Licensed)
@@ -11,7 +11,7 @@
     window.ScheduledTaskPage = {
 
         refreshScheduledTask: function () {
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             var id = getParameterByName('id');
 
@@ -31,7 +31,7 @@
                 ScheduledTaskPage.loadTaskTriggers(page, task);
             });
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         },
 
         loadTaskTriggers: function (context, task) {
@@ -185,7 +185,7 @@
 
         deleteTrigger: function (index) {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             var id = getParameterByName('id');
 
@@ -302,7 +302,7 @@
 
         function onSubmit() {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             var id = getParameterByName('id');
 

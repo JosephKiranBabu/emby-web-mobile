@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'fnchecked'], function ($) {
+﻿define(['jQuery', 'loading', 'fnchecked'], function ($, loading) {
     'use strict';
 
     function loadPage(page, config, users) {
@@ -18,12 +18,12 @@
 
         $('#selectUser', page).html(usersHtml).val(config.DefaultUserId || '');
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function onSubmit() {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var form = this;
 
@@ -65,7 +65,7 @@
     }).on('pageshow', "#dlnaSettingsPage", function () {
 
         LibraryMenu.setTabs('dlna', 0, getTabs);
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var page = this;
 

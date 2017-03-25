@@ -1,4 +1,4 @@
-﻿define(['events'], function (events) {
+﻿define(['events', 'loading'], function (events, loading) {
     'use strict';
 
     function onListingsSubmitted() {
@@ -40,7 +40,7 @@
 
     pageIdOn('pageshow', "liveTvGuideProviderPage", function () {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var providerId = getParameterByName('id');
         var type = getParameterByName('type');

@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'fnchecked'], function ($) {
+﻿define(['jQuery', 'loading', 'fnchecked'], function ($, loading) {
     'use strict';
 
     var currentUser;
@@ -52,12 +52,12 @@
         $('#chkEnableSyncTranscoding', page).checked(user.Policy.EnableSyncTranscoding);
         $('#chkEnableSharing', page).checked(user.Policy.EnablePublicSharing);
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function onSaveComplete(page, user) {
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
 
         var currentConnectUsername = currentUser.ConnectUserName || '';
         var enteredConnectUsername = $('#txtConnectUserName', page).val();
@@ -115,7 +115,7 @@
     function onSubmit() {
         var page = $(this).parents('.page');
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         getUser().then(function (result) {
             saveUser(result, page);
@@ -134,7 +134,7 @@
 
     function loadData(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         getUser().then(function (user) {
 

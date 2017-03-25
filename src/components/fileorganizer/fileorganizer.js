@@ -1,4 +1,4 @@
-﻿define(['dialogHelper', 'emby-checkbox', 'emby-input', 'emby-button', 'emby-select', 'paper-icon-button-light', 'formDialogStyle'], function (dialogHelper) {
+﻿define(['dialogHelper', 'loading', 'emby-checkbox', 'emby-input', 'emby-button', 'emby-select', 'paper-icon-button-light', 'formDialogStyle'], function (dialogHelper, loading) {
     'use strict';
 
     var extractedName;
@@ -9,7 +9,7 @@
 
     function onApiFailure(e) {
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
 
         require(['alert'], function (alert) {
             alert({
@@ -103,7 +103,7 @@
 
     function submitEpisodeForm(dlg) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var resultId = dlg.querySelector('#hfResultId').value;
         var seriesId = dlg.querySelector('#selectSeries').value;
@@ -136,7 +136,7 @@
 
         ApiClient.performEpisodeOrganization(resultId, options).then(function () {
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
 
             dlg.submitted = true;
             dialogHelper.close(dlg);

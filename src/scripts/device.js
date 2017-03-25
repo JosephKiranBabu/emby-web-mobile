@@ -1,4 +1,4 @@
-﻿define(['jQuery'], function ($) {
+﻿define(['jQuery', 'loading'], function ($, loading) {
     'use strict';
 
     function load(page, device, capabilities) {
@@ -16,7 +16,7 @@
 
     function loadData(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var id = getParameterByName('id');
 
@@ -27,7 +27,7 @@
 
             load(page, responses[0], responses[1]);
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
 

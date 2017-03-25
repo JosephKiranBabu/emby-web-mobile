@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'fnchecked', 'emby-checkbox'], function ($) {
+﻿define(['jQuery', 'loading', 'fnchecked', 'emby-checkbox'], function ($, loading) {
     'use strict';
 
     function loadPage(page, config) {
@@ -16,7 +16,7 @@
         $('#txtMetadataPath', page).val(config.MetadataPath || '');
         $('#txtMetadataNetworkPath', page).val(config.MetadataNetworkPath || '');
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function loadMetadataConfig(page, config) {
@@ -50,7 +50,7 @@
     }
 
     function onSubmit() {
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         var form = this;
 
@@ -137,7 +137,7 @@
 
         view.addEventListener('viewshow', function () {
             LibraryMenu.setTabs('librarysetup', 4, getTabs);
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             var page = this;
 

@@ -1,4 +1,4 @@
-﻿define(['datetime', 'jQuery'], function (datetime, $) {
+﻿define(['datetime', 'jQuery', 'loading'], function (datetime, $, loading) {
     'use strict';
 
     function revoke(page, key) {
@@ -6,7 +6,7 @@
         require(['confirm'], function (confirm) {
 
             confirm(Globalize.translate('MessageConfirmRevokeApiKey'), Globalize.translate('HeaderConfirmRevokeApiKey')).then(function () {
-                Dashboard.showLoadingMsg();
+                loading.show();
 
                 ApiClient.ajax({
                     type: "DELETE",
@@ -79,12 +79,12 @@
             revoke(page, this.getAttribute('data-token'));
         });
 
-        Dashboard.hideLoadingMsg();
+        loading.hide();
     }
 
     function loadData(page) {
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         ApiClient.getUsers().then(function (users) {
 

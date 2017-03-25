@@ -1,4 +1,4 @@
-﻿define(['libraryBrowser', 'cardBuilder', 'apphost'], function (libraryBrowser, cardBuilder, appHost) {
+﻿define(['loading', 'libraryBrowser', 'cardBuilder', 'apphost'], function (loading, libraryBrowser, cardBuilder, appHost) {
     'use strict';
 
     // The base query options
@@ -35,7 +35,7 @@
 
         var query = getQuery(params);
 
-        Dashboard.showLoadingMsg();
+        loading.show();
 
         return ApiClient.getStudios(Dashboard.getCurrentUserId(), query);
     }
@@ -56,7 +56,7 @@
                 context: 'tvshows'
             });
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         });
     }
     return function (view, params, tabContent) {

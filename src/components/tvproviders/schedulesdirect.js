@@ -1,4 +1,4 @@
-﻿define(['jQuery','emby-checkbox', 'listViewStyle', 'emby-input', 'emby-select'], function ($) {
+﻿define(['jQuery', 'loading', 'emby-checkbox', 'listViewStyle', 'emby-input', 'emby-select'], function ($, loading) {
     'use strict';
 
     return function (page, providerId, options) {
@@ -9,7 +9,7 @@
 
         function reload() {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             ApiClient.getNamedConfiguration("livetv").then(function (config) {
 
@@ -89,12 +89,12 @@
                 });
             });
 
-            Dashboard.hideLoadingMsg();
+            loading.hide();
         }
 
         function submitLoginForm() {
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             require(["cryptojs-sha1"], function () {
 
@@ -145,7 +145,7 @@
                 return;
             }
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             var id = providerId;
 
@@ -175,14 +175,14 @@
 
                 }).then(function (result) {
 
-                    Dashboard.hideLoadingMsg();
+                    loading.hide();
                     if (options.showConfirmation !== false) {
                         Dashboard.processServerConfigurationUpdateResult();
                     }
                     Events.trigger(self, 'submitted');
 
                 }, function () {
-                    Dashboard.hideLoadingMsg();
+                    loading.hide();
                     Dashboard.alert({
                         message: Globalize.translate('ErrorAddingListingsToSchedulesDirect')
                     });
@@ -198,7 +198,7 @@
                 return;
             }
 
-            Dashboard.showLoadingMsg();
+            loading.show();
 
             ApiClient.ajax({
                 type: "GET",
@@ -221,7 +221,7 @@
                     $('#selectListing', page).val(listingsId);
                 }
 
-                Dashboard.hideLoadingMsg();
+                loading.hide();
 
             }, function (result) {
 
@@ -229,7 +229,7 @@
                     message: Globalize.translate('ErrorGettingTvLineups')
                 });
                 refreshListings('');
-                Dashboard.hideLoadingMsg();
+                loading.hide();
             });
         }
 

@@ -585,6 +585,62 @@
         });
     }
 
+    function loadActiveRecordings(elem, userId) {
+
+        ApiClient.getLiveTvRecordings({
+
+            UserId: userId,
+            IsInProgress: true,
+            Fields: 'CanDelete,PrimaryImageAspectRatio,BasicSyncInfo',
+            EnableTotalRecordCount: false,
+            EnableImageTypes: "Primary,Thumb,Backdrop"
+
+        }).then(function (result) {
+
+            var html = '';
+
+            if (result.Items.length) {
+
+                html += '<h1 class="listHeader">' + Globalize.translate('HeaderActiveRecordings') + '</h1>';
+
+                if (enableScrollX()) {
+                    html += '<div is="emby-itemscontainer" class="hiddenScrollX itemsContainer">';
+                } else {
+                    html += '<div is="emby-itemscontainer" class="itemsContainer vertical-wrap">';
+                }
+
+                var supportsImageAnalysis = appHost.supports('imageanalysis');
+                supportsImageAnalysis = false;
+                var cardLayout = false;
+
+                html += cardBuilder.getCardsHtml({
+                    items: result.Items,
+                    lazy: true,
+                    allowBottomPadding: !enableScrollX(),
+                    shape: getThumbShape(),
+                    showParentTitle: false,
+                    showTitle: true,
+                    showAirTime: true,
+                    showAirEndTime: true,
+                    showChannelName: true,
+                    cardLayout: cardLayout,
+                    preferThumb: true,
+                    coverImage: true,
+                    overlayText: false,
+                    centerText: !cardLayout,
+                    overlayMoreButton: true,
+                    //action: 'play'
+
+                });
+                html += '</div>';
+            }
+
+            elem.innerHTML = html;
+
+            imageLoader.lazyChildren(elem);
+        });
+    }
+
     function loadNextUp(elem, userId) {
 
         var query = {
@@ -771,17 +827,16 @@
         });
     }
 
-    window.Sections = {
+    return {
         loadRecentlyAdded: loadRecentlyAdded,
         loadLatestChannelMedia: loadLatestChannelMedia,
         loadLibraryTiles: loadLibraryTiles,
         loadResumeVideo: loadResumeVideo,
         loadResumeAudio: loadResumeAudio,
+        loadActiveRecordings: loadActiveRecordings,
         loadNextUp: loadNextUp,
         loadLatestChannelItems: loadLatestChannelItems,
         loadLatestLiveTvRecordings: loadLatestLiveTvRecordings,
         loadlibraryButtons: loadlibraryButtons
     };
-
-    return window.Sections;
 });

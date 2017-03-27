@@ -122,6 +122,7 @@
         page.querySelector('#selectHomeSection4').value = userSettings.get('homesection3') || '';
         page.querySelector('#selectHomeSection5').value = userSettings.get('homesection4') || '';
         page.querySelector('#selectHomeSection6').value = userSettings.get('homesection5') || '';
+        page.querySelector('#selectHomeSection7').value = userSettings.get('homesection6') || '';
 
         var promise1 = ApiClient.getUserViews({}, user.Id);
         var promise2 = ApiClient.getJSON(ApiClient.getUrl("Users/" + user.Id + "/GroupingOptions"));
@@ -186,6 +187,7 @@
         userSettingsInstance.set('homesection3', page.querySelector('#selectHomeSection4').value);
         userSettingsInstance.set('homesection4', page.querySelector('#selectHomeSection5').value);
         userSettingsInstance.set('homesection5', page.querySelector('#selectHomeSection6').value);
+        userSettingsInstance.set('homesection6', page.querySelector('#selectHomeSection7').value);
 
         if (user.Id === Dashboard.getCurrentUserId()) {
             refreshGlobalUserSettings(userSettingsInstance);
@@ -245,10 +247,16 @@
         var userSettingsLoaded;
 
         function initLabels() {
-            for (var i = 1; i <= 6; i++) {
 
-                view.querySelector('#selectHomeSection' + i).setLabel(globalize.translate('LabelHomeScreenSectionValue', i));
+            for (var i = 1; i <= 10; i++) {
 
+                var select = view.querySelector('#selectHomeSection' + i);
+
+                if (!select) {
+                    break;
+                }
+
+                select.setLabel(globalize.translate('LabelHomeScreenSectionValue', i));
             }
         }
 

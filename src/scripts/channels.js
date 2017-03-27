@@ -1,4 +1,4 @@
-﻿define(['loading', 'libraryBrowser', 'cardBuilder', 'imageLoader', 'scripts/sections', 'emby-itemscontainer', 'emby-button'], function (loading, libraryBrowser, cardBuilder, imageLoader) {
+﻿define(['loading', 'libraryBrowser', 'cardBuilder', 'imageLoader', 'scripts/sections', 'emby-itemscontainer', 'emby-button'], function (loading, libraryBrowser, cardBuilder, imageLoader, Sections) {
     'use strict';
 
     // The base query options

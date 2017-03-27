@@ -1,4 +1,4 @@
-﻿define(['loading', 'embyRouter', 'layoutManager', 'cardBuilder', 'datetime', 'mediaInfo', 'backdrop', 'listView', 'itemContextMenu', 'itemHelper', 'userdataButtons', 'dom', 'indicators', 'apphost', 'imageLoader', 'libraryMenu', 'globalize', 'browser', 'events', 'scrollHelper', 'playbackManager', 'scrollStyles', 'emby-itemscontainer', 'emby-checkbox'], function (loading, embyRouter, layoutManager, cardBuilder, datetime, mediaInfo, backdrop, listView, itemContextMenu, itemHelper, userdataButtons, dom, indicators, appHost, imageLoader, libraryMenu, globalize, browser, events, scrollHelper, playbackManager) {
+﻿define(['loading', 'embyRouter', 'layoutManager', 'connectionManager', 'cardBuilder', 'datetime', 'mediaInfo', 'backdrop', 'listView', 'itemContextMenu', 'itemHelper', 'userdataButtons', 'dom', 'indicators', 'apphost', 'imageLoader', 'libraryMenu', 'globalize', 'browser', 'events', 'scrollHelper', 'playbackManager', 'scrollStyles', 'emby-itemscontainer', 'emby-checkbox'], function (loading, embyRouter, layoutManager, connectionManager, cardBuilder, datetime, mediaInfo, backdrop, listView, itemContextMenu, itemHelper, userdataButtons, dom, indicators, appHost, imageLoader, libraryMenu, globalize, browser, events, scrollHelper, playbackManager) {
     'use strict';
 
     function getPromise(params) {
@@ -67,7 +67,7 @@
         }
     }
 
-    function getContextMenuOptions(item, button) {
+    function getContextMenuOptions(item, user, button) {
 
         var options = {
             item: item,
@@ -80,7 +80,8 @@
             record: false,
             deleteItem: item.IsFolder === true,
             shuffle: false,
-            instantMix: false
+            instantMix: false,
+            user: user
         };
 
         if (appHost.supports('sync')) {
@@ -297,13 +298,13 @@
                 page.querySelector('.splitVersionContainer').classList.add('hide');
             }
 
-            itemContextMenu.getCommands(getContextMenuOptions(item)).then(function (commands) {
-                if (commands.length) {
-                    hideAll(page, 'btnMoreCommands', true);
-                } else {
-                    hideAll(page, 'btnMoreCommands');
-                }
-            });
+            var commands = itemContextMenu.getCommands(getContextMenuOptions(item, user));
+
+            if (commands.length) {
+                hideAll(page, 'btnMoreCommands', true);
+            } else {
+                hideAll(page, 'btnMoreCommands');
+            }
 
             var itemBirthday = page.querySelector('#itemBirthday');
             if (item.Type == "Person" && item.PremiereDate) {
@@ -2330,14 +2331,16 @@
         function onMoreCommandsClick() {
             var button = this;
 
-            itemContextMenu.show(getContextMenuOptions(currentItem, button)).then(function (result) {
+            connectionManager.getApiClient(currentItem.ServerId).getCurrentUser().then(function(user) {
+                itemContextMenu.show(getContextMenuOptions(currentItem, user, button)).then(function (result) {
 
-                if (result.deleted) {
-                    embyRouter.goHome();
+                    if (result.deleted) {
+                        embyRouter.goHome();
 
-                } else if (result.updated) {
-                    reload(view, params);
-                }
+                    } else if (result.updated) {
+                        reload(view, params);
+                    }
+                });
             });
         }
 

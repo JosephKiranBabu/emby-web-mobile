@@ -9,6 +9,7 @@
     .osdHeader .viewMenuBar {
         background-color: rgba(0, 0, 0, .3);
         background: linear-gradient(rgba(0, 0, 0, .6), rgba(0, 0, 0, 0));
+        backdrop-filter: none !important;
     }
 
 .osdHeader-hidden {

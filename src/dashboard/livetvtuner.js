@@ -65,6 +65,8 @@
             info.Id = id;
         }
 
+        var originalId = info.Id;
+
         ApiClient.ajax({
             type: "POST",
             url: ApiClient.getUrl('LiveTv/TunerHosts'),
@@ -74,7 +76,12 @@
         }).then(function (result) {
 
             Dashboard.processServerConfigurationUpdateResult();
-            Dashboard.navigate('livetvstatus.html');
+
+            if (originalId) {
+                Dashboard.navigate('livetvstatus.html');
+            } else {
+                Dashboard.navigate('livetvstatus.html');
+            }
 
         }, function () {
             Dashboard.alert({

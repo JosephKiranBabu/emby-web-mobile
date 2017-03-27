@@ -170,20 +170,6 @@ var Dashboard = {
         });
     },
 
-    showLoadingMsg: function () {
-
-        require(['loading'], function (loading) {
-            loading.show();
-        });
-    },
-
-    hideLoadingMsg: function () {
-
-        require(['loading'], function (loading) {
-            loading.hide();
-        });
-    },
-
     processPluginConfigurationUpdateResult: function () {
 
         require(['loading', 'toast'], function (loading, toast) {

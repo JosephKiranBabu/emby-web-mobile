@@ -257,7 +257,7 @@
 
         var html = '';
 
-        var cssClass = "card squareCard";
+        var cssClass = "card squareCard scalableCard squareCard-scalable";
 
         html += "<div data-id='" + user.Id + "' class='" + cssClass + "'>";
 

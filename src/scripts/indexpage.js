@@ -1,23 +1,23 @@
-﻿define(['loading', 'libraryBrowser', 'libraryMenu', 'playbackManager', 'mainTabsManager', 'emby-button'], function (loading, libraryBrowser, libraryMenu, playbackManager, mainTabsManager) {
+﻿define(['loading', 'libraryBrowser', 'libraryMenu', 'playbackManager', 'mainTabsManager', 'scripts/sections', 'emby-button'], function (loading, libraryBrowser, libraryMenu, playbackManager, mainTabsManager, Sections) {
     'use strict';
-
-    var defaultFirstSection = 'smalllibrarytiles';
 
     function getDefaultSection(index) {
 
         switch (index) {
 
             case 0:
-                return defaultFirstSection;
+                return 'smalllibrarytiles';
             case 1:
-                return 'resume';
+                return 'activerecordings';
             case 2:
-                return 'resumeaudio';
+                return 'resume';
             case 3:
-                return 'nextup';
+                return 'resumeaudio';
             case 4:
-                return 'latestmedia';
+                return 'nextup';
             case 5:
+                return 'latestmedia';
+            case 6:
                 return 'latesttvrecordings';
             default:
                 return '';
@@ -31,7 +31,7 @@
         var section = userSettings.get('homesection' + index) || getDefaultSection(index);
 
         if (section == 'folders') {
-            section = defaultFirstSection;
+            section = getDefaultSection()[0];
         }
 
         var elem = page.querySelector('.section' + index);
@@ -59,6 +59,9 @@
         }
         else if (section == 'resumeaudio') {
             return Sections.loadResumeAudio(elem, userId);
+        }
+        else if (section == 'activerecordings') {
+            return Sections.loadActiveRecordings(elem, userId);
         }
         else if (section == 'nextup') {
             return Sections.loadNextUp(elem, userId);
@@ -287,7 +290,6 @@
             switch (index) {
 
                 case 0:
-                    depends.push('scripts/sections');
                     break;
                 case 1:
                     depends.push('scripts/homefavorites');

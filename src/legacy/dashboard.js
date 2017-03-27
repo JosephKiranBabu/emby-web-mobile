@@ -10,3 +10,19 @@
         });
     });
 };
+
+Dashboard.showLoadingMsg = function () {
+    'use strict';
+
+    require(['loading'], function (loading) {
+        loading.show();
+    });
+};
+
+Dashboard.hideLoadingMsg = function () {
+    'use strict';
+
+    require(['loading'], function (loading) {
+        loading.hide();
+    });
+};

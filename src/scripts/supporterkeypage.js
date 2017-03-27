@@ -103,47 +103,6 @@
             });
 
             return false;
-        },
-
-        linkSupporterKeys: function () {
-
-            loading.show();
-            var form = this;
-
-            var email = $('#txtNewEmail', form).val();
-            var newkey = $('#txtNewKey', form).val();
-            var oldkey = $('#txtOldKey', form).val();
-
-            var url = "https://mb3admin.com/admin/service/supporter/linkKeys";
-            console.log(url);
-            fetchHelper.ajax({
-
-                url: url,
-                type: 'POST',
-                dataType: 'json',
-                query: {
-                    email: email,
-                    newkey: newkey,
-                    oldkey: oldkey
-                }
-
-            }).then(function (result) {
-
-                loading.hide();
-                if (result.Success) {
-                    require(['toast'], function (toast) {
-                        toast(Globalize.translate('MessageKeysLinked'));
-                    });
-                } else {
-                    require(['toast'], function (toast) {
-                        toast(result.ErrorMessage);
-                    });
-                }
-                console.log(result);
-
-            });
-
-            return false;
         }
     };
 
@@ -159,7 +118,6 @@
         var page = this;
         $('#supporterKeyForm', this).on('submit', SupporterKeyPage.updateSupporterKey);
         $('#lostKeyForm', this).on('submit', retrieveSupporterKey);
-        $('#linkKeysForm', this).on('submit', SupporterKeyPage.linkSupporterKeys);
 
         page.querySelector('.benefits').innerHTML = Globalize.translate('HeaderSupporterBenefit', '<a class="lnkPremiere" href="http://emby.media/premiere" target="_blank">', '</a>');
 

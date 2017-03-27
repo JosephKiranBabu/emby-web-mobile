@@ -168,7 +168,7 @@
 
             } else if (params.type == 'RecordingSeries') {
 
-                LibraryMenu.setTitle(Globalize.translate('TabSeries'));
+                LibraryMenu.setTitle(Globalize.translate('TabShows'));
             } else {
 
                 if (params.IsMovie == 'true') {

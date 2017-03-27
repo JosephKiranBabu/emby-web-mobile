@@ -19,13 +19,15 @@
 
     return function (view, params) {
 
-        var userId = params.userId || Dashboard.getCurrentUserId();
+        var loggedInUserId = Dashboard.getCurrentUserId();
+        var userId = params.userId || loggedInUserId;
         var userSettingsInstance = new userSettingsBuilder();
         var userSettingsLoaded;
 
         function loadForm(page, user, loggedInUser, allCulturesPromise) {
 
             userSettingsInstance.setUserInfo(userId, ApiClient).then(function () {
+
                 userSettingsLoaded = true;
                 allCulturesPromise.then(function (allCultures) {
 
@@ -36,6 +38,20 @@
                     page.querySelector('#selectSubtitleLanguage', page).value = user.Configuration.SubtitleLanguagePreference || "";
                     page.querySelector('.chkEpisodeAutoPlay').checked = user.Configuration.EnableNextEpisodeAutoPlay || false;
                 });
+
+                if (AppInfo.supportsExternalPlayers && userId === loggedInUserId) {
+                    view.querySelector('.fldExternalPlayer').classList.remove('hide');
+                } else {
+                    view.querySelector('.fldExternalPlayer').classList.add('hide');
+                }
+
+                if (userId === loggedInUserId) {
+                    view.querySelector('.fldMaxBitrate').classList.remove('hide');
+                    view.querySelector('.fldChromecastBitrate').classList.remove('hide');
+                } else {
+                    view.querySelector('.fldMaxBitrate').classList.add('hide');
+                    view.querySelector('.fldChromecastBitrate').classList.add('hide');
+                }
 
                 page.querySelector('#selectSubtitlePlaybackMode').value = user.Configuration.SubtitleMode || "";
 
@@ -183,12 +199,6 @@
         }
 
         view.addEventListener('viewshow', function () {
-
-            if (AppInfo.supportsExternalPlayers) {
-                view.querySelector('.fldExternalPlayer').classList.remove('hide');
-            } else {
-                view.querySelector('.fldExternalPlayer').classList.add('hide');
-            }
 
             loadPage(view);
         });

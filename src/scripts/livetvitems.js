@@ -178,7 +178,7 @@
                 } else if (params.IsKids == 'true') {
                     LibraryMenu.setTitle(Globalize.translate('HeaderUpcomingForKids'));
                 } else if (params.IsAiring == 'true') {
-                    LibraryMenu.setTitle(Globalize.translate('HeaderWhatsOnTV'));
+                    LibraryMenu.setTitle(Globalize.translate('HeaderOnNow'));
                 } else {
                     LibraryMenu.setTitle(Globalize.translate('HeaderUpcomingPrograms'));
                 }

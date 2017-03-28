@@ -84,6 +84,7 @@
 
             var supportsImageAnalysis = appHost.supports('imageanalysis');
             var cardLayout = appHost.preferVisualCards || supportsImageAnalysis;
+            cardLayout = false;
 
             html += cardBuilder.getCardsHtml({
                 items: group.items,
@@ -94,11 +95,12 @@
                 showChannelName: true,
                 cardLayout: cardLayout,
                 centerText: !cardLayout,
-                vibrant: supportsImageAnalysis,
+                vibrant: cardLayout && supportsImageAnalysis,
                 action: 'edit',
                 cardFooterAside: 'none',
                 preferThumb: true,
                 coverImage: true,
+                allowBottomPadding: !enableScrollX(),
                 overlayText: false
 
             });

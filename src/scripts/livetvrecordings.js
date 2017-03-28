@@ -78,7 +78,7 @@
         }
 
         var supportsImageAnalysis = appHost.supports('imageanalysis');
-        var cardLayout = appHost.preferVisualCards || supportsImageAnalysis;
+        var cardLayout = false;
 
         recordingItems.innerHTML = cardBuilder.getCardsHtml(Object.assign({
             items: recordings,
@@ -89,7 +89,7 @@
             lazy: true,
             cardLayout: cardLayout,
             centerText: !cardLayout,
-            vibrant: supportsImageAnalysis,
+            vibrant: cardLayout && supportsImageAnalysis,
             allowBottomPadding: !enableScrollX(),
             preferThumb: 'auto',
             overlayText: false
@@ -115,12 +115,12 @@
             renderRecordings(context.querySelector('#activeRecordings'), result.Items, {
                 shape: getBackdropShape(),
                 showParentTitle: false,
-                showTitle: true,
+                showParentTitleOrTitle: true,
+                showTitle: false,
                 showAirTime: true,
                 showAirEndTime: true,
                 showChannelName: true,
-                cardLayout: true,
-                vibrant: true,
+                cardLayout: false,
                 preferThumb: true,
                 coverImage: true
             });

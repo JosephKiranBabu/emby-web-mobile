@@ -29,8 +29,6 @@
             showTitle: true,
             showParentTitle: true,
             coverImage: true,
-            lazy: true,
-            cardLayout: true,
             allowBottomPadding: !enableScrollX(),
             preferThumb: 'auto'
 
@@ -55,14 +53,15 @@
             renderRecordings(context.querySelector('#activeRecordings'), result.Items, {
                 shape: getBackdropShape(),
                 showParentTitle: false,
-                showTitle: true,
+                showParentTitleOrTitle: true,
+                showTitle: false,
                 showAirTime: true,
                 showAirEndTime: true,
                 showChannelName: true,
-                cardLayout: true,
                 preferThumb: true,
                 coverImage: true,
-                overlayText: false
+                overlayText: false,
+                centerText: true
             });
         });
     }

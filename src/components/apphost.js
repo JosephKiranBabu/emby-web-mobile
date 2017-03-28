@@ -62,7 +62,7 @@ define(['appStorage', 'browser'], function (appStorage, browser) {
 
                 var profile = profileBuilder(getBaseProfileOptions(item));
 
-                if (!browser.edge && !browser.msie) {
+                if (!browser.edge && !browser.msie && !browser.orsay && !browser.tizen) {
                     // libjass not working here
                     profile.SubtitleProfiles.push({
                         Format: 'ass',

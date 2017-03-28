@@ -19,7 +19,7 @@
             shape: 'backdrop',
             showTitle: true,
             cardLayout: cardLayout,
-            vibrant: supportsImageAnalysis,
+            vibrant: cardLayout && supportsImageAnalysis,
             preferThumb: true,
             coverImage: true,
             overlayText: false,

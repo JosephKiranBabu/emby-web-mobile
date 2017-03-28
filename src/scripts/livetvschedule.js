@@ -25,6 +25,7 @@
 
         var supportsImageAnalysis = appHost.supports('imageanalysis');
         var cardLayout = appHost.preferVisualCards || supportsImageAnalysis;
+        cardLayout = false;
 
         recordingItems.innerHTML = cardBuilder.getCardsHtml(Object.assign({
             items: recordings,
@@ -34,7 +35,7 @@
             coverImage: true,
             cardLayout: cardLayout,
             centerText: !cardLayout,
-            vibrant: supportsImageAnalysis,
+            vibrant: cardLayout && supportsImageAnalysis,
             allowBottomPadding: !enableScrollX(),
             preferThumb: 'auto'
 
@@ -59,7 +60,8 @@
             renderRecordings(context.querySelector('#activeRecordings'), result.Items, {
                 shape: getBackdropShape(),
                 showParentTitle: false,
-                showTitle: true,
+                showParentTitleOrTitle: true,
+                showTitle: false,
                 showAirTime: true,
                 showAirEndTime: true,
                 showChannelName: true,

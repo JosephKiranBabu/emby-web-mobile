@@ -122,7 +122,8 @@
                 showChannelName: true,
                 cardLayout: false,
                 preferThumb: true,
-                coverImage: true
+                coverImage: true,
+                overlayMoreButton: true
             });
         });
     }

@@ -67,7 +67,8 @@
                 showChannelName: true,
                 preferThumb: true,
                 coverImage: true,
-                overlayText: false
+                overlayText: false,
+                overlayMoreButton: true
             });
         });
     }

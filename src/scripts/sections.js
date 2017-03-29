@@ -618,6 +618,7 @@
                     lazy: true,
                     allowBottomPadding: !enableScrollX(),
                     shape: getThumbShape(),
+                    showTitle: false,
                     showParentTitleOrTitle: true,
                     showAirTime: true,
                     showAirEndTime: true,

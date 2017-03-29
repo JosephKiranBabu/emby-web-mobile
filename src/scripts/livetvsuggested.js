@@ -61,7 +61,8 @@
                 preferThumb: true,
                 coverImage: true,
                 overlayText: false,
-                centerText: true
+                centerText: true,
+                overlayMoreButton: true
             });
         });
     }

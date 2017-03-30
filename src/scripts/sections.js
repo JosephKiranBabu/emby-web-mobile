@@ -29,6 +29,14 @@
 
         var html = "";
 
+        html += '<div>';
+
+        html += '<div>';
+        html += '<h1 class="listHeader">' + Globalize.translate('HeaderMyMedia') + '</h1>';
+        html += '</div>';
+
+        html += '<div is="emby-itemscontainer" class="itemsContainer vertical-wrap" data-multiselect="false">';
+
         // "My Library" backgrounds
         for (var i = 0, length = items.length; i < length; i++) {
 
@@ -102,6 +110,8 @@
             html += "</a>";
         }
 
+        html += '</div>';
+        html += '</div>';
         return html;
     }
 
@@ -109,14 +119,7 @@
 
         return getUserViews(userId).then(function (items) {
 
-            var html = '<br/>';
-
-            if (index) {
-                html += '<h1 class="listHeader">' + Globalize.translate('HeaderMyMedia') + '</h1>';
-            }
-            html += '<div style="display:flex;flex-wrap:wrap;">';
-            html += getLibraryButtonsHtml(items);
-            html += '</div>';
+            var html = getLibraryButtonsHtml(items);
 
             return getAppInfo().then(function (infoHtml) {
 

@@ -92,6 +92,7 @@
 
                 var supportsImageAnalysis = appHost.supports('imageanalysis');
                 var cardLayout = (appHost.preferVisualCards || supportsImageAnalysis) && section.autoCardLayout && section.showTitle;
+                cardLayout = false;
 
                 html += cardBuilder.getCardsHtml(result.Items, {
                     preferThumb: section.preferThumb,

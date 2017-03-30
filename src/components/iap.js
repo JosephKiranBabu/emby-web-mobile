@@ -47,7 +47,7 @@
     }
 
     function getRestoreButtonText() {
-        return globalize.translate('sharedcomponents#ButtonAlreadyPaid');
+        return globalize.translate('sharedcomponents#HeaderAlreadyPaid');
     }
 
     function getPeriodicMessageIntervalMs(feature) {

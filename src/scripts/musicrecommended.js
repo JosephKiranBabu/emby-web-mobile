@@ -37,6 +37,7 @@
             var elem = page.querySelector('#recentlyAddedSongs');
 
             var supportsImageAnalysis = appHost.supports('imageanalysis');
+            supportsImageAnalysis = false;
 
             elem.innerHTML = cardBuilder.getCardsHtml({
                 items: items,
@@ -89,6 +90,7 @@
             var itemsContainer = elem.querySelector('.itemsContainer');
 
             var supportsImageAnalysis = appHost.supports('imageanalysis');
+            supportsImageAnalysis = false;
 
             itemsContainer.innerHTML = cardBuilder.getCardsHtml({
                 items: result.Items,
@@ -141,6 +143,7 @@
             var itemsContainer = elem.querySelector('.itemsContainer');
 
             var supportsImageAnalysis = appHost.supports('imageanalysis');
+            supportsImageAnalysis = false;
 
             itemsContainer.innerHTML = cardBuilder.getCardsHtml({
                 items: result.Items,
@@ -190,6 +193,7 @@
             var itemsContainer = elem.querySelector('.itemsContainer');
 
             var supportsImageAnalysis = appHost.supports('imageanalysis');
+            supportsImageAnalysis = false;
 
             itemsContainer.innerHTML = cardBuilder.getCardsHtml({
                 items: result.Items,

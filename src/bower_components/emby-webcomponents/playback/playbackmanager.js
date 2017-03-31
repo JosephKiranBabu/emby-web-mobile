@@ -1,4 +1,4 @@
-define(['events', 'datetime', 'appSettings', 'pluginManager', 'userSettings', 'globalize', 'connectionManager', 'loading', 'serverNotifications', 'apphost', 'fullscreenManager', 'layoutManager'], function (events, datetime, appSettings, pluginManager, userSettings, globalize, connectionManager, loading, serverNotifications, apphost, fullscreenManager, layoutManager) {
+﻿define(['events', 'datetime', 'appSettings', 'pluginManager', 'userSettings', 'globalize', 'connectionManager', 'loading', 'serverNotifications', 'apphost', 'fullscreenManager', 'layoutManager'], function (events, datetime, appSettings, pluginManager, userSettings, globalize, connectionManager, loading, serverNotifications, apphost, fullscreenManager, layoutManager) {
     'use strict';
 
     function enableLocalPlaylistManagement(player) {
@@ -1168,7 +1168,7 @@ define(['events', 'datetime', 'appSettings', 'pluginManager', 'userSettings', 'g
 
                 var maxBitrate = params.MaxStreamingBitrate || self.getMaxStreamingBitrate(player);
 
-                getPlaybackInfo(apiClient, currentItem.Id, deviceProfile, maxBitrate, ticks, currentMediaSource, audioStreamIndex, subtitleStreamIndex, liveStreamId, params.EnableDirectPlay, params.EnableDirectStream).then(function (result) {
+                getPlaybackInfo(apiClient, currentItem.Id, deviceProfile, maxBitrate, ticks, currentMediaSource, audioStreamIndex, subtitleStreamIndex, liveStreamId, params.EnableDirectPlay, params.EnableDirectStream, params.AllowVideoStreamCopy, params.AllowAudioStreamCopy).then(function (result) {
 
                     if (validatePlaybackInfoResult(result)) {
 
@@ -2179,7 +2179,19 @@ define(['events', 'datetime', 'appSettings', 'pluginManager', 'userSettings', 'g
             });
         }
 
-        function getPlaybackInfo(apiClient, itemId, deviceProfile, maxBitrate, startPosition, mediaSource, audioStreamIndex, subtitleStreamIndex, liveStreamId, enableDirectPlay, enableDirectStream) {
+        function getPlaybackInfo(apiClient,
+            itemId,
+            deviceProfile,
+            maxBitrate,
+            startPosition,
+            mediaSource,
+            audioStreamIndex,
+            subtitleStreamIndex,
+            liveStreamId,
+            enableDirectPlay,
+            enableDirectStream,
+            allowVideoStreamCopy,
+            allowAudioStreamCopy) {
 
             var query = {
                 UserId: apiClient.getCurrentUserId(),
@@ -2201,6 +2213,12 @@ define(['events', 'datetime', 'appSettings', 'pluginManager', 'userSettings', 'g
             }
             if (enableDirectStream != null) {
                 query.EnableDirectStream = enableDirectStream;
+            }
+            if (allowVideoStreamCopy != null) {
+                query.AllowVideoStreamCopy = allowVideoStreamCopy;
+            }
+            if (allowAudioStreamCopy != null) {
+                query.AllowAudioStreamCopy = allowAudioStreamCopy;
             }
             if (mediaSource) {
                 query.MediaSourceId = mediaSource.Id;
@@ -2808,6 +2826,31 @@ define(['events', 'datetime', 'appSettings', 'pluginManager', 'userSettings', 'g
             }
         }
 
+        function enablePlaybackRetryWithTranscoding(streamInfo, errorType) {
+            
+            if (!streamInfo) {
+                return false;
+            }
+
+            if (errorType === 'mediadecodeerror' || errorType === 'medianotsupported') {
+
+                if (streamInfo.playMethod !== 'Transcode' && streamInfo.mediaSource.SupportsTranscoding) {
+
+                    return true;
+                }
+            }
+
+            if (errorType === 'network') {
+
+                if (streamInfo.playMethod === 'DirectPlay' && streamInfo.mediaSource.IsRemote && streamInfo.mediaSource.SupportsTranscoding) {
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         function onPlaybackError(e, error) {
 
             var player = this;
@@ -2823,22 +2866,21 @@ define(['events', 'datetime', 'appSettings', 'pluginManager', 'userSettings', 'g
             var streamInfo = getPlayerData(player).streamInfo;
 
             // Auto switch to transcoding
-            if (streamInfo && (errorType === 'mediadecodeerror' || errorType === 'medianotsupported')) {
+            if (enablePlaybackRetryWithTranscoding(streamInfo, errorType)) {
 
-                if (streamInfo.playMethod !== 'Transcode' && streamInfo.mediaSource.SupportsTranscoding) {
+                var startTime = getCurrentTicks(player) || streamInfo.playerStartPositionTicks;
 
-                    var startTime = getCurrentTicks(player) || streamInfo.playerStartPositionTicks;
+                changeStream(player, startTime, {
 
-                    changeStream(player, startTime, {
+                    // force transcoding
+                    EnableDirectPlay: false,
+                    EnableDirectStream: false,
+                    AllowVideoStreamCopy: false,
+                    AllowAudioStreamCopy: false
 
-                        // force transcoding
-                        EnableDirectPlay: false,
-                        EnableDirectStream: false
+                }, true);
 
-                    }, true);
-
-                    return;
-                }
+                return;
             }
 
             self.nextTrack(player);

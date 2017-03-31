@@ -4,7 +4,6 @@ define(['appStorage', 'browser'], function (appStorage, browser) {
     function getBaseProfileOptions(item) {
 
         var disableHlsVideoAudioCodecs = [];
-        var enableMkvProgressive = true;
 
         if (item) {
             // this does not work with hls.js + edge, but seems to be fine in other browsers
@@ -14,11 +13,10 @@ define(['appStorage', 'browser'], function (appStorage, browser) {
                 // hls.js does not support this
                 disableHlsVideoAudioCodecs.push('ac3');
             }
-            enableMkvProgressive = (item.RunTimeTicks && browser.edgeUwp) ? true : false;
         }
 
         return {
-            enableMkvProgressive: enableMkvProgressive,
+            enableMkvProgressive: false,
             disableHlsVideoAudioCodecs: disableHlsVideoAudioCodecs
         };
     }

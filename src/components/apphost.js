@@ -7,7 +7,7 @@ define(['appStorage', 'browser'], function (appStorage, browser) {
 
         if (item) {
             // this does not work with hls.js + edge, but seems to be fine in other browsers
-            if ((browser.edge && !item.RunTimeTicks) || !canPlayNativeHls()) {
+            if ((browser.edge) || !canPlayNativeHls()) {
                 disableHlsVideoAudioCodecs.push('mp3');
 
                 // hls.js does not support this

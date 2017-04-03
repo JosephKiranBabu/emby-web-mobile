@@ -19,7 +19,7 @@
         loading.hide();
     }
 
-    function refreshDirectoryBrowser(page, path, fileOptions) {
+    function refreshDirectoryBrowser(page, path, fileOptions, updatePathOnError) {
 
         if (path && typeof (path) !== 'string') {
             throw new Error('invalid path');
@@ -72,7 +72,9 @@
 
         }, function () {
 
-            page.querySelector('#txtDirectoryPickerPath').value = "";
+            if (updatePathOnError) {
+                page.querySelector('#txtDirectoryPickerPath').value = "";
+            }
             page.querySelector('.results').innerHTML = '';
 
             loading.hide();
@@ -181,7 +183,7 @@
                 if (lnkPath.classList.contains('lnkFile')) {
                     content.querySelector('#txtDirectoryPickerPath').value = path;
                 } else {
-                    refreshDirectoryBrowser(content, path, fileOptions);
+                    refreshDirectoryBrowser(content, path, fileOptions, true);
                 }
             }
         });
@@ -306,7 +308,7 @@
                 }
 
                 if (!options.pathReadOnly) {
-                    refreshDirectoryBrowser(dlg, txtCurrentPath.value);
+                    refreshDirectoryBrowser(dlg, txtCurrentPath.value, null, true);
                 }
 
             });

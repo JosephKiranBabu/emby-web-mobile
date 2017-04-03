@@ -309,10 +309,9 @@
                     overlayPlayButton: viewType !== 'photos',
                     allowBottomPadding: !enableScrollX() && !cardLayout,
                     cardLayout: cardLayout,
-                    showTitle: viewType === 'music' || !viewType || cardLayout,
-                    showYear: cardLayout && viewType === 'movies',
-                    showSeriesYear: cardLayout && viewType === 'tvshows',
-                    showParentTitle: viewType === 'music' || !viewType || (cardLayout && (viewType === 'tvshows')),
+                    showTitle: viewType === 'music' || viewType === 'tvshows' || !viewType || cardLayout,
+                    showYear: viewType === 'movies' || !viewType,
+                    showParentTitle: viewType === 'music' || viewType === 'tvshows' || !viewType || (cardLayout && (viewType === 'tvshows')),
                     vibrant: supportsImageAnalysis && cardLayout,
                     lines: 2
                 });
@@ -631,7 +630,7 @@
                     coverImage: true,
                     overlayText: false,
                     centerText: !cardLayout,
-                    overlayMoreButton: true,
+                    overlayMoreButton: true
                     //action: 'play'
 
                 });

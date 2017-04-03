@@ -347,7 +347,7 @@
             view.querySelector('.btnOfflineText').innerHTML = globalize.translate('sharedcomponents#HeaderDownloadedMedia');
 
             if (appHost.supports('sync')) {
-                view.querySelector('.btnOffline').classList.remove('hide');
+                //view.querySelector('.btnOffline').classList.remove('hide');
             }
         }
 

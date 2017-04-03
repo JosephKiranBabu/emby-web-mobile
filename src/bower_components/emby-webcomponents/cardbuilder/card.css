@@ -61,7 +61,7 @@ button {
     padding-bottom: 100%;
 }
 
-.cardPadder-portrait, .cardPadder-overflowPortrait {
+.cardPadder-portrait, .cardPadder-overflowPortrait, .overflowPortraitCard-textCardPadder {
     padding-bottom: 150%;
 }
 
@@ -154,6 +154,10 @@ button {
     border-radius: 0;
 }
 
+.textCardImageContainer {
+    background-color: #444;
+}
+
 .cardImageContainer-button {
     border: 0;
     padding: 0;
@@ -179,6 +183,10 @@ button {
     display: block;
     /* Needed in safari */
     height: 100%;
+}
+
+.cardContent-shadow {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 
 .cardImage {
@@ -266,7 +274,7 @@ button {
 
 .layout-tv .cardText {
     padding: .1em .5em;
-    font-size: 90%;
+    font-size: 92%;
 }
 
 .innerCardFooter > .cardText {
@@ -281,9 +289,17 @@ button {
     text-align: center;
 }
 
+.cardFooter.transparent > .cardText {
+    opacity: .8;
+}
+
 .cardText-secondary {
-    opacity: .5;
-    font-size: 90%;
+    opacity: .5 !important;
+    font-size: 92%;
+}
+
+.card:focus .cardText {
+    opacity: 1;
 }
 
 .cardText-rightmargin {
@@ -683,9 +699,17 @@ button {
 }
 
 .itemsContainer-tv > .overflowBackdropCard-scalable {
-    width: 23vw;
+    width: 23.3vw;
+}
+
+.overflowBackdropCard-textCard {
+    width: 15.5vw!important;
+}
+
+.overflowBackdropCard-textCardPadder {
+    padding-bottom: 87.75%;
 }
 
 .itemsContainer-tv > .overflowSquareCard-scalable, .itemsContainer-tv > .overflowPortraitCard-scalable {
-    width: 14.9vw;
+    width: 15.5vw;
 }

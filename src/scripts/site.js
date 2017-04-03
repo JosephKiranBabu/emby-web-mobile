@@ -2029,16 +2029,14 @@ var AppInfo = {};
             controller: 'scripts/myprofile'
         });
 
-        if (appHost.supports('sync')) {
-            defineRoute({
-                path: '/offline/offline.html',
-                transition: 'false',
-                controller: 'offline/offline',
-                dependencies: [],
-                anonymous: true,
-                startup: false
-            });
-        }
+        defineRoute({
+            path: '/offline/offline.html',
+            transition: 'false',
+            controller: 'offline/offline',
+            dependencies: [],
+            anonymous: true,
+            startup: false
+        });
 
         defineRoute({
             path: '/mysync.html',

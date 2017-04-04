@@ -309,7 +309,7 @@
                     overlayPlayButton: viewType !== 'photos',
                     allowBottomPadding: !enableScrollX() && !cardLayout,
                     cardLayout: cardLayout,
-                    showTitle: viewType === 'music' || viewType === 'tvshows' || !viewType || cardLayout,
+                    showTitle: viewType === 'music' || viewType === 'tvshows' || viewType === 'movies' || !viewType || cardLayout,
                     showYear: viewType === 'movies' || !viewType,
                     showParentTitle: viewType === 'music' || viewType === 'tvshows' || !viewType || (cardLayout && (viewType === 'tvshows')),
                     vibrant: supportsImageAnalysis && cardLayout,

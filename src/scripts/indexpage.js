@@ -83,11 +83,10 @@
     function loadSections(page, user, userSettings) {
 
         var i, length;
-        var sectionCount = 6;
+        var sectionCount = 7;
 
         var elem = page.querySelector('.sections');
 
-        //if (!elem.innerHTML.length) {
         var html = '';
         for (i = 0, length = sectionCount; i < length; i++) {
 
@@ -95,7 +94,6 @@
         }
 
         elem.innerHTML = html;
-        //}
 
         var promises = [];
 
@@ -204,24 +202,25 @@
             loading.show();
 
             var promises = [
-                getDisplayPreferences('home', userId),
                 Dashboard.getCurrentUser(),
                 getRequirePromise(['userSettings'])
             ];
 
             Promise.all(promises).then(function (responses) {
-                var displayPreferences = responses[0];
-                var user = responses[1];
-                var userSettings = responses[2];
+                var user = responses[0];
+                var userSettings = responses[1];
 
                 loadSections(tabContent, user, userSettings).then(function () {
 
-                    if (!AppInfo.isNativeApp) {
-                        showWelcomeIfNeeded(page, displayPreferences);
-                    }
                     loading.hide();
                 });
             });
+
+            if (!AppInfo.isNativeApp) {
+                getDisplayPreferences('home', userId).then(function (displayPreferences) {
+                    showWelcomeIfNeeded(page, displayPreferences);
+                });
+            }
         }
     }
 

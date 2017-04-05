@@ -15,13 +15,13 @@
                 query.PersonIds = item.Id;
             }
             else if (item.Type == "Genre") {
-                query.Genres = item.Name;
+                query.GenreIds = item.Id;
             }
             else if (item.Type == "MusicGenre") {
-                query.Genres = item.Name;
+                query.GenreIds = item.Id;
             }
             else if (item.Type == "GameGenre") {
-                query.Genres = item.Name;
+                query.GenreIds = item.Id;
             }
             else if (item.Type == "Studio") {
                 query.StudioIds = item.Id;

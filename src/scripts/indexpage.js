@@ -1,37 +1,14 @@
-﻿define(['loading', 'libraryBrowser', 'libraryMenu', 'playbackManager', 'mainTabsManager', 'scripts/sections', 'emby-button'], function (loading, libraryBrowser, libraryMenu, playbackManager, mainTabsManager, Sections) {
+﻿define(['loading', 'libraryBrowser', 'libraryMenu', 'playbackManager', 'mainTabsManager', 'homeSections', 'scripts/sections', 'emby-button'], function (loading, libraryBrowser, libraryMenu, playbackManager, mainTabsManager, homeSections, Sections) {
     'use strict';
-
-    function getDefaultSection(index) {
-
-        switch (index) {
-
-            case 0:
-                return 'smalllibrarytiles';
-            case 1:
-                return 'activerecordings';
-            case 2:
-                return 'resume';
-            case 3:
-                return 'resumeaudio';
-            case 4:
-                return 'nextup';
-            case 5:
-                return 'latestmedia';
-            case 6:
-                return 'latesttvrecordings';
-            default:
-                return '';
-        }
-    }
 
     function loadSection(page, user, userSettings, index) {
 
         var userId = user.Id;
 
-        var section = userSettings.get('homesection' + index) || getDefaultSection(index);
+        var section = userSettings.get('homesection' + index) || homeSections.getDefaultSection(index);
 
         if (section == 'folders') {
-            section = getDefaultSection()[0];
+            section = homeSections.getDefaultSection()[0];
         }
 
         var elem = page.querySelector('.section' + index);

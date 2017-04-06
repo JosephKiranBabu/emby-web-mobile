@@ -1,4 +1,4 @@
-﻿define(['userSettingsBuilder', 'dom', 'globalize', 'loading', 'listViewStyle'], function (userSettingsBuilder, dom, globalize, loading) {
+﻿define(['userSettingsBuilder', 'dom', 'globalize', 'loading', 'homeSections', 'listViewStyle'], function (userSettingsBuilder, dom, globalize, loading, homeSections) {
     'use strict';
 
     function renderViews(page, user, result) {
@@ -112,17 +112,32 @@
         page.querySelector('.viewOrderList').innerHTML = html;
     }
 
+    function updateHomeSectionValues(page, userSettings) {
+
+        for (var i = 1; i <= 7; i++) {
+
+            var select = page.querySelector('#selectHomeSection' + i);
+            var defaultValue = homeSections.getDefaultSection(i - 1);
+
+            var option = select.querySelector('option[value=' + defaultValue + ']') || select.querySelector('option[value=""]');
+
+            var userValue = userSettings.get('homesection' + (i - 1));
+
+            option.value = '';
+
+            if (userValue === defaultValue || !userValue) {
+                select.value = '';
+            } else {
+                select.value = userValue;
+            }
+        }
+    }
+
     function loadForm(page, user, userSettings) {
 
         page.querySelector('.chkHidePlayedFromLatest').checked = user.Configuration.HidePlayedInLatest || false;
 
-        page.querySelector('#selectHomeSection1').value = userSettings.get('homesection0') || '';
-        page.querySelector('#selectHomeSection2').value = userSettings.get('homesection1') || '';
-        page.querySelector('#selectHomeSection3').value = userSettings.get('homesection2') || '';
-        page.querySelector('#selectHomeSection4').value = userSettings.get('homesection3') || '';
-        page.querySelector('#selectHomeSection5').value = userSettings.get('homesection4') || '';
-        page.querySelector('#selectHomeSection6').value = userSettings.get('homesection5') || '';
-        page.querySelector('#selectHomeSection7').value = userSettings.get('homesection6') || '';
+        updateHomeSectionValues(page, userSettings);
 
         var promise1 = ApiClient.getUserViews({}, user.Id);
         var promise2 = ApiClient.getJSON(ApiClient.getUrl("Users/" + user.Id + "/GroupingOptions"));

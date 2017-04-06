@@ -1033,6 +1033,7 @@ var AppInfo = {};
         define("fullscreenManager", [embyWebComponentsBowerPath + "/fullscreen/fullscreenmanager", 'events'], returnFirstDependency);
 
         define("layoutManager", [embyWebComponentsBowerPath + "/layoutmanager", 'apphost'], getLayoutManager);
+        define("homeSections", [embyWebComponentsBowerPath + "/homesections"], returnFirstDependency);
         define("playMenu", [embyWebComponentsBowerPath + "/playmenu"], returnFirstDependency);
         define("refreshDialog", [embyWebComponentsBowerPath + "/refreshdialog/refreshdialog"], returnFirstDependency);
         define("backdrop", [embyWebComponentsBowerPath + "/backdrop/backdrop"], returnFirstDependency);

@@ -341,14 +341,10 @@
             view.querySelector('.btnSave').classList.remove('hide');
         }
 
-        view.addEventListener('viewbeforeshow', function () {
-            var page = this;
-            initLabels();
-        });
-
         view.addEventListener('viewshow', function () {
             var page = this;
 
+            initLabels();
             loading.show();
 
             var userId = params.userId || Dashboard.getCurrentUserId();

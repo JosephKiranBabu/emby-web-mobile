@@ -110,6 +110,7 @@
             }
 
             var supportsImageAnalysis = appHost.supports('imageanalysis');
+            supportsImageAnalysis = false;
 
             html += cardBuilder.getCardsHtml({
                 items: group.items,
@@ -125,7 +126,8 @@
                 showParentTitle: true,
                 allowBottomPadding: allowBottomPadding,
                 cardLayout: supportsImageAnalysis,
-                vibrant: supportsImageAnalysis
+                vibrant: supportsImageAnalysis,
+                overlayMoreButton: true
 
             });
             html += '</div>';

@@ -233,9 +233,13 @@ button {
     position: relative;
 }
 
-    .cardFooter.transparent {
-        padding-top: .2em;
-    }
+.cardFooter-transparent {
+    padding-top: .16em;
+}
+
+.layout-tv .cardFooter-transparent {
+    padding-top: 0;
+}
 
 .visualCardBox {
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
@@ -264,7 +268,7 @@ button {
 }
 
 .cardText {
-    padding: .3em .5em;
+    padding: .1em .5em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -273,7 +277,7 @@ button {
 }
 
 .layout-tv .cardText {
-    padding: .1em .5em;
+    padding: 0 .5em;
     font-size: 92%;
 }
 
@@ -281,25 +285,25 @@ button {
     padding: .3em .5em;
 }
 
-.singleCardText {
-    padding: .5em;
-}
-
 .cardTextCentered {
     text-align: center;
 }
 
-.cardFooter.transparent > .cardText {
-    opacity: .8;
+.cardFooter-transparent > .cardText {
+    color: #ccc;
 }
 
 .cardText-secondary {
-    opacity: .5 !important;
-    font-size: 92%;
+    color: #888 !important;
+}
+
+.visualCardBox .cardText-secondary {
+    color: inherit !important;
+    opacity: .5;
 }
 
 .card:focus .cardText {
-    opacity: 1;
+    color: #fff !important;
 }
 
 .cardText-rightmargin {
@@ -329,7 +333,6 @@ button {
 
     .textActionButton:hover {
         text-decoration: underline;
-        opacity: 1;
     }
 
 .cardFooterLogo {
@@ -703,7 +706,7 @@ button {
 }
 
 .overflowBackdropCard-textCard {
-    width: 15.5vw!important;
+    width: 15.5vw !important;
 }
 
 .overflowBackdropCard-textCardPadder {

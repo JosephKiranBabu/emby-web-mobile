@@ -4,7 +4,7 @@
  * License: MIT
  */
 
-(function (window, document) {
+define(['dom', 'layoutManager', 'browser', 'css!./headroom'], function (dom, layoutManager, browser) {
 
     'use strict';
 
@@ -29,98 +29,22 @@
          * @private
          */
         update: function () {
-            this.callback && this.callback();
-            this.ticking = false;
-        },
-
-        /**
-         * ensures events don't get stacked
-         * @private
-         */
-        requestTick: function () {
-            if (!this.ticking) {
-                requestAnimationFrame(this.rafCallback || (this.rafCallback = this.update.bind(this)));
-                this.ticking = true;
+            if (this.callback) {
+                this.callback();
             }
+            this.ticking = false;
         },
 
         /**
          * Attach this as the event listeners
          */
         handleEvent: function () {
-            this.requestTick();
+            if (!this.ticking) {
+                requestAnimationFrame(this.rafCallback || (this.rafCallback = this.update.bind(this)));
+                this.ticking = true;
+            }
         }
     };
-    /**
-     * Check if object is part of the DOM
-     * @constructor
-     * @param {Object} obj element to check
-     */
-    function isDOMElement(obj) {
-        return obj && typeof window !== 'undefined' && (obj === window || obj.nodeType);
-    }
-
-    /**
-     * Helper function for extending objects
-     */
-    function extend(object /*, objectN ... */) {
-        if (arguments.length <= 0) {
-            throw new Error('Missing arguments in extend function');
-        }
-
-        var result = object || {},
-            key,
-            i;
-
-        for (i = 1; i < arguments.length; i++) {
-            var replacement = arguments[i] || {};
-
-            for (key in replacement) {
-                // Recurse into object except if the object is a DOM element
-                if (typeof result[key] === 'object' && !isDOMElement(result[key])) {
-                    result[key] = extend(result[key], replacement[key]);
-                }
-                else {
-                    result[key] = result[key] || replacement[key];
-                }
-            }
-        }
-
-        return result;
-    }
-
-    /**
-     * Helper function for normalizing tolerance option to object format
-     */
-    function normalizeTolerance(t) {
-        return t === Object(t) ? t : { down: t, up: t };
-    }
-
-    var supportsCaptureOption = false;
-    try {
-        var opts = Object.defineProperty({}, 'capture', {
-            get: function () {
-                supportsCaptureOption = true;
-            }
-        });
-        window.addEventListener("test", null, opts);
-    } catch (e) { }
-
-    function addEventListenerWithOptions(target, type, handler, options) {
-        var optionsOrCapture = options;
-        if (!supportsCaptureOption) {
-            optionsOrCapture = options.capture;
-        }
-        target.addEventListener(type, handler, optionsOrCapture);
-    }
-
-    function removeEventListenerWithOptions(target, type, handler, options) {
-        var optionsOrCapture = options;
-        if (!supportsCaptureOption) {
-            optionsOrCapture = options.capture;
-        }
-        target.removeEventListener(type, handler, optionsOrCapture);
-    }
 
     /**
    * UI enhancement for fixed headers.
@@ -131,18 +55,20 @@
    * @param {Object} options options for the widget
    */
     function Headroom(elems, options) {
-        options = extend(options, Headroom.options);
+        options = Object.assign(Headroom.options, options || {});
 
         this.lastKnownScrollY = 0;
         this.elems = elems;
         this.debouncer = new Debouncer(this.update.bind(this));
-        this.tolerance = normalizeTolerance(options.tolerance);
-        this.classes = options.classes;
         this.offset = options.offset;
         this.scroller = options.scroller;
         this.initialised = false;
-        this.onPin = options.onPin;
-        this.onUnpin = options.onUnpin;
+
+        this.initialClass = options.initialClass;
+        this.unPinnedClass = options.unPinnedClass;
+
+        this.upTolerance = options.upTolerance;
+        this.downTolerance = options.downTolerance;
     }
     Headroom.prototype = {
         constructor: Headroom,
@@ -152,26 +78,30 @@
          */
         init: function () {
 
-            for (var i = 0, length = this.elems.length; i < length; i++) {
-                this.elems[i].classList.add(this.classes.initial);
-            }
+            if (browser.supportsCssAnimation()) {
+                for (var i = 0, length = this.elems.length; i < length; i++) {
+                    this.elems[i].classList.add(this.initialClass);
+                }
 
-            this.attachEvent();
+                this.attachEvent();
+            }
 
             return this;
         },
 
         add: function (elem) {
-            elem.classList.add(this.classes.initial);
-            this.elems.push(elem);
+
+            if (browser.supportsCssAnimation()) {
+                elem.classList.add(this.initialClass);
+                this.elems.push(elem);
+            }
         },
 
         remove: function (elem) {
 
-            var classes = this.classes;
-            elem.classList.remove(classes.unpinned, classes.pinned, classes.initial);
+            elem.classList.remove(this.unPinnedClass, this.initialClass);
             var i = this.elems.indexOf(elem);
-            if (i != -1) {
+            if (i !== -1) {
                 this.elems.splice(i, 1);
             }
         },
@@ -180,15 +110,14 @@
          * Unattaches events and removes any classes that were added
          */
         destroy: function () {
-            var classes = this.classes;
 
             this.initialised = false;
 
             for (var i = 0, length = this.elems.length; i < length; i++) {
-                this.elems[i].classList.remove(classes.unpinned, classes.pinned, classes.initial);
+                this.elems[i].classList.remove(this.unPinnedClass, this.initialClass);
             }
 
-            removeEventListenerWithOptions(this.scroller, 'scroll', this.debouncer, {
+            dom.removeEventListener(this.scroller, 'scroll', this.debouncer, {
                 capture: false,
                 passive: true
             });
@@ -202,7 +131,7 @@
             if (!this.initialised) {
                 this.lastKnownScrollY = this.getScrollY();
                 this.initialised = true;
-                addEventListenerWithOptions(this.scroller, 'scroll', this.debouncer, {
+                dom.addEventListener(this.scroller, 'scroll', this.debouncer, {
                     capture: false,
                     passive: true
                 });
@@ -214,35 +143,39 @@
         /**
          * Unpins the header if it's currently pinned
          */
-        unpin: function () {
-
-            var classes = this.classes;
+        clear: function () {
 
             for (var i = 0, length = this.elems.length; i < length; i++) {
                 var classList = this.elems[i].classList;
 
-                if (classList.contains(classes.pinned) || !classList.contains(classes.unpinned)) {
-                    classList.add(classes.unpinned);
-                    classList.remove(classes.pinned);
-                    this.onUnpin && this.onUnpin.call(this);
-                }
+                classList.remove(this.unPinnedClass);
+            }
+        },
+
+        /**
+         * Unpins the header if it's currently pinned
+         */
+        unpin: function () {
+
+            for (var i = 0, length = this.elems.length; i < length; i++) {
+                var classList = this.elems[i].classList;
+
+                classList.add(this.unPinnedClass);
             }
         },
 
         /**
          * Pins the header if it's currently unpinned
          */
-        pin: function () {
-
-            var classes = this.classes;
+        pin: function (scrollY) {
 
             for (var i = 0, length = this.elems.length; i < length; i++) {
                 var classList = this.elems[i].classList;
 
-                if (classList.contains(classes.unpinned)) {
-                    classList.remove(classes.unpinned);
-                    classList.add(classes.pinned);
-                    this.onPin && this.onPin.call(this);
+                if (scrollY && layoutManager.tv) {
+                    classList.add(this.unPinnedClass);
+                } else {
+                    classList.remove(this.unPinnedClass);
                 }
             }
 
@@ -255,12 +188,18 @@
          */
         getScrollY: function () {
 
-            var pageYOffset = this.scroller.pageYOffset;
+            var scroller = this.scroller;
+
+            if (scroller.getScrollPosition) {
+                return scroller.getScrollPosition();
+            }
+
+            var pageYOffset = scroller.pageYOffset;
             if (pageYOffset !== undefined) {
                 return pageYOffset;
             }
 
-            var scrollTop = this.scroller.scrollTop;
+            var scrollTop = scroller.scrollTop;
             if (scrollTop !== undefined) {
                 return scrollTop;
             }
@@ -274,7 +213,7 @@
          * @return {bool} true if tolerance exceeded, false otherwise
          */
         toleranceExceeded: function (currentScrollY, direction) {
-            return Math.abs(currentScrollY - this.lastKnownScrollY) >= this.tolerance[direction];
+            return Math.abs(currentScrollY - this.lastKnownScrollY) >= this[direction + 'Tolerance'];
         },
 
         /**
@@ -319,7 +258,9 @@
                 this.unpin();
             }
             else if (this.shouldPin(currentScrollY, toleranceExceeded)) {
-                this.pin();
+                this.pin(currentScrollY);
+            } else {
+                this.clear();
             }
 
             this.lastKnownScrollY = currentScrollY;
@@ -330,19 +271,14 @@
      * @type {Object}
      */
     Headroom.options = {
-        tolerance: {
-            up: 0,
-            down: 0
-        },
+        upTolerance: 0,
+        downTolerance: 0,
         offset: 0,
         scroller: window,
-        classes: {
-            pinned: 'headroom--pinned',
-            unpinned: 'headroom--unpinned',
-            initial: 'headroom'
-        }
+        initialClass: 'headroom',
+        unPinnedClass: 'headroom--unpinned'
     };
 
-    window.Headroom = Headroom;
+    return Headroom;
 
-}(window, document));
+});

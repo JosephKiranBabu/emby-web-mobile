@@ -682,7 +682,6 @@
                     overlayText: false,
                     showTitle: true,
                     showParentTitle: true,
-                    lazy: true,
                     overlayPlayButton: true,
                     context: 'home',
                     centerText: !supportsImageAnalysis,

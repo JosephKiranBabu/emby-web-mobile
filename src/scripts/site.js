@@ -850,20 +850,9 @@ var AppInfo = {};
         }
     }
 
-    function createWindowHeadroom() {
+    function createWindowHeadroom(Headroom) {
         // construct an instance of Headroom, passing the element
-        var headroom = new Headroom([], {
-            // or scroll tolerance per direction
-            tolerance: {
-                down: 0,
-                up: 0
-            },
-            classes: {
-                //pinned: 'appfooter--pinned',
-                //unpinned: 'appfooter--unpinned',
-                //initial: 'appfooter-headroom'
-            }
-        });
+        var headroom = new Headroom([], {});
         // initialise
         headroom.init();
         return headroom;
@@ -930,7 +919,6 @@ var AppInfo = {};
             howler: bowerPath + '/howlerjs/howler.min',
             sortable: bowerPath + '/Sortable/Sortable.min',
             isMobile: bowerPath + '/isMobile/isMobile.min',
-            headroom: bowerPath + '/headroomjs/dist/headroom',
             masonry: bowerPath + '/masonry/dist/masonry.pkgd.min',
             humanedate: 'components/humanedate',
             libraryBrowser: 'scripts/librarybrowser',
@@ -1031,6 +1019,8 @@ var AppInfo = {};
 
         define("fullscreen-doubleclick", [embyWebComponentsBowerPath + "/fullscreen/fullscreen-doubleclick"], returnFirstDependency);
         define("fullscreenManager", [embyWebComponentsBowerPath + "/fullscreen/fullscreenmanager", 'events'], returnFirstDependency);
+
+        define("headroom", [embyWebComponentsBowerPath + "/headroom/headroom"], returnFirstDependency);
 
         define("layoutManager", [embyWebComponentsBowerPath + "/layoutmanager", 'apphost'], getLayoutManager);
         define("homeSections", [embyWebComponentsBowerPath + "/homesections"], returnFirstDependency);

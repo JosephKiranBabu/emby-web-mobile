@@ -34,7 +34,7 @@
             var html = '';
 
             var supportsImageAnalysis = appHost.supports('imageanalysis');
-            var cardLayout = supportsImageAnalysis;
+            var cardLayout = false;
 
             html += cardBuilder.getCardsHtml({
                 items: items,
@@ -50,7 +50,7 @@
                 centerText: !cardLayout,
                 lazy: true,
                 overlayPlayButton: true,
-                vibrant: supportsImageAnalysis,
+                vibrant: cardLayout && supportsImageAnalysis,
                 lines: 2
             });
 

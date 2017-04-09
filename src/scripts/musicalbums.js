@@ -25,7 +25,7 @@
                         StartIndex: 0,
                         Limit: pageSize
                     },
-                    view: libraryBrowser.getSavedView(key) || (appHost.preferVisualCards ? 'PosterCard' : 'Poster')
+                    view: libraryBrowser.getSavedView(key) || ('Poster')
                 };
 
                 pageData.query.ParentId = params.topParentId;

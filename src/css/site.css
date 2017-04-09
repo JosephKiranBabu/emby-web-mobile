@@ -37,6 +37,7 @@ html {
     height: 100%;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", 'Open Sans', sans-serif;
     font-size: 88%;
+    line-height: 1.35;
 }
 
 .smallerFontSize {
@@ -92,7 +93,6 @@ h1, h2, h3 {
 
 h1 {
     font-weight: normal !important;
-    opacity: .7;
     font-size: 1.72em;
 }
 
@@ -104,12 +104,20 @@ h3 {
     font-weight: normal;
 }
 
+.ui-body-a h1, .ui-body-a h2 {
+    color: #444;
+}
+
+.ui-body-b h1, .ui-body-b h2 {
+    color: #bbb;
+}
+
 a, a:active, a:hover {
     text-decoration: none;
 }
 
 .libraryPage h1 a {
-    color: #fff !important;
+    color: inherit !important;
 }
 
 h1 a:hover {
@@ -324,14 +332,9 @@ div[data-role='page'] {
     color: #555;
 }
 
-
 .ui-body-a .visualCardBox {
     background-color: #fff;
     margin: 6px;
-}
-
-.ui-body-a .cardFooter .cardText + .cardText {
-    opacity: .8;
 }
 
 .ui-body-a .listItem .secondary {

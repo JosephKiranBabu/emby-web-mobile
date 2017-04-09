@@ -177,6 +177,7 @@
 
                 var itemsContainer = view.querySelector('#items');
                 var supportsImageAnalysis = appHost.supports('imageanalysis');
+                supportsImageAnalysis = false;
 
                 if (query.IncludeItemTypes == "Audio") {
 
@@ -220,6 +221,7 @@
                     else if (query.IncludeItemTypes == "MusicArtist") {
                         posterOptions.overlayText = false;
                         posterOptions.overlayPlayButton = true;
+                        posterOptions.showTitle = true;
                     }
                     else if (query.IncludeItemTypes == "Episode") {
                         posterOptions.overlayText = false;

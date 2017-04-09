@@ -1,4 +1,4 @@
-﻿define(['cardBuilder', 'appSettings', 'dom', 'apphost', 'layoutManager', 'imageLoader', 'globalize', 'scrollStyles', 'emby-button', 'paper-icon-button-light', 'emby-itemscontainer'], function (cardBuilder, appSettings, dom, appHost, layoutManager, imageLoader, globalize) {
+﻿define(['cardBuilder', 'appSettings', 'dom', 'apphost', 'layoutManager', 'imageLoader', 'globalize', 'itemShortcuts', 'emby-button', 'paper-icon-button-light', 'emby-itemscontainer', 'emby-scroller'], function (cardBuilder, appSettings, dom, appHost, layoutManager, imageLoader, globalize, itemShortcuts) {
     'use strict';
 
     function getDefaultSection(index) {
@@ -95,8 +95,22 @@
         return enableScrollX() ? 'overflowPortrait' : 'portrait';
     }
 
+    function getTextActionButton(item, text, serverId, buttonClass) {
+
+        if (!text) {
+            text = itemHelper.getDisplayName(item);
+        }
+
+        var html = '<button ' + itemShortcuts.getShortcutAttributesHtml(item, serverId) + ' type="button" is="emby-button" class="itemAction ' + buttonClass + '" data-action="link">';
+        html += text;
+        html += '</button>';
+
+        return html;
+    }
+
     function getLibraryButtonsHtml(items) {
 
+        return '';
         var html = "";
 
         html += '<div>';
@@ -346,9 +360,7 @@
                 html += '<div class="sectionTitleContainer">';
                 html += '<h2 class="sectionTitle sectionTitle-cards padded-left">' + globalize.translate('sharedcomponents#LatestFromLibrary', parent.Name) + '</h2>';
                 if (!layoutManager.tv) {
-                    html += '<button data-href="" type="button" is="emby-button" class="raised raised-mini sectionTitleButton btnMore">';
-                    html += '<span>' + globalize.translate('sharedcomponents#More') + '</span>';
-                    html += '</button>';
+                    html += getTextActionButton(parent, globalize.translate('sharedcomponents#More'), null, 'raised raised-mini sectionTitleButton btnMore');
                 }
                 html += '</div>';
 
@@ -773,6 +785,7 @@
                     //html += '<button data-href="" type="button" is="emby-button" class="raised raised-mini sectionTitleButton btnMore">';
                     //html += '<span>' + globalize.translate('sharedcomponents#More') + '</span>';
                     //html += '</button>';
+                    html += getTextActionButton(parent, globalize.translate('sharedcomponents#More'), null, 'raised raised-mini sectionTitleButton btnMore');
                 }
                 html += '</div>';
 
@@ -838,7 +851,7 @@
 
                 var channel = channels[i];
 
-                loadLatestChannelItemsFromChannel(elem, channel, i);
+                loadLatestChannelItemsFromChannel(elem, apiClient, channel, i);
             }
 
         });
@@ -869,10 +882,7 @@
                 var text = globalize.translate('sharedcomponents#HeaderLatestFrom').replace('{0}', channel.Name);
                 html += '<h2 class="sectionTitle sectionTitle-cards padded-left">' + text + '</h2>';
                 if (!layoutManager.tv) {
-                    //html += '<a href="channelitems.html?id=' + channel.Id + '" class="clearLink" style="margin-left:2em;"><button is="emby-button" type="button" class="raised more mini"><span>' + globalize.translate('sharedcomponents#More') + '</span></button></a>';
-                    //html += '<button data-href="" type="button" is="emby-button" class="raised raised-mini sectionTitleButton btnMore">';
-                    //html += '<span>' + globalize.translate('sharedcomponents#More') + '</span>';
-                    //html += '</button>';
+                    html += getTextActionButton(channel, globalize.translate('sharedcomponents#More'), null, 'raised raised-mini sectionTitleButton btnMore');
                 }
                 html += '</div>';
 

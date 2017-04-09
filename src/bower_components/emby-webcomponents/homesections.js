@@ -1,4 +1,4 @@
-﻿define(['cardBuilder', 'appSettings', 'dom', 'apphost', 'layoutManager', 'imageLoader', 'globalize', 'itemShortcuts', 'emby-button', 'paper-icon-button-light', 'emby-itemscontainer', 'emby-scroller'], function (cardBuilder, appSettings, dom, appHost, layoutManager, imageLoader, globalize, itemShortcuts) {
+﻿define(['cardBuilder', 'appSettings', 'dom', 'apphost', 'layoutManager', 'imageLoader', 'globalize', 'itemShortcuts', 'itemHelper', 'emby-button', 'paper-icon-button-light', 'emby-itemscontainer', 'emby-scroller'], function (cardBuilder, appSettings, dom, appHost, layoutManager, imageLoader, globalize, itemShortcuts, itemHelper) {
     'use strict';
 
     function getDefaultSection(index) {
@@ -110,16 +110,13 @@
 
     function getLibraryButtonsHtml(items) {
 
-        return '';
         var html = "";
 
-        html += '<div>';
-
-        html += '<div>';
+        html += '<div class="sectionTitleContainer">';
         html += '<h2 class="sectionTitle sectionTitle-cards padded-left">' + globalize.translate('sharedcomponents#HeaderMyMedia') + '</h2>';
         html += '</div>';
 
-        html += '<div is="emby-itemscontainer" class="itemsContainer vertical-wrap" data-multiselect="false">';
+        html += '<div is="emby-itemscontainer" class="itemsContainer padded-left padded-right vertical-wrap focuscontainer-x" data-multiselect="false">';
 
         // "My Library" backgrounds
         for (var i = 0, length = items.length; i < length; i++) {
@@ -170,32 +167,11 @@
                     break;
             }
 
-            var cssClass = 'card smallBackdropCard buttonCard';
-
-            if (item.CollectionType) {
-                cssClass += ' ' + item.CollectionType + 'buttonCard';
-            }
-
-            var href = item.url || libraryBrowser.getHref(item);
-            var onclick = item.onclick ? ' onclick="' + item.onclick + '"' : '';
-
-            icon = item.icon || icon;
-
-            html += '<a' + onclick + ' data-id="' + item.Id + '" class="' + cssClass + '" href="' + href + '" style="min-width:12.5%;">';
-            html += '<div class="cardBox ' + cardBuilder.getDefaultColorClass(item.Name) + '" style="margin:4px;">';
-
-            html += "<div class='cardText'>";
-            html += '<i class="md-icon">' + icon + '</i>';
-            html += '<span style="margin-left:.7em;">' + item.Name + '</span>';
-            html += "</div>";
-
-            html += "</div>";
-
-            html += "</a>";
+            html += getTextActionButton(item, '<i class="md-icon">' + icon + '</i><span>' + item.Name + '</span>', null, 'raised homeLibraryButton');
         }
 
         html += '</div>';
-        html += '</div>';
+
         return html;
     }
 

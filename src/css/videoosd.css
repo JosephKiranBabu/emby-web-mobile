@@ -155,19 +155,19 @@
     }
 
 .osdParentTitle {
-    opacity: 1;
+    color: #fff !important;
     margin: 0;
 }
 
 .osdTitle {
     margin: 0;
-    opacity: 1;
+    color: #fff !important;
     margin-right: 1em;
 }
 
 .osdTitleSmall {
     margin: 0;
-    opacity: 1;
+    color: #fff !important;
     margin-right: 1em;
 }
 

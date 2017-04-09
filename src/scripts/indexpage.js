@@ -1,4 +1,4 @@
-﻿define(['loading', 'libraryBrowser', 'libraryMenu', 'playbackManager', 'mainTabsManager', 'homeSections', 'scripts/sections', 'emby-button'], function (loading, libraryBrowser, libraryMenu, playbackManager, mainTabsManager, homeSections, Sections) {
+﻿define(['loading', 'libraryBrowser', 'libraryMenu', 'playbackManager', 'mainTabsManager', 'homeSections', 'emby-button'], function (loading, libraryBrowser, libraryMenu, playbackManager, mainTabsManager, homeSections) {
     'use strict';
 
     function loadSection(page, user, userSettings, index) {
@@ -12,42 +12,43 @@
         }
 
         var elem = page.querySelector('.section' + index);
+        var apiClient = ApiClient;
 
         if (section == 'latestmedia') {
-            return Sections.loadRecentlyAdded(elem, user);
+            return homeSections.loadRecentlyAdded(elem, apiClient, user);
         }
         else if (section == 'librarytiles') {
-            return Sections.loadLibraryTiles(elem, user, 'backdrop', index);
+            return homeSections.loadLibraryTiles(elem, apiClient, user, 'backdrop', index);
         }
         else if (section == 'smalllibrarytiles') {
-            return Sections.loadLibraryTiles(elem, user, 'smallBackdrop', index);
+            return homeSections.loadLibraryTiles(elem, apiClient, user, 'smallBackdrop', index);
         }
         else if (section == 'smalllibrarytiles-automobile') {
-            return Sections.loadLibraryTiles(elem, user, 'smallBackdrop', index);
+            return homeSections.loadLibraryTiles(elem, apiClient, user, 'smallBackdrop', index);
         }
         else if (section == 'librarytiles-automobile') {
-            return Sections.loadLibraryTiles(elem, user, 'backdrop', index);
+            return homeSections.loadLibraryTiles(elem, apiClient, user, 'backdrop', index);
         }
         else if (section == 'librarybuttons') {
-            return Sections.loadlibraryButtons(elem, userId, index);
+            return homeSections.loadlibraryButtons(elem, apiClient, userId, index);
         }
         else if (section == 'resume') {
-            return Sections.loadResumeVideo(elem, userId);
+            return homeSections.loadResumeVideo(elem, apiClient, userId);
         }
         else if (section == 'resumeaudio') {
-            return Sections.loadResumeAudio(elem, userId);
+            return homeSections.loadResumeAudio(elem, apiClient, userId);
         }
         else if (section == 'activerecordings') {
-            return Sections.loadActiveRecordings(elem, userId);
+            return homeSections.loadActiveRecordings(elem, apiClient, userId);
         }
         else if (section == 'nextup') {
-            return Sections.loadNextUp(elem, userId);
+            return homeSections.loadNextUp(elem, apiClient, userId);
         }
         else if (section == 'latesttvrecordings') {
-            return Sections.loadLatestLiveTvRecordings(elem, userId);
+            return homeSections.loadLatestLiveTvRecordings(elem, apiClient, userId);
         }
         else if (section == 'latestchannelmedia') {
-            return Sections.loadLatestChannelMedia(elem, userId);
+            return homeSections.loadLatestChannelMedia(elem, apiClient, userId);
 
         } else {
 
@@ -67,7 +68,7 @@
         var html = '';
         for (i = 0, length = sectionCount; i < length; i++) {
 
-            html += '<div class="homePageSection section' + i + '"></div>';
+            html += '<div class="verticalSection section' + i + '"></div>';
         }
 
         elem.innerHTML = html;

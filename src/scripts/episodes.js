@@ -122,7 +122,8 @@
                         shape: "backdrop",
                         showTitle: true,
                         showParentTitle: true,
-                        overlayText: true,
+                        overlayText: false,
+                        centerText: true,
                         scalable: true,
                         overlayPlayButton: true
                     });

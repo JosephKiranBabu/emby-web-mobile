@@ -286,35 +286,6 @@
         }
     }
 
-    function getDrawerUserPanelHtml(user) {
-        var html = '';
-
-        return html;
-        html += '<div class="drawerUserPanel">';
-
-        var userButtonHeight = 40;
-        var url;
-
-        if (user) {
-            var url = user.imageUrl;
-
-            if (user.supportsImageParams) {
-                url += "&height=" + Math.round((userButtonHeight * Math.max(window.devicePixelRatio || 1, 2)));
-            }
-        }
-
-        html += '<div><img style="height:' + userButtonHeight + 'px;border-radius:1000px;margin-bottom:1.25em;" src="' + url + '" /></div>';
-
-        html += '<div class="drawerUserName">';
-        var username = user && user.localUser ? user.localUser.Name : '';
-        html += username;
-        html += '</div>';
-
-        html += '</div>';
-
-        return html;
-    }
-
     function refreshLibraryInfoInDrawer(user, drawer) {
 
         var html = '';
@@ -373,7 +344,7 @@
 
         html += '</div>';
 
-        navDrawerScrollContainer.innerHTML = getDrawerUserPanelHtml(user) + html;
+        navDrawerScrollContainer.innerHTML = html;
 
         var lnkManageServer = navDrawerScrollContainer.querySelector('.lnkManageServer');
         if (lnkManageServer) {

@@ -1,4 +1,4 @@
-﻿define(['loading', 'libraryBrowser', 'cardBuilder', 'imageLoader', 'scripts/sections', 'emby-itemscontainer', 'emby-button'], function (loading, libraryBrowser, cardBuilder, imageLoader, Sections) {
+﻿define(['loading', 'libraryBrowser', 'cardBuilder', 'imageLoader', 'homeSections', 'emby-itemscontainer', 'emby-button'], function (loading, libraryBrowser, cardBuilder, imageLoader, homeSections) {
     'use strict';
 
     // The base query options
@@ -66,7 +66,7 @@
         view.addEventListener('viewshow', function (e) {
 
             libraryBrowser.loadSavedQueryValues('channels', query);
-            Sections.loadLatestChannelItems(view.querySelector('.latestItems'), Dashboard.getCurrentUserId());
+            homeSections.loadLatestChannelItems(view.querySelector('.latestItems'), ApiClient, Dashboard.getCurrentUserId());
 
             reloadItems(view);
         });

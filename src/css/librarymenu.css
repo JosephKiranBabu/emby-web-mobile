@@ -47,13 +47,6 @@
     flex-shrink: 0;
 }
 
-.menuArrow {
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAbklEQ…yGDxkLaBtENI9kPMk0gaoW0Dyj0aWowFLYNYzWB6MWMAAAq1H3+Mhu2hQAAAAASUVORK5CYII=);
-    height: 24px;
-    width: 24px;
-    display: inline-block;
-}
-
 .hideMainDrawer .mainDrawerButton {
     display: none;
 }
@@ -302,18 +295,4 @@ body:not(.dashboardDocument) .headerAppsButton {
     .dashboardDocument .darkDrawer {
         background-color: rgba(28,28,31,.3) !important;
     }
-}
-
-.drawerUserPanel {
-    height: 7em;
-    margin-bottom: .5em;
-    color: #ccc;
-    display: flex;
-    padding: 1.5em;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.drawerUserName {
-    padding-left: .25em;
 }

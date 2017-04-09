@@ -63,6 +63,7 @@
 
                 var container = view.querySelector('#nextUpItems');
                 var supportsImageAnalysis = appHost.supports('imageanalysis');
+                var cardLayout = false;
 
                 cardBuilder.buildCards(result.Items, {
                     itemsContainer: container,
@@ -72,10 +73,10 @@
                     showTitle: true,
                     showParentTitle: true,
                     overlayText: false,
-                    centerText: !supportsImageAnalysis,
+                    centerText: !cardLayout,
                     overlayPlayButton: true,
-                    cardLayout: supportsImageAnalysis,
-                    vibrant: supportsImageAnalysis
+                    cardLayout: cardLayout,
+                    vibrant: cardLayout && supportsImageAnalysis
                 });
 
                 loading.hide();
@@ -126,7 +127,7 @@
                 var container = view.querySelector('#resumableItems');
 
                 var supportsImageAnalysis = appHost.supports('imageanalysis');
-                var cardLayout = supportsImageAnalysis;
+                var cardLayout = false;
 
                 cardBuilder.buildCards(result.Items, {
                     itemsContainer: container,
@@ -140,7 +141,7 @@
                     overlayPlayButton: true,
                     allowBottomPadding: allowBottomPadding,
                     cardLayout: cardLayout,
-                    vibrant: supportsImageAnalysis
+                    vibrant: cardLayout && supportsImageAnalysis
                 });
             });
         }

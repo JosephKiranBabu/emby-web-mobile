@@ -1052,7 +1052,9 @@
 
                 var context = inferContext(item);
 
-                var href = LibraryBrowser.getHref(item.Studios[0], context);
+                var href = embyRouter.getRouteUrl(item.Studios[0], {
+                    context: context
+                });
                 html += ' on <a class="textlink" href="' + href + '">' + item.Studios[0].Name + '</a>';
             }
         }
@@ -1449,7 +1451,9 @@
                 } else {
 
                     item.Studios[i].Type = 'Studio';
-                    var href = LibraryBrowser.getHref(item.Studios[i], context);
+                    var href = embyRouter.getRouteUrl(item.Studios[0], {
+                        context: context
+                    });
                     html += '<a class="textlink" href="' + href + '">' + item.Studios[i].Name + '</a>';
                 }
             }

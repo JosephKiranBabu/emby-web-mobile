@@ -17,7 +17,7 @@
 
             var html = result.Items.map(function (i) {
 
-                var href = LibraryBrowser.getHref(i);
+                var href = embyRouter.getRouteUrl(i);
 
                 var itemHtml = '<div><a style="display:inline-block;padding:.55em 1em;" href="' + href + '">';
                 itemHtml += i.Name;

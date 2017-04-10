@@ -985,6 +985,7 @@ var AppInfo = {};
 
         define("emby-collapse", [embyWebComponentsBowerPath + "/emby-collapse/emby-collapse"], returnFirstDependency);
         define("emby-button", [embyWebComponentsBowerPath + "/emby-button/emby-button"], returnFirstDependency);
+        define("emby-linkbutton", ['emby-button'], returnFirstDependency);
         define("emby-itemscontainer", [embyWebComponentsBowerPath + "/emby-itemscontainer/emby-itemscontainer"], returnFirstDependency);
         define("emby-scroller", [embyWebComponentsBowerPath + "/emby-scroller/emby-scroller"], returnFirstDependency);
         define("emby-tabs", [embyWebComponentsBowerPath + "/emby-tabs/emby-tabs"], returnFirstDependency);
@@ -1303,6 +1304,179 @@ var AppInfo = {};
             embyRouter.setTitle = function () {
             };
 
+            embyRouter.getRouteUrl = function (item, options) {
+
+                if (!item) {
+                    throw new Error('item cannot be null');
+                }
+
+                if (item.url) {
+                    return item.url;
+                }
+
+                var context = options ? options.context : null;
+                var context = options ? options.topParentId : null;
+
+                var url;
+                // Handle search hints
+                var id = item.Id || item.ItemId;
+
+                if (item.Type == "SeriesTimer") {
+                    //return "livetvseriestimer.html?id=" + id;
+                    return "itemdetails.html?seriesTimerId=" + id;
+                }
+
+                if (item.CollectionType == 'livetv') {
+                    return 'livetv.html';
+                }
+
+                if (item.CollectionType == 'channels') {
+
+                    return 'channels.html';
+                }
+
+                if (context != 'folders') {
+                    if (item.CollectionType == 'movies') {
+                        return 'movies.html?topParentId=' + item.Id;
+                    }
+
+                    if (item.CollectionType == 'boxsets') {
+                        return 'itemlist.html?topParentId=' + item.Id + '&parentId=' + item.Id;
+                    }
+
+                    if (item.CollectionType == 'tvshows') {
+                        return 'tv.html?topParentId=' + item.Id;
+                    }
+
+                    if (item.CollectionType == 'music') {
+                        return 'music.html?topParentId=' + item.Id;
+                    }
+
+                    if (item.CollectionType == 'games') {
+                        return id ? "itemlist.html?parentId=" + id : "#";
+                        //return 'gamesrecommended.html?topParentId=' + item.Id;
+                    }
+                    if (item.CollectionType == 'playlists') {
+                        return 'playlists.html?topParentId=' + item.Id;
+                    }
+                    if (item.CollectionType == 'photos') {
+                        return 'photos.html?topParentId=' + item.Id;
+                    }
+                }
+                else if (item.IsFolder) {
+                    if (item.Type != "BoxSet" && item.Type != "Series") {
+                        return id ? "itemlist.html?parentId=" + id : "#";
+                    }
+                }
+
+                if (item.Type == 'CollectionFolder') {
+                    return 'itemlist.html?topParentId=' + item.Id + '&parentId=' + item.Id;
+                }
+
+                if (item.Type == "PhotoAlbum") {
+                    return "itemlist.html?context=photos&parentId=" + id;
+                }
+                if (item.Type == "Playlist") {
+                    return "itemdetails.html?id=" + id;
+                }
+                if (item.Type == "TvChannel") {
+                    return "itemdetails.html?id=" + id;
+                }
+                if (item.Type == "Channel") {
+                    return "channelitems.html?id=" + id;
+                }
+                if ((item.IsFolder && item.SourceType == 'Channel') || item.Type == 'ChannelFolderItem') {
+                    return "channelitems.html?id=" + item.ChannelId + '&folderId=' + item.Id;
+                }
+                if (item.Type == "Program") {
+                    return "itemdetails.html?id=" + id;
+                }
+
+                if (item.Type == "BoxSet") {
+                    return "itemdetails.html?id=" + id;
+                }
+                if (item.Type == "MusicAlbum") {
+                    return "itemdetails.html?id=" + id;
+                }
+                if (item.Type == "GameSystem") {
+                    return "itemdetails.html?id=" + id;
+                }
+                if (item.Type == "Genre") {
+                    var type;
+                    switch (context) {
+                        case 'tvshows':
+                            type = 'Series';
+                            break;
+                        case 'games':
+                            type = 'Game';
+                            break;
+                        default:
+                            type = 'Movie';
+                            break;
+                    }
+
+                    url = "secondaryitems.html?type=" + type + "&genreId=" + id;
+                    if (topParentId) {
+                        url += "&parentId=" + topParentId;
+                    }
+                    return url;
+                }
+                if (item.Type == "MusicGenre") {
+                    return "itemdetails.html?id=" + id;
+                }
+                if (item.Type == "GameGenre") {
+
+                    url = "secondaryitems.html?type=Game&genreId=" + id;
+                    if (topParentId) {
+                        url += "&parentId=" + topParentId;
+                    }
+                    return url;
+                }
+                if (item.Type == "Studio") {
+
+                    var type;
+                    switch (context) {
+                        case 'tvshows':
+                            type = 'Series';
+                            break;
+                        case 'games':
+                            type = 'Game';
+                            break;
+                        default:
+                            type = 'Movie';
+                            break;
+                    }
+
+                    url = "secondaryitems.html?type=" + type + "&studioId=" + id;
+                    if (topParentId) {
+                        url += "&parentId=" + topParentId;
+                    }
+                    return url;
+                }
+                if (item.Type == "Person") {
+                    return "itemdetails.html?id=" + id;
+                }
+                if (item.Type == "Recording") {
+                    return "itemdetails.html?id=" + id;
+                }
+
+                if (item.Type == "MusicArtist") {
+                    return "itemdetails.html?id=" + id;
+                }
+
+                var contextSuffix = context ? ('&context=' + context) : '';
+
+                if (item.Type == "Series" || item.Type == "Season" || item.Type == "Episode") {
+                    return "itemdetails.html?id=" + id + contextSuffix;
+                }
+
+                if (item.IsFolder) {
+                    return id ? "itemlist.html?parentId=" + id : "#";
+                }
+
+                return "itemdetails.html?id=" + id;
+            };
+
             function showItem(item, serverId, options) {
                 if (typeof (item) === 'string') {
                     require(['connectionManager'], function (connectionManager) {
@@ -1317,8 +1491,7 @@ var AppInfo = {};
                         options = arguments[1];
                     }
 
-                    var context = options ? options.context : null;
-                    embyRouter.show('/' + LibraryBrowser.getHref(item, context), { item: item });
+                    embyRouter.show('/' + embyRouter.getRouteUrl(item, options), { item: item });
                 }
             }
 

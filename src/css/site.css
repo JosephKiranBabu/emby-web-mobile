@@ -8,21 +8,25 @@
 }
 
 /* Links */
-.ui-body-b a {
+a {
     color: #52B54B /*{b-link-color}*/;
     font-weight: 500;
+    text-decoration: none;
 }
 
-    .ui-body-b a:visited {
+    a:visited {
         color: #52B54B /*{b-link-visited}*/;
+        text-decoration: none;
     }
 
-    .ui-body-b a:hover {
+    a:hover {
         color: #2E7D32 /*{b-link-hover}*/;
+        text-decoration: none;
     }
 
-    .ui-body-b a:active {
+    a:active {
         color: #2E7D32 /*{b-link-active}*/;
+        text-decoration: none;
     }
 
 /* Remove IE mobile 300ms tap delay */
@@ -110,10 +114,6 @@ h3 {
 
 .ui-body-b h1, .ui-body-b h2 {
     color: #bbb;
-}
-
-a, a:active, a:hover {
-    text-decoration: none;
 }
 
 .libraryPage h1 a {

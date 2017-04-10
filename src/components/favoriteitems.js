@@ -79,7 +79,7 @@
                 if (options.Limit && result.Items.length >= options.Limit) {
                     var href = "secondaryitems.html?type=" + section.types + "&filters=IsFavorite";
 
-                    html += '<a class="clearLink" href="' + href + '" style="margin-left:2em;"><button is="emby-button" type="button" class="raised more mini">' + Globalize.translate('ButtonMore') + '</button></a>';
+                    html += '<a class="clearLink" href="' + href + '" style="margin-left:2em;"><button is="emby-button" type="button" class="raised more raised-mini">' + Globalize.translate('ButtonMore') + '</button></a>';
                 }
 
                 html += '</div>';

@@ -68,7 +68,11 @@
                     if (datetime.isRelativeDay(premiereDate, -1)) {
                         dateText = Globalize.translate('Yesterday');
                     } else {
-                        dateText = LibraryBrowser.getFutureDateText(premiereDate, true);
+                        dateText = datetime.toLocaleDateString(premiereDate, {
+                            weekday: 'long',
+                            month: 'short',
+                            day: 'numeric'
+                        });
                     }
 
                 } catch (err) {
@@ -121,6 +125,7 @@
                 lazy: true,
                 showDetailsMenu: true,
                 centerText: !supportsImageAnalysis,
+                overlayText: false,
                 context: 'home-upcoming',
                 overlayMoreButton: !supportsImageAnalysis,
                 showParentTitle: true,

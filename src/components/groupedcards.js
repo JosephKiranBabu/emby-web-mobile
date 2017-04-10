@@ -1,4 +1,4 @@
-﻿define(['dom'], function (dom) {
+﻿define(['dom', 'embyRouter'], function (dom, embyRouter) {
     'use strict';
 
     function onGroupedCardClick(e, card) {
@@ -27,7 +27,7 @@
         ApiClient.getJSON(ApiClient.getUrl('Users/' + userId + '/Items/Latest', options)).then(function (items) {
 
             if (items.length == 1) {
-                Dashboard.navigate(LibraryBrowser.getHref(items[0]));
+                embyRouter.showItem(items[0]);
                 return;
             }
 

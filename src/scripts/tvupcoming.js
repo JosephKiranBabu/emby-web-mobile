@@ -70,7 +70,11 @@
                     if (datetime.isRelativeDay(premiereDate, -1)) {
                         dateText = Globalize.translate('Yesterday');
                     } else {
-                        dateText = libraryBrowser.getFutureDateText(premiereDate, true);
+                        dateText = datetime.toLocaleDateString(premiereDate, {
+                            weekday: 'long',
+                            month: 'short',
+                            day: 'numeric'
+                        });
                     }
 
                 } catch (err) {

@@ -12,7 +12,7 @@
         var html = '';
 
         var supportsImageAnalysis = appHost.supports('imageanalysis');
-        var cardLayout = appHost.preferVisualCards || supportsImageAnalysis;
+        var cardLayout = false;
 
         html += cardBuilder.getCardsHtml({
             items: timers,

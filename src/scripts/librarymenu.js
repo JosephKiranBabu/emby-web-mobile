@@ -246,7 +246,9 @@
 
     function getItemHref(item, context) {
 
-        return libraryBrowser.getHref(item, context);
+        return embyRouter.getRouteUrl(item, {
+            context: context
+        });
     }
 
     var requiresUserRefresh = true;

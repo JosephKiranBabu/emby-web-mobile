@@ -1,35 +1,6 @@
 ﻿define(['userSettingsBuilder', 'dom', 'globalize', 'loading', 'homeSections', 'listViewStyle'], function (userSettingsBuilder, dom, globalize, loading, homeSections) {
     'use strict';
 
-    function renderViews(page, user, result) {
-
-        var folderHtml = '';
-
-        folderHtml += '<div class="checkboxList">';
-        folderHtml += result.map(function (i) {
-
-            var currentHtml = '';
-
-            var id = 'chkGroupFolder' + i.Id;
-
-            var isChecked = user.Configuration.GroupedFolders.indexOf(i.Id) != -1;
-
-            var checkedHtml = isChecked ? ' checked="checked"' : '';
-
-            currentHtml += '<label>';
-            currentHtml += '<input type="checkbox" is="emby-checkbox" class="chkGroupFolder" data-folderid="' + i.Id + '" id="' + id + '"' + checkedHtml + '/>';
-            currentHtml += '<span>' + i.Name + '</span>';
-            currentHtml += '</label>';
-
-            return currentHtml;
-
-        }).join('');
-
-        folderHtml += '</div>';
-
-        page.querySelector('.folderGroupList').innerHTML = folderHtml;
-    }
-
     function renderLatestItems(page, user, result) {
 
         var folderHtml = '';
@@ -140,11 +111,9 @@
         updateHomeSectionValues(page, userSettings);
 
         var promise1 = ApiClient.getUserViews({}, user.Id);
-        var promise2 = ApiClient.getJSON(ApiClient.getUrl("Users/" + user.Id + "/GroupingOptions"));
 
-        Promise.all([promise1, promise2]).then(function (responses) {
+        Promise.all([promise1]).then(function (responses) {
 
-            renderViews(page, user, responses[1]);
             renderLatestItems(page, user, responses[0]);
             renderViewOrder(page, user, responses[0]);
 
@@ -179,11 +148,6 @@
         user.Configuration.HidePlayedInLatest = page.querySelector('.chkHidePlayedFromLatest').checked;
 
         user.Configuration.LatestItemsExcludes = getCheckboxItems(".chkIncludeInLatest", page, false).map(function (i) {
-
-            return i.getAttribute('data-folderid');
-        });
-
-        user.Configuration.GroupedFolders = getCheckboxItems(".chkGroupFolder", page, true).map(function (i) {
 
             return i.getAttribute('data-folderid');
         });

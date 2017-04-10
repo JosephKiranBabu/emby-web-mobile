@@ -768,6 +768,10 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
 }
 
 .verticalSection {
+    margin-bottom: 2.8em;
+}
+
+.layout-tv .verticalSection {
     margin-bottom: 1.8em;
 }
 

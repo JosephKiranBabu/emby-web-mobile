@@ -1,4 +1,4 @@
-﻿define(['appSettings', 'dom', 'browser', 'datetime', 'scrollStyles'], function (appSettings, dom, browser, datetime) {
+﻿define(['appSettings', 'dom', 'browser', 'datetime', 'embyRouter', 'scrollStyles'], function (appSettings, dom, browser, datetime, embyRouter) {
     'use strict';
 
     function fadeInRight(elem) {
@@ -194,176 +194,6 @@
                 return html;
             },
 
-            getHref: function (item, context, topParentId) {
-
-                if (!item) {
-                    throw new Error('item cannot be null');
-                }
-
-                if (item.url) {
-                    return item.url;
-                }
-
-                var url;
-                // Handle search hints
-                var id = item.Id || item.ItemId;
-
-                if (item.Type == "SeriesTimer") {
-                    //return "livetvseriestimer.html?id=" + id;
-                    return "itemdetails.html?seriesTimerId=" + id;
-                }
-
-                if (item.CollectionType == 'livetv') {
-                    return 'livetv.html';
-                }
-
-                if (item.CollectionType == 'channels') {
-
-                    return 'channels.html';
-                }
-
-                if (context != 'folders') {
-                    if (item.CollectionType == 'movies') {
-                        return 'movies.html?topParentId=' + item.Id;
-                    }
-
-                    if (item.CollectionType == 'boxsets') {
-                        return 'itemlist.html?topParentId=' + item.Id + '&parentId=' + item.Id;
-                    }
-
-                    if (item.CollectionType == 'tvshows') {
-                        return 'tv.html?topParentId=' + item.Id;
-                    }
-
-                    if (item.CollectionType == 'music') {
-                        return 'music.html?topParentId=' + item.Id;
-                    }
-
-                    if (item.CollectionType == 'games') {
-                        return id ? "itemlist.html?parentId=" + id : "#";
-                        //return 'gamesrecommended.html?topParentId=' + item.Id;
-                    }
-                    if (item.CollectionType == 'playlists') {
-                        return 'playlists.html?topParentId=' + item.Id;
-                    }
-                    if (item.CollectionType == 'photos') {
-                        return 'photos.html?topParentId=' + item.Id;
-                    }
-                }
-                else if (item.IsFolder) {
-                    if (item.Type != "BoxSet" && item.Type != "Series") {
-                        return id ? "itemlist.html?parentId=" + id : "#";
-                    }
-                }
-
-                if (item.Type == 'CollectionFolder') {
-                    return 'itemlist.html?topParentId=' + item.Id + '&parentId=' + item.Id;
-                }
-
-                if (item.Type == "PhotoAlbum") {
-                    return "itemlist.html?context=photos&parentId=" + id;
-                }
-                if (item.Type == "Playlist") {
-                    return "itemdetails.html?id=" + id;
-                }
-                if (item.Type == "TvChannel") {
-                    return "itemdetails.html?id=" + id;
-                }
-                if (item.Type == "Channel") {
-                    return "channelitems.html?id=" + id;
-                }
-                if ((item.IsFolder && item.SourceType == 'Channel') || item.Type == 'ChannelFolderItem') {
-                    return "channelitems.html?id=" + item.ChannelId + '&folderId=' + item.Id;
-                }
-                if (item.Type == "Program") {
-                    return "itemdetails.html?id=" + id;
-                }
-
-                if (item.Type == "BoxSet") {
-                    return "itemdetails.html?id=" + id;
-                }
-                if (item.Type == "MusicAlbum") {
-                    return "itemdetails.html?id=" + id;
-                }
-                if (item.Type == "GameSystem") {
-                    return "itemdetails.html?id=" + id;
-                }
-                if (item.Type == "Genre") {
-                    var type;
-                    switch (context) {
-                        case 'tvshows':
-                            type = 'Series';
-                            break;
-                        case 'games':
-                            type = 'Game';
-                            break;
-                        default:
-                            type = 'Movie';
-                            break;
-                    }
-
-                    url = "secondaryitems.html?type=" + type + "&genreId=" + id;
-                    if (topParentId) {
-                        url += "&parentId=" + topParentId;
-                    }
-                    return url;
-                }
-                if (item.Type == "MusicGenre") {
-                    return "itemdetails.html?id=" + id;
-                }
-                if (item.Type == "GameGenre") {
-
-                    url = "secondaryitems.html?type=Game&genreId=" + id;
-                    if (topParentId) {
-                        url += "&parentId=" + topParentId;
-                    }
-                    return url;
-                }
-                if (item.Type == "Studio") {
-
-                    var type;
-                    switch (context) {
-                        case 'tvshows':
-                            type = 'Series';
-                            break;
-                        case 'games':
-                            type = 'Game';
-                            break;
-                        default:
-                            type = 'Movie';
-                            break;
-                    }
-
-                    url = "secondaryitems.html?type=" + type + "&studioId=" + id;
-                    if (topParentId) {
-                        url += "&parentId=" + topParentId;
-                    }
-                    return url;
-                }
-                if (item.Type == "Person") {
-                    return "itemdetails.html?id=" + id;
-                }
-                if (item.Type == "Recording") {
-                    return "itemdetails.html?id=" + id;
-                }
-
-                if (item.Type == "MusicArtist") {
-                    return "itemdetails.html?id=" + id;
-                }
-
-                var contextSuffix = context ? ('&context=' + context) : '';
-
-                if (item.Type == "Series" || item.Type == "Season" || item.Type == "Episode") {
-                    return "itemdetails.html?id=" + id + contextSuffix;
-                }
-
-                if (item.IsFolder) {
-                    return id ? "itemlist.html?parentId=" + id : "#";
-                }
-
-                return "itemdetails.html?id=" + id;
-            },
-
             getListItemInfo: function (elem) {
 
                 var elemWithAttributes = elem;
@@ -384,27 +214,6 @@
                 };
             },
 
-            getFutureDateText: function (date) {
-
-                var weekday = [];
-                weekday[0] = Globalize.translate('OptionSunday');
-                weekday[1] = Globalize.translate('OptionMonday');
-                weekday[2] = Globalize.translate('OptionTuesday');
-                weekday[3] = Globalize.translate('OptionWednesday');
-                weekday[4] = Globalize.translate('OptionThursday');
-                weekday[5] = Globalize.translate('OptionFriday');
-                weekday[6] = Globalize.translate('OptionSaturday');
-
-                var day = weekday[date.getDay()];
-                date = datetime.toLocaleDateString(date);
-
-                if (date.toLowerCase().indexOf(day.toLowerCase()) == -1) {
-                    return day + " " + date;
-                }
-
-                return date;
-            },
-
             renderName: function (item, nameElem, linkToElement, context) {
 
                 require(['itemHelper'], function (itemHelper) {
@@ -413,7 +222,9 @@
                     });
 
                     if (linkToElement) {
-                        nameElem.innerHTML = '<a class="detailPageParentLink" href="' + LibraryBrowser.getHref(item, context) + '">' + name + '</a>';
+                        nameElem.innerHTML = '<a class="detailPageParentLink" href="' + embyRouter.getRouteUrl(item, {
+                            context: context
+                        }) + '">' + name + '</a>';
                     } else {
                         nameElem.innerHTML = name;
                     }

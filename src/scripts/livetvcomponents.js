@@ -35,7 +35,11 @@
 
                     var premiereDate = datetime.parseISO8601Date(item.StartDate, true);
 
-                    dateText = LibraryBrowser.getFutureDateText(premiereDate, true);
+                    dateText = datetime.toLocaleDateString(premiereDate, {
+                        weekday: 'long',
+                        month: 'short',
+                        day: 'numeric'
+                    });
 
                 } catch (err) {
                 }

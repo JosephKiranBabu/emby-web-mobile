@@ -744,7 +744,11 @@
                 html += '<div class="sectionTitleContainer">';
                 html += '<h2 class="sectionTitle sectionTitle-cards padded-left">' + globalize.translate('sharedcomponents#HeaderNextUp') + '</h2>';
                 if (!layoutManager.tv) {
-                    html += '<a is="emby-linkbutton" href="secondaryitems.html?type=nextup" class="raised raised-mini sectionTitleButton btnMore">' + globalize.translate('sharedcomponents#More') + '</a>';
+                    html += '<a is="emby-linkbutton" href="' + embyRouter.getRouteUrl('nextup', {
+                        
+                        serverId: apiClient.serverId()
+
+                    }) + '" class="raised raised-mini sectionTitleButton btnMore">' + globalize.translate('sharedcomponents#More') + '</a>';
                 }
                 html += '</div>';
 

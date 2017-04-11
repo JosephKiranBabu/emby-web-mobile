@@ -50,10 +50,22 @@ html {
 
 h1 {
     font-family: -apple-system-headline, system-ui, BlinkMacSystemFont, "Roboto", "Segoe UI", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", 'Open Sans', sans-serif;
+    font-weight: normal !important;
+    font-size: 1.72em;
+    margin-top: 1em;
 }
 
 h2 {
     font-family: -apple-system-subheadline, system-ui, BlinkMacSystemFont, "Roboto", "Segoe UI", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", 'Open Sans', sans-serif;
+    font-weight: normal;
+    margin-top: 1em;
+    font-size: 1.5em;
+}
+
+h3 {
+    font-weight: normal;
+    margin-top: 1em;
+    font-size: 1.17em;
 }
 
 body {
@@ -89,23 +101,6 @@ body {
 
 .bodyWithPopupOpen {
     overflow-y: hidden !important;
-}
-
-h1, h2, h3 {
-    margin-top: 1em;
-}
-
-h1 {
-    font-weight: normal !important;
-    font-size: 1.72em;
-}
-
-h2 {
-    font-weight: normal;
-}
-
-h3 {
-    font-weight: normal;
 }
 
 .ui-body-a h1, .ui-body-a h2 {

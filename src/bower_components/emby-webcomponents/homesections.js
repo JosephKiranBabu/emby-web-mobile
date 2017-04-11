@@ -330,7 +330,11 @@
                 html += '<div class="sectionTitleContainer">';
                 html += '<h2 class="sectionTitle sectionTitle-cards padded-left">' + globalize.translate('sharedcomponents#LatestFromLibrary', parent.Name) + '</h2>';
                 if (!layoutManager.tv) {
-                    html += '<a is="emby-linkbutton" href="' + embyRouter.getRouteUrl(parent) + '" class="raised raised-mini sectionTitleButton btnMore">' + globalize.translate('sharedcomponents#More') + '</a>';
+                    html += '<a is="emby-linkbutton" href="' + embyRouter.getRouteUrl(parent, {
+
+                        section: 'latest'
+
+                    }) + '" class="raised raised-mini sectionTitleButton btnMore">' + globalize.translate('sharedcomponents#More') + '</a>';
                 }
                 html += '</div>';
 

@@ -1,9 +1,11 @@
-﻿define(['loading', 'libraryBrowser', 'listView', 'cardBuilder', 'imageLoader', 'apphost', 'globalize', 'emby-itemscontainer'], function (loading, libraryBrowser, listView, cardBuilder, imageLoader, appHost, globalize) {
+﻿define(['connectionManager', 'loading', 'libraryBrowser', 'listView', 'cardBuilder', 'imageLoader', 'apphost', 'globalize', 'emby-itemscontainer'], function (connectionManager, loading, libraryBrowser, listView, cardBuilder, imageLoader, appHost, globalize) {
     'use strict';
 
     return function (view, params) {
 
         var data = {};
+
+        var apiClient = params.serverId ? connectionManager.getApiClient(params.serverId) : ApiClient;
 
         function addCurrentItemToQuery(query, item) {
 
@@ -129,7 +131,6 @@
 
         function getPromise(parentItem) {
 
-            var apiClient = ApiClient;
             var query = getQuery(parentItem);
 
             if (params.type === 'nextup') {
@@ -280,25 +281,25 @@
             var id = params.genreId || params.studioId || params.artistId || params.personId || params.parentId;
 
             if (id) {
-                return ApiClient.getItem(Dashboard.getCurrentUserId(), id);
+                return apiClient.getItem(Dashboard.getCurrentUserId(), id);
             }
 
             var name = params.genre;
 
             if (name) {
-                return ApiClient.getGenre(name, Dashboard.getCurrentUserId());
+                return apiClient.getGenre(name, Dashboard.getCurrentUserId());
             }
 
             name = params.musicgenre;
 
             if (name) {
-                return ApiClient.getMusicGenre(name, Dashboard.getCurrentUserId());
+                return apiClient.getMusicGenre(name, Dashboard.getCurrentUserId());
             }
 
             name = params.gamegenre;
 
             if (name) {
-                return ApiClient.getGameGenre(name, Dashboard.getCurrentUserId());
+                return apiClient.getGameGenre(name, Dashboard.getCurrentUserId());
             }
 
             return null;

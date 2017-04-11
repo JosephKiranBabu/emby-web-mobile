@@ -1023,6 +1023,9 @@ var AppInfo = {};
 
         define("headroom", [embyWebComponentsBowerPath + "/headroom/headroom"], returnFirstDependency);
 
+        define("homescreenSettings", [embyWebComponentsBowerPath + "/homescreensettings/homescreensettings"], returnFirstDependency);
+        define("homescreenSettingsDialog", [embyWebComponentsBowerPath + "/homescreensettings/homescreensettingsdialog"], returnFirstDependency);
+
         define("layoutManager", [embyWebComponentsBowerPath + "/layoutmanager", 'apphost'], getLayoutManager);
         define("homeSections", [embyWebComponentsBowerPath + "/homesections"], returnFirstDependency);
         define("playMenu", [embyWebComponentsBowerPath + "/playmenu"], returnFirstDependency);
@@ -1315,7 +1318,13 @@ var AppInfo = {};
                 }
 
                 var context = options ? options.context : null;
-                var context = options ? options.topParentId : null;
+                var topParentId = options ? (options.topParentId || options.parentId) : null;
+
+                if (typeof (item) === 'string') {
+                    if (item === 'nextup') {
+                        return 'secondaryitems.html?type=nextup&serverId=' + options.serverId;
+                    }
+                }
 
                 var url;
                 // Handle search hints
@@ -1345,7 +1354,15 @@ var AppInfo = {};
                     }
 
                     if (item.CollectionType == 'tvshows') {
-                        return 'tv.html?topParentId=' + item.Id;
+                        url = 'tv.html?topParentId=' + item.Id;
+
+                        if (options) {
+                            if (options.section === 'latest') {
+                                url += '&tab=1';
+                            }
+                        }
+
+                        return url;
                     }
 
                     if (item.CollectionType == 'music') {

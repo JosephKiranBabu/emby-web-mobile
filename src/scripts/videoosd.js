@@ -195,14 +195,21 @@
                 return;
             }
 
-            require(['recordingButton'], function (RecordingButton) {
+            connectionManager.getApiClient(item.ServerId).getCurrentUser().then(function (user) {
+                
+                if (!user.Policy.EnableLiveTvManagement) {
+                    return;
+                }
 
-                recordingButtonManager = new RecordingButton({
-                    item: item,
-                    button: view.querySelector('.btnRecord')
+                require(['recordingButton'], function (RecordingButton) {
+
+                    recordingButtonManager = new RecordingButton({
+                        item: item,
+                        button: view.querySelector('.btnRecord')
+                    });
+
+                    view.querySelector('.btnRecord').classList.remove('hide');
                 });
-
-                view.querySelector('.btnRecord').classList.remove('hide');
             });
         }
 

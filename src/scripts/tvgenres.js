@@ -1,4 +1,4 @@
-﻿define(['loading', 'libraryBrowser', 'cardBuilder', 'lazyLoader', 'apphost', 'globalize', 'dom'], function (loading, libraryBrowser, cardBuilder, lazyLoader, appHost, globalize, dom) {
+﻿define(['loading', 'libraryBrowser', 'cardBuilder', 'lazyLoader', 'apphost', 'globalize', 'embyRouter', 'dom', 'emby-linkbutton'], function (loading, libraryBrowser, cardBuilder, lazyLoader, appHost, globalize, embyRouter, dom) {
     'use strict';
 
     return function (view, params, tabContent) {
@@ -63,18 +63,6 @@
             return 'secondaryitems.html?type=' + type + '&genreId=' + itemId + '&parentId=' + params.topParentId;
         }
 
-        dom.addEventListener(tabContent, 'click', function (e) {
-
-            var btnMoreFromGenre = dom.parentWithClass(e.target, 'btnMoreFromGenre');
-            if (btnMoreFromGenre) {
-                var id = btnMoreFromGenre.getAttribute('data-id');
-                Dashboard.navigate(getMoreItemsHref(id, 'Series'));
-            }
-
-        }, {
-            passive: true
-        });
-
         function fillItemsContainer(elem) {
 
             var id = elem.getAttribute('data-id');
@@ -134,7 +122,7 @@
                         centerText: false,
                         cardLayout: true,
                         vibrant: supportsImageAnalysis,
-                        showSeriesYear: true
+                        showYear: true
                     });
                 }
                 else if (viewStyle == "PosterCard") {
@@ -146,7 +134,7 @@
                         centerText: false,
                         cardLayout: true,
                         vibrant: supportsImageAnalysis,
-                        showSeriesYear: true
+                        showYear: true
                     });
                 }
                 else if (viewStyle == "Poster") {
@@ -180,21 +168,24 @@
 
                     var item = items[i];
 
-                    html += '<div class="homePageSection">';
+                    html += '<div class="verticalSection">';
 
-                    html += '<div style="display:flex;align-items:center;">';
-                    html += '<h1 class="listHeader">';
+                    html += '<div class="sectionTitleContainer padded-left">';
+                    html += '<h2 class="sectionTitle sectionTitle-cards">';
                     html += item.Name;
-                    html += '</h1>';
-                    html += '<button is="emby-button" type="button" class="raised more raised-mini hide btnMoreFromGenre btnMoreFromGenre' + item.Id + '" data-id="' + item.Id + '">';
-                    html += '<span>' + globalize.translate('ButtonMore') + '</span>';
-                    html += '</button>';
+                    html += '</h2>';
+                    html += '<a is="emby-linkbutton" href="' + embyRouter.getRouteUrl(item, {
+                        context: 'tvshows',
+                        parentId: params.topParentId
+                    }) + '" class="raised more raised-mini hide sectionTitleButton btnMoreFromGenre' + item.Id + '">';
+                    html += globalize.translate('ButtonMore');
+                    html += '</a>';
                     html += '</div>';
 
                     if (enableScrollX()) {
-                        html += '<div is="emby-itemscontainer" class="itemsContainer hiddenScrollX lazy" data-id="' + item.Id + '">';
+                        html += '<div is="emby-itemscontainer" class="itemsContainer hiddenScrollX lazy padded-left padded-right" data-id="' + item.Id + '">';
                     } else {
-                        html += '<div is="emby-itemscontainer" class="itemsContainer vertical-wrap lazy" data-id="' + item.Id + '">';
+                        html += '<div is="emby-itemscontainer" class="itemsContainer vertical-wrap lazy padded-left padded-right" data-id="' + item.Id + '">';
                     }
                     html += '</div>';
 

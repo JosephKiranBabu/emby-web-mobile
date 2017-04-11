@@ -1,63 +1,6 @@
 ﻿define(['loading', 'libraryBrowser', 'libraryMenu', 'playbackManager', 'mainTabsManager', 'homeSections', 'emby-button'], function (loading, libraryBrowser, libraryMenu, playbackManager, mainTabsManager, homeSections) {
     'use strict';
 
-    function loadSection(page, user, userSettings, index) {
-
-        var userId = user.Id;
-
-        var section = userSettings.get('homesection' + index) || homeSections.getDefaultSection(index);
-
-        if (section == 'folders') {
-            section = homeSections.getDefaultSection()[0];
-        }
-
-        var elem = page.querySelector('.section' + index);
-        var apiClient = ApiClient;
-
-        if (section == 'latestmedia') {
-            return homeSections.loadRecentlyAdded(elem, apiClient, user);
-        }
-        else if (section == 'librarytiles') {
-            return homeSections.loadLibraryTiles(elem, apiClient, user, 'backdrop', index);
-        }
-        else if (section == 'smalllibrarytiles') {
-            return homeSections.loadLibraryTiles(elem, apiClient, user, 'smallBackdrop', index);
-        }
-        else if (section == 'smalllibrarytiles-automobile') {
-            return homeSections.loadLibraryTiles(elem, apiClient, user, 'smallBackdrop', index);
-        }
-        else if (section == 'librarytiles-automobile') {
-            return homeSections.loadLibraryTiles(elem, apiClient, user, 'backdrop', index);
-        }
-        else if (section == 'librarybuttons') {
-            return homeSections.loadlibraryButtons(elem, apiClient, userId, index);
-        }
-        else if (section == 'resume') {
-            return homeSections.loadResumeVideo(elem, apiClient, userId);
-        }
-        else if (section == 'resumeaudio') {
-            return homeSections.loadResumeAudio(elem, apiClient, userId);
-        }
-        else if (section == 'activerecordings') {
-            return homeSections.loadActiveRecordings(elem, apiClient, userId);
-        }
-        else if (section == 'nextup') {
-            return homeSections.loadNextUp(elem, apiClient, userId);
-        }
-        else if (section == 'latesttvrecordings') {
-            return homeSections.loadLatestLiveTvRecordings(elem, apiClient, userId);
-        }
-        else if (section == 'latestchannelmedia') {
-            return homeSections.loadLatestChannelMedia(elem, apiClient, userId);
-
-        } else {
-
-            elem.innerHTML = '';
-
-            return Promise.resolve();
-        }
-    }
-
     function loadSections(page, user, userSettings) {
 
         var i, length;
@@ -77,7 +20,7 @@
 
         for (i = 0, length = sectionCount; i < length; i++) {
 
-            promises.push(loadSection(page, user, userSettings, i));
+            promises.push(homeSections.loadSection(page, ApiClient, user, userSettings, i));
         }
 
         return Promise.all(promises);

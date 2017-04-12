@@ -1,4 +1,4 @@
-﻿define(['loading', 'libraryBrowser', 'cardBuilder', 'lazyLoader', 'apphost', 'globalize', 'embyRouter', 'dom', 'emby-linkbutton'], function (loading, libraryBrowser, cardBuilder, lazyLoader, appHost, globalize, embyRouter, dom) {
+﻿define(['layoutManager', 'loading', 'libraryBrowser', 'cardBuilder', 'lazyLoader', 'apphost', 'globalize', 'embyRouter', 'dom', 'emby-linkbutton'], function (layoutManager, loading, libraryBrowser, cardBuilder, lazyLoader, appHost, globalize, embyRouter, dom) {
     'use strict';
 
     return function (view, params, tabContent) {
@@ -47,7 +47,7 @@
         }
 
         function enableScrollX() {
-            return browserInfo.mobile;
+            return !layoutManager.desktop;
         }
 
         function getThumbShape() {

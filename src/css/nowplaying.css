@@ -1,13 +1,4 @@
-﻿/*.nowPlayingPage {
-    padding-top: 1em !important;
-}*/
-
-.remoteControlContent {
-    padding: 1em 0 0;
-    max-width: 96%;
-}
-
-.nowPlayingInfoContainer {
+﻿.nowPlayingInfoContainer {
     display: flex;
     flex-direction: row;
 }

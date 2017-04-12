@@ -1,8 +1,8 @@
-﻿define(['loading', 'libraryBrowser', 'mainTabsManager', 'cardBuilder', 'apphost', 'imageLoader', 'scrollStyles', 'emby-itemscontainer', 'emby-tabs', 'emby-button'], function (loading, libraryBrowser, mainTabsManager, cardBuilder, appHost, imageLoader) {
+﻿define(['layoutManager', 'loading', 'libraryBrowser', 'mainTabsManager', 'cardBuilder', 'apphost', 'imageLoader', 'scrollStyles', 'emby-itemscontainer', 'emby-tabs', 'emby-button'], function (layoutManager, loading, libraryBrowser, mainTabsManager, cardBuilder, appHost, imageLoader) {
     'use strict';
 
     function enableScrollX() {
-        return browserInfo.mobile;
+        return !layoutManager.desktop;
     }
 
     function renderRecordings(elem, recordings, cardOptions) {

@@ -2876,23 +2876,7 @@ pageClassOn('viewinit', "page", function () {
     }
 
     page.classList.add("ui-page");
-    page.classList.add("ui-page-theme-" + current);
     page.classList.add("ui-body-" + current);
-
-    var contents = page.querySelectorAll("div[data-role='content']");
-
-    for (var i = 0, length = contents.length; i < length; i++) {
-        var content = contents[i];
-        //var theme = content.getAttribute("theme") || undefined;
-
-        //content.classList.add("ui-content");
-        //if (self.options.contentTheme) {
-        //    content.classList.add("ui-body-" + (self.options.contentTheme));
-        //}
-        // Add ARIA role
-        content.setAttribute("role", "main");
-        content.classList.add("ui-content");
-    }
 });
 
 pageClassOn('viewshow', "page", function () {
@@ -2900,7 +2884,7 @@ pageClassOn('viewshow', "page", function () {
 
     var page = this;
 
-    var currentTheme = page.classList.contains('ui-page-theme-a') ? 'a' : 'b';
+    var currentTheme = page.classList.contains('ui-body-a') ? 'a' : 'b';
     var docElem = document.documentElement;
 
     if (currentTheme == 'a') {

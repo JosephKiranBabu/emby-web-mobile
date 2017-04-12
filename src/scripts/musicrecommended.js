@@ -1,4 +1,4 @@
-﻿define(['loading', 'libraryBrowser', 'cardBuilder', 'dom', 'apphost', 'imageLoader', 'libraryMenu', 'mainTabsManager', 'scrollStyles', 'emby-itemscontainer', 'emby-tabs', 'emby-button'], function (loading, libraryBrowser, cardBuilder, dom, appHost, imageLoader, libraryMenu, mainTabsManager) {
+﻿define(['layoutManager', 'loading', 'libraryBrowser', 'cardBuilder', 'dom', 'apphost', 'imageLoader', 'libraryMenu', 'mainTabsManager', 'scrollStyles', 'emby-itemscontainer', 'emby-tabs', 'emby-button'], function (layoutManager, loading, libraryBrowser, cardBuilder, dom, appHost, imageLoader, libraryMenu, mainTabsManager) {
     'use strict';
 
     function itemsPerRow() {
@@ -9,7 +9,7 @@
     }
 
     function enableScrollX() {
-        return browserInfo.mobile;
+        return !layoutManager.desktop;
     }
 
     function getSquareShape() {

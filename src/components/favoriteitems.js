@@ -1,8 +1,8 @@
-﻿define(['loading', 'libraryBrowser', 'cardBuilder', 'dom', 'apphost', 'imageLoader', 'scrollStyles', 'emby-itemscontainer'], function (loading, libraryBrowser, cardBuilder, dom, appHost, imageLoader) {
+﻿define(['loading', 'libraryBrowser', 'cardBuilder', 'dom', 'apphost', 'imageLoader', 'globalize', 'layoutManager', 'scrollStyles', 'emby-itemscontainer'], function (loading, libraryBrowser, cardBuilder, dom, appHost, imageLoader, globalize, layoutManager) {
     'use strict';
 
     function enableScrollX() {
-        return browserInfo.mobile;
+        return !layoutManager.desktop;
     }
 
     function getThumbShape() {
@@ -73,21 +73,21 @@
 
             if (result.Items.length) {
 
-                html += '<div>';
-                html += '<h1 style="display:inline-block; vertical-align:middle;" class="listHeader">' + Globalize.translate(section.name) + '</h1>';
+                html += '<div class="sectionTitleContainer">';
+                html += '<h2 class="sectionTitle sectionTitle-cards padded-left">' + globalize.translate(section.name) + '</h2>';
 
-                if (options.Limit && result.Items.length >= options.Limit) {
+                if (!layoutManager.tv && options.Limit && result.Items.length >= options.Limit) {
                     var href = "secondaryitems.html?type=" + section.types + "&filters=IsFavorite";
 
-                    html += '<a class="clearLink" href="' + href + '" style="margin-left:2em;"><button is="emby-button" type="button" class="raised more raised-mini">' + Globalize.translate('ButtonMore') + '</button></a>';
+                    html += '<a class="clearLink" href="' + href + '" style="margin-left:1.5em;"><button is="emby-button" type="button" class="raised more raised-mini">' + globalize.translate('ButtonMore') + '</button></a>';
                 }
 
                 html += '</div>';
 
                 if (enableScrollX()) {
-                    html += '<div is="emby-itemscontainer" class="itemsContainer hiddenScrollX">';
+                    html += '<div is="emby-itemscontainer" class="itemsContainer hiddenScrollX padded-left padded-right">';
                 } else {
-                    html += '<div is="emby-itemscontainer" class="itemsContainer vertical-wrap">';
+                    html += '<div is="emby-itemscontainer" class="itemsContainer vertical-wrap padded-left padded-right">';
                 }
 
                 var supportsImageAnalysis = appHost.supports('imageanalysis');
@@ -148,7 +148,7 @@
             var html = '';
             for (i = 0, length = sections.length; i < length; i++) {
 
-                html += '<div class="homePageSection section' + sections[i].id + '"></div>';
+                html += '<div class="verticalSection section' + sections[i].id + '"></div>';
             }
 
             elem.innerHTML = html;

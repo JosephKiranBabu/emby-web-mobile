@@ -1,8 +1,8 @@
-﻿define(['datetime', 'cardBuilder', 'apphost'], function (datetime, cardBuilder, appHost) {
+﻿define(['layoutManager', 'datetime', 'cardBuilder', 'apphost'], function (layoutManager, datetime, cardBuilder, appHost) {
     'use strict';
 
     function enableScrollX() {
-        return browserInfo.mobile;
+        return !layoutManager.desktop;
     }
 
     function getBackdropShape() {
@@ -75,15 +75,15 @@
             var group = groups[i];
 
             if (group.name) {
-                html += '<div class="homePageSection">';
+                html += '<div class="verticalSection">';
 
-                html += '<h1 class="listHeader">' + group.name + '</h1>';
+                html += '<h2 class="sectionTitle sectionTitle-cards padded-left">' + group.name + '</h2>';
             }
 
             if (enableScrollX()) {
-                html += '<div is="emby-itemscontainer" class="itemsContainer hiddenScrollX">';
+                html += '<div is="emby-itemscontainer" class="itemsContainer hiddenScrollX padded-left padded-right">';
             } else {
-                html += '<div is="emby-itemscontainer" class="itemsContainer vertical-wrap">';
+                html += '<div is="emby-itemscontainer" class="itemsContainer vertical-wrap padded-left padded-right">';
             }
 
             var supportsImageAnalysis = appHost.supports('imageanalysis');

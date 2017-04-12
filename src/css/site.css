@@ -51,7 +51,7 @@ html {
 h1 {
     font-family: -apple-system-headline, system-ui, BlinkMacSystemFont, "Roboto", "Segoe UI", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", 'Open Sans', sans-serif;
     font-weight: normal !important;
-    font-size: 1.72em;
+    font-size: 1.8em;
     margin-top: 1em;
 }
 
@@ -59,7 +59,7 @@ h2 {
     font-family: -apple-system-subheadline, system-ui, BlinkMacSystemFont, "Roboto", "Segoe UI", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", 'Open Sans', sans-serif;
     font-weight: normal;
     margin-top: 1em;
-    font-size: 1.5em;
+    font-size: 1.6em;
 }
 
 h3 {
@@ -214,14 +214,14 @@ div[data-role='page'] {
     background-color: #f0f0f0;
 }
 
-.ui-content {
+div[data-role="content"] {
     border-width: 0;
     overflow: visible;
     overflow-x: hidden;
     padding: 1em;
 }
 
-.page > .ui-content, .pageWithAbsoluteTabs .pageTabContent, .absolutePageTabContent .itemsContainer {
+.page, .pageWithAbsoluteTabs .pageTabContent {
     /* Need this so that the audio player doesn't cover content, but also for unveil lazy loading. */
     padding-bottom: 160px;
 }

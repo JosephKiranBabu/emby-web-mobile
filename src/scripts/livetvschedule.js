@@ -1,8 +1,8 @@
-﻿define(['cardBuilder', 'apphost', 'imageLoader', 'loading', 'scripts/livetvcomponents', 'emby-button', 'emby-itemscontainer'], function (cardBuilder, appHost, imageLoader, loading) {
+﻿define(['layoutManager', 'cardBuilder', 'apphost', 'imageLoader', 'loading', 'scripts/livetvcomponents', 'emby-button', 'emby-itemscontainer'], function (layoutManager, cardBuilder, appHost, imageLoader, loading) {
     'use strict';
 
     function enableScrollX() {
-        return browserInfo.mobile;
+        return !layoutManager.desktop;
     }
 
     function renderRecordings(elem, recordings, cardOptions) {

@@ -1,8 +1,8 @@
-﻿define(['libraryBrowser', 'mainTabsManager', 'components/categorysyncbuttons', 'cardBuilder', 'dom', 'apphost', 'imageLoader', 'playbackManager', 'scrollStyles', 'emby-itemscontainer', 'emby-tabs', 'emby-button'], function (libraryBrowser, mainTabsManager, categorysyncbuttons, cardBuilder, dom, appHost, imageLoader, playbackManager) {
+﻿define(['layoutManager', 'libraryBrowser', 'mainTabsManager', 'components/categorysyncbuttons', 'cardBuilder', 'dom', 'apphost', 'imageLoader', 'playbackManager', 'scrollStyles', 'emby-itemscontainer', 'emby-tabs', 'emby-button'], function (layoutManager, libraryBrowser, mainTabsManager, categorysyncbuttons, cardBuilder, dom, appHost, imageLoader, playbackManager) {
     'use strict';
 
     function enableScrollX() {
-        return browserInfo.mobile;
+        return !layoutManager.desktop;
     }
 
     function getPortraitShape() {
@@ -115,16 +115,16 @@
                 break;
         }
 
-        html += '<div class="homePageSection">';
-        html += '<h1 class="listHeader">' + title + '</h1>';
+        html += '<div class="verticalSection">';
+        html += '<h2 class="sectionTitle sectionTitle-cards padded-left">' + title + '</h2>';
 
         var allowBottomPadding = true;
 
         if (enableScrollX()) {
             allowBottomPadding = false;
-            html += '<div is="emby-itemscontainer" class="itemsContainer hiddenScrollX">';
+            html += '<div is="emby-itemscontainer" class="itemsContainer hiddenScrollX padded-left padded-right">';
         } else {
-            html += '<div is="emby-itemscontainer" class="itemsContainer vertical-wrap">';
+            html += '<div is="emby-itemscontainer" class="itemsContainer vertical-wrap padded-left padded-right">';
         }
 
         html += cardBuilder.getCardsHtml(recommendation.Items, {

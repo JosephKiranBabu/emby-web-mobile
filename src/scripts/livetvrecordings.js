@@ -1,4 +1,4 @@
-﻿define(['loading', 'components/categorysyncbuttons', 'cardBuilder', 'apphost', 'imageLoader', 'scripts/livetvcomponents', 'emby-button', 'listViewStyle', 'emby-itemscontainer'], function (loading, categorysyncbuttons, cardBuilder, appHost, imageLoader) {
+﻿define(['layoutManager', 'loading', 'components/categorysyncbuttons', 'cardBuilder', 'apphost', 'imageLoader', 'scripts/livetvcomponents', 'emby-button', 'listViewStyle', 'emby-itemscontainer'], function (layoutManager, loading, categorysyncbuttons, cardBuilder, appHost, imageLoader) {
     'use strict';
 
     function getRecordingGroupHtml(group) {
@@ -56,7 +56,7 @@
     }
 
     function enableScrollX() {
-        return browserInfo.mobile;
+        return !layoutManager.desktop;
     }
 
     function renderRecordings(elem, recordings, cardOptions) {

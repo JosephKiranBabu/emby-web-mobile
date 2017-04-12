@@ -87,16 +87,16 @@
 
             var html = '';
 
-            html += '<div class="homePageSection" data-type="' + section.type + '">';
+            html += '<div class="verticalSection" data-type="' + section.type + '">';
 
-            html += '<div>';
-            html += '<h1 class="listHeader" style="display:inline-block;vertical-align:middle;">';
+            html += '<div class="sectionTitleContainer">';
+            html += '<h2 class="sectionTitle sectionTitle-cards padded-left">';
             html += section.name;
-            html += '</h1>';
-            html += '<a href="#" class="clearLink hide" style="margin-left:1em;vertical-align:middle;"><button is="emby-button" type="button" class="raised more mini noIcon">' + Globalize.translate('ButtonMore') + '</button></a>';
+            html += '</h2>';
+            html += '<a href="#" class="clearLink hide" style="margin-left:1em;vertical-align:middle;"><button is="emby-button" type="button" class="raised more raised-mini noIcon">' + Globalize.translate('ButtonMore') + '</button></a>';
             html += '</div>';
 
-            html += '<div is="emby-itemscontainer" class="itemsContainer">';
+            html += '<div is="emby-itemscontainer" class="itemsContainer padded-left padded-right">';
             html += '</div>';
 
             html += '</div>';
@@ -105,7 +105,7 @@
 
         }).join('');
 
-        var sectionElems = elem.querySelectorAll('.homePageSection');
+        var sectionElems = elem.querySelectorAll('.verticalSection');
         for (var i = 0, length = sectionElems.length; i < length; i++) {
             renderSection(page, item, sectionElems[i], sectionElems[i].getAttribute('data-type'));
         }

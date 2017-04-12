@@ -92,7 +92,7 @@ progress {
 
 @media all and (min-width: 800px) {
 
-    .type-interior > .ui-content, .type-interior > .ui-panel-content-wrap > .ui-content {
+    .type-interior > div[data-role="content"], .type-interior > .ui-panel-content-wrap > div[data-role="content"] {
         padding-right: 0;
         padding-left: 0;
         padding-top: 0;

@@ -1,4 +1,4 @@
-﻿define(['loading', 'datetime', 'libraryBrowser', 'cardBuilder', 'apphost', 'imageLoader', 'scrollStyles', 'emby-itemscontainer'], function (loading, datetime, libraryBrowser, cardBuilder, appHost, imageLoader) {
+﻿define(['layoutManager', 'loading', 'datetime', 'libraryBrowser', 'cardBuilder', 'apphost', 'imageLoader', 'scrollStyles', 'emby-itemscontainer'], function (layoutManager, loading, datetime, libraryBrowser, cardBuilder, appHost, imageLoader) {
     'use strict';
 
     function getUpcomingPromise(context, params) {
@@ -40,7 +40,7 @@
     }
 
     function enableScrollX() {
-        return browserInfo.mobile;
+        return !layoutManager.desktop;
     }
 
     function getThumbShape() {
@@ -103,16 +103,16 @@
 
             var group = groups[i];
 
-            html += '<div class="homePageSection">';
-            html += '<h1 class="listHeader">' + group.name + '</h1>';
+            html += '<div class="verticalSection">';
+            html += '<h2 class="sectionTitle sectionTitle-cards padded-left">' + group.name + '</h2>';
 
             var allowBottomPadding = true;
 
             if (enableScrollX()) {
                 allowBottomPadding = false;
-                html += '<div is="emby-itemscontainer" class="itemsContainer hiddenScrollX">';
+                html += '<div is="emby-itemscontainer" class="itemsContainer hiddenScrollX padded-left padded-right">';
             } else {
-                html += '<div is="emby-itemscontainer" class="itemsContainer vertical-wrap">';
+                html += '<div is="emby-itemscontainer" class="itemsContainer vertical-wrap padded-left padded-right">';
             }
 
             var supportsImageAnalysis = appHost.supports('imageanalysis');

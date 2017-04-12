@@ -38,24 +38,12 @@
     contain: style;
 }
 
-.libraryPage > .ui-content {
-    padding-top: 10px;
-}
-
 .pageWithAbsoluteTabs .pageTabContent {
     padding-top: 2.1em;
 }
 
 .flexPageTabContent.is-active {
     display: flex !important;
-}
-
-@media all and (max-width: 600px) {
-
-    .libraryPage > .ui-content {
-        padding-left: .5em !important;
-        padding-right: .5em !important;
-    }
 }
 
 .listHeader {
@@ -74,14 +62,6 @@
 
 .listHeader + button {
     margin-left: 2em;
-}
-
-.ehsContent, .ehsContent .pageTabContent {
-    margin: 0 auto;
-}
-
-.homePageSection {
-    margin-bottom: 2.8em;
 }
 
 .sectionHeaderButton {
@@ -106,38 +86,6 @@
 
     .paddedItemsContainer {
         padding: 0 .8em;
-    }
-}
-
-.ehsContent:not(.fullWidth), .ehsContent .pageTabContent {
-    width: 98%;
-}
-
-@media all and (min-width: 1200px) {
-
-    .ehsContent:not(.fullWidth), .ehsContent .pageTabContent {
-        width: 96%;
-    }
-}
-
-.homePageSection h1 {
-    padding-left: .5em;
-}
-
-.homePageSection .itemsContainer {
-    padding-left: .5em;
-    padding-right: .5em;
-}
-
-@media all and (min-width: 1200px) {
-
-    .homePageSection h1 {
-        padding-left: 2.2vw;
-    }
-
-    .homePageSection .itemsContainer {
-        padding-left: 2vw;
-        padding-right: 2vw;
     }
 }
 
@@ -610,12 +558,16 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
 
 .alphabetPicker {
     position: fixed;
-    right: 0;
-    bottom: 0;
+    left: 5px;
+    bottom: 56px;
     text-align: center;
-    font-size: 90%;
     display: none;
     line-height: 1;
+}
+
+.alphabetPicker-right {
+    right: 5px;
+    left: auto;
 }
 
 .layout-desktop .absolutePageTabContent .alphabetPicker {
@@ -633,25 +585,9 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
     }
 }
 
-@media all and (min-height: 500px) {
-
-    .itemsContainerWithAlphaPicker {
-        margin-right: 1em;
-    }
-}
-
-@media all and (min-height: 500px) {
-
-    .alphabetPicker {
-        bottom: 70px;
-    }
-}
-
-@media all and (min-width: 1200px) {
-
-    .itemsContainerWithAlphaPicker, .absolutePageTabContent .itemsContainerWithAlphaPicker {
-        margin-right: 0;
-    }
+.alphaPicker-vertical .alphaPickerButton {
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
 }
 
 @media all and (max-height: 700px) {
@@ -673,14 +609,21 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
 @media all and (max-height: 530px) {
 
     .alphabetPicker {
-        font-size: 80%;
+        font-size: 80% !important;
     }
 }
 
 @media all and (max-height: 480px) {
 
     .alphabetPicker {
-        font-size: 76%;
+        font-size: 76% !important;
+    }
+}
+
+@media all and (min-height: 600px) {
+
+    .alphabetPicker {
+        bottom: 70px;
     }
 }
 
@@ -776,6 +719,10 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
 }
 
 .sectionTitleContainer {
+    margin-bottom: .3em;
+}
+
+.layout-tv .sectionTitleContainer {
     margin-bottom: .1em;
 }
 
@@ -810,7 +757,7 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
 }
 
 .sectionTitle-cards {
-    margin-left: .3em;
+    margin-left: .1em;
 }
 
 .verticalSection .sectionTitle {
@@ -822,15 +769,19 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
 }
 
 .padded-left {
-    padding-left: .5em;
-}
-
-.padded-left-withalphapicker {
-    padding-left: 1em;
+    padding-left: 2%;
 }
 
 .padded-right {
-    padding-right: .5em;
+    padding-right: 2%;
+}
+
+.padded-left-withalphapicker {
+    padding-left: 6%;
+}
+
+.padded-right-withalphapicker {
+    padding-right: 6%;
 }
 
 .padded-top {
@@ -853,16 +804,12 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
 
 @media all and (min-width: 800px) {
 
-    .padded-left {
-        padding-left: 2%;
-    }
-
     .padded-left-withalphapicker {
-        padding-left: 4%;
+        padding-left: 4.4%;
     }
 
-    .padded-right {
-        padding-right: 2%;
+    .padded-right-withalphapicker {
+        padding-right: 4.4%;
     }
 }
 
@@ -870,10 +817,6 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
 
     .padded-left {
         padding-left: 2.2%;
-    }
-
-    .padded-left-withalphapicker {
-        padding-left: 4.4%;
     }
 
     .padded-right {
@@ -886,6 +829,14 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
 
     .layout-tv .padded-right {
         padding-right: 4%;
+    }
+
+    .layout-tv .padded-left-withalphapicker {
+        padding-left: 4.4%;
+    }
+
+    .layout-tv .padded-right-withalphapicker {
+        padding-right: 4.4%;
     }
 }
 

@@ -1,4 +1,4 @@
-﻿define(['loading', 'libraryBrowser', 'dom', 'components/categorysyncbuttons', 'cardBuilder', 'apphost', 'playbackManager', 'mainTabsManager', 'scrollStyles', 'emby-itemscontainer', 'emby-button'], function (loading, libraryBrowser, dom, categorysyncbuttons, cardBuilder, appHost, playbackManager, mainTabsManager) {
+﻿define(['layoutManager', 'loading', 'libraryBrowser', 'dom', 'components/categorysyncbuttons', 'cardBuilder', 'apphost', 'playbackManager', 'mainTabsManager', 'scrollStyles', 'emby-itemscontainer', 'emby-button'], function (layoutManager, loading, libraryBrowser, dom, categorysyncbuttons, cardBuilder, appHost, playbackManager, mainTabsManager) {
     'use strict';
 
     function getTabs() {
@@ -84,7 +84,7 @@
         }
 
         function enableScrollX() {
-            return browserInfo.mobile;
+            return !layoutManager.desktop;
         }
 
         function getThumbShape() {

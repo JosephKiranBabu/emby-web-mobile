@@ -1,4 +1,4 @@
-﻿define(['loading', 'libraryBrowser', 'alphaPicker', 'listView', 'cardBuilder', 'imageLoader', 'emby-itemscontainer'], function (loading, libraryBrowser, alphaPicker, listView, cardBuilder, imageLoader) {
+﻿define(['layoutManager', 'loading', 'libraryBrowser', 'alphaPicker', 'listView', 'cardBuilder', 'imageLoader', 'emby-itemscontainer'], function (layoutManager, loading, libraryBrowser, alphaPicker, listView, cardBuilder, imageLoader) {
     'use strict';
 
     return function (view, params) {
@@ -242,6 +242,13 @@
             element: alphaPickerElement,
             valueChangeEvent: 'click'
         });
+
+        if (layoutManager.desktop || layoutManager.mobile) {
+            view.querySelector('.alphaPicker').classList.add('alphabetPicker-right');
+            var itemsContainer = view.querySelector('.itemsContainer');
+            itemsContainer.classList.remove('padded-left-withalphapicker');
+            itemsContainer.classList.add('padded-right-withalphapicker');
+        }
 
         function updateFilterControls() {
 

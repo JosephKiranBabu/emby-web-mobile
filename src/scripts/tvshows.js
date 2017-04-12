@@ -1,4 +1,4 @@
-﻿define(['loading', 'events', 'libraryBrowser', 'imageLoader', 'listView', 'cardBuilder', 'apphost', 'alphaPicker', 'emby-itemscontainer'], function (loading, events, libraryBrowser, imageLoader, listView, cardBuilder, appHost, alphaPicker) {
+﻿define(['layoutManager', 'loading', 'events', 'libraryBrowser', 'imageLoader', 'listView', 'cardBuilder', 'apphost', 'alphaPicker', 'emby-itemscontainer'], function (layoutManager, loading, events, libraryBrowser, imageLoader, listView, cardBuilder, appHost, alphaPicker) {
     'use strict';
 
     return function (view, params, tabContent) {
@@ -239,6 +239,13 @@
                 element: alphaPickerElement,
                 valueChangeEvent: 'click'
             });
+
+            if (layoutManager.desktop || layoutManager.mobile) {
+                tabContent.querySelector('.alphaPicker').classList.add('alphabetPicker-right');
+                var itemsContainer = tabContent.querySelector('.itemsContainer');
+                itemsContainer.classList.remove('padded-left-withalphapicker');
+                itemsContainer.classList.add('padded-right-withalphapicker');
+            }
 
             tabContent.querySelector('.btnFilter').addEventListener('click', function () {
                 self.showFilterMenu();

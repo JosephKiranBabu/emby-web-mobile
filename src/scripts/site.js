@@ -1324,6 +1324,13 @@ var AppInfo = {};
                     if (item === 'nextup') {
                         return 'secondaryitems.html?type=nextup&serverId=' + options.serverId;
                     }
+                    if (item === 'livetv') {
+
+                        if (options.section === 'guide') {
+                            return 'livetv.html?tab=1&serverId=' + options.serverId;
+                        }
+                        return 'livetv.html?serverId=' + options.serverId;
+                    }
                 }
 
                 var url;

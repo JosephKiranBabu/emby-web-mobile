@@ -992,7 +992,7 @@ var AppInfo = {};
         define("itemHoverMenu", [embyWebComponentsBowerPath + "/itemhovermenu/itemhovermenu"], returnFirstDependency);
         define("multiSelect", [embyWebComponentsBowerPath + "/multiselect/multiselect"], returnFirstDependency);
         define("alphaPicker", [embyWebComponentsBowerPath + "/alphapicker/alphapicker"], returnFirstDependency);
-        define("paper-icon-button-light", [embyWebComponentsBowerPath + "/emby-button/paper-icon-button-light"]);
+        define("paper-icon-button-light", [embyWebComponentsBowerPath + "/emby-button/paper-icon-button-light"], returnFirstDependency);
 
         define("connectHelper", [embyWebComponentsBowerPath + "/emby-connect/connecthelper"], returnFirstDependency);
 
@@ -1114,21 +1114,21 @@ var AppInfo = {};
         define("cryptojs-sha1", [sha1Path]);
         define("cryptojs-md5", [md5Path]);
 
-        define("jstree", [bowerPath + "/jstree/dist/jstree", "css!thirdparty/jstree/themes/default/style.min.css"]);
+        define("jstree", [bowerPath + "/jstree/dist/jstree", "css!thirdparty/jstree/themes/default/style.min.css"], returnFirstDependency);
 
-        define("dashboardcss", ['css!css/dashboard']);
+        define("dashboardcss", ['css!css/dashboard'], returnFirstDependency);
 
-        define("jqmtable", ["thirdparty/jquerymobile-1.4.5/jqm.table", 'css!thirdparty/jquerymobile-1.4.5/jqm.table.css']);
+        define("jqmtable", ["thirdparty/jquerymobile-1.4.5/jqm.table", 'css!thirdparty/jquerymobile-1.4.5/jqm.table.css'], returnFirstDependency);
 
-        define("jqmwidget", ["thirdparty/jquerymobile-1.4.5/jqm.widget"]);
+        define("jqmwidget", ["thirdparty/jquerymobile-1.4.5/jqm.widget"], returnFirstDependency);
 
-        define("jqmslider", ["thirdparty/jquerymobile-1.4.5/jqm.slider", 'css!thirdparty/jquerymobile-1.4.5/jqm.slider.css']);
+        define("jqmslider", ["thirdparty/jquerymobile-1.4.5/jqm.slider", 'css!thirdparty/jquerymobile-1.4.5/jqm.slider.css'], returnFirstDependency);
 
-        define("jqmpopup", ["thirdparty/jquerymobile-1.4.5/jqm.popup", 'css!thirdparty/jquerymobile-1.4.5/jqm.popup.css']);
+        define("jqmpopup", ["thirdparty/jquerymobile-1.4.5/jqm.popup", 'css!thirdparty/jquerymobile-1.4.5/jqm.popup.css'], returnFirstDependency);
 
-        define("jqmlistview", ['css!thirdparty/jquerymobile-1.4.5/jqm.listview.css']);
+        define("jqmlistview", ['css!thirdparty/jquerymobile-1.4.5/jqm.listview.css'], returnFirstDependency);
 
-        define("jqmpanel", ["thirdparty/jquerymobile-1.4.5/jqm.panel", 'css!thirdparty/jquerymobile-1.4.5/jqm.panel.css']);
+        define("jqmpanel", ["thirdparty/jquerymobile-1.4.5/jqm.panel", 'css!thirdparty/jquerymobile-1.4.5/jqm.panel.css'], returnFirstDependency);
 
         define("slideshow", [embyWebComponentsBowerPath + "/slideshow/slideshow"], returnFirstDependency);
 
@@ -1139,7 +1139,7 @@ var AppInfo = {};
         define('arraypolyfills', [embyWebComponentsBowerPath + '/polyfills/array']);
         define('objectassign', [embyWebComponentsBowerPath + '/polyfills/objectassign']);
 
-        define("clearButtonStyle", ['css!' + embyWebComponentsBowerPath + '/clearbutton']);
+        define("clearButtonStyle", ['css!' + embyWebComponentsBowerPath + '/clearbutton'], returnFirstDependency);
         define("userdataButtons", [embyWebComponentsBowerPath + "/userdatabuttons/userdatabuttons"], returnFirstDependency);
         define("listView", [embyWebComponentsBowerPath + "/listview/listview"], returnFirstDependency);
         define("listViewStyle", ['css!' + embyWebComponentsBowerPath + "/listview/listview"], returnFirstDependency);
@@ -1188,9 +1188,9 @@ var AppInfo = {};
         define("userSettings", [embyWebComponentsBowerPath + "/usersettings/usersettings"], returnFirstDependency);
         define("userSettingsBuilder", [embyWebComponentsBowerPath + "/usersettings/usersettingsbuilder"], returnFirstDependency);
 
-        define("material-icons", ['css!' + embyWebComponentsBowerPath + '/fonts/material-icons/style']);
-        define("robotoFont", ['css!' + embyWebComponentsBowerPath + '/fonts/roboto/style']);
-        define("scrollStyles", ['css!' + embyWebComponentsBowerPath + '/scrollstyles']);
+        define("material-icons", ['css!' + embyWebComponentsBowerPath + '/fonts/material-icons/style'], returnFirstDependency);
+        define("robotoFont", ['css!' + embyWebComponentsBowerPath + '/fonts/roboto/style'], returnFirstDependency);
+        define("scrollStyles", ['css!' + embyWebComponentsBowerPath + '/scrollstyles'], returnFirstDependency);
 
         define("navdrawer", ['components/navdrawer/navdrawer'], returnFirstDependency);
         define("viewcontainer", ['components/viewcontainer-lite', 'css!' + embyWebComponentsBowerPath + '/viewmanager/viewcontainer-lite'], returnFirstDependency);
@@ -1206,7 +1206,7 @@ var AppInfo = {};
             return jQuery;
         });
 
-        define("fnchecked", ['legacy/fnchecked']);
+        define("fnchecked", ['legacy/fnchecked'], returnFirstDependency);
 
         define("dialogHelper", [embyWebComponentsBowerPath + "/dialoghelper/dialoghelper"], function (dialoghelper) {
 
@@ -1569,9 +1569,9 @@ var AppInfo = {};
 
         if (!('registerElement' in document)) {
             if (browser.msie) {
-                define("registerElement", [bowerPath + '/webcomponentsjs/webcomponents-lite.min.js']);
+                define("registerElement", [bowerPath + '/webcomponentsjs/webcomponents-lite.min.js'], returnFirstDependency);
             } else {
-                define("registerElement", [bowerPath + '/document-register-element/build/document-register-element']);
+                define("registerElement", [bowerPath + '/document-register-element/build/document-register-element'], returnFirstDependency);
             }
         } else {
             define("registerElement", []);
@@ -1663,7 +1663,7 @@ var AppInfo = {};
     function init() {
 
         if (Dashboard.isRunningInCordova() && browserInfo.android) {
-            define("nativedirectorychooser", ["cordova/nativedirectorychooser"]);
+            define("nativedirectorychooser", ["cordova/nativedirectorychooser"], returnFirstDependency);
         }
 
         if (Dashboard.isRunningInCordova() && browserInfo.android) {
@@ -1673,11 +1673,11 @@ var AppInfo = {};
             define("localsync", ["scripts/localsync"], returnFirstDependency);
         }
 
-        define("livetvcss", ['css!css/livetv.css']);
-        define("detailtablecss", ['css!css/detailtable.css']);
-        define("autoorganizetablecss", ['css!css/autoorganizetable.css']);
+        define("livetvcss", ['css!css/livetv.css'], returnFirstDependency);
+        define("detailtablecss", ['css!css/detailtable.css'], returnFirstDependency);
+        define("autoorganizetablecss", ['css!css/autoorganizetable.css'], returnFirstDependency);
 
-        define("buttonenabled", ["legacy/buttonenabled"]);
+        define("buttonenabled", ["legacy/buttonenabled"], returnFirstDependency);
 
         initAfterDependencies();
     }
@@ -2731,7 +2731,7 @@ var AppInfo = {};
 
                     postInitDependencies.push('cordova/volume');
                     postInitDependencies.push('cordova/statusbar');
-                    postInitDependencies.push('cordova/orientation');
+                    //postInitDependencies.push('cordova/orientation');
                     postInitDependencies.push('cordova/remotecontrols');
 
                     //postInitDependencies.push('cordova/backgroundfetch');
@@ -2747,7 +2747,8 @@ var AppInfo = {};
                 postInitDependencies.push('bower_components/emby-webcomponents/playback/remotecontrolautoplay');
             }
 
-            if (!appHost.supports('physicalvolumecontrol') || browserInfo.touch) {
+            // Don't use the volume OSD in Edge due to buggy MS volume reporting
+            if ((!appHost.supports('physicalvolumecontrol') || browserInfo.touch) && !browserInfo.edge) {
                 postInitDependencies.push('bower_components/emby-webcomponents/playback/volumeosd');
             }
 

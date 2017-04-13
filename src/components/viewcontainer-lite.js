@@ -66,6 +66,8 @@ define(['browser', 'dom', 'layoutManager', 'css!bower_components/emby-webcompone
 
         return new Promise(function (resolve, reject) {
 
+            var dependencyNames = dependencies.join(',');
+
             require(dependencies, function () {
 
                 var currentPage = allPages[pageIndex];
@@ -101,7 +103,7 @@ define(['browser', 'dom', 'layoutManager', 'css!bower_components/emby-webcompone
                 }
 
                 if (typeof (newView) != 'string') {
-                    enhanceNewView(dependencies, view);
+                    enhanceNewView(dependencyNames, view);
                 }
 
                 if (options.type) {
@@ -137,7 +139,9 @@ define(['browser', 'dom', 'layoutManager', 'css!bower_components/emby-webcompone
                     // Temporary hack
                     // If a view renders UI in viewbeforeshow the lazy image loader will think the images aren't visible and won't load images
                     // The views need to be updated to start loading data in beforeshow, but not render until show
-                    document.dispatchEvent(new CustomEvent('scroll', {}));
+                    if (!window.IntersectionObserver) {
+                        document.dispatchEvent(new CustomEvent('scroll', {}));
+                    }
 
                     if (window.$) {
                         $.mobile = $.mobile || {};
@@ -150,16 +154,9 @@ define(['browser', 'dom', 'layoutManager', 'css!bower_components/emby-webcompone
         });
     }
 
-    function enhanceNewView(dependencies, newView) {
+    function enhanceNewView(dependencyNames, newView) {
 
-        var hasJqm = false;
-
-        for (var i = 0, length = dependencies.length; i < length; i++) {
-            if (dependencies[i].indexOf('jqm') == 0) {
-                hasJqm = true;
-                break;
-            }
-        }
+        var hasJqm = dependencyNames.indexOf('jqm') !== -1;
 
         if (hasJqm && window.$) {
             $(newView).trigger('create');

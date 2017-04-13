@@ -1111,8 +1111,8 @@ var AppInfo = {};
             shim: shim
         });
 
-        define("cryptojs-sha1", [sha1Path]);
-        define("cryptojs-md5", [md5Path]);
+        define("cryptojs-sha1", [sha1Path], returnFirstDependency);
+        define("cryptojs-md5", [md5Path], returnFirstDependency);
 
         define("jstree", [bowerPath + "/jstree/dist/jstree", "css!thirdparty/jstree/themes/default/style.min.css"], returnFirstDependency);
 
@@ -1132,12 +1132,12 @@ var AppInfo = {};
 
         define("slideshow", [embyWebComponentsBowerPath + "/slideshow/slideshow"], returnFirstDependency);
 
-        define('fetch', [bowerPath + '/fetch/fetch']);
+        define('fetch', [bowerPath + '/fetch/fetch'], returnFirstDependency);
 
-        define('raf', [embyWebComponentsBowerPath + '/polyfills/raf']);
-        define('functionbind', [embyWebComponentsBowerPath + '/polyfills/bind']);
-        define('arraypolyfills', [embyWebComponentsBowerPath + '/polyfills/array']);
-        define('objectassign', [embyWebComponentsBowerPath + '/polyfills/objectassign']);
+        define('raf', [embyWebComponentsBowerPath + '/polyfills/raf'], returnFirstDependency);
+        define('functionbind', [embyWebComponentsBowerPath + '/polyfills/bind'], returnFirstDependency);
+        define('arraypolyfills', [embyWebComponentsBowerPath + '/polyfills/array'], returnFirstDependency);
+        define('objectassign', [embyWebComponentsBowerPath + '/polyfills/objectassign'], returnFirstDependency);
 
         define("clearButtonStyle", ['css!' + embyWebComponentsBowerPath + '/clearbutton'], returnFirstDependency);
         define("userdataButtons", [embyWebComponentsBowerPath + "/userdatabuttons/userdatabuttons"], returnFirstDependency);

@@ -185,7 +185,7 @@
                     if (enableScrollX()) {
                         html += '<div is="emby-itemscontainer" class="itemsContainer hiddenScrollX lazy padded-left padded-right" data-id="' + item.Id + '">';
                     } else {
-                        html += '<div is="emby-itemscontainer" class="itemsContainer vertical-wrap lazy padded-left padded-right" data-id="' + item.Id + '">e';
+                        html += '<div is="emby-itemscontainer" class="itemsContainer vertical-wrap lazy padded-left padded-right" data-id="' + item.Id + '">';
                     }
                     html += '</div>';
 

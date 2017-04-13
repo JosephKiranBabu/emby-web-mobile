@@ -6,7 +6,7 @@
 
         var src;
 
-        if (self.Promise) {
+        if (self.Promise && navigator.userAgent.toLowerCase().indexOf('os x') === -1) {
             src = './bower_components/alameda/alameda.js';
         } else {
             src = './bower_components/requirejs/require.js';

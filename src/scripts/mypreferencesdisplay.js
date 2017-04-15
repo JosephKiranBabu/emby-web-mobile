@@ -97,15 +97,6 @@
             ApiClient.getUser(userId).then(function (user) {
 
                 loadForm(page, user);
-
-                var requiresUserPreferences = view.querySelectorAll('.requiresUserPreferences');
-                for (var i = 0, length = requiresUserPreferences.length; i < length; i++) {
-                    if (user.Policy.EnableUserPreferenceAccess) {
-                        requiresUserPreferences[i].classList.remove('hide');
-                    } else {
-                        requiresUserPreferences[i].classList.add('hide');
-                    }
-                }
             });
 
             if (AppInfo.supportsUserDisplayLanguageSetting) {

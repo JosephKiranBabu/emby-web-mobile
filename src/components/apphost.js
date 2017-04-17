@@ -302,6 +302,8 @@ define(['appStorage', 'browser'], function (appStorage, browser) {
             features.push('remotemedia');
         }
 
+        features.push('otherapppromotions');
+
         return features;
     }();
 

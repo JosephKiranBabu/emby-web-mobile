@@ -273,6 +273,7 @@
 
             if (state.NowPlayingItem && state.NowPlayingItem.MediaType == 'Video') {
 
+                renderedTabs = [];
                 mainTabsManager.getTabsElement().triggerTabChange();
             }
         }

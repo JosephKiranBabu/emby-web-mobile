@@ -86,6 +86,7 @@
         var currentPlayer;
         var currentPlayerSupportedCommands = [];
         var currentRuntimeTicks = 0;
+        var comingUpNextDisplayed;
         var lastUpdateTime = 0;
         var isEnabled;
         var currentItem;
@@ -196,7 +197,7 @@
             }
 
             connectionManager.getApiClient(item.ServerId).getCurrentUser().then(function (user) {
-                
+
                 if (!user.Policy.EnableLiveTvManagement) {
                     return;
                 }
@@ -712,6 +713,8 @@
         function onPlaybackStopped(e, state) {
 
             currentRuntimeTicks = null;
+            comingUpNextDisplayed = false;
+            hideComingUpNext();
 
             console.log('nowplaying event: ' + e.type);
 
@@ -749,6 +752,8 @@
             events.on(player, 'playing', onPlayPauseStateChanged);
             events.on(player, 'timeupdate', onTimeUpdate);
             events.on(player, 'fullscreenchange', updateFullscreenIcon);
+
+            hideComingUpNext();
         }
 
         function releaseCurrentPlayer() {
@@ -767,6 +772,8 @@
 
                 currentPlayer = null;
             }
+
+            hideComingUpNext();
         }
 
         function onTimeUpdate(e) {
@@ -785,9 +792,37 @@
 
             var player = this;
             currentRuntimeTicks = playbackManager.duration(player);
-            updateTimeDisplay(playbackManager.currentTime(player), currentRuntimeTicks);
+
+            var currentTime = playbackManager.currentTime(player);
+            updateTimeDisplay(currentTime, currentRuntimeTicks);
 
             refreshProgramInfoIfNeeded(player);
+            showComingUpNextIfNeeded(player, currentTime, currentRuntimeTicks);
+        }
+
+        function showComingUpNextIfNeeded(player, currentTimeTicks, runtimeTicks) {
+
+            if (runtimeTicks && currentTimeTicks) {
+
+                var showAtSecondsLeft = 45;
+                var showAtTicks = runtimeTicks - (showAtSecondsLeft * 1000 * 10000);
+
+                if (currentTimeTicks >= showAtTicks) {
+                    showComingUpNext(player, currentTimeTicks, runtimeTicks);
+                }
+            }
+        }
+
+        function showComingUpNext(player, currentTimeTicks, runtimeTicks) {
+
+            if (comingUpNextDisplayed) {
+                return;
+            }
+            comingUpNextDisplayed = true;
+        }
+
+        function hideComingUpNext() {
+
         }
 
         function refreshProgramInfoIfNeeded(player) {

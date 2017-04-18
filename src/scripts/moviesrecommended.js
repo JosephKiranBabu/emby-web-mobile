@@ -1,4 +1,4 @@
-﻿define(['layoutManager', 'libraryBrowser', 'mainTabsManager', 'components/categorysyncbuttons', 'cardBuilder', 'dom', 'apphost', 'imageLoader', 'playbackManager', 'scrollStyles', 'emby-itemscontainer', 'emby-tabs', 'emby-button'], function (layoutManager, libraryBrowser, mainTabsManager, categorysyncbuttons, cardBuilder, dom, appHost, imageLoader, playbackManager) {
+﻿define(['layoutManager', 'userSettings', 'libraryBrowser', 'mainTabsManager', 'components/categorysyncbuttons', 'cardBuilder', 'dom', 'apphost', 'imageLoader', 'playbackManager', 'scrollStyles', 'emby-itemscontainer', 'emby-tabs', 'emby-button'], function (layoutManager, userSettings, libraryBrowser, mainTabsManager, categorysyncbuttons, cardBuilder, dom, appHost, imageLoader, playbackManager) {
     'use strict';
 
     function enableScrollX() {
@@ -222,10 +222,28 @@
          }];
     }
 
+    function getDefaultTabIndex(folderId) {
+
+        switch (userSettings.get('landing-' + folderId)) {
+
+            case 'movies':
+                return 1;
+            case 'favorites':
+                // TODO
+                return 0;
+            case 'collections':
+                return 3;
+            case 'genres':
+                return 4;
+            default:
+                return 0;
+        }
+    }
+
     return function (view, params) {
 
         var self = this;
-        var currentTabIndex = parseInt(params.tab || '0');
+        var currentTabIndex = parseInt(params.tab || getDefaultTabIndex(params.topParentId));
 
         self.initTab = function () {
 

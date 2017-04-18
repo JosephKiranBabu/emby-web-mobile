@@ -1,4 +1,4 @@
-﻿define(['layoutManager', 'loading', 'libraryBrowser', 'dom', 'components/categorysyncbuttons', 'cardBuilder', 'apphost', 'playbackManager', 'mainTabsManager', 'scrollStyles', 'emby-itemscontainer', 'emby-button'], function (layoutManager, loading, libraryBrowser, dom, categorysyncbuttons, cardBuilder, appHost, playbackManager, mainTabsManager) {
+﻿define(['layoutManager', 'loading', 'libraryBrowser', 'dom', 'components/categorysyncbuttons', 'userSettings', 'cardBuilder', 'apphost', 'playbackManager', 'mainTabsManager', 'scrollStyles', 'emby-itemscontainer', 'emby-button'], function (layoutManager, loading, libraryBrowser, dom, categorysyncbuttons, userSettings, cardBuilder, appHost, playbackManager, mainTabsManager) {
     'use strict';
 
     function getTabs() {
@@ -26,10 +26,28 @@
          }];
     }
 
+    function getDefaultTabIndex(folderId) {
+
+        switch (userSettings.get('landing-' + folderId)) {
+
+            case 'latest':
+                return 1;
+            case 'shows':
+                return 2;
+            case 'favorites':
+                // TODO
+                return 0;
+            case 'genres':
+                return 4;
+            default:
+                return 0;
+        }
+    }
+
     return function (view, params) {
 
         var self = this;
-        var currentTabIndex = parseInt(params.tab || '0');
+        var currentTabIndex = parseInt(params.tab || getDefaultTabIndex(params.topParentId));
 
         function reload() {
 

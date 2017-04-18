@@ -898,6 +898,11 @@ var AppInfo = {};
         return footer;
     }
 
+    function onRequireJsError(requireType, requireModules) {
+
+        console.log('RequireJS error: ' + (requireType || 'unknown') + '. Failed modules: ' + (requireModules || []).join(','));
+    }
+
     function initRequire() {
 
         var urlArgs = "v=" + (window.dashboardVersion || new Date().getDate());
@@ -1108,7 +1113,8 @@ var AppInfo = {};
             urlArgs: urlArgs,
 
             paths: paths,
-            shim: shim
+            shim: shim,
+            onError: onRequireJsError
         });
 
         define("cryptojs-sha1", [sha1Path], returnFirstDependency);

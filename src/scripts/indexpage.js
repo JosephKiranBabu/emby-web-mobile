@@ -1,31 +1,6 @@
 ﻿define(['loading', 'libraryBrowser', 'libraryMenu', 'playbackManager', 'mainTabsManager', 'homeSections', 'emby-button'], function (loading, libraryBrowser, libraryMenu, playbackManager, mainTabsManager, homeSections) {
     'use strict';
 
-    function loadSections(page, user, userSettings) {
-
-        var i, length;
-        var sectionCount = 7;
-
-        var elem = page.querySelector('.sections');
-
-        var html = '';
-        for (i = 0, length = sectionCount; i < length; i++) {
-
-            html += '<div class="verticalSection section' + i + '"></div>';
-        }
-
-        elem.innerHTML = html;
-
-        var promises = [];
-
-        for (i = 0, length = sectionCount; i < length; i++) {
-
-            promises.push(homeSections.loadSection(page, ApiClient, user, userSettings, i));
-        }
-
-        return Promise.all(promises);
-    }
-
     var homePageDismissValue = '14';
     var homePageTourKey = 'homePageTour';
 
@@ -131,7 +106,7 @@
                 var user = responses[0];
                 var userSettings = responses[1];
 
-                loadSections(tabContent, user, userSettings).then(function () {
+                homeSections.loadSections(tabContent.querySelector('.sections'), ApiClient, user, userSettings).then(function () {
 
                     loading.hide();
                 });
@@ -269,11 +244,18 @@
             takeTour(view, Dashboard.getCurrentUserId());
         });
 
+        view.querySelector('.sections').addEventListener('settingschange', function () {
+            renderedTabs = [];
+            mainTabsManager.getTabsElement().triggerBeforeTabChange();
+            mainTabsManager.getTabsElement().triggerTabChange();
+        });
+
         function onPlaybackStop(e, state) {
 
             if (state.NowPlayingItem && state.NowPlayingItem.MediaType == 'Video') {
 
                 renderedTabs = [];
+                mainTabsManager.getTabsElement().triggerBeforeTabChange();
                 mainTabsManager.getTabsElement().triggerTabChange();
             }
         }

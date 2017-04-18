@@ -1,5 +1,7 @@
 ﻿(function() {
     
+    "use strict";
+
     function loadRequire() {
         
         var script = document.createElement('script');

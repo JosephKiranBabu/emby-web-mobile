@@ -221,9 +221,9 @@ div[data-role="content"] {
     padding: 1em;
 }
 
-.page, .pageWithAbsoluteTabs .pageTabContent {
+.page, .pageWithAbsoluteTabs .pageTabContent, .padded-bottom-page, .content-primary {
     /* Need this so that the audio player doesn't cover content, but also for unveil lazy loading. */
-    padding-bottom: 160px;
+    padding-bottom: 160px !important;
 }
 
 @media all and (min-width: 800px) {

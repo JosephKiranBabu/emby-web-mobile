@@ -780,12 +780,15 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
     padding-right: 2%;
 }
 
-.padded-left-withalphapicker {
-    padding-left: 6%;
-}
+@media all and (min-height: 500px) {
 
-.padded-right-withalphapicker {
-    padding-right: 6%;
+    .padded-left-withalphapicker {
+        padding-left: 6%;
+    }
+
+    .padded-right-withalphapicker {
+        padding-right: 6%;
+    }
 }
 
 .padded-top {

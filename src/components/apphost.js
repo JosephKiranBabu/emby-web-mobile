@@ -48,7 +48,9 @@ define(['appStorage', 'browser'], function (appStorage, browser) {
         });
     }
 
-    function getDeviceProfile(item) {
+    function getDeviceProfile(item, options) {
+
+        options = options || {};
 
         if (self.Windows) {
             return getDeviceProfileForWindowsUwp(item);
@@ -60,16 +62,20 @@ define(['appStorage', 'browser'], function (appStorage, browser) {
 
                 var profile = profileBuilder(getBaseProfileOptions(item));
 
-                if (!browser.edge && !browser.msie && !browser.orsay && !browser.tizen) {
-                    // libjass not working here
-                    profile.SubtitleProfiles.push({
-                        Format: 'ass',
-                        Method: 'External'
-                    });
-                    profile.SubtitleProfiles.push({
-                        Format: 'ssa',
-                        Method: 'External'
-                    });
+                // Streaming only, allow in-app ass decoding. Streaming only because there is no automatic retry to transcoding for offline media
+                // Don't use in-app ass decoding if it's a playback retry (automatic switch from direct play to transcoding)
+                if (item && !options.isRetry) {
+                    if (!browser.edge && !browser.msie && !browser.orsay && !browser.tizen) {
+                        // libjass not working here
+                        profile.SubtitleProfiles.push({
+                            Format: 'ass',
+                            Method: 'External'
+                        });
+                        profile.SubtitleProfiles.push({
+                            Format: 'ssa',
+                            Method: 'External'
+                        });
+                    }
                 }
 
                 resolve(profile);

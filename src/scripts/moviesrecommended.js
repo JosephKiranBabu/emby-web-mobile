@@ -240,6 +240,25 @@
         }
     }
 
+    function getTabNameToSave(index) {
+
+        switch (index) {
+
+            case 1:
+                return 'movies';
+            case 3:
+                return 'collections';
+            case 4:
+                return 'genres';
+            default:
+                return '';
+        }
+    }
+
+    function setSavedTab(index, folderId) {
+        userSettings.set('landing-' + folderId, getTabNameToSave(index));
+    }
+
     return function (view, params) {
 
         var self = this;
@@ -262,7 +281,9 @@
         }
 
         function onTabChange(e) {
-            loadTab(view, parseInt(e.detail.selectedTabIndex));
+            var newIndex = parseInt(e.detail.selectedTabIndex);
+            loadTab(view, newIndex);
+            setSavedTab(newIndex, params.topParentId);
         }
 
         function initTabs() {

@@ -244,6 +244,8 @@
 
         switch (index) {
 
+            case 0:
+                return 'suggestions';
             case 1:
                 return 'movies';
             case 3:
@@ -256,7 +258,11 @@
     }
 
     function setSavedTab(index, folderId) {
-        userSettings.set('landing-' + folderId, getTabNameToSave(index));
+
+        var tab = getTabNameToSave(index);
+        if (tab) {
+            userSettings.set('landing-' + folderId, tab);
+        }
     }
 
     return function (view, params) {
@@ -283,7 +289,6 @@
         function onTabChange(e) {
             var newIndex = parseInt(e.detail.selectedTabIndex);
             loadTab(view, newIndex);
-            setSavedTab(newIndex, params.topParentId);
         }
 
         function initTabs() {

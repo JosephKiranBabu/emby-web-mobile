@@ -43,6 +43,127 @@ define(['require', 'globalize', 'loading', 'connectionManager', 'homeSections', 
         context.querySelector('.latestItemsList').innerHTML = folderHtml;
     }
 
+    function renderViews(page, user, result) {
+
+        var folderHtml = '';
+
+        folderHtml += '<div class="checkboxList">';
+        folderHtml += result.map(function (i) {
+
+            var currentHtml = '';
+
+            var id = 'chkGroupFolder' + i.Id;
+
+            var isChecked = user.Configuration.GroupedFolders.indexOf(i.Id) !== -1;
+
+            var checkedHtml = isChecked ? ' checked="checked"' : '';
+
+            currentHtml += '<label>';
+            currentHtml += '<input type="checkbox" is="emby-checkbox" class="chkGroupFolder" data-folderid="' + i.Id + '" id="' + id + '"' + checkedHtml + '/>';
+            currentHtml += '<span>' + i.Name + '</span>';
+            currentHtml += '</label>';
+
+            return currentHtml;
+
+        }).join('');
+
+        folderHtml += '</div>';
+
+        page.querySelector('.folderGroupList').innerHTML = folderHtml;
+    }
+
+    function getLandingScreenOptions(type) {
+
+        var list = [];
+
+        list.push({
+            name: globalize.translate('sharedcomponents#Suggestions'),
+            value: 'suggestions',
+            isDefault: true
+        });
+
+        if (type === 'movies') {
+
+            list.push({
+                name: globalize.translate('sharedcomponents#Movies'),
+                value: 'movies'
+            });
+            list.push({
+                name: globalize.translate('sharedcomponents#Favorites'),
+                value: 'favorites'
+            });
+            list.push({
+                name: globalize.translate('sharedcomponents#Collections'),
+                value: 'collections'
+            });
+        }
+        else if (type === 'tvshows') {
+
+            list.push({
+                name: globalize.translate('sharedcomponents#Latest'),
+                value: 'latest'
+            });
+            list.push({
+                name: globalize.translate('sharedcomponents#Shows'),
+                value: 'shows'
+            });
+            list.push({
+                name: globalize.translate('sharedcomponents#Favorites'),
+                value: 'favorites'
+            });
+        }
+
+        list.push({
+            name: globalize.translate('sharedcomponents#Genres'),
+            value: 'genres'
+        });
+
+        return list;
+    }
+
+    function getLandingScreenOptionsHtml(type, userValue) {
+
+        return getLandingScreenOptions(type).map(function (o) {
+
+            var selected = userValue === o.value || (o.isDefault && !userValue);
+            var selectedHtml = selected ? ' selected' : '';
+            var optionValue = o.isDefault ? '' : o.value;
+
+            return '<option value="' + optionValue + '"' + selectedHtml + '>' + o.name + '</option>';
+        }).join('');
+    }
+
+    function renderLandingScreens(context, user, userSettings, result) {
+
+        var html = '';
+
+        for (var i = 0, length = result.Items.length; i < length; i++) {
+            var folder = result.Items[i];
+
+            if (!(folder.CollectionType === 'movies' || folder.CollectionType === 'tvshows')) {
+                continue;
+            }
+
+            html += '<div class="selectContainer">';
+            html += '<select is="emby-select" class="selectLanding" data-folderid="' + folder.Id + '" label="' + folder.Name + '">';
+
+            var userValue = userSettings.get('landing-' + folder.Id);
+
+            html += getLandingScreenOptionsHtml(folder.CollectionType, userValue);
+
+            html += '</select>';
+            html += '</div>';
+        }
+
+        context.querySelector('.landingScreens').innerHTML = html;
+
+        if (html) {
+            context.querySelector('.landingScreensSection').classList.remove('hide');
+        } else {
+            context.querySelector('.landingScreensSection').classList.add('hide');
+        }
+    }
+
     function renderViewOrder(context, user, result) {
 
         var html = '';
@@ -106,11 +227,14 @@ define(['require', 'globalize', 'loading', 'connectionManager', 'homeSections', 
         updateHomeSectionValues(context, userSettings);
 
         var promise1 = apiClient.getUserViews({}, user.Id);
+        var promise2 = ApiClient.getJSON(ApiClient.getUrl("Users/" + user.Id + "/GroupingOptions"));
 
-        Promise.all([promise1]).then(function (responses) {
+        Promise.all([promise1, promise2]).then(function (responses) {
 
+            renderViews(context, user, responses[1]);
             renderLatestItems(context, user, responses[0]);
             renderViewOrder(context, user, responses[0]);
+            renderLandingScreens(context, user, userSettings, responses[0]);
 
             loading.hide();
         });
@@ -198,6 +322,11 @@ define(['require', 'globalize', 'loading', 'connectionManager', 'homeSections', 
             return i.getAttribute('data-folderid');
         });
 
+        user.Configuration.GroupedFolders = getCheckboxItems(".chkGroupFolder", context, true).map(function (i) {
+
+            return i.getAttribute('data-folderid');
+        });
+
         var viewItems = context.querySelectorAll('.viewItem');
         var orderedViews = [];
         var i, length;
@@ -214,6 +343,12 @@ define(['require', 'globalize', 'loading', 'connectionManager', 'homeSections', 
         userSettingsInstance.set('homesection4', context.querySelector('#selectHomeSection5').value);
         userSettingsInstance.set('homesection5', context.querySelector('#selectHomeSection6').value);
         userSettingsInstance.set('homesection6', context.querySelector('#selectHomeSection7').value);
+
+        var selectLandings = context.querySelectorAll('.selectLanding');
+        for (i = 0, length = selectLandings.length; i < length; i++) {
+            var selectLanding = selectLandings[i];
+            userSettingsInstance.set('landing-' + selectLanding.getAttribute('data-folderid'), selectLanding.value);
+        }
 
         if (user.Id === apiClient.getCurrentUserId()) {
             refreshGlobalUserSettings(userSettingsInstance);

@@ -131,10 +131,6 @@
         color: #fff;
     }
 
-        .viewMenuLink:hover img {
-            opacity: .5;
-        }
-
     .viewMenuLink img {
         height: 24px;
         vertical-align: top;
@@ -178,13 +174,13 @@
 
 .sidebarLinkIcon {
     margin-right: 1em;
-    opacity: .7;
+    color: #444 !important;
 }
 
 .sidebarHeader {
     padding-left: 1.4em;
     margin: 1.2em 0 .7em;
-    color: #666;
+    color: #555;
 }
 
 body:not(.dashboardDocument) .btnNotifications {
@@ -193,10 +189,11 @@ body:not(.dashboardDocument) .btnNotifications {
 
 .darkDrawer {
     background-color: #181818 !important;
-    /*background-color: rgba(40,40,40,.8) !important;
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);*/
 }
+
+    .darkDrawer .sidebarLinkIcon {
+        color: #bbb !important;
+    }
 
     .darkDrawer .sidebarLink {
         color: #fff !important;

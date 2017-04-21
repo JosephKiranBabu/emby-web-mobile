@@ -107,7 +107,7 @@
             dom.addEventListener(this, 'keydown', onKeyDown, {
                 passive: true
             });
-            if (browser.safari) {
+            if (browser.safari || (browser.firefox && this.tagName === 'A')) {
                 dom.addEventListener(this, 'click', onClick, {
                     passive: true
                 });

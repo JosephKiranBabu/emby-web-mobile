@@ -21,8 +21,7 @@
 
 .autoorganizetable tbody tr:nth-child(odd) td,
 .autoorganizetable tbody tr:nth-child(odd) th {
-    background-color: #eeeeee; /* non-RGBA fallback  */
-    background-color: rgba(0,0,0,.04);
+    background-color: #eeeeee; 
 }
 
 
@@ -53,8 +52,7 @@
         }
 
             .autoorganizetable > .table > tbody > tr > td {
-                background-color: #eeeeee; /* non-RGBA fallback  */
-                background-color: rgba(0,0,0,.04);
+                background-color: #eeeeee;
                 display: block;
                 vertical-align: middle;
                 text-align: left;

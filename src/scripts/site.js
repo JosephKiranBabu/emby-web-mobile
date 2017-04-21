@@ -1116,6 +1116,7 @@ var AppInfo = {};
             shim: shim,
             onError: onRequireJsError
         });
+        requirejs.onError = onRequireJsError;
 
         define("cryptojs-sha1", [sha1Path], returnFirstDependency);
         define("cryptojs-md5", [md5Path], returnFirstDependency);

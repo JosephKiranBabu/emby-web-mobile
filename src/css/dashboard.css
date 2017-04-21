@@ -577,7 +577,4 @@ a[data-role='button'] {
     text-decoration: none !important;
     background: #f6f6f6 !important;
     font-size: 16px;
-    -webkit-box-shadow: 0 1px 3px /*{global-box-shadow-size}*/ rgba(0,0,0,.15) /*{global-box-shadow-color}*/;
-    -moz-box-shadow: 0 1px 3px /*{global-box-shadow-size}*/ rgba(0,0,0,.15) /*{global-box-shadow-color}*/;
-    box-shadow: 0 1px 3px /*{global-box-shadow-size}*/ rgba(0,0,0,.15) /*{global-box-shadow-color}*/;
 }

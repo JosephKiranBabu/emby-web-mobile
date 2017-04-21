@@ -57,6 +57,7 @@
                 });
 
                 page.querySelector('.listTopPaging').innerHTML = pagingHtml;
+                page.querySelector('.bottomPaging').innerHTML = pagingHtml;
 
                 html = cardBuilder.getCardsHtml({
                     items: result.Items,
@@ -79,7 +80,7 @@
                 });
 
                 var elem = page.querySelector('.itemsContainer');
-                elem.innerHTML = html + pagingHtml;
+                elem.innerHTML = html;
                 imageLoader.lazyChildren(elem);
 
                 var i, length;

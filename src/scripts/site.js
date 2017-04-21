@@ -1359,7 +1359,15 @@ var AppInfo = {};
 
                 if (context != 'folders') {
                     if (item.CollectionType == 'movies') {
-                        return 'movies.html?topParentId=' + item.Id;
+                        url = 'movies.html?topParentId=' + item.Id;
+
+                        if (options) {
+                            if (options.section === 'latest') {
+                                url += '&tab=0';
+                            }
+                        }
+
+                        return url;
                     }
 
                     if (item.CollectionType == 'boxsets') {

@@ -28,6 +28,10 @@
                     view: libraryBrowser.getSavedView(key) || 'Poster'
                 };
 
+                if (self.mode === 'favorites') {
+                    pageData.query.IsFavorite = true;
+                }
+
                 pageData.query.ParentId = params.topParentId;
                 libraryBrowser.loadSavedQueryValues(key, pageData.query);
             }
@@ -42,7 +46,9 @@
         function getSavedQueryKey(context) {
 
             if (!context.savedQueryKey) {
-                context.savedQueryKey = libraryBrowser.getSavedQueryKey('movies');
+                var key = self.mode === 'favorites' ? 'moviefavorites' : 'movies';
+
+                context.savedQueryKey = libraryBrowser.getSavedQueryKey(key);
             }
             return context.savedQueryKey;
         }
@@ -103,7 +109,8 @@
                         preferThumb: true,
                         context: 'movies',
                         lazy: true,
-                        overlayPlayButton: true
+                        overlayPlayButton: true,
+                        centerText: true
                     });
                 }
                 else if (viewStyle == "ThumbCard") {
@@ -221,94 +228,106 @@
         function updateFilterControls(tabContent) {
 
             var query = getQuery(tabContent);
-            self.alphaPicker.value(query.NameStartsWithOrGreater);
+            if (self.alphaPicker) {
+                self.alphaPicker.value(query.NameStartsWithOrGreater);
+            }
         }
 
         function initPage(tabContent) {
 
             var alphaPickerElement = tabContent.querySelector('.alphaPicker');
-            alphaPickerElement.addEventListener('alphavaluechanged', function (e) {
-                var newValue = e.detail.value;
-                var query = getQuery(tabContent);
-                query.NameStartsWithOrGreater = newValue;
-                query.StartIndex = 0;
-                reloadItems(tabContent);
-            });
+            if (alphaPickerElement) {
+                alphaPickerElement.addEventListener('alphavaluechanged', function (e) {
+                    var newValue = e.detail.value;
+                    var query = getQuery(tabContent);
+                    query.NameStartsWithOrGreater = newValue;
+                    query.StartIndex = 0;
+                    reloadItems(tabContent);
+                });
 
-            self.alphaPicker = new alphaPicker({
-                element: alphaPickerElement,
-                valueChangeEvent: 'click'
-            });
+                self.alphaPicker = new alphaPicker({
+                    element: alphaPickerElement,
+                    valueChangeEvent: 'click'
+                });
 
-            if (layoutManager.desktop || layoutManager.mobile) {
-                tabContent.querySelector('.alphaPicker').classList.add('alphabetPicker-right');
-                var itemsContainer = tabContent.querySelector('.itemsContainer');
-                itemsContainer.classList.remove('padded-left-withalphapicker');
-                itemsContainer.classList.add('padded-right-withalphapicker');
+                if (layoutManager.desktop || layoutManager.mobile) {
+
+                    alphaPickerElement.classList.add('alphabetPicker-right');
+
+                    var itemsContainer = tabContent.querySelector('.itemsContainer');
+                    itemsContainer.classList.remove('padded-left-withalphapicker');
+                    itemsContainer.classList.add('padded-right-withalphapicker');
+                }
             }
 
-            tabContent.querySelector('.btnFilter').addEventListener('click', function () {
-                self.showFilterMenu();
-            });
-
-            tabContent.querySelector('.btnSort').addEventListener('click', function (e) {
-                libraryBrowser.showSortMenu({
-                    items: [{
-                        name: Globalize.translate('OptionNameSort'),
-                        id: 'SortName'
-                    },
-                        {
-                            name: Globalize.translate('OptionBudget'),
-                            id: 'Budget,SortName'
-                        },
-                        {
-                            name: Globalize.translate('OptionImdbRating'),
-                            id: 'CommunityRating,SortName'
-                        },
-                        {
-                            name: Globalize.translate('OptionCriticRating'),
-                            id: 'CriticRating,SortName'
-                        },
-                        {
-                            name: Globalize.translate('OptionDateAdded'),
-                            id: 'DateCreated,SortName'
-                        },
-                        {
-                            name: Globalize.translate('OptionDatePlayed'),
-                            id: 'DatePlayed,SortName'
-                        },
-                        {
-                            name: Globalize.translate('OptionMetascore'),
-                            id: 'Metascore,SortName'
-                        },
-                        {
-                            name: Globalize.translate('OptionParentalRating'),
-                            id: 'OfficialRating,SortName'
-                        },
-                        {
-                            name: Globalize.translate('OptionPlayCount'),
-                            id: 'PlayCount,SortName'
-                        },
-                        {
-                            name: Globalize.translate('OptionReleaseDate'),
-                            id: 'PremiereDate,SortName'
-                        },
-                        {
-                            name: Globalize.translate('OptionRevenue'),
-                            id: 'Revenue,SortName'
-                        },
-                        {
-                            name: Globalize.translate('OptionRuntime'),
-                            id: 'Runtime,SortName'
-                        }],
-                    callback: function () {
-                        getQuery(tabContent).StartIndex = 0;
-                        reloadItems(tabContent);
-                    },
-                    query: getQuery(tabContent),
-                    button: e.target
+            var btnFilter = tabContent.querySelector('.btnFilter');
+            if (btnFilter) {
+                btnFilter.addEventListener('click', function () {
+                    self.showFilterMenu();
                 });
-            });
+            }
+
+            var btnSort = tabContent.querySelector('.btnSort');
+            if (btnSort) {
+                btnSort.addEventListener('click', function () {
+                    libraryBrowser.showSortMenu({
+                        items: [{
+                            name: Globalize.translate('OptionNameSort'),
+                            id: 'SortName'
+                        },
+                            {
+                                name: Globalize.translate('OptionBudget'),
+                                id: 'Budget,SortName'
+                            },
+                            {
+                                name: Globalize.translate('OptionImdbRating'),
+                                id: 'CommunityRating,SortName'
+                            },
+                            {
+                                name: Globalize.translate('OptionCriticRating'),
+                                id: 'CriticRating,SortName'
+                            },
+                            {
+                                name: Globalize.translate('OptionDateAdded'),
+                                id: 'DateCreated,SortName'
+                            },
+                            {
+                                name: Globalize.translate('OptionDatePlayed'),
+                                id: 'DatePlayed,SortName'
+                            },
+                            {
+                                name: Globalize.translate('OptionMetascore'),
+                                id: 'Metascore,SortName'
+                            },
+                            {
+                                name: Globalize.translate('OptionParentalRating'),
+                                id: 'OfficialRating,SortName'
+                            },
+                            {
+                                name: Globalize.translate('OptionPlayCount'),
+                                id: 'PlayCount,SortName'
+                            },
+                            {
+                                name: Globalize.translate('OptionReleaseDate'),
+                                id: 'PremiereDate,SortName'
+                            },
+                            {
+                                name: Globalize.translate('OptionRevenue'),
+                                id: 'Revenue,SortName'
+                            },
+                            {
+                                name: Globalize.translate('OptionRuntime'),
+                                id: 'Runtime,SortName'
+                            }],
+                        callback: function () {
+                            getQuery(tabContent).StartIndex = 0;
+                            reloadItems(tabContent);
+                        },
+                        query: getQuery(tabContent),
+                        button: e.target
+                    });
+                });
+            }
 
             var btnSelectView = tabContent.querySelector('.btnSelectView');
             btnSelectView.addEventListener('click', function (e) {
@@ -332,8 +351,11 @@
             return getPageData(tabContent).view;
         };
 
-        initPage(tabContent);
-        onViewStyleChange();
+
+        self.initTab = function() {
+            initPage(tabContent);
+            onViewStyleChange();
+        };
 
         self.renderTab = function () {
 

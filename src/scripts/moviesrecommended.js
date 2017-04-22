@@ -212,6 +212,9 @@
              name: Globalize.translate('TabTrailers')
          },
          {
+             name: Globalize.translate('TabFavorites')
+         },
+         {
              name: Globalize.translate('TabCollections')
          },
          {
@@ -226,12 +229,11 @@
             case 'movies':
                 return 1;
             case 'favorites':
-                // TODO
-                return 0;
-            case 'collections':
                 return 3;
-            case 'genres':
+            case 'collections':
                 return 4;
+            case 'genres':
+                return 5;
             default:
                 return 0;
         }
@@ -246,8 +248,10 @@
             case 1:
                 return 'movies';
             case 3:
-                return 'collections';
+                return 'favorites';
             case 4:
+                return 'collections';
+            case 5:
                 return 'genres';
             default:
                 return '';
@@ -326,9 +330,12 @@
                     depends.push('scripts/movietrailers');
                     break;
                 case 3:
-                    depends.push('scripts/moviecollections');
+                    depends.push('scripts/movies');
                     break;
                 case 4:
+                    depends.push('scripts/moviecollections');
+                    break;
+                case 5:
                     depends.push('scripts/moviegenres');
                     break;
                 default:
@@ -346,6 +353,9 @@
                     tabContent = view.querySelector('.pageTabContent[data-index=\'' + index + '\']');
                     controller = index ? new controllerFactory(view, params, tabContent) : self;
                     tabControllers[index] = controller;
+                    if (index === 3) {
+                        controller.mode = 'favorites';
+                    }
 
                     if (controller.initTab) {
                         controller.initTab();

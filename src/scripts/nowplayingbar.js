@@ -530,20 +530,24 @@
             height: imgHeight
         })) : null;
 
+        var isRefreshing = false;
+
         if (url !== currentImgUrl) {
             currentImgUrl = url;
-
+            isRefreshing = true;
             imageLoader.lazyImage(nowPlayingImageElement, url);
         }
 
         if (nowPlayingItem.Id) {
-            ApiClient.getItem(Dashboard.getCurrentUserId(), nowPlayingItem.Id).then(function (item) {
-                userdataButtons.fill({
-                    item: item,
-                    includePlayed: false,
-                    element: nowPlayingUserData
+            if (isRefreshing) {
+                ApiClient.getItem(Dashboard.getCurrentUserId(), nowPlayingItem.Id).then(function (item) {
+                    userdataButtons.fill({
+                        item: item,
+                        includePlayed: false,
+                        element: nowPlayingUserData
+                    });
                 });
-            });
+            }
         } else {
             userdataButtons.destroy({
                 element: nowPlayingUserData
@@ -553,7 +557,7 @@
 
     function onPlaybackStart(e, state) {
 
-        console.log('nowplaying event: ' + e.type);
+        //console.log('nowplaying event: ' + e.type);
 
         var player = this;
 
@@ -600,7 +604,7 @@
 
     function onPlaybackStopped(e, state) {
 
-        console.log('nowplaying event: ' + e.type);
+        //console.log('nowplaying event: ' + e.type);
         var player = this;
 
         if (player.isLocalPlayer) {

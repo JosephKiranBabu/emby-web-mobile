@@ -1380,6 +1380,10 @@
 
         self.getApiClient = function (item) {
 
+            if (!item) {
+                throw new Error('item or serverId cannot be null');
+            }
+
             // Accept string + object
             if (item.ServerId) {
                 item = item.ServerId;

@@ -216,9 +216,6 @@
          },
          {
              name: Globalize.translate('TabGenres')
-         },
-         {
-             name: Globalize.translate('TabStudios')
          }];
     }
 
@@ -333,9 +330,6 @@
                     break;
                 case 4:
                     depends.push('scripts/moviegenres');
-                    break;
-                case 5:
-                    depends.push('scripts/moviestudios');
                     break;
                 default:
                     break;

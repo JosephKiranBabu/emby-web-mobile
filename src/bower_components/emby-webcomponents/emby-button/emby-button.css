@@ -46,6 +46,7 @@
     margin: 0;
     padding: 0;
     color: #52B54B;
+    vertical-align: initial;
 }
 
 .button-flat-accent {
@@ -68,6 +69,10 @@
     font-size: 1.36em;
     width: 1em;
     height: 1em;
+}
+
+.button-link > i {
+    font-size: 1em;
 }
 
 .fab {

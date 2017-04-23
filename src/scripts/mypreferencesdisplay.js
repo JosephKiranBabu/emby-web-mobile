@@ -1,4 +1,4 @@
-﻿define(['userSettingsBuilder', 'appStorage', 'loading'], function (userSettingsBuilder, appStorage, loading) {
+﻿define(['userSettingsBuilder', 'appStorage', 'loading', 'emby-linkbutton'], function (userSettingsBuilder, appStorage, loading) {
     'use strict';
 
     return function (view, params) {

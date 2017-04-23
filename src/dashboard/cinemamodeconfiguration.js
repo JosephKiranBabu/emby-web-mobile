@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'fnchecked'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'fnchecked', 'emby-linkbutton'], function ($, loading) {
     'use strict';
 
     function loadPage(page, config) {

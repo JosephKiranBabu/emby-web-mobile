@@ -309,6 +309,7 @@ define(['appStorage', 'browser'], function (appStorage, browser) {
         }
 
         features.push('otherapppromotions');
+        features.push('targetblank');
 
         return features;
     }();

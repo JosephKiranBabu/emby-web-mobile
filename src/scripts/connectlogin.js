@@ -1,4 +1,4 @@
-﻿define(['appSettings', 'loading'], function (appSettings, loading) {
+﻿define(['appSettings', 'loading', 'emby-linkbutton'], function (appSettings, loading) {
     'use strict';
 
     function login(page, username, password) {
@@ -313,7 +313,7 @@
         });
 
         var terms = view.querySelector('.terms');
-        terms.innerHTML = Globalize.translate('LoginDisclaimer') + "<div style='margin-top:5px;'><a href='http://emby.media/terms' target='_blank'>" + Globalize.translate('TermsOfUse') + "</a></div>";
+        terms.innerHTML = Globalize.translate('LoginDisclaimer') + "<div style='margin-top:5px;'><a is='emby-linkbutton' class='button-link' href='http://emby.media/terms' target='_blank'>" + Globalize.translate('TermsOfUse') + "</a></div>";
 
         if (AppInfo.isNativeApp) {
             terms.classList.add('hide');
@@ -336,7 +336,7 @@
                 // With apple we can't even have a link to the site
                 page.querySelector('.embyIntroDownloadMessage').innerHTML = Globalize.translate('EmbyIntroDownloadMessageWithoutLink');
             } else {
-                var link = '<a href="http://emby.media" target="_blank">http://emby.media</a>';
+                var link = '<a is="emby-linkbutton" class="button-link" href="http://emby.media" target="_blank">http://emby.media</a>';
                 page.querySelector('.embyIntroDownloadMessage').innerHTML = Globalize.translate('EmbyIntroDownloadMessage', link);
             }
         });

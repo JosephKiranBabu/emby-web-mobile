@@ -1,4 +1,4 @@
-﻿define(['loading', 'dialogHelper', 'imageLoader', 'emby-checkbox', 'emby-button', 'paper-icon-button-light', 'css!css/metadataeditor.css'], function (loading, dialogHelper, imageLoader) {
+﻿define(['loading', 'dialogHelper', 'imageLoader', 'emby-checkbox', 'emby-button', 'paper-icon-button-light', 'css!css/metadataeditor.css', 'emby-linkbutton'], function (loading, dialogHelper, imageLoader) {
     'use strict';
 
     var currentItemId;
@@ -191,7 +191,7 @@
 
         var displayUrl = getDisplayUrl(image.ThumbnailUrl || image.Url);
 
-        html += '<a target="_blank" href="' + getDisplayUrl(image.Url) + '" class="' + cssClass + '" data-src="' + displayUrl + '">';
+        html += '<a target="_blank" href="' + getDisplayUrl(image.Url) + '" is="emby-linkbutton" class="button-link ' + cssClass + '" data-src="' + displayUrl + '">';
         html += '</a>';
 
         html += '<div class="remoteImageDetails">';

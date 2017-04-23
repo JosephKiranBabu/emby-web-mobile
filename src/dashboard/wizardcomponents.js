@@ -1,4 +1,4 @@
-﻿define([], function () {
+﻿define(['emby-linkbutton'], function () {
     'use strict';
 
     function goNext() {
@@ -23,7 +23,7 @@
 
             if (operatingSystem == 'windows' && systemInfo.SystemArchitecture != 'Arm') {
 
-                view.querySelector('.suggestedLocation').innerHTML = Globalize.translate('FFmpegSuggestedDownload', '<a target="_blank" href="https://ffmpeg.zeranoe.com/builds">https://ffmpeg.zeranoe.com</a>');
+                view.querySelector('.suggestedLocation').innerHTML = Globalize.translate('FFmpegSuggestedDownload', '<a is="emby-linkbutton" class="button-link" target="_blank" href="https://ffmpeg.zeranoe.com/builds">https://ffmpeg.zeranoe.com</a>');
 
                 if (systemInfo.SystemArchitecture == 'X86') {
                     instructions = 'Download FFmpeg 32-Bit Static';
@@ -34,7 +34,7 @@
 
             } else if (operatingSystem == 'linux') {
 
-                view.querySelector('.suggestedLocation').innerHTML = Globalize.translate('FFmpegSuggestedDownload', '<a target="_blank" href="http://johnvansickle.com/ffmpeg">http://johnvansickle.com/ffmpeg</a>');
+                view.querySelector('.suggestedLocation').innerHTML = Globalize.translate('FFmpegSuggestedDownload', '<a is="emby-linkbutton" class="button-link" target="_blank" href="http://johnvansickle.com/ffmpeg">http://johnvansickle.com/ffmpeg</a>');
 
                 if (systemInfo.SystemArchitecture == 'X86') {
                     instructions = 'Download x86 build';
@@ -45,11 +45,11 @@
 
             } else if (operatingSystem == 'osx' && systemInfo.SystemArchitecture == 'X64') {
 
-                view.querySelector('.suggestedLocation').innerHTML = Globalize.translate('FFmpegSuggestedDownload', '<a target="_blank" href="http://evermeet.cx/ffmpeg">http://evermeet.cx/ffmpeg</a>');
+                view.querySelector('.suggestedLocation').innerHTML = Globalize.translate('FFmpegSuggestedDownload', '<a is="emby-linkbutton" class="button-link" target="_blank" href="http://evermeet.cx/ffmpeg">http://evermeet.cx/ffmpeg</a>');
                 instructions = 'Download both ffmpeg and ffprobe, and extract them to the same folder.';
 
             } else {
-                view.querySelector('.suggestedLocation').innerHTML = Globalize.translate('FFmpegSuggestedDownload', '<a target="_blank" href="http://ffmpeg.org">https://ffmpeg.org/download.html</a>');
+                view.querySelector('.suggestedLocation').innerHTML = Globalize.translate('FFmpegSuggestedDownload', '<a is="emby-linkbutton" class="button-link" target="_blank" href="http://ffmpeg.org">https://ffmpeg.org/download.html</a>');
             }
 
             view.querySelector('.downloadInstructions').innerHTML = instructions;

@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'emby-checkbox', 'listViewStyle', 'emby-input', 'emby-select'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'emby-checkbox', 'listViewStyle', 'emby-input', 'emby-select', 'emby-linkbutton'], function ($, loading) {
     'use strict';
 
     return function (page, providerId, options) {
@@ -323,7 +323,7 @@
                 }
             });
 
-            $('.createAccountHelp', page).html(Globalize.translate('MessageCreateAccountAt', '<a href="http://www.schedulesdirect.org" target="_blank">http://www.schedulesdirect.org</a>'));
+            $('.createAccountHelp', page).html(Globalize.translate('MessageCreateAccountAt', '<a is="emby-linkbutton" class="button-link" href="http://www.schedulesdirect.org" target="_blank">http://www.schedulesdirect.org</a>'));
 
             reload();
         };

@@ -1,4 +1,4 @@
-﻿define(['loading', 'dialogHelper', 'dom', 'listViewStyle', 'emby-input', 'emby-button', 'paper-icon-button-light', 'css!./directorybrowser', 'formDialogStyle'], function (loading, dialogHelper, dom) {
+﻿define(['loading', 'dialogHelper', 'dom', 'listViewStyle', 'emby-input', 'emby-button', 'paper-icon-button-light', 'css!./directorybrowser', 'formDialogStyle', 'emby-linkbutton'], function (loading, dialogHelper, dom) {
     'use strict';
 
     var systemInfo;
@@ -118,7 +118,7 @@
                 html += '<br/>';
                 html += Globalize.translate('MessageDirectoryPickerBSDInstruction');
                 html += '<br/>';
-                html += '<a href="http://doc.freenas.org/9.3/freenas_jails.html#add-storage" target="_blank">' + Globalize.translate('ButtonMoreInformation') + '</a>';
+                html += '<a is="emby-linkbutton" class="button-link" href="http://doc.freenas.org/9.3/freenas_jails.html#add-storage" target="_blank">' + Globalize.translate('ButtonMoreInformation') + '</a>';
             }
             else if (systemInfo.OperatingSystem.toLowerCase() == 'linux') {
 

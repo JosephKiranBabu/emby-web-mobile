@@ -1,4 +1,4 @@
-﻿define(['loading', 'embyRouter', 'layoutManager', 'connectionManager', 'cardBuilder', 'datetime', 'mediaInfo', 'backdrop', 'listView', 'itemContextMenu', 'itemHelper', 'userdataButtons', 'dom', 'indicators', 'apphost', 'imageLoader', 'libraryMenu', 'globalize', 'browser', 'events', 'scrollHelper', 'playbackManager', 'scrollStyles', 'emby-itemscontainer', 'emby-checkbox'], function (loading, embyRouter, layoutManager, connectionManager, cardBuilder, datetime, mediaInfo, backdrop, listView, itemContextMenu, itemHelper, userdataButtons, dom, indicators, appHost, imageLoader, libraryMenu, globalize, browser, events, scrollHelper, playbackManager) {
+﻿define(['loading', 'embyRouter', 'layoutManager', 'connectionManager', 'cardBuilder', 'datetime', 'mediaInfo', 'backdrop', 'listView', 'itemContextMenu', 'itemHelper', 'userdataButtons', 'dom', 'indicators', 'apphost', 'imageLoader', 'libraryMenu', 'globalize', 'browser', 'events', 'scrollHelper', 'playbackManager', 'scrollStyles', 'emby-itemscontainer', 'emby-checkbox', 'emby-linkbutton'], function (loading, embyRouter, layoutManager, connectionManager, cardBuilder, datetime, mediaInfo, backdrop, listView, itemContextMenu, itemHelper, userdataButtons, dom, indicators, appHost, imageLoader, libraryMenu, globalize, browser, events, scrollHelper, playbackManager) {
     'use strict';
 
     function getPromise(params) {
@@ -340,7 +340,7 @@
             var itemBirthLocation = page.querySelector('#itemBirthLocation');
             if (item.Type == "Person" && item.ProductionLocations && item.ProductionLocations.length) {
 
-                var gmap = '<a class="textlink" target="_blank" href="https://maps.google.com/maps?q=' + item.ProductionLocations[0] + '">' + item.ProductionLocations[0] + '</a>';
+                var gmap = '<a is="emby-linkbutton" class="button-link textlink" target="_blank" href="https://maps.google.com/maps?q=' + item.ProductionLocations[0] + '">' + item.ProductionLocations[0] + '</a>';
 
                 itemBirthLocation.classList.remove('hide');
                 itemBirthLocation.innerHTML = globalize.translate('BirthPlaceValue').replace('{0}', gmap);
@@ -447,7 +447,7 @@
         var links = [];
 
         if (item.HomePageUrl) {
-            links.push('<a class="textlink" href="' + item.HomePageUrl + '" target="_blank">' + globalize.translate('ButtonWebsite') + '</a>');
+            links.push('<a is="emby-linkbutton" class="button-link textlink" href="' + item.HomePageUrl + '" target="_blank">' + globalize.translate('ButtonWebsite') + '</a>');
         }
 
         if (item.ExternalUrls) {
@@ -456,7 +456,7 @@
 
                 var url = item.ExternalUrls[i];
 
-                links.push('<a class="textlink" href="' + url.Url + '" target="_blank">' + url.Name + '</a>');
+                links.push('<a is="emby-linkbutton" class="button-link textlink" href="' + url.Url + '" target="_blank">' + url.Name + '</a>');
             }
         }
 
@@ -1623,7 +1623,7 @@
             require(['alert'], function (alert) {
                 alert({
                     text: globalize.translate('AddItemToCollectionHelp'),
-                    html: globalize.translate('AddItemToCollectionHelp') + '<br/><br/><a target="_blank" href="https://github.com/MediaBrowser/Wiki/wiki/Collections">' + globalize.translate('ButtonLearnMore') + '</a>'
+                    html: globalize.translate('AddItemToCollectionHelp') + '<br/><br/><a is="emby-linkbutton" class="button-link" target="_blank" href="https://github.com/MediaBrowser/Wiki/wiki/Collections">' + globalize.translate('ButtonLearnMore') + '</a>'
                 });
             });
         });
@@ -1727,7 +1727,7 @@
             html += '</div>';
 
             if (review.Url) {
-                html += '<div class="secondary listItemBodyText"><a class="textlink" href="' + review.Url + '" target="_blank">' + globalize.translate('ButtonFullReview') + '</a></div>';
+                html += '<div class="secondary listItemBodyText"><a is="emby-linkbutton" class="button-link textlink" href="' + review.Url + '" target="_blank">' + globalize.translate('ButtonFullReview') + '</a></div>';
             }
 
             html += '</div>';

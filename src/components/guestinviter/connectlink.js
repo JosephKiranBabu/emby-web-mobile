@@ -1,4 +1,4 @@
-﻿define(['dialogHelper', 'connectHelper', 'emby-input', 'emby-button', 'emby-collapse', 'paper-icon-button-light', 'formDialogStyle'], function (dialogHelper, connectHelper) {
+﻿define(['dialogHelper', 'connectHelper', 'emby-input', 'emby-button', 'emby-collapse', 'paper-icon-button-light', 'formDialogStyle', 'emby-linkbutton'], function (dialogHelper, connectHelper) {
     'use strict';
 
     return {

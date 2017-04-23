@@ -1,4 +1,4 @@
-﻿define(['scripts/userpasswordpage', 'loading'], function (Userpasswordpage, loading) {
+﻿define(['scripts/userpasswordpage', 'loading', 'emby-linkbutton'], function (Userpasswordpage, loading) {
     'use strict';
 
     var currentFile;

@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'emby-linkbutton'], function ($, loading) {
     'use strict';
 
     function populateHistory(packageInfo, page) {

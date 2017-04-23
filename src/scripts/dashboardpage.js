@@ -1,4 +1,4 @@
-﻿define(['datetime', 'jQuery', 'dom', 'loading', 'humanedate', 'cardStyle', 'listViewStyle'], function (datetime, $, dom, loading) {
+﻿define(['datetime', 'jQuery', 'dom', 'loading', 'humanedate', 'cardStyle', 'listViewStyle', 'emby-linkbutton'], function (datetime, $, dom, loading) {
     'use strict';
 
     function renderNoHealthAlertsMessage(page) {
@@ -855,11 +855,11 @@
 
         renderUrls: function (page, systemInfo) {
 
-            var helpButton = '<a href="https://github.com/MediaBrowser/Wiki/wiki/Connectivity" target="_blank" style="margin-left:1em;color:#fff;background:#52B54B;padding:.25em 1em;border-radius:.5em;">' + Globalize.translate('ButtonHelp') + '</a>';
+            var helpButton = '<a is="emby-linkbutton" class="button-link" href="https://github.com/MediaBrowser/Wiki/wiki/Connectivity" target="_blank" style="margin-left:1em;color:#fff;background:#52B54B;padding:.25em 1em;border-radius:1em;">' + Globalize.translate('ButtonHelp') + '</a>';
 
             if (systemInfo.LocalAddress) {
 
-                var localAccessHtml = Globalize.translate('LabelLocalAccessUrl', '<a href="' + systemInfo.LocalAddress + '" target="_blank">' + systemInfo.LocalAddress + '</a>');
+                var localAccessHtml = Globalize.translate('LabelLocalAccessUrl', '<a is="emby-linkbutton" class="button-link" href="' + systemInfo.LocalAddress + '" target="_blank">' + systemInfo.LocalAddress + '</a>');
 
                 $('.localUrl', page).html(localAccessHtml + helpButton).show().trigger('create');
             } else {
@@ -870,7 +870,7 @@
 
                 var externalUrl = systemInfo.WanAddress;
 
-                var remoteAccessHtml = Globalize.translate('LabelRemoteAccessUrl', '<a href="' + externalUrl + '" target="_blank">' + externalUrl + '</a>');
+                var remoteAccessHtml = Globalize.translate('LabelRemoteAccessUrl', '<a is="emby-linkbutton" class="button-link" href="' + externalUrl + '" target="_blank">' + externalUrl + '</a>');
 
                 $('.externalUrl', page).html(remoteAccessHtml + helpButton).show().trigger('create');
             } else {
@@ -894,7 +894,7 @@
                 imgUrl = "css/images/supporter/supporterbadge.png";
                 text = Globalize.translate('MessageThankYouForSupporting');
 
-                supporterIconContainer.innerHTML = '<a class="imageLink supporterIcon" href="http://emby.media/premiere" target="_blank" title="' + text + '"><img src="' + imgUrl + '" style="height:32px;vertical-align: middle; margin-right: .5em;" /></a><span style="position:relative;top:2px;text-decoration:none;">' + text + '</span>';
+                supporterIconContainer.innerHTML = '<a is="emby-linkbutton" class="button-link imageLink supporterIcon" href="http://emby.media/premiere" target="_blank" title="' + text + '"><img src="' + imgUrl + '" style="height:32px;vertical-align: middle; margin-right: .5em;" /></a><span style="position:relative;top:2px;text-decoration:none;">' + text + '</span>';
             } else {
 
                 supporterIconContainer.classList.add('hide');

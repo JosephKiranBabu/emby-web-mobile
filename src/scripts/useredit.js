@@ -48,7 +48,6 @@
         $('#chkEnableVideoPlaybackTranscoding', page).checked(user.Policy.EnableVideoPlaybackTranscoding);
         $('#chkEnableVideoPlaybackRemuxing', page).checked(user.Policy.EnablePlaybackRemuxing);
 
-        $('#chkEnableSync', page).checked(user.Policy.EnableSync);
         $('#chkEnableSyncTranscoding', page).checked(user.Policy.EnableSyncTranscoding);
         $('#chkEnableSharing', page).checked(user.Policy.EnablePublicSharing);
 
@@ -99,7 +98,6 @@
 
         user.Policy.EnableContentDownloading = $('#chkEnableDownloading', page).checked();
 
-        user.Policy.EnableSync = $('#chkEnableSync', page).checked();
         user.Policy.EnableSyncTranscoding = $('#chkEnableSyncTranscoding', page).checked();
         user.Policy.EnablePublicSharing = $('#chkEnableSharing', page).checked();
 

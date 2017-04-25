@@ -477,14 +477,14 @@
             return;
         }
 
-        if (user.Policy.EnableSync) {
+        if (user.Policy.EnableContentDownloading) {
             showBySelector('.lnkSyncToOtherDevices', true);
         } else {
             showBySelector('.lnkSyncToOtherDevices', false);
         }
 
         require(['apphost'], function (appHost) {
-            if (user.Policy.EnableSync && appHost.supports('sync')) {
+            if (user.Policy.EnableContentDownloading && appHost.supports('sync')) {
                 showBySelector('.lnkManageOffline', true);
             } else {
                 showBySelector('.lnkManageOffline', false);

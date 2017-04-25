@@ -134,7 +134,7 @@
             id: 'settings'
         });
 
-        if (currentUser.Policy.EnableSync) {
+        if (currentUser.Policy.EnableContentDownloading) {
             commands.push({
                 name: globalize.translate('SyncToOtherDevices'),
                 id: 'sync'
@@ -259,7 +259,7 @@
         var hasSync = false;
         var downloadsTab = element.querySelector('.docked-tab-syncdownloads');
         if (downloadsTab) {
-            if (user.Policy.EnableSync) {
+            if (user.Policy.EnableContentDownloading) {
                 downloadsTab.classList.remove('hide');
                 hasSync = true;
             } else {
@@ -281,7 +281,7 @@
 
         var downloadsTab = element.querySelector('.docked-tab-syncdownloads');
         if (downloadsTab) {
-            if (user.Policy.EnableSync) {
+            if (user.Policy.EnableContentDownloading) {
                 downloadsTab.classList.remove('hide');
             } else {
                 downloadsTab.classList.add('hide');

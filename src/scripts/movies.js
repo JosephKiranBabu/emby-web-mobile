@@ -269,7 +269,7 @@
 
             var btnSort = tabContent.querySelector('.btnSort');
             if (btnSort) {
-                btnSort.addEventListener('click', function () {
+                btnSort.addEventListener('click', function (e) {
                     libraryBrowser.showSortMenu({
                         items: [{
                             name: Globalize.translate('OptionNameSort'),

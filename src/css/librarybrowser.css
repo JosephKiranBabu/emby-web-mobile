@@ -809,13 +809,24 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
     margin-bottom: -1.6em;
 }
 
-@media all and (min-width: 800px) {
+@media all and (min-width: 600px) {
 
     .padded-left-withalphapicker {
-        padding-left: 4.4%;
+        padding-left: 3%;
     }
 
     .padded-right-withalphapicker {
+        padding-right: 3%;
+    }
+}
+
+@media all and (min-width: 800px) {
+
+    .layout-tv .padded-left-withalphapicker {
+        padding-right: 4.4%;
+    }
+
+    .layout-tv .padded-right-withalphapicker {
         padding-right: 4.4%;
     }
 }

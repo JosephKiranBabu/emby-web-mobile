@@ -326,6 +326,7 @@
 
             return {
                 Id: i.Id,
+                ServerId: i.ServerId,
                 Name: i.Name,
                 Type: i.Type,
                 MediaType: i.MediaType,
@@ -358,6 +359,7 @@
             deviceId: apiClient.deviceId(),
             accessToken: apiClient.accessToken(),
             serverAddress: apiClient.serverAddress(),
+            serverId: apiClient.serverId(),
             receiverName: receiverName
         });
 

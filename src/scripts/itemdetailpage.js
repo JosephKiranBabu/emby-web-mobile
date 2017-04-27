@@ -118,7 +118,7 @@
         options = options || {};
 
         var html = '';
-        html += '<div is="emby-itemscontainer" class="itemsContainer vertical-list" data-contextmenu="false">';
+        html += '<div is="emby-itemscontainer" class="itemsContainer vertical-list padded-left padded-right" data-contextmenu="false">';
         html += listView.getListViewHtml({
             items: items,
             enableUserDataButtons: false,
@@ -476,7 +476,7 @@
 
         var container = page.querySelector('.detailImageContainer');
 
-        LibraryBrowser.renderDetailImage(container, item, user.Policy.IsAdministrator && item.MediaType != 'Photo', null, imageLoader, indicators);
+        LibraryBrowser.renderDetailImage(page, container, item, user.Policy.IsAdministrator && item.MediaType != 'Photo', null, imageLoader, indicators);
     }
 
     function refreshDetailImageUserData(elem, item) {
@@ -917,9 +917,9 @@
             var html = '';
 
             if (enableScrollX()) {
-                html += '<div is="emby-itemscontainer" class="hiddenScrollX itemsContainer">';
+                html += '<div is="emby-itemscontainer" class="hiddenScrollX itemsContainer padded-left padded-right">';
             } else {
-                html += '<div is="emby-itemscontainer" class="itemsContainer vertical-wrap">';
+                html += '<div is="emby-itemscontainer" class="itemsContainer vertical-wrap padded-left padded-right">';
             }
 
             var shape = item.Type == "MusicAlbum" || item.Type == "MusicArtist" ? getSquareShape() : getPortraitShape();
@@ -991,9 +991,9 @@
             var html = '';
 
             if (enableScrollX()) {
-                html += '<div is="emby-itemscontainer" class="hiddenScrollX itemsContainer">';
+                html += '<div is="emby-itemscontainer" class="hiddenScrollX itemsContainer padded-left padded-right">';
             } else {
-                html += '<div is="emby-itemscontainer" class="itemsContainer vertical-wrap">';
+                html += '<div is="emby-itemscontainer" class="itemsContainer vertical-wrap padded-left padded-right">';
             }
 
             var supportsImageAnalysis = appHost.supports('imageanalysis');
@@ -1053,7 +1053,8 @@
                 var context = inferContext(item);
 
                 var href = embyRouter.getRouteUrl(item.Studios[0], {
-                    context: context
+                    context: context,
+                    itemType: 'Studio'
                 });
                 html += ' on <a class="textlink" href="' + href + '">' + item.Studios[0].Name + '</a>';
             }
@@ -1595,7 +1596,7 @@
         html += '<button class="btnAddToCollection autoSize" type="button" is="paper-icon-button-light" style="margin-left:1em;"><i class="md-icon" icon="add">add</i></button>';
         html += '</div>';
 
-        html += '<div is="emby-itemscontainer" class="detailSectionContent itemsContainer vertical-wrap">';
+        html += '<div is="emby-itemscontainer" class="detailSectionContent itemsContainer vertical-wrap padded-left padded-right">';
 
         var shape = type.type == 'MusicAlbum' ? getSquareShape(false) : getPortraitShape(false);
 

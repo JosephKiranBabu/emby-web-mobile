@@ -358,6 +358,10 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
     .itemDetailPage {
         padding-top: 0 !important;
     }
+
+    .detailimg-hidemobile {
+        display: none;
+    }
 }
 
 @media all and (min-width: 500px) {
@@ -383,45 +387,12 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
     margin: 0;
 }
 
-.detailSection {
-    vertical-align: top;
-    margin-bottom: 3em;
-}
-
 .detailCollapsibleSection:not(.hide) + .detailCollapsibleSection {
     margin-top: -2em;
 }
 
 .detailPageCollabsible {
     margin-top: 0;
-}
-
-.detailSection h1 {
-    margin-bottom: .25em;
-    position: relative;
-}
-
-.detailSectionHeader {
-    background-clip: border-box;
-    padding: 0 0 .25em .25em;
-    background-color: transparent;
-    border-radius: 0;
-    margin-bottom: .5em;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    position: relative;
-    margin: 1.5em 0 1em;
-    display: flex;
-    align-items: center;
-}
-
-    .detailSectionHeader > h1 {
-        margin: 0;
-    }
-
-.detailSectionHeaderButton {
-    margin-left: 1em;
 }
 
 .mainDetailButtons {
@@ -492,13 +463,28 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
     }
 }
 
+.layout-tv .detailVerticalSection {
+    margin-bottom: 3.4em !important;
+}
+
 .detailPageContent {
-    padding: 3em 3% 0;
+    padding-top: 3em;
+}
+
+@media all and (max-width: 800px) {
+    .detailPageContent-nodetailimg {
+        padding-top: 1em;
+    }
 }
 
 @media all and (min-width: 1200px) {
-    .detailPageContent {
-        padding: 3em 5% 0;
+
+    .itemDetailPage .padded-left {
+        padding-left: 4% !important;
+    }
+
+    .itemDetailPage .padded-right {
+        padding-right: 4% !important;
     }
 }
 

@@ -166,58 +166,10 @@
 
     }
 
-    function loadPlaylists(page, parentId) {
-
-        var options = {
-
-            SortBy: "SortName",
-            SortOrder: "Ascending",
-            IncludeItemTypes: "Playlist",
-            Recursive: true,
-            Fields: "PrimaryImageAspectRatio,SortName,CumulativeRunTimeTicks,CanDelete",
-            StartIndex: 0,
-            Limit: itemsPerRow(),
-            EnableTotalRecordCount: false
-        };
-
-        ApiClient.getItems(Dashboard.getCurrentUserId(), options).then(function (result) {
-
-            var elem = page.querySelector('#playlists');
-
-            if (result.Items.length) {
-                elem.classList.remove('hide');
-            } else {
-                elem.classList.add('hide');
-            }
-
-            var itemsContainer = elem.querySelector('.itemsContainer');
-
-            var supportsImageAnalysis = appHost.supports('imageanalysis');
-            supportsImageAnalysis = false;
-
-            itemsContainer.innerHTML = cardBuilder.getCardsHtml({
-                items: result.Items,
-                shape: getSquareShape(),
-                showTitle: true,
-                lazy: true,
-                coverImage: true,
-                centerText: !supportsImageAnalysis,
-                overlayPlayButton: !supportsImageAnalysis,
-                allowBottomPadding: !enableScrollX(),
-                cardLayout: supportsImageAnalysis,
-                vibrant: supportsImageAnalysis
-
-            });
-            imageLoader.lazyChildren(itemsContainer);
-
-        });
-    }
-
     function loadSuggestionsTab(page, tabContent, parentId) {
 
         console.log('loadSuggestionsTab');
         loadLatest(tabContent, parentId);
-        loadPlaylists(tabContent, parentId);
         loadRecentlyPlayed(tabContent, parentId);
         loadFrequentlyPlayed(tabContent, parentId);
 
@@ -243,13 +195,13 @@
              name: Globalize.translate('TabArtists')
          },
          {
+             name: Globalize.translate('TabPlaylists')
+         },
+         {
              name: Globalize.translate('TabSongs')
          },
          {
              name: Globalize.translate('TabGenres')
-         },
-         {
-             name: Globalize.translate('TabFolders')
          }];
     }
 
@@ -307,7 +259,7 @@
 
                 viewTabs.addEventListener('beforetabchange', onBeforeTabChange);
                 viewTabs.addEventListener('tabchange', onTabChange);
-                libraryBrowser.configurePaperLibraryTabs(view, viewTabs, view.querySelectorAll('.pageTabContent'), [0, 4, 5, 6]);
+                libraryBrowser.configurePaperLibraryTabs(view, viewTabs, view.querySelectorAll('.pageTabContent'), [0, 4, 5]);
 
                 if (!viewTabs.triggerBeforeTabChange) {
                     viewTabs.addEventListener('ready', function () {
@@ -338,13 +290,13 @@
                     depends.push('scripts/musicartists');
                     break;
                 case 4:
-                    depends.push('scripts/songs');
+                    depends.push('scripts/musicplaylists');
                     break;
                 case 5:
-                    depends.push('scripts/musicgenres');
+                    depends.push('scripts/songs');
                     break;
                 case 6:
-                    depends.push('scripts/musicfolders');
+                    depends.push('scripts/musicgenres');
                     break;
                 default:
                     break;

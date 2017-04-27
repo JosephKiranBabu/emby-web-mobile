@@ -500,10 +500,17 @@
                 });
             },
 
-            renderDetailImage: function (elem, item, editable, preferThumb, imageLoader, indicators) {
+            renderDetailImage: function (page, elem, item, editable, preferThumb, imageLoader, indicators) {
 
                 if (item.Type === 'SeriesTimer') {
                     editable = false;
+                }
+
+                if (item.Type === 'Episode') {
+                    elem.classList.add('detailimg-hidemobile');
+                    page.querySelector('.detailPageContent').classList.add('detailPageContent-nodetailimg');
+                } else {
+                    page.querySelector('.detailPageContent').classList.remove('detailPageContent-nodetailimg');
                 }
 
                 var imageTags = item.ImageTags || {};
@@ -659,7 +666,8 @@
 
                 var itemBackdropElement = page.querySelector('#itemBackdrop');
                 var usePrimaryImage = item.Type === 'Episode';
-                usePrimaryImage = false;
+                //usePrimaryImage = false;
+                var useThumbImage = false;
 
                 if (usePrimaryImage && item.ImageTags && item.ImageTags.Primary) {
 
@@ -668,6 +676,19 @@
                         index: 0,
                         maxWidth: screenWidth,
                         tag: item.ImageTags.Primary
+                    });
+
+                    itemBackdropElement.classList.remove('noBackdrop');
+                    imageLoader.lazyImage(itemBackdropElement, imgUrl, false);
+                    hasbackdrop = true;
+                }
+                else if (useThumbImage && item.ImageTags && item.ImageTags.Thumb) {
+
+                    imgUrl = ApiClient.getScaledImageUrl(item.Id, {
+                        type: "Thumb",
+                        index: 0,
+                        maxWidth: screenWidth,
+                        tag: item.ImageTags.Thumb
                     });
 
                     itemBackdropElement.classList.remove('noBackdrop');
@@ -694,6 +715,19 @@
                         index: 0,
                         tag: item.ParentBackdropImageTags[0],
                         maxWidth: screenWidth
+                    });
+
+                    itemBackdropElement.classList.remove('noBackdrop');
+                    imageLoader.lazyImage(itemBackdropElement, imgUrl, false);
+                    hasbackdrop = true;
+                }
+                else if (item.ImageTags && item.ImageTags.Thumb) {
+
+                    imgUrl = ApiClient.getScaledImageUrl(item.Id, {
+                        type: "Thumb",
+                        index: 0,
+                        maxWidth: screenWidth,
+                        tag: item.ImageTags.Thumb
                     });
 
                     itemBackdropElement.classList.remove('noBackdrop');

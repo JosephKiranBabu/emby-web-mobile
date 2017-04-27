@@ -59,7 +59,7 @@
     }
 
     function renderImage(page, item) {
-        libraryBrowser.renderDetailImage(page.querySelector('.detailImageContainer'), item, false, null, imageLoader, indicators);
+        libraryBrowser.renderDetailImage(page, page.querySelector('.detailImageContainer'), item, false, null, imageLoader, indicators);
     }
 
     $(document).on('pageinit', "#publicSharedItemPage", function () {

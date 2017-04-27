@@ -1343,8 +1343,9 @@ var AppInfo = {};
                 var url;
                 // Handle search hints
                 var id = item.Id || item.ItemId;
+                var itemType = item.Type || (options ? options.itemType : null);
 
-                if (item.Type == "SeriesTimer") {
+                if (itemType == "SeriesTimer") {
                     //return "livetvseriestimer.html?id=" + id;
                     return "itemdetails.html?seriesTimerId=" + id;
                 }
@@ -1403,44 +1404,44 @@ var AppInfo = {};
                     }
                 }
                 else if (item.IsFolder) {
-                    if (item.Type != "BoxSet" && item.Type != "Series") {
+                    if (itemType != "BoxSet" && itemType != "Series") {
                         return id ? "itemlist.html?parentId=" + id : "#";
                     }
                 }
 
-                if (item.Type == 'CollectionFolder') {
+                if (itemType == 'CollectionFolder') {
                     return 'itemlist.html?topParentId=' + item.Id + '&parentId=' + item.Id;
                 }
 
-                if (item.Type == "PhotoAlbum") {
+                if (itemType == "PhotoAlbum") {
                     return "itemlist.html?context=photos&parentId=" + id;
                 }
-                if (item.Type == "Playlist") {
+                if (itemType == "Playlist") {
                     return "itemdetails.html?id=" + id;
                 }
-                if (item.Type == "TvChannel") {
+                if (itemType == "TvChannel") {
                     return "itemdetails.html?id=" + id;
                 }
-                if (item.Type == "Channel") {
+                if (itemType == "Channel") {
                     return "channelitems.html?id=" + id;
                 }
-                if ((item.IsFolder && item.SourceType == 'Channel') || item.Type == 'ChannelFolderItem') {
+                if ((item.IsFolder && item.SourceType == 'Channel') || itemType == 'ChannelFolderItem') {
                     return "channelitems.html?id=" + item.ChannelId + '&folderId=' + item.Id;
                 }
-                if (item.Type == "Program") {
+                if (itemType == "Program") {
                     return "itemdetails.html?id=" + id;
                 }
 
-                if (item.Type == "BoxSet") {
+                if (itemType == "BoxSet") {
                     return "itemdetails.html?id=" + id;
                 }
-                if (item.Type == "MusicAlbum") {
+                if (itemType == "MusicAlbum") {
                     return "itemdetails.html?id=" + id;
                 }
-                if (item.Type == "GameSystem") {
+                if (itemType == "GameSystem") {
                     return "itemdetails.html?id=" + id;
                 }
-                if (item.Type == "Genre") {
+                if (itemType == "Genre") {
                     var type;
                     switch (context) {
                         case 'tvshows':
@@ -1460,10 +1461,10 @@ var AppInfo = {};
                     }
                     return url;
                 }
-                if (item.Type == "MusicGenre") {
+                if (itemType == "MusicGenre") {
                     return "itemdetails.html?id=" + id;
                 }
-                if (item.Type == "GameGenre") {
+                if (itemType == "GameGenre") {
 
                     url = "secondaryitems.html?type=Game&genreId=" + id;
                     if (topParentId) {
@@ -1471,7 +1472,7 @@ var AppInfo = {};
                     }
                     return url;
                 }
-                if (item.Type == "Studio") {
+                if (itemType == "Studio") {
 
                     var type;
                     switch (context) {
@@ -1492,20 +1493,20 @@ var AppInfo = {};
                     }
                     return url;
                 }
-                if (item.Type == "Person") {
+                if (itemType == "Person") {
                     return "itemdetails.html?id=" + id;
                 }
-                if (item.Type == "Recording") {
+                if (itemType == "Recording") {
                     return "itemdetails.html?id=" + id;
                 }
 
-                if (item.Type == "MusicArtist") {
+                if (itemType == "MusicArtist") {
                     return "itemdetails.html?id=" + id;
                 }
 
                 var contextSuffix = context ? ('&context=' + context) : '';
 
-                if (item.Type == "Series" || item.Type == "Season" || item.Type == "Episode") {
+                if (itemType == "Series" || itemType == "Season" || itemType == "Episode") {
                     return "itemdetails.html?id=" + id + contextSuffix;
                 }
 

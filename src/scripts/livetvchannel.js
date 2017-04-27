@@ -22,9 +22,10 @@
 
                 if (currentItems.length) {
 
-                    html += '<h1>' + datetime.toLocaleDateString(currentStartDate, { weekday: 'long', month: 'long', day: 'numeric' }) + '</h1>';
+                    html += '<div class="verticalSection verticalDetailSection">';
+                    html += '<h2 class="sectionTitle padded-left">' + datetime.toLocaleDateString(currentStartDate, { weekday: 'long', month: 'long', day: 'numeric' }) + '</h2>';
 
-                    html += '<div is="emby-itemscontainer" class="vertical-list">' + listView.getListViewHtml({
+                    html += '<div is="emby-itemscontainer" class="vertical-list padded-left padded-right">' + listView.getListViewHtml({
                         items: currentItems,
                         enableUserDataButtons: false,
                         showParentTitle: true,
@@ -33,7 +34,7 @@
                         mediaInfo: false,
                         parentTitleWithTitle: true
 
-                    }) + '</div>';
+                    }) + '</div></div>';
                 }
 
                 currentStartDate = itemStartDate;

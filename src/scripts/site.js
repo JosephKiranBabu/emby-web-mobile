@@ -953,7 +953,7 @@ var AppInfo = {};
 
         paths.hlsjs = bowerPath + "/hlsjs/dist/hls.min";
 
-        define("mediaSession", [embyWebComponentsBowerPath + "/playback/mediasession"]);
+        define("mediaSession", [embyWebComponentsBowerPath + "/playback/mediasession"], returnFirstDependency);
         define("webActionSheet", [embyWebComponentsBowerPath + "/actionsheet/actionsheet"], returnFirstDependency);
 
         if (Dashboard.isRunningInCordova()) {
@@ -1196,7 +1196,7 @@ var AppInfo = {};
         define("userSettingsBuilder", [embyWebComponentsBowerPath + "/usersettings/usersettingsbuilder"], returnFirstDependency);
 
         define("material-icons", ['css!' + embyWebComponentsBowerPath + '/fonts/material-icons/style'], returnFirstDependency);
-        define("robotoFont", ['css!' + embyWebComponentsBowerPath + '/fonts/roboto/style'], returnFirstDependency);
+        define("robotoFont", ['css!fonts/roboto/style'], returnFirstDependency);
         define("scrollStyles", ['css!' + embyWebComponentsBowerPath + '/scrollstyles'], returnFirstDependency);
 
         define("navdrawer", ['components/navdrawer/navdrawer'], returnFirstDependency);
@@ -2747,7 +2747,6 @@ var AppInfo = {};
 
                     postInitDependencies.push('cordova/volume');
                     postInitDependencies.push('cordova/statusbar');
-                    //postInitDependencies.push('cordova/orientation');
                     postInitDependencies.push('cordova/remotecontrols');
 
                     //postInitDependencies.push('cordova/backgroundfetch');

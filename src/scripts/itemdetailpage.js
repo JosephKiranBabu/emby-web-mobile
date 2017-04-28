@@ -711,14 +711,6 @@
 
         page.querySelector('.criticRatingScore').innerHTML = (item.CriticRating || '0') + '%';
 
-        if (item.CriticRatingSummary) {
-            page.querySelector('#criticRatingSummary').classList.remove('hide');
-            page.querySelector('.criticRatingSummaryText').innerHTML = item.CriticRatingSummary;
-
-        } else {
-            page.querySelector('#criticRatingSummary').classList.add('hide');
-        }
-
         renderTags(page, item);
 
         renderSeriesAirTime(page, item, isStatic);
@@ -1665,7 +1657,7 @@
 
         ApiClient.getCriticReviews(item.Id, options).then(function (result) {
 
-            if (result.TotalRecordCount || item.CriticRatingSummary || item.AwardSummary) {
+            if (result.TotalRecordCount || item.AwardSummary) {
                 page.querySelector('#criticReviewsCollapsible').classList.remove('hide');
                 renderCriticReviewsContent(page, result, limit);
             } else {

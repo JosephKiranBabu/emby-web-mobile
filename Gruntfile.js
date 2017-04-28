@@ -63,7 +63,7 @@ module.exports = function (grunt) {
 		    pre: ['dist/'],
             
 		    postMobile: [
-                'dist/bower_components/emby-webcomponents/fonts/roboto/',
+                'dist/fonts/roboto/',
                 'dist/css/images/tour/'
 		    ]
 		},

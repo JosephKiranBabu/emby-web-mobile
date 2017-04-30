@@ -62,13 +62,13 @@
             margin-left: .5em;
         }
 
-@media all and (min-width: 600px) {
+@media all and (min-width: 37.5em) {
     .tabletColumn {
         display: table-cell;
     }
 }
 
-@media all and (min-width: 1100px) {
+@media all and (min-width: 68.75em) {
     .desktopColumn {
         display: table-cell;
     }

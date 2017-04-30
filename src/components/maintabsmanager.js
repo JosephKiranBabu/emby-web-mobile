@@ -6,24 +6,24 @@
 
     function setTabs(view, selectedIndex, builder) {
 
-        var viewMenuBarTabs;
+        var headerTabs;
 
         if (!view) {
             if (tabOwnerView) {
 
                 document.body.classList.remove('withTallToolbar');
-                viewMenuBarTabs = queryScope.querySelector('.viewMenuBarTabs');
-                viewMenuBarTabs.innerHTML = '';
-                viewMenuBarTabs.classList.add('hide');
+                headerTabs = queryScope.querySelector('.headerTabs');
+                headerTabs.innerHTML = '';
+                headerTabs.classList.add('hide');
                 tabOwnerView = null;
             }
             return;
         }
 
-        viewMenuBarTabs = queryScope.querySelector('.viewMenuBarTabs');
+        headerTabs = queryScope.querySelector('.headerTabs');
 
         if (!tabOwnerView) {
-            viewMenuBarTabs.classList.remove('hide');
+            headerTabs.classList.remove('hide');
         }
 
         if (tabOwnerView !== view) {
@@ -31,7 +31,7 @@
             var index = 0;
 
             var indexAttribute = selectedIndex == null ? '' : (' data-index="' + selectedIndex + '"');
-            viewMenuBarTabs.innerHTML = '<div is="emby-tabs"' + indexAttribute + ' class="tabs-viewmenubar"><div class="emby-tabs-slider" style="white-space:nowrap;">' + builder().map(function (t) {
+            headerTabs.innerHTML = '<div is="emby-tabs"' + indexAttribute + ' class="tabs-viewmenubar"><div class="emby-tabs-slider" style="white-space:nowrap;">' + builder().map(function (t) {
 
                 var tabClass = 'emby-tab-button';
 
@@ -53,7 +53,7 @@
             return true;
         }
 
-        viewMenuBarTabs.querySelector('[is="emby-tabs"]').selectedIndex(selectedIndex);
+        headerTabs.querySelector('[is="emby-tabs"]').selectedIndex(selectedIndex);
 
         tabOwnerView = view;
         return false;

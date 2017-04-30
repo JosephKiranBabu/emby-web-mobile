@@ -64,9 +64,10 @@
     margin: 0 0 0 .5em;
     /* Avoid pushing right header off the screen */
     flex-shrink: 1;
+    color: #bbb;
 }
 
-.viewMenuBar {
+.skinHeader {
     position: fixed;
     right: 0;
     left: 0;
@@ -76,46 +77,43 @@
     padding-top: 3px;
     display: flex;
     flex-direction: column;
+    background-color: #101010;
+    color: #ddd;
 }
 
-.hiddenViewMenuBar .viewMenuBar {
+.hiddenViewMenuBar .skinHeader {
     display: none;
 }
 
-.viewMenuBar {
-    background-color: #101010;
-    color: #fff;
+.headerTop {
+    padding: .3em 0;
 }
 
-    .viewMenuBar .primaryIcons {
-        display: flex;
-        flex-grow: 1;
-        flex-shrink: 0;
-        width: 100%;
-        align-items: center;
-        padding: .3em 0;
-    }
+.headerLeft {
+    display: flex;
+    align-items: center;
+}
 
 @supports ( (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)) ) {
 
-    .viewMenuBar-blurred {
+    .skinHeader-blurred {
         background: rgba(24,24,24,.7);
         -webkit-backdrop-filter: blur(20px);
         backdrop-filter: blur(20px);
     }
 }
 
-.withTallToolbar .primaryIcons {
+/*.withTallToolbar .headerTop {
     padding-bottom: 0 !important;
-}
+}*/
 
-.viewMenuBarTabs {
+.headerTabs {
     width: 100%;
     text-align: center;
     font-size: 92%;
 }
 
-.viewMenuBar.semiTransparent {
+.skinHeader.semiTransparent {
     background-color: rgba(15, 15, 15, .3);
 }
 
@@ -136,10 +134,11 @@
         vertical-align: top;
     }
 
-.viewMenuSecondary {
-    margin-left: auto;
+.headerRight {
     display: flex;
     align-items: center;
+    flex-grow: 1;
+    justify-content: flex-end;
 }
 
 .selectedMediaFolder {
@@ -233,16 +232,16 @@ body:not(.dashboardDocument) .headerAppsButton {
     left: 0;
 }
 
-@media all and (max-width: 640px) {
+@media all and (max-width: 40em) {
 
     .sidebarLink {
         font-size: 110%;
     }
 }
 
-@media all and (min-width: 640px) {
+@media all and (min-width: 40em) {
 
-    .dashboardDocument .viewMenuBarTabs {
+    .dashboardDocument .headerTabs {
         width: auto;
         padding-left: 272px;
         text-align: left !important;
@@ -291,5 +290,31 @@ body:not(.dashboardDocument) .headerAppsButton {
 
     .dashboardDocument .darkDrawer {
         background-color: rgba(28,28,31,.3) !important;
+    }
+}
+
+@media all and (min-width: 84em) {
+
+    .libraryDocument .headerTabs {
+        align-self: center;
+        position: fixed;
+        width: auto;
+        align-items: center;
+        justify-content: center;
+        top: .6em;
+        font-size: inherit;
+    }
+
+    .skinHeader .headerTop {
+        padding: .7em 0;
+    }
+
+    .libraryPage:not(.noSecondaryNavPage) {
+        padding-top: 63px !important;
+    }
+
+    .absolutePageTabContent {
+        /* Page needs to supply padding */
+        top: 64px !important;
     }
 }

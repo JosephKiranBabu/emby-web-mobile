@@ -25,7 +25,7 @@
 }
 
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 50em) {
     .autoorganizetable > .table {
         margin-bottom: 0;
         background-color: transparent;

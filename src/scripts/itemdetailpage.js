@@ -1481,7 +1481,7 @@
                 html += '<span class="bulletSeparator">&bull;</span>';
             }
 
-            var param = item.Type == "Audio" || item.Type == "MusicArtist" || item.Type == "MusicAlbum" ? "musicgenre" : "genre";
+            var param = item.Type == "Audio" || item.Type == "MusicArtist" || item.Type == "MusicAlbum" || item.Type == "MusicVideo" ? "musicgenre" : "genre";
 
             if (item.MediaType == "Game") {
                 param = "gamegenre";

@@ -1,4 +1,4 @@
-﻿define(['layoutManager', 'viewManager', 'libraryBrowser', 'embyRouter', 'playbackManager', 'browser', 'paper-icon-button-light', 'material-icons', 'scrollStyles'], function (layoutManager, viewManager, libraryBrowser, embyRouter, playbackManager, browser) {
+﻿define(['layoutManager', 'viewManager', 'libraryBrowser', 'embyRouter', 'playbackManager', 'browser', 'paper-icon-button-light', 'material-icons', 'scrollStyles', 'flexStyles'], function (layoutManager, viewManager, libraryBrowser, embyRouter, playbackManager, browser) {
     'use strict';
 
     var enableBottomTabs = browser.mobile;
@@ -9,12 +9,15 @@
     var navDrawerInstance;
 
     var mainDrawerButton;
+    var skinHeader = document.querySelector('.skinHeader');
 
     function renderHeader() {
 
         var html = '';
 
-        html += '<div class="primaryIcons">';
+        html += '<div class="flex align-items-center flex-grow headerTop">';
+
+        html += '<div class="headerLeft">';
         var backIcon = browser.safari ? 'chevron_left' : '&#xE5C4;';
 
         html += '<button type="button" is="paper-icon-button-light" class="headerButton headerButtonLeft headerBackButton hide"><i class="md-icon">' + backIcon + '</i></button>';
@@ -22,9 +25,10 @@
         html += '<button type="button" is="paper-icon-button-light" class="headerButton mainDrawerButton barsMenuButton headerButtonLeft hide"><i class="md-icon">menu</i></button>';
         html += '<button type="button" is="paper-icon-button-light" class="headerButton headerAppsButton barsMenuButton headerButtonLeft"><i class="md-icon">home</i></button>';
 
-        html += '<h3 class="libraryMenuButtonText headerButton"></h3>';
+        html += '<h2 class="libraryMenuButtonText headerButton"></h2>';
+        html += '</div>';
 
-        html += '<div class="viewMenuSecondary">';
+        html += '<div class="headerRight">';
 
         html += '<span class="headerSelectedPlayer"></span>';
         html += '<button is="paper-icon-button-light" class="btnCast headerButton-btnCast headerButton headerButtonRight hide autoSize"><i class="md-icon">cast</i></button>';
@@ -42,20 +46,17 @@
         }
 
         html += '</div>';
+
         html += '</div>';
 
-        html += '<div class="viewMenuBarTabs">';
+        html += '<div class="headerTabs">';
         html += '</div>';
 
-        var viewMenuBar = document.createElement('div');
-        viewMenuBar.classList.add('viewMenuBar');
-        viewMenuBar.innerHTML = html;
+        skinHeader.innerHTML = html;
 
         if (!browser.chrome) {
-            viewMenuBar.classList.add('viewMenuBar-blurred');
+            skinHeader.classList.add('skinHeader-blurred');
         }
-
-        document.querySelector('.skinHeader').appendChild(viewMenuBar);
 
         lazyLoadViewMenuBarImages();
 
@@ -64,7 +65,7 @@
 
     function lazyLoadViewMenuBarImages() {
         require(['imageLoader'], function (imageLoader) {
-            imageLoader.lazyChildren(document.querySelector('.viewMenuBar'));
+            imageLoader.lazyChildren(skinHeader);
         });
     }
 
@@ -75,12 +76,7 @@
 
     function updateUserInHeader(user) {
 
-        var header = document.querySelector('.viewMenuBar');
-        if (!header) {
-            return;
-        }
-
-        var headerUserButton = header.querySelector('.headerUserButton');
+        var headerUserButton = skinHeader.querySelector('.headerUserButton');
         var hasImage;
 
         if (user && user.name) {
@@ -127,11 +123,9 @@
 
     function updateLocalUser(user) {
 
-        var header = document.querySelector('.viewMenuBar');
-
-        var headerSearchButton = header.querySelector('.headerSearchButton');
-        var btnCast = header.querySelector('.btnCast');
-        var dashboardEntryHeaderButton = header.querySelector('.dashboardEntryHeaderButton');
+        var headerSearchButton = skinHeader.querySelector('.headerSearchButton');
+        var btnCast = skinHeader.querySelector('.btnCast');
+        var dashboardEntryHeaderButton = skinHeader.querySelector('.dashboardEntryHeaderButton');
 
         if (user) {
             btnCast.classList.remove('hide');
@@ -150,15 +144,15 @@
 
             require(['apphost'], function (apphost) {
                 if (apphost.supports('voiceinput')) {
-                    header.querySelector('.headerVoiceButton').classList.add('hide');
+                    skinHeader.querySelector('.headerVoiceButton').classList.add('hide');
                 } else {
-                    header.querySelector('.headerVoiceButton').classList.add('hide');
+                    skinHeader.querySelector('.headerVoiceButton').classList.add('hide');
                 }
             });
 
         } else {
             btnCast.classList.add('hide');
-            header.querySelector('.headerVoiceButton').classList.add('hide');
+            skinHeader.querySelector('.headerVoiceButton').classList.add('hide');
             if (headerSearchButton) {
                 headerSearchButton.classList.add('hide');
             }
@@ -221,10 +215,9 @@
             headerAppsButton.addEventListener('click', onHeaderAppsButtonClick);
         }
 
-        var viewMenuBar = document.querySelector(".viewMenuBar");
-        initHeadRoom(viewMenuBar);
+        initHeadRoom(skinHeader);
 
-        viewMenuBar.querySelector('.btnNotifications').addEventListener('click', function () {
+        skinHeader.querySelector('.btnNotifications').addEventListener('click', function () {
             Dashboard.navigate('notificationlist.html');
         });
 
@@ -701,14 +694,10 @@
 
         setTransparentMenu: function (transparent) {
 
-            var viewMenuBar = document.querySelector('.viewMenuBar');
-
-            if (viewMenuBar) {
-                if (transparent) {
-                    viewMenuBar.classList.add('semiTransparent');
-                } else {
-                    viewMenuBar.classList.remove('semiTransparent');
-                }
+            if (transparent) {
+                skinHeader.classList.add('semiTransparent');
+            } else {
+                skinHeader.classList.remove('semiTransparent');
             }
         }
     };
@@ -803,20 +792,16 @@
 
     function updateViewMenuBar(page) {
 
-        var viewMenuBar = document.querySelector('.viewMenuBar');
+        if (page.classList.contains('standalonePage')) {
+            skinHeader.classList.add('hide');
+        } else {
+            skinHeader.classList.remove('hide');
+        }
 
-        if (viewMenuBar) {
-            if (page.classList.contains('standalonePage')) {
-                viewMenuBar.classList.add('hide');
-            } else {
-                viewMenuBar.classList.remove('hide');
-            }
-
-            if (page.classList.contains('type-interior') && !layoutManager.mobile) {
-                viewMenuBar.classList.add('headroomDisabled');
-            } else {
-                viewMenuBar.classList.remove('headroomDisabled');
-            }
+        if (page.classList.contains('type-interior') && !layoutManager.mobile) {
+            skinHeader.classList.add('headroomDisabled');
+        } else {
+            skinHeader.classList.remove('headroomDisabled');
         }
 
         if (requiresUserRefresh) {

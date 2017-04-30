@@ -20,9 +20,6 @@
          },
          {
              name: Globalize.translate('TabNetworks')
-         },
-         {
-             name: Globalize.translate('TabEpisodes')
          }];
     }
 
@@ -263,9 +260,6 @@
                     break;
                 case 5:
                     depends.push('scripts/tvstudios');
-                    break;
-                case 6:
-                    depends.push('scripts/episodes');
                     break;
                 default:
                     break;

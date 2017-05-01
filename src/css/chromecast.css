@@ -4,7 +4,7 @@
 
 .headerSelectedPlayer {
     font-weight: normal;
-    max-width: 160px;
+    max-width: 10em;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;

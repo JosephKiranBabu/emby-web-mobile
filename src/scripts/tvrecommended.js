@@ -20,6 +20,9 @@
          },
          {
              name: Globalize.translate('TabNetworks')
+         },
+         {
+             name: Globalize.translate('ButtonSearch')
          }];
     }
 
@@ -38,30 +41,6 @@
                 return 4;
             default:
                 return 0;
-        }
-    }
-
-    function getTabNameToSave(index) {
-
-        switch (index) {
-        
-            case 0:
-                return 'suggestions';
-            case 1:
-                return 'latest';
-            case 2:
-                return 'shows';
-            case 4:
-                return 'genres';
-            default:
-                return '';
-        }
-    }
-
-    function setSavedTab(index, folderId) {
-        var tab = getTabNameToSave(index);
-        if (tab) {
-            userSettings.set('landing-' + folderId, tab);
         }
     }
 
@@ -260,6 +239,9 @@
                     break;
                 case 5:
                     depends.push('scripts/tvstudios');
+                    break;
+                case 6:
+                    depends.push('scripts/searchtab');
                     break;
                 default:
                     break;

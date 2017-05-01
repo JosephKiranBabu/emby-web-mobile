@@ -90,7 +90,7 @@ progress {
     margin-bottom: 30px !important;
 }
 
-@media all and (min-width: 800px) {
+@media all and (min-width: 50em) {
 
     .type-interior > div[data-role="content"], .type-interior > .ui-panel-content-wrap > div[data-role="content"] {
         padding-right: 0;
@@ -153,7 +153,7 @@ progress {
         height: 30px;
     }
 
-@media all and (max-width: 640px) {
+@media all and (max-width: 40em) {
 
     .dashboardDocument .headerAppsButton {
         display: none;
@@ -228,7 +228,7 @@ div[data-role="controlgroup"] a.ui-btn-active {
     padding-bottom: 3em;
 }
 
-@media all and (min-width: 800px) {
+@media all and (min-width: 50em) {
 
     .content-primary {
         padding-right: 1.5em;
@@ -236,7 +236,7 @@ div[data-role="controlgroup"] a.ui-btn-active {
     }
 }
 
-@media all and (min-width: 1200px) {
+@media all and (min-width: 75em) {
 
     .content-primary {
         padding-left: 2em;
@@ -251,7 +251,7 @@ div[data-role="controlgroup"] a.ui-btn-active {
     margin-top: 0;
 }
 
-@media all and (max-width: 1439px) {
+@media all and (max-width: 90em) {
 
     .dashboardHomeRightColumn {
         margin-top: 1em;
@@ -266,7 +266,7 @@ div[data-role="controlgroup"] a.ui-btn-active {
     vertical-align: top;
 }
 
-@media all and (min-width: 1440px) {
+@media all and (min-width: 90em) {
 
     .dashboardHomeLeftColumn {
         width: 600px;
@@ -286,7 +286,7 @@ div[data-role="controlgroup"] a.ui-btn-active {
     }
 }
 
-@media all and (min-width: 1580px) {
+@media all and (min-width: 98.75em) {
 
     .dashboardHomeRightColumn {
         display: inline-block;
@@ -296,7 +296,7 @@ div[data-role="controlgroup"] a.ui-btn-active {
     }
 }
 
-@media all and (min-width: 1680px) {
+@media all and (min-width: 105em) {
 
     .dashboardHomeRightColumn {
         width: 350px;
@@ -305,7 +305,7 @@ div[data-role="controlgroup"] a.ui-btn-active {
 }
 
 
-@media all and (min-width: 1880px) {
+@media all and (min-width: 117.5em) {
 
     .dashboardHomeRightColumn {
         max-width: 440px;
@@ -350,7 +350,7 @@ div[data-role="controlgroup"] a.ui-btn-active {
     outline: none !important;
 }
 
-@media all and (min-width: 420px) {
+@media all and (min-width: 26.25em) {
 
     .activeSession {
         width: 50% !important;
@@ -520,14 +520,14 @@ div[data-role="controlgroup"] a.ui-btn-active {
     background-color: #52B54B;
 }
 
-@media all and (max-width: 550px) {
+@media all and (max-width: 34.375em) {
 
     .sessionAppName {
         max-width: 160px;
     }
 }
 
-@media all and (max-width: 500px) {
+@media all and (max-width: 31.25em) {
 
     .sessionAppName {
         max-width: 150px;

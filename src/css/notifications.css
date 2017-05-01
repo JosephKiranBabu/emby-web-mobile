@@ -12,10 +12,10 @@
     color: #fff;
     font-weight: 500;
     position: relative;
-    border-radius: 1000px;
+    border-radius: 100em;
     background: #444;
-    line-height: 28px;
-    min-width: 30px;
+    line-height: 1.8em;
+    min-width: 2em;
     display: inline-flex;
     align-items: center;
     justify-content: center;

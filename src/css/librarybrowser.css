@@ -46,49 +46,6 @@
     display: flex !important;
 }
 
-.listHeader {
-    margin: .25em 0;
-    padding-left: 2px;
-    line-height: 1.25em;
-    line-height: initial;
-}
-
-@media all and (max-width: 500px) {
-
-    .listHeader {
-        padding-left: 5px;
-    }
-}
-
-.listHeader + button {
-    margin-left: 2em;
-}
-
-.sectionHeaderButton {
-    vertical-align: middle;
-    margin: 0 0 .25em 1.5em;
-    position: relative;
-    top: 8px;
-}
-
-.viewPanelTabs {
-    margin-bottom: 2em;
-}
-
-@media all and (min-width: 800px) {
-
-    .hiddenSectionOnNonMobile {
-        display: none;
-    }
-}
-
-@media all and (min-width: 1200px) {
-
-    .paddedItemsContainer {
-        padding: 0 .8em;
-    }
-}
-
 .detailPageContent {
     border-spacing: 0;
     border-collapse: collapse;
@@ -110,8 +67,8 @@
 .criticReview {
     margin: 1.5em 0;
     background: #222;
-    padding: .8em .8em .8em 55px;
-    border-radius: 5px;
+    padding: .8em .8em .8em 3em;
+    border-radius: .3em;
     position: relative;
 }
 
@@ -120,7 +77,7 @@
     }
 
     .criticReview img {
-        width: 30px;
+        width: 2.4em;
     }
 
 .criticRatingScore {
@@ -130,9 +87,9 @@
 .itemTag {
     display: inline-block;
     background-color: #333;
-    border-radius: 4px;
-    padding: 5px 7px;
-    margin: 0 5px 5px 0;
+    border-radius: .25em;
+    padding: .3em .5em;
+    margin: 0 .3em .3em 0;
     color: #fff !important;
     text-decoration: none;
     font-weight: normal !important;
@@ -195,7 +152,7 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
     left: 0;
     right: 0;
     background-color: rgba(0,0,0,0.7);
-    min-height: 120px;
+    min-height: 9em;
 }
 
 .noBackdrop .itemBackdropContent {
@@ -204,7 +161,7 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
 
 .desktopMiscInfoContainer {
     position: absolute;
-    bottom: 10px;
+    bottom: .75em;
 }
 
 .detailUserDataIcons {
@@ -224,8 +181,8 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
 }
 
 .detailLogo {
-    width: 300px;
-    height: 70px;
+    width: 21.3em;
+    height: 5em;
     position: absolute;
     top: 13.5%;
     right: 19.5%;
@@ -234,21 +191,21 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
     background-size: contain;
 }
 
-@media all and (max-width: 1400px) {
+@media all and (max-width: 87.5em) {
 
     .detailLogo {
         right: 5%;
     }
 }
 
-@media all and (max-width: 1200px) {
+@media all and (max-width: 75em) {
 
     .detailLogo {
         right: 2%;
     }
 }
 
-@media all and (max-width: 1100px) {
+@media all and (max-width: 68.75em) {
 
     .detailLogo {
         display: none;
@@ -265,19 +222,19 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
 }
 
 .itemDetailImage.loaded {
-    -moz-box-shadow: 0px 0 20px #000;
-    -webkit-box-shadow: 0px 0 20px #000;
-    box-shadow: 0px 0 20px #000;
+    -moz-box-shadow: 0 0 1.5em #000;
+    -webkit-box-shadow: 0 0 1.5em #000;
+    box-shadow: 0 0 1.5em #000;
     border: solid 1px #222;
 }
 
 .itemDetailGalleryLink img:hover {
-    -moz-box-shadow: 0 0 20px 3px #52B54B;
-    -webkit-box-shadow: 0 0 20px 3px #52B54B;
-    box-shadow: 0 0 20px 3px #52B54B;
+    -moz-box-shadow: 0 0 1.5em 3px #52B54B;
+    -webkit-box-shadow: 0 0 1.5em 3px #52B54B;
+    box-shadow: 0 0 1.5em 3px #52B54B;
 }
 
-@media all and (max-width: 800px) {
+@media all and (max-width: 50em) {
 
     .detailPageContent {
         position: relative;
@@ -300,7 +257,7 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
     }
 }
 
-@media all and (min-width: 800px) {
+@media all and (min-width: 50em) {
 
     .itemBackdrop {
         display: none;
@@ -312,7 +269,7 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
     }
 }
 
-@media all and (max-width: 1200px) {
+@media all and (max-width: 75em) {
 
     .lnkSibling {
         display: none !important;
@@ -345,7 +302,7 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
     background-color: #cc3333 !important;
 }
 
-@media all and (max-width: 800px) {
+@media all and (max-width: 50em) {
 
     .parentName {
         margin-bottom: 1em;
@@ -364,14 +321,14 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
     }
 }
 
-@media all and (min-width: 500px) {
+@media all and (min-width: 31.25em) {
 
     .mobileDetails {
         display: none;
     }
 }
 
-@media all and (max-width: 500px) {
+@media all and (max-width: 31.25em) {
 
     .desktopDetails {
         display: none !important;
@@ -416,7 +373,7 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
         justify-content: center;
     }
 
-@media all and (min-width: 400px) {
+@media all and (min-width: 25em) {
 
     .mainDetailButtons > .raised {
         padding-left: 1.5em;
@@ -436,7 +393,7 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
     display: inline-block;
 }
 
-@media all and (max-width: 800px) {
+@media all and (max-width: 50em) {
 
     .editorMenuLink {
         display: none;
@@ -451,7 +408,7 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
     align-items: center;
 }
 
-@media all and (max-width: 500px) {
+@media all and (max-width: 31.25em) {
 
     .mobileDetails .itemMiscInfo {
         text-align: center;
@@ -471,13 +428,13 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
     padding-top: 3em;
 }
 
-@media all and (max-width: 800px) {
+@media all and (max-width: 50em) {
     .detailPageContent-nodetailimg {
         padding-top: 1em;
     }
 }
 
-@media all and (min-width: 1200px) {
+@media all and (min-width: 75em) {
 
     .itemDetailPage .padded-left {
         padding-left: 4% !important;
@@ -544,7 +501,7 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
 
 .alphabetPicker {
     position: fixed;
-    left: 5px;
+    left: .4em;
     bottom: 56px;
     text-align: center;
     display: none;
@@ -552,15 +509,15 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
 }
 
 .alphabetPicker-right {
-    right: 5px;
+    right: .4em;
     left: auto;
 }
 
 .layout-desktop .absolutePageTabContent .alphabetPicker {
-    right: 20px;
+    right: 1.5em;
 }
 
-@media all and (max-height: 500px) {
+@media all and (max-height: 31.25em) {
 
     .alphabetPicker {
         display: none !important;
@@ -576,7 +533,7 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
     padding-bottom: 2px !important;
 }
 
-@media all and (max-height: 700px) {
+@media all and (max-height: 43.75em) {
 
     .alphaPicker-vertical .alphaPickerButton {
         padding-top: 1px !important;
@@ -584,7 +541,7 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
     }
 }
 
-@media all and (max-height: 600px) {
+@media all and (max-height: 37.5em) {
 
     .alphaPicker-vertical .alphaPickerButton {
         padding-top: 0 !important;
@@ -592,42 +549,42 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
     }
 }
 
-@media all and (max-height: 530px) {
+@media all and (max-height: 33.125em) {
 
     .alphabetPicker {
         font-size: 80% !important;
     }
 }
 
-@media all and (max-height: 480px) {
+@media all and (max-height: 30em) {
 
     .alphabetPicker {
         font-size: 76% !important;
     }
 }
 
-@media all and (min-height: 600px) {
+@media all and (min-height: 37.5em) {
 
     .alphabetPicker {
         bottom: 70px;
     }
 }
 
-@media all and (min-height: 900px) {
+@media all and (min-height: 56.25em) {
 
     .alphabetPicker {
         bottom: 120px;
     }
 }
 
-@media all and (min-height: 1000px) {
+@media all and (min-height: 62.5em) {
 
     .alphabetPicker {
         bottom: 200px;
     }
 }
 
-@media all and (max-width: 1200px) {
+@media all and (max-width: 75em) {
 
     .listViewUserDataButtons {
         display: none !important;
@@ -638,7 +595,7 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
     max-width: 700px;
 }
 
-@media all and (max-width: 700px) {
+@media all and (max-width: 43.75em) {
 
     .userProfileSettingsForm .detailSection {
         margin-left: .5em;
@@ -646,7 +603,7 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
     }
 }
 
-@media all and (max-width: 800px) {
+@media all and (max-width: 50em) {
 
     .detailsHiddenOnMobile {
         display: none;
@@ -663,7 +620,7 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
         max-width: 500px;
         display: inline-block;
         vertical-align: top;
-        margin: 0 4px 0 0;
+        margin: 0 .35em 0 0;
     }
 
 .btnSyncComplete {
@@ -849,9 +806,13 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
     margin: .5em !important;
 }
 
-@media all and (max-width: 800px) {
+@media all and (max-width: 50em) {
 
     .homeLibraryButton {
         width: 46% !important;
     }
+}
+
+.searchfields-icon {
+    color: #aaa;
 }

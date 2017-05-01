@@ -4,13 +4,10 @@
     will-change: transform;
     position: relative;
     z-index: 1;
+    background-color: rgba(0, 0, 0, .3);
+    background: linear-gradient(rgba(0, 0, 0, .6), rgba(0, 0, 0, 0));
+    backdrop-filter: none !important;
 }
-
-    .osdHeader .viewMenuBar {
-        background-color: rgba(0, 0, 0, .3);
-        background: linear-gradient(rgba(0, 0, 0, .6), rgba(0, 0, 0, 0));
-        backdrop-filter: none !important;
-    }
 
 .osdHeader-hidden {
     transform: translate3d(0,-100%,0);
@@ -51,7 +48,7 @@
     }
 }
 
-@media all and (max-height: 800px) and (orientation: landscape) {
+@media all and (max-height: 50em) and (orientation: landscape) {
 
     .chapterThumb {
         height: 30vh;
@@ -197,25 +194,25 @@
     position: fixed;
 }
 
-@media all and (max-width:480px) {
+@media all and (max-width:30em) {
     .osdPoster, .btnRewind, .btnFastForward, .osdMediaInfo {
         display: none !important;
     }
 }
 
-@media all and (max-width:540px) {
+@media all and (max-width:33.75em) {
     .videoOsdBottom .paper-icon-button-light {
         margin: 0;
     }
 }
 
-@media all and (max-width:600px) {
+@media all and (max-width:37.5em) {
     .videoOsdBottom .volumeButtons {
         display: none !important;
     }
 }
 
-@media all and (max-width: 1200px) {
+@media all and (max-width: 75em) {
     .videoOsdBottom .endsAtText {
         display: none !important;
     }

@@ -1,4 +1,4 @@
 ﻿/* Allow vertical space for anything that slides up at the bottom */
 .guideVerticalScroller {
-    padding-bottom: 160px;
+    padding-bottom: 15em;
 }

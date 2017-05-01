@@ -15,19 +15,19 @@
     color: #52B54B;
 }
 
-@media (min-width: 500px) {
+@media (min-width: 31.25em) {
     .nowPlayingText {
         max-width: 180px;
     }
 }
 
-@media (min-width: 600px) {
+@media (min-width: 37.5em) {
     .nowPlayingText {
         max-width: 200px;
     }
 }
 
-@media (min-width: 800px) {
+@media (min-width: 50em) {
     .nowPlayingText {
         margin-right: 30px;
     }
@@ -124,32 +124,32 @@
     color: #52B54B;
 }
 
-@media (min-width: 500px) {
+@media (min-width: 31.25em) {
     .nowPlayingBarText {
         max-width: 180px;
     }
 }
 
-@media (min-width: 600px) {
+@media (min-width: 37.5em) {
     .nowPlayingBarText {
         max-width: 200px;
     }
 }
 
-@media (min-width: 700px) {
+@media (min-width: 43.75em) {
     .nowPlayingBarText {
         max-width: 240px;
     }
 }
 
-@media (min-width: 800px) {
+@media (min-width: 50em) {
     .nowPlayingBarText {
         max-width: 300px;
         margin-right: 30px;
     }
 }
 
-@media (min-width: 900px) {
+@media (min-width: 56.25em) {
     .nowPlayingBarText {
         max-width: 400px;
     }
@@ -216,21 +216,21 @@
 }
 
 
-@media all and (max-width: 1400px) {
+@media all and (max-width: 87.5em) {
 
     .nowPlayingBarUserDataButtons {
         display: none;
     }
 }
 
-@media all and (max-width: 1100px) {
+@media all and (max-width: 68.75em) {
 
     .nowPlayingBarVolumeSliderContainer, .nowPlayingBar .muteButton, .nowPlayingBar .unmuteButton {
         display: none !important;
     }
 }
 
-@media all and (max-width: 800px) {
+@media all and (max-width: 50em) {
 
     .nowPlayingBarCurrentTime {
         padding-left: 0;
@@ -248,14 +248,14 @@
     }
 }
 
-@media all and (min-width: 800px) {
+@media all and (min-width: 50em) {
 
     .nowPlayingBarRight .playPauseButton {
         display: none;
     }
 }
 
-@media all and (max-width: 600px) {
+@media all and (max-width: 37.5em) {
 
     .nowPlayingBarCurrentTime {
         display: none;

@@ -1,4 +1,4 @@
-﻿define(['loading', 'libraryBrowser', 'libraryMenu', 'playbackManager', 'mainTabsManager', 'homeSections', 'emby-button'], function (loading, libraryBrowser, libraryMenu, playbackManager, mainTabsManager, homeSections) {
+﻿define(['loading', 'libraryBrowser', 'libraryMenu', 'playbackManager', 'mainTabsManager', 'homeSections', 'globalize', 'emby-button'], function (loading, libraryBrowser, libraryMenu, playbackManager, mainTabsManager, homeSections, globalize) {
     'use strict';
 
     var homePageDismissValue = '14';
@@ -34,13 +34,13 @@
 
             if (displayPreferences.CustomPrefs[homePageTourKey]) {
 
-                elem.querySelector('.tourHeader').innerHTML = Globalize.translate('HeaderWelcomeBack');
-                elem.querySelector('.tourButtonText').innerHTML = Globalize.translate('ButtonTakeTheTourToSeeWhatsNew');
+                elem.querySelector('.tourHeader').innerHTML = globalize.translate('HeaderWelcomeBack');
+                elem.querySelector('.tourButtonText').innerHTML = globalize.translate('ButtonTakeTheTourToSeeWhatsNew');
 
             } else {
 
-                elem.querySelector('.tourHeader').innerHTML = Globalize.translate('HeaderWelcomeToProjectWebClient');
-                elem.querySelector('.tourButtonText').innerHTML = Globalize.translate('ButtonTakeTheTour');
+                elem.querySelector('.tourHeader').innerHTML = globalize.translate('HeaderWelcomeToProjectWebClient');
+                elem.querySelector('.tourButtonText').innerHTML = globalize.translate('ButtonTakeTheTour');
             }
         }
     }
@@ -50,21 +50,21 @@
         require(['slideshow'], function () {
 
             var slides = [
-                    { imageUrl: 'css/images/tour/web/tourcontent.jpg', title: Globalize.translate('WebClientTourContent') },
-                    { imageUrl: 'css/images/tour/web/tourmovies.jpg', title: Globalize.translate('WebClientTourMovies') },
-                    { imageUrl: 'css/images/tour/web/tourmouseover.jpg', title: Globalize.translate('WebClientTourMouseOver') },
-                    { imageUrl: 'css/images/tour/web/tourtaphold.jpg', title: Globalize.translate('WebClientTourTapHold') },
-                    { imageUrl: 'css/images/tour/web/tourmysync.png', title: Globalize.translate('WebClientTourMySync') },
-                    { imageUrl: 'css/images/tour/web/toureditor.png', title: Globalize.translate('WebClientTourMetadataManager') },
-                    { imageUrl: 'css/images/tour/web/tourplaylist.png', title: Globalize.translate('WebClientTourPlaylists') },
-                    { imageUrl: 'css/images/tour/web/tourcollections.jpg', title: Globalize.translate('WebClientTourCollections') },
-                    { imageUrl: 'css/images/tour/web/tourusersettings1.png', title: Globalize.translate('WebClientTourUserPreferences1') },
-                    { imageUrl: 'css/images/tour/web/tourusersettings2.png', title: Globalize.translate('WebClientTourUserPreferences2') },
-                    { imageUrl: 'css/images/tour/web/tourusersettings3.png', title: Globalize.translate('WebClientTourUserPreferences3') },
-                    { imageUrl: 'css/images/tour/web/tourusersettings4.png', title: Globalize.translate('WebClientTourUserPreferences4') },
-                    { imageUrl: 'css/images/tour/web/tourmobile1.jpg', title: Globalize.translate('WebClientTourMobile1') },
-                    { imageUrl: 'css/images/tour/web/tourmobile2.png', title: Globalize.translate('WebClientTourMobile2') },
-                    { imageUrl: 'css/images/tour/enjoy.jpg', title: Globalize.translate('MessageEnjoyYourStay') }
+                    { imageUrl: 'css/images/tour/web/tourcontent.jpg', title: globalize.translate('WebClientTourContent') },
+                    { imageUrl: 'css/images/tour/web/tourmovies.jpg', title: globalize.translate('WebClientTourMovies') },
+                    { imageUrl: 'css/images/tour/web/tourmouseover.jpg', title: globalize.translate('WebClientTourMouseOver') },
+                    { imageUrl: 'css/images/tour/web/tourtaphold.jpg', title: globalize.translate('WebClientTourTapHold') },
+                    { imageUrl: 'css/images/tour/web/tourmysync.png', title: globalize.translate('WebClientTourMySync') },
+                    { imageUrl: 'css/images/tour/web/toureditor.png', title: globalize.translate('WebClientTourMetadataManager') },
+                    { imageUrl: 'css/images/tour/web/tourplaylist.png', title: globalize.translate('WebClientTourPlaylists') },
+                    { imageUrl: 'css/images/tour/web/tourcollections.jpg', title: globalize.translate('WebClientTourCollections') },
+                    { imageUrl: 'css/images/tour/web/tourusersettings1.png', title: globalize.translate('WebClientTourUserPreferences1') },
+                    { imageUrl: 'css/images/tour/web/tourusersettings2.png', title: globalize.translate('WebClientTourUserPreferences2') },
+                    { imageUrl: 'css/images/tour/web/tourusersettings3.png', title: globalize.translate('WebClientTourUserPreferences3') },
+                    { imageUrl: 'css/images/tour/web/tourusersettings4.png', title: globalize.translate('WebClientTourUserPreferences4') },
+                    { imageUrl: 'css/images/tour/web/tourmobile1.jpg', title: globalize.translate('WebClientTourMobile1') },
+                    { imageUrl: 'css/images/tour/web/tourmobile2.png', title: globalize.translate('WebClientTourMobile2') },
+                    { imageUrl: 'css/images/tour/enjoy.jpg', title: globalize.translate('MessageEnjoyYourStay') }
             ];
 
             require(['slideshow'], function (slideshow) {
@@ -128,13 +128,16 @@
     function getTabs() {
         return [
         {
-            name: Globalize.translate('TabHome')
+            name: globalize.translate('TabHome')
         },
          {
-             name: Globalize.translate('TabFavorites')
+             name: globalize.translate('TabFavorites')
          },
          {
-             name: Globalize.translate('TabUpcoming')
+             name: globalize.translate('TabUpcoming')
+         },
+         {
+             name: globalize.translate('ButtonSearch')
          }];
     }
 
@@ -190,7 +193,10 @@
                     depends.push('scripts/homefavorites');
                     break;
                 case 2:
-                    depends.push('scripts/homeupcoming');
+                    depends.push('scripts/tvupcoming');
+                    break;
+                case 3:
+                    depends.push('scripts/searchtab');
                     break;
                 default:
                     return;

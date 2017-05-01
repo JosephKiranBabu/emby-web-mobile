@@ -203,11 +203,12 @@
     function getTabs() {
         return [
         {
-            name: Globalize.translate('TabSuggestions')
+            name: Globalize.translate('TabMovies')
         },
-         {
-             name: Globalize.translate('TabMovies')
-         },
+        {
+            name: Globalize.translate('TabSuggestions')
+        }
+         ,
          {
              name: Globalize.translate('TabTrailers')
          },
@@ -219,6 +220,9 @@
          },
          {
              name: Globalize.translate('TabGenres')
+         },
+         {
+             name: Globalize.translate('ButtonSearch')
          }];
     }
 
@@ -226,7 +230,7 @@
 
         switch (userSettings.get('landing-' + folderId)) {
 
-            case 'movies':
+            case 'suggestions':
                 return 1;
             case 'favorites':
                 return 3;
@@ -239,47 +243,21 @@
         }
     }
 
-    function getTabNameToSave(index) {
-
-        switch (index) {
-
-            case 0:
-                return 'suggestions';
-            case 1:
-                return 'movies';
-            case 3:
-                return 'favorites';
-            case 4:
-                return 'collections';
-            case 5:
-                return 'genres';
-            default:
-                return '';
-        }
-    }
-
-    function setSavedTab(index, folderId) {
-
-        var tab = getTabNameToSave(index);
-        if (tab) {
-            userSettings.set('landing-' + folderId, tab);
-        }
-    }
-
     return function (view, params) {
 
         var self = this;
         var currentTabIndex = parseInt(params.tab || getDefaultTabIndex(params.topParentId));
+        var suggestionsTabIndex = 1;
 
         self.initTab = function () {
 
-            var tabContent = view.querySelector('.pageTabContent[data-index=\'' + 0 + '\']');
+            var tabContent = view.querySelector('.pageTabContent[data-index=\'' + suggestionsTabIndex + '\']');
             categorysyncbuttons.init(tabContent);
             initSuggestedTab(view, tabContent);
         };
 
         self.renderTab = function () {
-            var tabContent = view.querySelector('.pageTabContent[data-index=\'' + 0 + '\']');
+            var tabContent = view.querySelector('.pageTabContent[data-index=\'' + suggestionsTabIndex + '\']');
             loadSuggestionsTab(view, params, tabContent);
         };
 
@@ -322,9 +300,9 @@
             switch (index) {
 
                 case 0:
+                    depends.push('scripts/movies');
                     break;
                 case 1:
-                    depends.push('scripts/movies');
                     break;
                 case 2:
                     depends.push('scripts/movietrailers');
@@ -338,20 +316,23 @@
                 case 5:
                     depends.push('scripts/moviegenres');
                     break;
+                case 6:
+                    depends.push('scripts/searchtab');
+                    break;
                 default:
                     break;
             }
 
             require(depends, function (controllerFactory) {
                 var tabContent;
-                if (index == 0) {
+                if (index === suggestionsTabIndex) {
                     tabContent = view.querySelector('.pageTabContent[data-index=\'' + index + '\']');
                     self.tabContent = tabContent;
                 }
                 var controller = tabControllers[index];
                 if (!controller) {
                     tabContent = view.querySelector('.pageTabContent[data-index=\'' + index + '\']');
-                    controller = index ? new controllerFactory(view, params, tabContent) : self;
+                    controller = index !== suggestionsTabIndex ? new controllerFactory(view, params, tabContent) : self;
                     tabControllers[index] = controller;
                     if (index === 3) {
                         controller.mode = 'favorites';

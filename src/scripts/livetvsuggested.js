@@ -267,6 +267,9 @@
          },
          {
              name: Globalize.translate('TabSeries')
+         },
+         {
+             name: Globalize.translate('ButtonSearch')
          }];
     }
 
@@ -365,6 +368,9 @@
                     break;
                 case 5:
                     depends.push('scripts/livetvseriestimers');
+                    break;
+                case 6:
+                    depends.push('scripts/searchtab');
                     break;
                 default:
                     break;

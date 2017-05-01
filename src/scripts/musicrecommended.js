@@ -202,6 +202,9 @@
          },
          {
              name: Globalize.translate('TabGenres')
+         },
+         {
+             name: Globalize.translate('ButtonSearch')
          }];
     }
 
@@ -297,6 +300,9 @@
                     break;
                 case 6:
                     depends.push('scripts/musicgenres');
+                    break;
+                case 7:
+                    depends.push('scripts/searchtab');
                     break;
                 default:
                     break;

@@ -1,9 +1,9 @@
 ﻿.libraryPage {
-    padding-top: 60px !important;
+    padding-top: 4.3em !important;
 }
 
     .libraryPage:not(.noSecondaryNavPage) {
-        padding-top: 90px !important;
+        padding-top: 6.4em !important;
     }
 
 .absolutePageTabContent {
@@ -16,7 +16,7 @@
     z-index: 1;
     margin: 0 !important;
     /* Page needs to supply padding */
-    top: 94px !important;
+    top: 6.5em !important;
     transition: transform 200ms ease-out;
 }
 
@@ -120,7 +120,7 @@
 .viewMenuLink {
     text-decoration: none;
     color: #eee !important;
-    padding: 7px .5em 6px;
+    padding: .5em;
     display: inline-block;
     vertical-align: middle;
 }
@@ -130,7 +130,7 @@
     }
 
     .viewMenuLink img {
-        height: 24px;
+        height: 1.5em;
         vertical-align: top;
     }
 
@@ -145,7 +145,7 @@
     background-color: #f2f2f2 !important;
 }
 
-@media all and (max-width: 800px) {
+@media all and (max-width: 50em) {
 
     /* The sidebar isn't visible at this size, so there's no way to navigate within the editor */
     .editorViewMenu {
@@ -243,7 +243,7 @@ body:not(.dashboardDocument) .headerAppsButton {
 
     .dashboardDocument .headerTabs {
         width: auto;
-        padding-left: 272px;
+        padding-left: 21em;
         text-align: left !important;
     }
 
@@ -261,11 +261,11 @@ body:not(.dashboardDocument) .headerAppsButton {
     }
 
     .dashboardDocument .mainDrawer-scrollContainer {
-        margin-top: 50px !important;
+        margin-top: 3.86em !important;
     }
 
     .dashboardDocument.withTallToolbar .mainDrawer-scrollContainer {
-        margin-top: 86px !important;
+        margin-top: 6.64em !important;
     }
 
     .dashboardDocument .tmla-mask {
@@ -277,11 +277,11 @@ body:not(.dashboardDocument) .headerAppsButton {
     }
 
     .dashboardDocument .skinBody {
-        left: 260px;
+        left: 18.5em;
     }
 
     .dashboardDocument .mainDrawer {
-        width: 260px !important;
+        width: 20.07em !important;
     }
 
     .dashboardDocument .adminDrawerLogo {
@@ -295,26 +295,29 @@ body:not(.dashboardDocument) .headerAppsButton {
 
 @media all and (min-width: 84em) {
 
-    .libraryDocument .headerTabs {
-        align-self: center;
-        position: fixed;
-        width: auto;
-        align-items: center;
-        justify-content: center;
-        top: .6em;
-        font-size: inherit;
-    }
+    @supports ( (display:flex) or (-webkit-display:flex) ) {
 
-    .skinHeader .headerTop {
-        padding: .7em 0;
-    }
+        .libraryDocument .headerTabs {
+            align-self: center;
+            position: fixed;
+            width: auto;
+            align-items: center;
+            justify-content: center;
+            top: .6em;
+            font-size: inherit;
+        }
 
-    .libraryPage:not(.noSecondaryNavPage) {
-        padding-top: 63px !important;
-    }
+        .skinHeader .headerTop {
+            padding: .7em 0;
+        }
 
-    .absolutePageTabContent {
-        /* Page needs to supply padding */
-        top: 64px !important;
+        .libraryPage:not(.noSecondaryNavPage) {
+            padding-top: 4.5em !important;
+        }
+
+        .absolutePageTabContent {
+            /* Page needs to supply padding */
+            top: 4.5em !important;
+        }
     }
 }

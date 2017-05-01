@@ -176,19 +176,19 @@ div[data-role='page'] {
     Header
     */
 .header {
-    padding: 20px 0 0 20px;
+    padding: 1.5em 0 0 1.5em;
 }
 
 .imgLogoIcon {
-    height: 40px;
+    height: 3em;
     vertical-align: middle;
 }
 
     .imgLogoIcon + span {
-        margin-left: 10px;
+        margin-left: .75em;
     }
 
-@media all and (max-height: 800px) {
+@media all and (max-height: 50em) {
 
     .header {
         display: none !important;
@@ -201,13 +201,13 @@ div[data-role='page'] {
 }
 
 .fieldDescription {
-    padding-left: 2px;
+    padding-left: .15em;
     font-weight: normal;
     white-space: normal !important;
 }
 
     .fieldDescription + .fieldDescription {
-        margin-top: 5px;
+        margin-top: .3em;
     }
 
 .background-theme-a .backgroundContainer {
@@ -227,24 +227,24 @@ div[data-role="content"] {
 
 .page, .pageWithAbsoluteTabs .pageTabContent, .padded-bottom-page, .content-primary {
     /* Need this so that the audio player doesn't cover content, but also for unveil lazy loading. */
-    padding-bottom: 160px !important;
+    padding-bottom: 14em !important;
 }
 
-@media all and (min-width: 800px) {
+@media all and (min-width: 50em) {
 
     /*
     Forms
     */
     form, .readOnlyContent {
-        max-width: 700px;
+        max-width: 54em;
     }
 
     .header {
-        padding-bottom: 15px;
+        padding-bottom: 1em;
     }
 }
 
-@media all and (min-width: 900px) {
+@media all and (min-width: 56.25em) {
 
     .page:not(.standalonePage) .header {
         padding-top: 0;
@@ -255,7 +255,7 @@ div[data-role="content"] {
     margin: 0 0 2em;
 }
 
-@media all and (min-width: 1280px) {
+@media all and (min-width: 80em) {
 
     .supporterPromotionContainer {
         position: fixed;
@@ -268,7 +268,7 @@ div[data-role="content"] {
     position: static !important;
 }
 
-@media all and (min-width: 800px) {
+@media all and (min-width: 50em) {
 
     .supporterPromotionContainer {
         display: flex;
@@ -286,27 +286,12 @@ div[data-role="content"] {
         }
 }
 
-.syncActivityForTarget {
-    margin: 0 0 3em 0;
-}
-
-@media all and (min-width: 800px) {
-
-    .syncActivityForTarget {
-        max-width: 600px;
-        margin: 0 3em 3em 0;
-        display: inline-block;
-        vertical-align: top;
-        min-width: 400px;
-    }
-}
-
 .imageDropZone {
     border: 2px dashed #bbb;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    padding: 25px;
+    -moz-border-radius: .3em;
+    -webkit-border-radius: .3em;
+    border-radius: .3em;
+    padding: 1.6em;
     text-align: center;
     color: #bbb;
 }
@@ -333,7 +318,6 @@ div[data-role="content"] {
 
 .ui-body-a .visualCardBox {
     background-color: #fff;
-    margin: 6px;
 }
 
 .ui-body-a .listItem .secondary {

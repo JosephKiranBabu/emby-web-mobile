@@ -25,7 +25,7 @@
     flex-shrink: 0;
 }
 
-@media all and (min-width: 800px) {
+@media all and (min-width: 50em) {
 
     .nowPlayingPageImageContainer {
         width: 16%;
@@ -57,7 +57,7 @@
     -ms-user-select: none;
 }
 
-@media all and (orientation: portrait) and (max-width: 800px) {
+@media all and (orientation: portrait) and (max-width: 50em) {
 
     .remoteControlContent {
         padding-top: 0;
@@ -107,7 +107,7 @@
     align-items: center;
 }
 
-@media all and (min-width: 800px) {
+@media all and (min-width: 50em) {
 
     .nowPlayingSecondaryButtons {
         flex-grow: 1;
@@ -115,7 +115,7 @@
     }
 }
 
-@media all and (min-width: 1280px) {
+@media all and (min-width: 80em) {
 
     .nowPlayingPageImageContainer {
         margin-right: .75em;
@@ -123,7 +123,7 @@
 }
 
 .nowPlayingNavButtonContainer {
-    width: 400px;
+    width: 30em;
 }
 
 .nowPlayingPageRepeatActive {
@@ -153,14 +153,14 @@
     width: 6em;
 }
 
-@media all and (max-width: 400px) {
+@media all and (max-width: 25em) {
 
     .playlist .listItemMediaInfo {
         display: none !important;
     }
 }
 
-@media all and (max-width: 640px) {
+@media all and (max-width: 40em) {
 
     .btnNowPlayingFastForward, .btnNowPlayingRewind {
         display: none !important;

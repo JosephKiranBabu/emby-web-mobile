@@ -1,4 +1,4 @@
-﻿define(['loading', 'libraryBrowser', 'focusManager', 'embyRouter', 'cardBuilder', 'imageLoader', 'emby-input', 'paper-icon-button-light', 'material-icons', 'emby-itemscontainer'], function (loading, libraryBrowser, focusManager, embyRouter, cardBuilder, imageLoader) {
+﻿define(['loading', 'libraryBrowser', 'focusManager', 'embyRouter', 'cardBuilder', 'imageLoader', 'searchFields', 'events', 'emby-itemscontainer'], function (loading, libraryBrowser, focusManager, embyRouter, cardBuilder, imageLoader, SearchFields, events) {
     'use strict';
 
     function loadSuggestions(page) {
@@ -32,6 +32,7 @@
 
     return function (view, params) {
 
+        var self = this;
         var textSuggestions = view.querySelector('.textSuggestions');
         var searchResults = view.querySelector('.searchResults');
         var searchHintTimeout;
@@ -177,22 +178,20 @@
         showTextSuggestions();
         loadSuggestions(view);
 
-        view.querySelector('.txtSearch').addEventListener('input', function () {
-            onSearchChange(this.value);
+        self.searchFields = new SearchFields({
+            element: view.querySelector('.searchFields')
         });
 
-        view.querySelector('.btnBack').addEventListener('click', function () {
-            embyRouter.back();
+        events.on(self.searchFields, 'search', function (e, value) {
+            onSearchChange(value);
         });
 
-        view.addEventListener('viewbeforeshow', function (e) {
-            document.body.classList.add('hiddenViewMenuBar');
+        view.addEventListener('viewdestroy', function () {
+
+            if (self.searchFields) {
+                self.searchFields.destroy();
+                self.searchFields = null;
+            }
         });
-
-        view.addEventListener('viewbeforehide', function (e) {
-
-            document.body.classList.remove('hiddenViewMenuBar');
-        });
-
     };
 });

@@ -1023,6 +1023,8 @@ var AppInfo = {};
         define("imageEditor", [embyWebComponentsBowerPath + "/imageeditor/imageeditor"], returnFirstDependency);
         define("dom", [embyWebComponentsBowerPath + "/dom"], returnFirstDependency);
 
+        define("searchFields", [embyWebComponentsBowerPath + "/search/searchfields"], returnFirstDependency);
+
         define("fullscreen-doubleclick", [embyWebComponentsBowerPath + "/fullscreen/fullscreen-doubleclick"], returnFirstDependency);
         define("fullscreenManager", [embyWebComponentsBowerPath + "/fullscreen/fullscreenmanager", 'events'], returnFirstDependency);
 

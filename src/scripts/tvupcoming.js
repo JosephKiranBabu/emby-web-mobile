@@ -7,7 +7,7 @@
 
         var query = {
 
-            Limit: 40,
+            Limit: 48,
             Fields: "AirTime,UserData",
             UserId: Dashboard.getCurrentUserId(),
             ImageTypeLimit: 1,

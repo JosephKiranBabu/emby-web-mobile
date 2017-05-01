@@ -1024,6 +1024,7 @@ var AppInfo = {};
         define("dom", [embyWebComponentsBowerPath + "/dom"], returnFirstDependency);
 
         define("searchFields", [embyWebComponentsBowerPath + "/search/searchfields"], returnFirstDependency);
+        define("searchResults", [embyWebComponentsBowerPath + "/search/searchresults"], returnFirstDependency);
 
         define("fullscreen-doubleclick", [embyWebComponentsBowerPath + "/fullscreen/fullscreen-doubleclick"], returnFirstDependency);
         define("fullscreenManager", [embyWebComponentsBowerPath + "/fullscreen/fullscreenmanager", 'events'], returnFirstDependency);

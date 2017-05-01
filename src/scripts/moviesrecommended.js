@@ -203,7 +203,7 @@
     function getTabs() {
         return [
         {
-            name: Globalize.translate('TabMovies')
+            name: Globalize.translate('All')
         },
         {
             name: Globalize.translate('TabSuggestions')

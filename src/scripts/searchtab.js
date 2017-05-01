@@ -1,12 +1,23 @@
-﻿define(['searchFields'], function (SearchFields) {
+﻿define(['searchFields', 'searchResults', 'events'], function (SearchFields, SearchResults, events) {
     'use strict';
 
-    function init(instance, tabContent) {
+    function init(instance, tabContent, parentId) {
 
-        tabContent.innerHTML = '<div class="searchFields"></div>';
+        tabContent.innerHTML = '<div class="searchFields"></div><div class="searchResults"></div>';
 
         instance.searchFields = new SearchFields({
             element: tabContent.querySelector('.searchFields')
+        });
+
+        instance.searchResults = new SearchResults({
+            element: tabContent.querySelector('.searchResults'),
+            serverId: ApiClient.serverId(),
+            parentId: parentId
+        });
+
+        events.on(instance.searchFields, 'search', function (e, value) {
+
+            instance.searchResults.search(value);
         });
     }
 
@@ -14,7 +25,7 @@
 
         var self = this;
 
-        init(this, tabContent);
+        init(this, tabContent, params.topParentId || params.parentId);
 
         self.preRender = function () {
         };
@@ -35,6 +46,12 @@
             searchFields.destroy();
         }
         this.searchFields = null;
+
+        var searchResults = this.searchResults;
+        if (searchResults) {
+            searchResults.destroy();
+        }
+        this.searchResults = null;
     };
 
     return SearchTab;

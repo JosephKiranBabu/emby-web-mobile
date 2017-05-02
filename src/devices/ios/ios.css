@@ -3,16 +3,6 @@
     background-attachment: initial;
 }
 
-.txtSearch {
-    padding-bottom: .5em !important;
-    text-indent: 0 !important;
-}
-
-.searchInputContainer {
-    margin-left: 5%;
-    margin-right: 5%;
-}
-
 .categorySyncButton, .btnSync {
     display: none !important;
 }

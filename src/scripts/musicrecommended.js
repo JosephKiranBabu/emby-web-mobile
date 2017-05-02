@@ -51,7 +51,8 @@
                 overlayPlayButton: !supportsImageAnalysis,
                 allowBottomPadding: !enableScrollX(),
                 cardLayout: supportsImageAnalysis,
-                vibrant: supportsImageAnalysis
+                vibrant: supportsImageAnalysis,
+                coverImage: true
 
             });
             imageLoader.lazyChildren(elem);
@@ -104,7 +105,8 @@
                 overlayMoreButton: !supportsImageAnalysis,
                 allowBottomPadding: !enableScrollX(),
                 cardLayout: supportsImageAnalysis,
-                vibrant: supportsImageAnalysis
+                vibrant: supportsImageAnalysis,
+                coverImage: true
 
             });
             imageLoader.lazyChildren(itemsContainer);
@@ -157,7 +159,8 @@
                 overlayMoreButton: !supportsImageAnalysis,
                 allowBottomPadding: !enableScrollX(),
                 cardLayout: supportsImageAnalysis,
-                vibrant: supportsImageAnalysis
+                vibrant: supportsImageAnalysis,
+                coverImage: true
 
             });
             imageLoader.lazyChildren(itemsContainer);

@@ -3,7 +3,7 @@
 
     function init(instance, tabContent, parentId) {
 
-        tabContent.innerHTML = '<div class="searchFields"></div><div class="searchResults"></div>';
+        tabContent.innerHTML = '<div class="padded-left padded-right searchFields"></div><div class="searchResults padded-top" style="padding-top:1.5em;"></div>';
 
         instance.searchFields = new SearchFields({
             element: tabContent.querySelector('.searchFields')

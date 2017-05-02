@@ -295,29 +295,27 @@ body:not(.dashboardDocument) .headerAppsButton {
 
 @media all and (min-width: 84em) {
 
-    @supports ( (display:flex) or (-webkit-display:flex) ) {
+    .libraryDocument .headerTabs {
+        align-self: center;
+        width: auto;
+        align-items: center;
+        justify-content: center;
+        font-size: inherit;
+        margin-top: -3.34em;
+        position: relative;
+        top: -.29em;
+    }
 
-        .libraryDocument .headerTabs {
-            align-self: center;
-            position: fixed;
-            width: auto;
-            align-items: center;
-            justify-content: center;
-            top: .6em;
-            font-size: inherit;
-        }
+    .headerTop {
+        padding: .7em 0;
+    }
 
-        .skinHeader .headerTop {
-            padding: .7em 0;
-        }
+    .libraryPage:not(.noSecondaryNavPage) {
+        padding-top: 4.5em !important;
+    }
 
-        .libraryPage:not(.noSecondaryNavPage) {
-            padding-top: 4.5em !important;
-        }
-
-        .absolutePageTabContent {
-            /* Page needs to supply padding */
-            top: 4.5em !important;
-        }
+    .absolutePageTabContent {
+        /* Page needs to supply padding */
+        top: 4.5em !important;
     }
 }

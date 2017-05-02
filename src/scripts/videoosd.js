@@ -1168,8 +1168,9 @@
             if (!layoutManager.mobile) {
                 playbackManager.playPause(currentPlayer);
             }
-            showOsd();
         });
+
+        view.addEventListener('click', showOsd);
 
         view.querySelector('.buttonMute').addEventListener('click', function () {
 

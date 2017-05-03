@@ -6,6 +6,7 @@
         var currentItem;
 
         var data;
+        var self = this;
 
         function getPageData() {
             var pageData = data;
@@ -338,13 +339,16 @@
         });
 
         view.addEventListener('viewbeforeshow', function (e) {
+
             reloadItems(view);
             updateFilterControls();
         });
 
         view.addEventListener('viewdestroy', function (e) {
+
             if (self.alphaPicker) {
                 self.alphaPicker.destroy();
+                self.alphaPicker = null;
             }
         });
     };

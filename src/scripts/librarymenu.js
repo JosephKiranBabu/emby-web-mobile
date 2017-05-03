@@ -25,7 +25,7 @@
         html += '<button type="button" is="paper-icon-button-light" class="headerButton mainDrawerButton barsMenuButton headerButtonLeft hide"><i class="md-icon">menu</i></button>';
         html += '<button type="button" is="paper-icon-button-light" class="headerButton headerAppsButton barsMenuButton headerButtonLeft"><i class="md-icon">home</i></button>';
 
-        html += '<h2 class="libraryMenuButtonText headerButton"></h2>';
+        html += '<h3 class="libraryMenuButtonText headerButton"></h3>';
         html += '</div>';
 
         html += '<div class="headerRight">';
@@ -49,7 +49,7 @@
 
         html += '</div>';
 
-        html += '<div class="headerTabs">';
+        html += '<div class="headerTabs hide">';
         html += '</div>';
 
         skinHeader.innerHTML = html;

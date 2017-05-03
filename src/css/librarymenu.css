@@ -311,11 +311,11 @@ body:not(.dashboardDocument) .headerAppsButton {
     }
 
     .libraryPage:not(.noSecondaryNavPage) {
-        padding-top: 4.6em !important;
+        padding-top: 4.7em !important;
     }
 
     .absolutePageTabContent {
         /* Page needs to supply padding */
-        top: 4.5em !important;
+        top: 4.6em !important;
     }
 }

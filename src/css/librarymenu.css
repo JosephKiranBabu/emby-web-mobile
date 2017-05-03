@@ -1,9 +1,9 @@
 ﻿.libraryPage {
-    padding-top: 4.3em !important;
+    padding-top: 4.6em !important;
 }
 
     .libraryPage:not(.noSecondaryNavPage) {
-        padding-top: 6.4em !important;
+        padding-top: 6.6em !important;
     }
 
 .absolutePageTabContent {
@@ -311,7 +311,7 @@ body:not(.dashboardDocument) .headerAppsButton {
     }
 
     .libraryPage:not(.noSecondaryNavPage) {
-        padding-top: 4.5em !important;
+        padding-top: 4.6em !important;
     }
 
     .absolutePageTabContent {

@@ -110,7 +110,9 @@
                         context: 'movies',
                         lazy: true,
                         overlayPlayButton: true,
-                        centerText: true
+                        centerText: true,
+                        showTitle: self.mode === 'favorites',
+                        showYear: self.mode === 'favorites'
                     });
                 }
                 else if (viewStyle == "ThumbCard") {
@@ -167,7 +169,9 @@
                         context: 'movies',
                         centerText: true,
                         lazy: true,
-                        overlayPlayButton: true
+                        overlayPlayButton: true,
+                        showTitle: self.mode === 'favorites',
+                        showYear: self.mode === 'favorites'
                     });
                 }
 

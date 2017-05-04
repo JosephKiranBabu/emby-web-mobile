@@ -832,19 +832,31 @@
             return Promise.resolve(this.lastDetectedBitrate);
         }
 
-        return detectBitrateInternal(this, [
-        {
-            bytes: 500000,
-            threshold: 500000
-        },
-        {
-            bytes: 1000000,
-            threshold: 20000000
-        },
-        {
-            bytes: 3000000,
-            threshold: 50000000
-        }], 0);
+        var instance = this;
+        return this.getEndpointInfo().then(function (info) {
+
+            if (info.IsInNetwork) {
+
+                var result = 140000000;
+                instance.lastDetectedBitrate = result;
+                instance.lastDetectedBitrateTime = new Date().getTime();
+                return result;
+            }
+
+            return detectBitrateInternal(this, [
+            {
+                bytes: 500000,
+                threshold: 500000
+            },
+            {
+                bytes: 1000000,
+                threshold: 20000000
+            },
+            {
+                bytes: 3000000,
+                threshold: 50000000
+            }], 0);
+        });
     };
 
     /**
@@ -3439,26 +3451,20 @@
             throw new Error("null options");
         }
 
-        var now = new Date().getTime();
         if ((options.EventName || 'timeupdate') === 'timeupdate') {
+
+            var now = new Date().getTime();
             if ((now - (this.lastPlaybackProgressReport || 0)) <= 10000) {
                 return;
             }
+
+            this.lastPlaybackProgressReport = now;
+
+        } else {
+
+            // allow the next timeupdate
+            this.lastPlaybackProgressReport = 0;
         }
-
-        this.lastPlaybackProgressReport = now;
-
-        //if (this.isWebSocketOpen()) {
-
-        //    try {
-        //        this.sendWebSocketMessage("ReportPlaybackProgress", JSON.stringify(options));
-        //        return Promise.resolve();
-        //    } catch (err) {
-
-        //        // Log and send via http
-        //        console.log('Error sending playback progress report: ' + err);
-        //    }
-        //}
 
         var url = this.getUrl("Sessions/Playing/Progress");
 
@@ -3708,6 +3714,11 @@
             data: JSON.stringify(postData),
             contentType: "application/json"
         });
+    };
+
+    ApiClient.prototype.getEndpointInfo = function () {
+
+        return this.getJSON(this.getUrl('System/Endpoint'));
     };
 
     ApiClient.prototype.getLatestItems = function (options) {

@@ -64,7 +64,7 @@
     margin: 0 0 0 .5em;
     /* Avoid pushing right header off the screen */
     flex-shrink: 1;
-    color: #bbb;
+    color: #ddd;
 }
 
 .skinHeader {
@@ -74,7 +74,6 @@
     z-index: 999;
     top: 0;
     border: 0;
-    padding-top: 3px;
     display: flex;
     flex-direction: column;
     background-color: #101010;
@@ -303,19 +302,19 @@ body:not(.dashboardDocument) .headerAppsButton {
         font-size: inherit;
         margin-top: -3.34em;
         position: relative;
-        top: -.29em;
+        top: -.34em;
     }
 
     .headerTop {
-        padding: .7em 0;
+        padding: .8em 0;
     }
 
     .libraryPage:not(.noSecondaryNavPage) {
-        padding-top: 4.7em !important;
+        padding-top: 4.9em !important;
     }
 
     .absolutePageTabContent {
         /* Page needs to supply padding */
-        top: 4.6em !important;
+        top: 4.7em !important;
     }
 }

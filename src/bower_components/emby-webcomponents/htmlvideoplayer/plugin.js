@@ -1,4 +1,4 @@
-define(['browser', 'require', 'events', 'apphost', 'loading', 'playbackManager', 'embyRouter', 'appSettings', 'connectionManager'], function (browser, require, events, appHost, loading, playbackManager, embyRouter, appSettings, connectionManager) {
+define(['browser', 'require', 'events', 'apphost', 'loading', 'dom', 'playbackManager', 'embyRouter', 'appSettings', 'connectionManager'], function (browser, require, events, appHost, loading, dom, playbackManager, embyRouter, appSettings, connectionManager) {
     "use strict";
 
     function tryRemoveElement(elem) {
@@ -14,7 +14,28 @@ define(['browser', 'require', 'events', 'apphost', 'loading', 'playbackManager',
         }
     }
 
-    return function () {
+    function getSavedVolume() {
+        return appSettings.get("volume") || 1;
+    }
+
+    function saveVolume(value) {
+        if (value) {
+            appSettings.set("volume", value);
+        }
+    }
+
+    function getDefaultProfile() {
+
+        return new Promise(function (resolve, reject) {
+
+            require(['browserdeviceprofile'], function (profileBuilder) {
+
+                resolve(profileBuilder({}));
+            });
+        });
+    }
+
+    function HtmlVideoPlayer() {
 
         var self = this;
 
@@ -40,45 +61,9 @@ define(['browser', 'require', 'events', 'apphost', 'loading', 'playbackManager',
         var currentClock;
         var currentAssRenderer;
         var customTrackIndex = -1;
-        var currentAspectRatio;
 
         var videoSubtitlesElem;
         var currentTrackEvents;
-
-        self.canPlayMediaType = function (mediaType) {
-
-            return (mediaType || '').toLowerCase() === 'video';
-        };
-
-        function getSavedVolume() {
-            return appSettings.get("volume") || 1;
-        }
-
-        function saveVolume(value) {
-            if (value) {
-                appSettings.set("volume", value);
-            }
-        }
-
-        function getDefaultProfile() {
-
-            return new Promise(function (resolve, reject) {
-
-                require(['browserdeviceprofile'], function (profileBuilder) {
-
-                    resolve(profileBuilder({}));
-                });
-            });
-        }
-
-        self.getDeviceProfile = function (item, options) {
-
-            if (appHost.getDeviceProfile) {
-                return appHost.getDeviceProfile(item, options);
-            }
-
-            return getDefaultProfile();
-        };
 
         self.currentSrc = function () {
             return currentSrc;
@@ -180,28 +165,6 @@ define(['browser', 'require', 'events', 'apphost', 'loading', 'playbackManager',
             }
 
             return supportedFeatures.indexOf(feature) !== -1;
-        };
-
-        self.setAspectRatio = function (val) {
-
-            var video = mediaElement;
-            if (video) {
-                currentAspectRatio = val;
-            }
-        };
-
-        self.getAspectRatio = function () {
-
-            return currentAspectRatio;
-        };
-
-        self.getSupportedAspectRatios = function () {
-
-            return [];
-        };
-
-        self.togglePictureInPicture = function () {
-            return self.setPictureInPictureEnabled(!self.isPictureInPictureEnabled());
         };
 
         self.setPictureInPictureEnabled = function (isEnabled) {
@@ -1087,7 +1050,7 @@ define(['browser', 'require', 'events', 'apphost', 'loading', 'playbackManager',
 
             customTrackIndex = -1;
             currentClock = null;
-            currentAspectRatio = null;
+            self._currentAspectRatio = null;
 
             var renderer = currentAssRenderer;
             if (renderer) {
@@ -1427,12 +1390,13 @@ define(['browser', 'require', 'events', 'apphost', 'loading', 'playbackManager',
 
         function zoomIn(elem) {
 
-            var duration = 240;
-
-            elem.style.animation = 'htmlvideoplayer-zoomin ' + duration + 'ms ease-in normal';
-
             return new Promise(function (resolve, reject) {
-                setTimeout(resolve, duration);
+
+                var duration = 240;
+                elem.style.animation = 'htmlvideoplayer-zoomin ' + duration + 'ms ease-in normal';
+                dom.addEventListener(elem, dom.whichAnimationEvent(), resolve, {
+                    once: true
+                });
             });
         }
 
@@ -1521,5 +1485,39 @@ define(['browser', 'require', 'events', 'apphost', 'loading', 'playbackManager',
                 }
             });
         }
+    }
+
+    HtmlVideoPlayer.prototype.canPlayMediaType = function (mediaType) {
+
+        return (mediaType || '').toLowerCase() === 'video';
     };
+
+    HtmlVideoPlayer.prototype.getDeviceProfile = function (item, options) {
+
+        if (appHost.getDeviceProfile) {
+            return appHost.getDeviceProfile(item, options);
+        }
+
+        return getDefaultProfile();
+    };
+
+    HtmlVideoPlayer.prototype.setAspectRatio = function (val) {
+
+    };
+
+    HtmlVideoPlayer.prototype.getAspectRatio = function () {
+
+        return this._currentAspectRatio;
+    };
+
+    HtmlVideoPlayer.prototype.getSupportedAspectRatios = function () {
+
+        return [];
+    };
+
+    HtmlVideoPlayer.prototype.togglePictureInPicture = function () {
+        return this.setPictureInPictureEnabled(!this.isPictureInPictureEnabled());
+    };
+
+    return HtmlVideoPlayer;
 });

@@ -25,19 +25,19 @@
 
 .detailTable td {
     border-spacing: 0;
-    padding: 5px 5px;
+    padding: .4em;
 }
 
 .detailTable th {
     border-spacing: 0;
-    padding: 5px;
+    padding: .4em;
     font-weight: bold;
     text-align: left;
     vertical-align: top;
 }
 
 .userDataCell {
-    width: 130px;
+    width: 10em;
     text-align: right;
 }
 

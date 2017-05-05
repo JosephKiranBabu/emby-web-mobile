@@ -3,7 +3,7 @@
 }
 
 .dashboardFooter {
-    margin-top: 50px;
+    margin-top: 3.5em;
     text-align: center;
 }
 
@@ -15,10 +15,6 @@
 
     .dashboardFooter .appLinks a {
         margin: .25em;
-    }
-
-    .dashboardFooter .appLinks img {
-        height: 16px;
     }
 
 .ui-body-a .listItem-shaded:nth-child(even) {
@@ -37,7 +33,7 @@ progress {
     -webkit-appearance: none;
     /* gets rid of default border in Firefox and Opera. */
     border: solid #cccccc 2px;
-    border-radius: 4px;
+    border-radius: .3em;
     margin: 0;
 }
 
@@ -66,20 +62,20 @@ progress {
 
     /* Firefox */
     progress::-moz-progress-bar {
-        border-radius: 5px;
+        border-radius: .4em;
         background-image: -moz-linear-gradient( center bottom, rgb(43,194,83) 37%, rgb(84,240,84) 69% );
     }
 
     /* Chrome */
     progress::-webkit-progress-value {
-        border-radius: 5px;
+        border-radius: .4em;
         background-image: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgb(43,194,83)), color-stop(1, rgb(84,240,84)) );
         background-image: -webkit-linear-gradient( center bottom, rgb(43,194,83) 37%, rgb(84,240,84) 69% );
     }
 
     /* Polyfill */
     progress[aria-valuenow]:before {
-        border-radius: 5px;
+        border-radius: .4em;
         background-image: -moz-linear-gradient( center bottom, rgb(43,194,83) 37%, rgb(84,240,84) 69% );
         background-image: -ms-linear-gradient( center bottom, rgb(43,194,83) 37%, rgb(84,240,84) 69% );
         background-image: -o-linear-gradient( center bottom, rgb(43,194,83) 37%, rgb(84,240,84) 69% );
@@ -87,7 +83,7 @@ progress {
 
 /* Tabs (e.g. advanced metadata page) */
 .localnav {
-    margin-bottom: 30px !important;
+    margin-bottom: 2.2em !important;
 }
 
 @media all and (min-width: 50em) {
@@ -150,7 +146,7 @@ progress {
 }
 
     .adminDrawerLogo img {
-        height: 30px;
+        height: 2.2em;
     }
 
 @media all and (max-width: 40em) {
@@ -187,7 +183,7 @@ div[data-role="controlgroup"] a[data-role='button'] {
 
     div[data-role="controlgroup"] a[data-role='button'] + a[data-role='button'] {
         border-left-width: 0 !important;
-        margin: 0 0 0 -3px !important;
+        margin: 0 0 0 -.4em !important;
     }
 
 div[data-role="controlgroup"] a.ui-btn-active {
@@ -200,13 +196,13 @@ div[data-role="controlgroup"] a.ui-btn-active {
 }
 
     .header .imageLink img {
-        height: 28px;
+        height: 2.1em;
         vertical-align: middle;
     }
 
 .ulForm {
     margin: -1em !important;
-    margin-bottom: 20px !important;
+    margin-bottom: 1.4em !important;
 }
 
     .ulForm li:not(.ui-li-divider) {
@@ -219,13 +215,8 @@ div[data-role="controlgroup"] a.ui-btn-active {
 }
 
 .content-primary {
-    padding-top: 70px;
+    padding-top: 7em;
     font-size: 92%;
-}
-
-.content-primary {
-    padding-top: 90px;
-    padding-bottom: 3em;
 }
 
 @media all and (min-width: 50em) {
@@ -244,7 +235,7 @@ div[data-role="controlgroup"] a.ui-btn-active {
 }
 
 .withTabs .content-primary {
-    padding-top: 125px !important;
+    padding-top: 10em !important;
 }
 
 .content-primary ul:first-child {
@@ -259,7 +250,7 @@ div[data-role="controlgroup"] a.ui-btn-active {
 }
 
 .dashboardContent {
-    margin-top: -10px;
+    margin-top: -.7em;
 }
 
 .dashboardHomeRightColumn {
@@ -319,12 +310,12 @@ div[data-role="controlgroup"] a.ui-btn-active {
     text-align: right;
     top: 0;
     right: 0;
-    width: 60px;
-    height: 60px;
+    width: 4.4em;
+    height: 4.4em;
 }
 
 .wizardContent {
-    max-width: 800px;
+    max-width: 62em;
     padding: .5em 2em 1em;
     margin: 0 auto;
     background: #fff;
@@ -339,11 +330,11 @@ div[data-role="controlgroup"] a.ui-btn-active {
 }
 
 .wizardContent h2 img {
-    height: 35px;
+    height: 2.5em;
     vertical-align: middle;
     margin-right: .5em;
     position: relative;
-    top: -3px;
+    top: -.3em;
 }
 
 .scheduledTaskPaperIconItem {

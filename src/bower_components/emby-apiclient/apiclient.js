@@ -143,25 +143,39 @@
 
         var currentServerInfo = this.serverInfo();
         var appName = this._appName;
-
-        if (appName) {
-
-            var auth = 'MediaBrowser Client="' + appName + '", Device="' + this._deviceName + '", DeviceId="' + this._deviceId + '", Version="' + this._appVersion + '"';
-
-            var userId = currentServerInfo.UserId;
-
-            if (userId) {
-                auth += ', UserId="' + userId + '"';
-            }
-
-            headers["X-Emby-Authorization"] = auth;
-        }
-
         var accessToken = currentServerInfo.AccessToken;
 
-        if (accessToken) {
-            headers['X-MediaBrowser-Token'] = accessToken;
+        var values = [];
+
+        if (appName) {
+            values.push('Client="' + appName + '"');
         }
+
+        if (this._deviceName) {
+            values.push('Device="' + this._deviceName + '"');
+        }
+
+        if (this._deviceId) {
+            values.push('DeviceId="' + this._deviceId + '"');
+        }
+
+        if (this._appVersion) {
+            values.push('Version="' + this._appVersion + '"');
+        }
+
+        if (accessToken) {
+            values.push('Token="' + accessToken + '"');
+        }
+
+        if (values.length) {
+            
+            var auth = 'MediaBrowser ' + values.join(', ');
+            headers["Authorization"] = auth;
+        }
+
+        //if (accessToken) {
+        //    headers['X-MediaBrowser-Token'] = accessToken;
+        //}
     };
 
     ApiClient.prototype.appVersion = function () {

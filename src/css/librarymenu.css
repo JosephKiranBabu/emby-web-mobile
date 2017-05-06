@@ -264,7 +264,7 @@ body:not(.dashboardDocument) .headerAppsButton {
     }
 
     .dashboardDocument.withTallToolbar .mainDrawer-scrollContainer {
-        margin-top: 6.64em !important;
+        margin-top: 7em !important;
     }
 
     .dashboardDocument .tmla-mask {

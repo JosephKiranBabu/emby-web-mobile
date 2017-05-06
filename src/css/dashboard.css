@@ -215,15 +215,26 @@ div[data-role="controlgroup"] a.ui-btn-active {
 }
 
 .content-primary {
-    padding-top: 7em;
+    padding-top:6em;
     font-size: 92%;
+    padding-right: 1em;
+    padding-left: 1em;
+}
+
+.withTabs .content-primary {
+    padding-top: 9em !important;
 }
 
 @media all and (min-width: 50em) {
 
     .content-primary {
+        padding-top: 7em;
         padding-right: 1.5em;
         padding-left: 1.5em;
+    }
+
+    .withTabs .content-primary {
+        padding-top: 10em !important;
     }
 }
 
@@ -232,10 +243,6 @@ div[data-role="controlgroup"] a.ui-btn-active {
     .content-primary {
         padding-left: 2em;
     }
-}
-
-.withTabs .content-primary {
-    padding-top: 10em !important;
 }
 
 .content-primary ul:first-child {

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html class="preload">
-<head><meta http-equiv="X-UA-Compatibility" content="IE=Edge"><link rel="manifest" href="manifest.json"><meta name="format-detection" content="telephone=no"><meta name="msapplication-tap-highlight" content="no"><meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="application-name" content="Emby"><meta name="robots" content="noindex, nofollow, noarchive"><meta property="og:title" content="Emby"><meta property="og:site_name" content="Emby"><meta property="og:url" content="http://emby.media"><meta property="og:description" content="Energize your media."><meta property="og:type" content="article"><meta property="fb:app_id" content="1618309211750238"><link rel="apple-touch-icon" href="touchicon.png"><link rel="apple-touch-icon" sizes="72x72" href="touchicon72.png"><link rel="apple-touch-icon" sizes="114x114" href="touchicon114.png"><link rel="apple-touch-startup-image" href="css/images/iossplash.png"><link rel="shortcut icon" href="css/images/favicon.ico"><meta name="msapplication-TileImage" content="touchicon144.png"><meta name="msapplication-TileColor" content="#333333"><meta name="theme-color" content="#43A047"><link rel="stylesheet" href="css/site.css?v=3.2.13.14" async /><link rel="stylesheet" href="css/librarymenu.css?v=3.2.13.14" async /><link rel="stylesheet" href="css/librarybrowser.css?v=3.2.13.14" async /><link rel="stylesheet" href="thirdparty/paper-button-style.css?v=3.2.13.14" async />
+<head><meta http-equiv="X-UA-Compatibility" content="IE=Edge"><link rel="manifest" href="manifest.json"><meta name="format-detection" content="telephone=no"><meta name="msapplication-tap-highlight" content="no"><meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="application-name" content="Emby"><meta name="robots" content="noindex, nofollow, noarchive"><meta property="og:title" content="Emby"><meta property="og:site_name" content="Emby"><meta property="og:url" content="http://emby.media"><meta property="og:description" content="Energize your media."><meta property="og:type" content="article"><meta property="fb:app_id" content="1618309211750238"><link rel="apple-touch-icon" href="touchicon.png"><link rel="apple-touch-icon" sizes="72x72" href="touchicon72.png"><link rel="apple-touch-icon" sizes="114x114" href="touchicon114.png"><link rel="apple-touch-startup-image" href="css/images/iossplash.png"><link rel="shortcut icon" href="css/images/favicon.ico"><meta name="msapplication-TileImage" content="touchicon144.png"><meta name="msapplication-TileColor" content="#333333"><meta name="theme-color" content="#43A047"><link rel="stylesheet" href="css/site.css?v=3.2.14.1" async /><link rel="stylesheet" href="css/librarymenu.css?v=3.2.14.1" async /><link rel="stylesheet" href="css/librarybrowser.css?v=3.2.14.1" async /><link rel="stylesheet" href="thirdparty/paper-button-style.css?v=3.2.14.1" async />
     <title>Emby</title>
 
     <style>
@@ -22,41 +22,45 @@
     <div class="skinHeader"></div>
     <div class="mainAnimatedPages skinBody hide">﻿<div id="userProfilesPage" data-role="page" class="page type-interior userProfilesPage fullWidthContent" data-helpurl="https://github.com/MediaBrowser/Wiki/wiki/Users" data-require="scripts/userprofilespage,emby-button">
 
-    <div data-role="content">
+    <div>
         <div class="content-primary">
-            <div class="detailSectionHeader">
-                <h1>
-                    <span style="vertical-align:middle;">${HeaderUsers}</span>
-                </h1>
-                <button is="emby-button" type="button" class="raised btnAddUser submit mini" style="margin-left:1em;" title="${ButtonAddUser}">
-                    <i class="md-icon">add</i>
-                    <span>${ButtonAdd}</span>
-                </button>
+            <div class="verticalSection">
+                <div class="sectionTitleContainer">
+                    <h1 class="sectionTitle">
+                        <span>${HeaderUsers}</span>
+                    </h1>
+                    <button is="emby-button" type="button" class="raised btnAddUser submit raised-mini sectionTitleButton" style="margin-left:1em;" title="${ButtonAddUser}">
+                        <i class="md-icon">add</i>
+                        <span>${ButtonAdd}</span>
+                    </button>
+                </div>
+                <div class="localUsers itemsContainer vertical-wrap" style="margin-top: .5em;"></div>
             </div>
-            <div class="localUsers itemsContainer vertical-wrap" style="text-align:left;margin-top:.5em;"></div>
 
-            <div class="detailSectionHeader" style="margin-top:2.5em;">
-                <h1>
-                    ${HeaderGuests}
-                </h1>
-                <button is="emby-button" type="button" class="raised btnInvite submit mini" style="margin-left:1em;" title="${ButtonInviteUser}">
-                    <i class="md-icon">add</i>
-                    <span>${ButtonAdd}</span>
-                </button>
+            <div class="verticalSection">
+                <div class="sectionTitleContainer">
+                    <h1 class="sectionTitle">
+                        ${HeaderGuests}
+                    </h1>
+                    <button is="emby-button" type="button" class="raised btnInvite submit raised-mini" style="margin-left:1em;" title="${ButtonInviteUser}">
+                        <i class="md-icon">add</i>
+                        <span>${ButtonAdd}</span>
+                    </button>
+                </div>
+                <div class="connectUsers itemsContainer vertical-wrap" style="margin-top:.5em;"></div>
             </div>
-            <div class="connectUsers itemsContainer vertical-wrap" style="text-align:left;margin-top:.5em;"></div>
 
-            <div class="sectionPendingGuests" style="display:none;margin-top:2.5em;">
-                <div class="detailSectionHeader" style="margin-top:2.5em;">
-                    <h3 style="margin:.6em 0;vertical-align:middle;display:inline-block;">
+            <div class="sectionPendingGuests verticalSection" style="display:none;">
+                <div class="sectionTitleContainer">
+                    <h3 class="sectionTitle">
                         ${HeaderPendingInvitations}
                     </h3>
                 </div>
-                <div class="itemsContainer vertical-wrap pending" style="text-align:left;margin-top:.5em;"></div>
+                <div class="itemsContainer vertical-wrap pending" style="margin-top:.5em;"></div>
             </div>
         </div>
 
     </div>
 </div></div>
-<script>window.dashboardVersion='3.2.13.14';</script><script src="scripts/apploader.js?v=3.2.13.14" defer></script></body>
+<script>window.dashboardVersion='3.2.14.1';</script><script src="scripts/apploader.js?v=3.2.14.1" defer></script></body>
 </html>

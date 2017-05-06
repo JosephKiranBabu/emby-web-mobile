@@ -143,24 +143,35 @@
 
         var currentServerInfo = this.serverInfo();
         var appName = this._appName;
-
-        if (appName) {
-
-            var auth = 'MediaBrowser Client="' + appName + '", Device="' + this._deviceName + '", DeviceId="' + this._deviceId + '", Version="' + this._appVersion + '"';
-
-            var userId = currentServerInfo.UserId;
-
-            if (userId) {
-                auth += ', UserId="' + userId + '"';
-            }
-
-            headers["X-Emby-Authorization"] = auth;
-        }
-
         var accessToken = currentServerInfo.AccessToken;
 
+        var values = [];
+
+        if (appName) {
+            values.push('Client="' + appName + '"');
+        }
+
+        if (this._deviceName) {
+            values.push('Device="' + this._deviceName + '"');
+        }
+
+        if (this._deviceId) {
+            values.push('DeviceId="' + this._deviceId + '"');
+        }
+
+        if (this._appVersion) {
+            values.push('Version="' + this._appVersion + '"');
+        }
+
         if (accessToken) {
-            headers['X-MediaBrowser-Token'] = accessToken;
+            values.push('Token="' + accessToken + '"');
+        }
+
+        if (values.length) {
+            
+            var auth = 'MediaBrowser ' + values.join(', ');
+            //headers.Authorization = auth;
+            headers['X-Emby-Authorization'] = auth;
         }
     };
 
@@ -2696,9 +2707,9 @@
 
         var url = this.getUrl("Users/" + userId + "/Password");
 
-        return new Promise(function (resolve, reject) {
+        var instance = this;
 
-            var instance = this;
+        return new Promise(function (resolve, reject) {
 
             require(["cryptojs-sha1"], function () {
 
@@ -2721,6 +2732,8 @@
      */
     ApiClient.prototype.updateEasyPassword = function (userId, newPassword) {
 
+        var instance = this;
+
         return new Promise(function (resolve, reject) {
 
             if (!userId) {
@@ -2729,7 +2742,6 @@
             }
 
             var url = this.getUrl("Users/" + userId + "/EasyPassword");
-            var instance = this;
 
             require(["cryptojs-sha1"], function () {
 

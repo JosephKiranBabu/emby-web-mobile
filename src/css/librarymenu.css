@@ -302,19 +302,19 @@ body:not(.dashboardDocument) .headerAppsButton {
         font-size: inherit;
         margin-top: -3.34em;
         position: relative;
-        top: -.34em;
+        top: -.39em;
     }
 
     .headerTop {
-        padding: .8em 0;
+        padding: .9em 0;
     }
 
     .libraryPage:not(.noSecondaryNavPage) {
-        padding-top: 4.9em !important;
+        padding-top: 5em !important;
     }
 
     .absolutePageTabContent {
         /* Page needs to supply padding */
-        top: 4.7em !important;
+        top: 4.8em !important;
     }
 }

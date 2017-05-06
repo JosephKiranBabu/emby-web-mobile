@@ -1,7 +1,7 @@
 ﻿define(['layoutManager', 'viewManager', 'libraryBrowser', 'embyRouter', 'playbackManager', 'browser', 'paper-icon-button-light', 'material-icons', 'scrollStyles', 'flexStyles'], function (layoutManager, viewManager, libraryBrowser, embyRouter, playbackManager, browser) {
     'use strict';
 
-    var enableBottomTabs = browser.mobile;
+    var enableBottomTabs = layoutManager.mobile;
     var enableLibraryNavDrawer = !enableBottomTabs;
 
     var navDrawerElement;
@@ -41,7 +41,7 @@
 
         html += '<button is="paper-icon-button-light" class="headerButton headerButtonRight headerUserButton autoSize"><i class="md-icon">person</i></button>';
 
-        if (!browser.mobile) {
+        if (!layoutManager.mobile) {
             html += '<button is="paper-icon-button-light" class="headerButton headerButtonRight dashboardEntryHeaderButton autoSize" onclick="return LibraryMenu.onSettingsClicked(event);"><i class="md-icon">settings</i></button>';
         }
 
@@ -264,7 +264,7 @@
 
     function onMainDrawerOpened() {
 
-        if (browser.mobile) {
+        if (layoutManager.mobile) {
             document.body.classList.add('bodyWithPopupOpen');
         }
     }
@@ -311,7 +311,7 @@
             html += '<a class="sidebarLink lnkMediaFolder lnkManageServer" data-itemid="dashboard" href="#"><span class="sidebarLinkText">' + Globalize.translate('ButtonManageServer') + '</span></a>';
             html += '<a class="sidebarLink lnkMediaFolder editorViewMenu" data-itemid="editor" onclick="return LibraryMenu.onLinkClicked(event, this);" href="edititemmetadata.html"><span class="sidebarLinkText">' + Globalize.translate('MetadataManager') + '</span></a>';
 
-            if (!browser.mobile) {
+            if (!layoutManager.mobile) {
                 html += '<a class="sidebarLink lnkMediaFolder" data-itemid="reports" onclick="return LibraryMenu.onLinkClicked(event, this);" href="reports.html"><span class="sidebarLinkText">' + Globalize.translate('ButtonReports') + '</span></a>';
             }
             html += '</div>';
@@ -585,7 +585,7 @@
 
     function getNavigateDelay() {
         // On mobile devices don't navigate until after the closing animation has completed or it may stutter
-        return browser.mobile ? 320 : 200;;
+        return browser.slow ? 320 : 200;
     }
 
     window.LibraryMenu = {

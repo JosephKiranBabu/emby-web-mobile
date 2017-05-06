@@ -332,7 +332,19 @@
                 var controller = tabControllers[index];
                 if (!controller) {
                     tabContent = view.querySelector('.pageTabContent[data-index=\'' + index + '\']');
-                    controller = index !== suggestionsTabIndex ? new controllerFactory(view, params, tabContent) : self;
+
+                    if (index === suggestionsTabIndex) {
+                        controller = self;
+                    }
+                    else if (index === 6) {
+                        controller = new controllerFactory(view, tabContent, {
+                            collectionType: 'movies',
+                            parentId: params.topParentId
+                        });
+                    } else {
+                        controller = new controllerFactory(view, params, tabContent);
+                    }
+
                     tabControllers[index] = controller;
                     if (index === 3) {
                         controller.mode = 'favorites';

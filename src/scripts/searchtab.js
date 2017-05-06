@@ -1,7 +1,7 @@
 ﻿define(['searchFields', 'searchResults', 'events'], function (SearchFields, SearchResults, events) {
     'use strict';
 
-    function init(instance, tabContent, parentId) {
+    function init(instance, tabContent, options) {
 
         tabContent.innerHTML = '<div class="padded-left padded-right searchFields"></div><div class="searchResults padded-top" style="padding-top:1.5em;"></div>';
 
@@ -12,7 +12,8 @@
         instance.searchResults = new SearchResults({
             element: tabContent.querySelector('.searchResults'),
             serverId: ApiClient.serverId(),
-            parentId: parentId
+            parentId: options.parentId,
+            collectionType: options.collectionType
         });
 
         events.on(instance.searchFields, 'search', function (e, value) {
@@ -21,11 +22,12 @@
         });
     }
 
-    function SearchTab(view, params, tabContent) {
+    function SearchTab(view, tabContent, options) {
 
         var self = this;
 
-        init(this, tabContent, params.topParentId || params.parentId);
+        options = options || {};
+        init(this, tabContent, options);
 
         self.preRender = function () {
         };

@@ -320,7 +320,18 @@
                 var controller = tabControllers[index];
                 if (!controller) {
                     tabContent = view.querySelector('.pageTabContent[data-index=\'' + index + '\']');
-                    controller = index ? new controllerFactory(view, params, tabContent) : self;
+
+                    if (index === 0) {
+                        controller = self;
+                    }
+                    else if (index === 7) {
+                        controller = new controllerFactory(view, tabContent, {
+                            collectionType: 'music',
+                            parentId: params.topParentId
+                        });
+                    } else {
+                        controller = new controllerFactory(view, params, tabContent);
+                    }
 
                     if (index == 2) {
                         controller.mode = 'albumartists';

@@ -79,7 +79,7 @@
     background-color: #eeeeee; 
 }
 
-.stripedTable tbody tr:nth-child(odd) td,
-.stripedTable tbody tr:nth-child(odd) th {
-    background-color: #eeeeee; 
+.ui-body-b .detailTable tbody tr:nth-child(odd) td,
+.ui-body-b .detailTable tbody tr:nth-child(odd) th {
+    background-color: #101010; 
 }

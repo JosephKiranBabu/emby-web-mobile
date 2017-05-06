@@ -4,7 +4,9 @@
     // Make sure this is pulled in after button and tab css
     require(['css!./dockedtabs']);
 
-    var currentUser = {};
+    var currentUser = {
+        Policy: {}
+    };
     var currentUserViews = [];
 
     function showUserView(id) {
@@ -343,7 +345,6 @@
             self.hide();
         });
 
-        showCurrentUserTabs(self.element);
         document.addEventListener('viewshow', onViewShow);
     }
 

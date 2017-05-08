@@ -68,7 +68,7 @@
     position: relative;
     contain: strict;
     box-sizing: border-box;
-    border-bottom: .2em solid #121212;
+    border-bottom: .2em solid #101010;
 }
 
 .timeslotHeadersInner {
@@ -92,7 +92,6 @@
 .currentTimeIndicatorArrowContainer {
     position: absolute;
     bottom: -.4em;
-    width: 100%;
     color: #52B54B;
     margin-left: .25em;
     transform-origin: left;
@@ -141,8 +140,8 @@
 .channelHeaderCell, .channelTimeslotHeader {
     overflow: hidden;
     text-overflow: ellipsis;
-    border-right: 1px solid #121212;
-    background: rgb(38, 38, 38);
+    border-right: 1px solid #101010;
+    background: rgb(38,38,38);
     display: flex;
     align-items: center;
     text-decoration: none;
@@ -201,7 +200,7 @@
 }
 
 .channelHeaderCell {
-    border-bottom: .2em solid #121212 !important;
+    border-bottom: .2em solid #101010 !important;
     background-size: auto 70%;
     background-position: 92% center;
     background-repeat: no-repeat;
@@ -250,8 +249,8 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    border-left: .2em solid #121212 !important;
-    background-color: rgb(30, 30, 30);
+    border-left: .2em solid #101010 !important;
+    background-color: rgb(28,28,28);
     display: flex;
     text-decoration: none;
     overflow: hidden;
@@ -301,6 +300,24 @@
     /* Need block here or the ellipsis overflow is lost */
     display: block;
     flex-grow: 1;
+    position: relative;
+    /*transition: transform 60ms ease-out;*/
+}
+
+.guideProgramName-withCaret {
+    padding-left: 1.85em;
+}
+
+.guideProgramNameCaret {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #777;
+    font-size: 200%;
 }
 
 .guideProgramNameText {
@@ -311,10 +328,11 @@
 .guideProgramSecondaryInfo {
     display: flex;
     align-items: center;
+    margin-top: .1em;
 }
 
 .programSecondaryTitle {
-    opacity: .6;
+    color: #888;
 }
 
 .programIcon {
@@ -336,7 +354,7 @@
     color: rgb(30,30,30);
     font-size: .9em;
     background: #555;
-    padding: .18em .32em;
+    padding: .16em .3em;
     border-radius: .25em;
     margin-right: .35em;
     width: auto;
@@ -436,23 +454,18 @@
 }
 
 .guide-date-tab-button {
-    font-weight: normal !important;
-    color: inherit !important;
+    color: #555 !important;
     padding: .3em .7em !important;
     margin: 0 .3em !important;
-    opacity: .25;
 }
 
     .guide-date-tab-button.emby-tab-button-active {
         color: #52B54B !important;
         border-color: transparent !important;
-        opacity: 1;
-        font-weight: normal !important;
     }
 
     .guide-date-tab-button:focus {
         color: #52B54B !important;
-        opacity: 1;
     }
 
     .guide-date-tab-button.emby-button-tv:focus {

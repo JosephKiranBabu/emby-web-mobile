@@ -325,6 +325,7 @@
             if (browser.edge) {
                 options.disableEdgeSwipe = true;
             }
+            options.disableEdgeSwipe = true;
 
             self.initElements();
 

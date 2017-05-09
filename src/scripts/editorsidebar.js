@@ -291,6 +291,11 @@
                     cancelable: false
                 }));
             }
+
+            document.querySelector('.editPageSidebar').classList.add('editPageSidebar-withcontent');
+
+        } else {
+            document.querySelector('.editPageSidebar').classList.remove('editPageSidebar-withcontent');
         }
     }
 

@@ -198,6 +198,22 @@
             IsAiring: false,
             HasAired: false,
             limit: getLimit(),
+            IsNews: true,
+            EnableTotalRecordCount: false,
+            Fields: "ChannelInfo",
+            EnableImageTypes: "Primary,Thumb"
+
+        }).then(function (result) {
+
+            renderItems(page, result.Items, 'upcomingNewsItems');
+        });
+
+        ApiClient.getLiveTvRecommendedPrograms({
+
+            userId: Dashboard.getCurrentUserId(),
+            IsAiring: false,
+            HasAired: false,
+            limit: getLimit(),
             IsMovie: false,
             IsSports: false,
             IsKids: false,

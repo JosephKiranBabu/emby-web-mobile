@@ -180,6 +180,8 @@
                     LibraryMenu.setTitle(Globalize.translate('HeaderUpcomingForKids'));
                 } else if (params.IsAiring == 'true') {
                     LibraryMenu.setTitle(Globalize.translate('HeaderOnNow'));
+                } else if (params.IsNews == 'true') {
+                    LibraryMenu.setTitle(Globalize.translate('HeaderUpcomingNews'));
                 } else {
                     LibraryMenu.setTitle(Globalize.translate('HeaderUpcomingPrograms'));
                 }

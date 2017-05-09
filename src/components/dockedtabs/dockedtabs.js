@@ -111,12 +111,10 @@
                 id: 'manageserver'
             });
 
-            if (dom.getWindowSize().innerWidth >= 1000) {
-                commands.push({
-                    name: globalize.translate('MetadataManager'),
-                    id: 'metadatamanager'
-                });
-            }
+            commands.push({
+                name: globalize.translate('MetadataManager'),
+                id: 'metadatamanager'
+            });
 
             commands.push({
                 name: globalize.translate('ButtonReports'),

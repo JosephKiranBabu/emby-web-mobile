@@ -1171,7 +1171,6 @@ var AppInfo = {};
         define("serversync", [apiClientBowerPath + "/sync/serversync"], returnFirstDependency);
         define("multiserversync", [apiClientBowerPath + "/sync/multiserversync"], returnFirstDependency);
         define("mediasync", [apiClientBowerPath + "/sync/mediasync"], returnFirstDependency);
-        define("localsync", [apiClientBowerPath + "/sync/localsync"], returnFirstDependency);
 
         define("idb", [embyWebComponentsBowerPath + "/idb"], returnFirstDependency);
         define('itemrepository', [apiClientBowerPath + '/sync/itemrepository'], returnFirstDependency);

@@ -19,7 +19,8 @@
                 config.HttpsPortNumber = $('#txtHttpsPort', form).val();
                 config.EnableUPnP = enableUpnp;
                 config.WanDdns = $('#txtDdns', form).val();
-                config.CertificatePath = $('#txtCertificatePath', form).val();
+                config.CertificatePath = $('#txtCertificatePath', form).val() || null;
+                config.CertificatePassword = $('#txtCertPassword', form).val() || null;
 
                 config.LocalNetworkAddresses = localAddress ? [localAddress] : [];
 
@@ -80,6 +81,8 @@
 
             var txtCertificatePath = page.querySelector('#txtCertificatePath');
             txtCertificatePath.value = config.CertificatePath || '';
+
+            page.querySelector('#txtCertPassword').value = config.CertificatePassword || '';
 
             $('#chkEnableUpnp', page).checked(config.EnableUPnP);
 

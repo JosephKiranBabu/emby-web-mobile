@@ -157,23 +157,6 @@
             }
         }
 
-        function initEdgeSwipe() {
-
-            if (options.disableEdgeSwipe) {
-                return;
-            }
-
-            dom.addEventListener(edgeContainer, 'touchstart', onEdgeTouchStart, {
-                passive: true
-            });
-            dom.addEventListener(edgeContainer, 'touchend', onEdgeTouchEnd, {
-                passive: true
-            });
-            dom.addEventListener(edgeContainer, 'touchcancel', onEdgeTouchEnd, {
-                passive: true
-            });
-        }
-
         var startingScrollTop;
         function disableEvent(e) {
 
@@ -317,15 +300,60 @@
             }
         };
 
+        var _edgeSwipeEnabled;
+        TouchMenuLA.prototype.setEdgeSwipeEnabled = function (enabled) {
+
+            if (options.disableEdgeSwipe) {
+                return;
+            }
+
+            if (!browser.touch) {
+                return;
+            }
+
+            if (enabled) {
+
+                if (!_edgeSwipeEnabled) {
+                    _edgeSwipeEnabled = true;
+
+                    dom.addEventListener(edgeContainer, 'touchstart', onEdgeTouchStart, {
+                        passive: true
+                    });
+                    dom.addEventListener(edgeContainer, 'touchend', onEdgeTouchEnd, {
+                        passive: true
+                    });
+                    dom.addEventListener(edgeContainer, 'touchcancel', onEdgeTouchEnd, {
+                        passive: true
+                    });
+                }
+
+            } else {
+
+                if (_edgeSwipeEnabled) {
+
+                    _edgeSwipeEnabled = false;
+
+                    dom.removeEventListener(edgeContainer, 'touchstart', onEdgeTouchStart, {
+                        passive: true
+                    });
+                    dom.removeEventListener(edgeContainer, 'touchend', onEdgeTouchEnd, {
+                        passive: true
+                    });
+                    dom.removeEventListener(edgeContainer, 'touchcancel', onEdgeTouchEnd, {
+                        passive: true
+                    });
+                }
+            }
+        };
+
         TouchMenuLA.prototype.initialize = function () {
 
             options = Object.assign(defaults, options || {});
 
-            // Not ready yet
-            if (browser.edge) {
+            // These devices have their own left swipe functions
+            if (browser.edge || browser.safari || browser.iOS) {
                 options.disableEdgeSwipe = true;
             }
-            options.disableEdgeSwipe = true;
 
             self.initElements();
 
@@ -354,8 +382,6 @@
                 dom.addEventListener(mask, 'touchcancel', onBackgroundTouchEnd, {
                     passive: true
                 });
-
-                initEdgeSwipe();
             }
 
             self.clickMaskClose();

@@ -863,6 +863,10 @@
             document.body.classList.add('libraryDocument');
             document.body.classList.remove('dashboardDocument');
             document.body.classList.remove('hideMainDrawer');
+
+            if (navDrawerInstance) {
+                navDrawerInstance.setEdgeSwipeEnabled(false);
+            }
         }
         else if (isDashboardPage) {
 
@@ -870,11 +874,19 @@
             document.body.classList.add('dashboardDocument');
             document.body.classList.remove('hideMainDrawer');
 
+            if (navDrawerInstance) {
+                navDrawerInstance.setEdgeSwipeEnabled(true);
+            }
+
         } else {
 
             document.body.classList.remove('libraryDocument');
             document.body.classList.remove('dashboardDocument');
             document.body.classList.add('hideMainDrawer');
+
+            if (navDrawerInstance) {
+                navDrawerInstance.setEdgeSwipeEnabled(false);
+            }
         }
 
         updateLibraryNavLinks(page);
@@ -967,17 +979,10 @@
         // But not exceeding this
         drawerWidth = Math.min(drawerWidth, 320);
 
-        var disableEdgeSwipe = false;
-
-        if (browser.safari) {
-            disableEdgeSwipe = true;
-        }
-
         return {
             target: navDrawerElement,
             onChange: onMainDrawerSelect,
-            width: drawerWidth,
-            disableEdgeSwipe: disableEdgeSwipe
+            width: drawerWidth
         };
     }
 

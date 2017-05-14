@@ -232,12 +232,6 @@ body:not(.dashboardDocument) .headerAppsButton {
 
 @media all and (min-width: 40em) {
 
-    .dashboardDocument .headerTabs {
-        width: auto;
-        padding-left: 21em;
-        text-align: left !important;
-    }
-
     .dashboardDocument .sidebarLink {
         padding-top: .7em;
         padding-bottom: .7em;
@@ -286,7 +280,7 @@ body:not(.dashboardDocument) .headerAppsButton {
 
 @media all and (min-width: 84em) {
 
-    .libraryDocument .headerTabs {
+    .headerTabs {
         align-self: center;
         width: auto;
         align-items: center;

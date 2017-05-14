@@ -1,4 +1,4 @@
-define(['browser', 'layoutManager', 'dom', 'focusManager', 'scrollStyles'], function (browser, layoutManager, dom, focusManager) {
+define(['browser', 'layoutManager', 'dom', 'focusManager', 'ResizeObserver', 'scrollStyles'], function (browser, layoutManager, dom, focusManager, ResizeObserver) {
     'use strict';
 
     /**
@@ -159,6 +159,7 @@ define(['browser', 'layoutManager', 'dom', 'focusManager', 'scrollStyles'], func
         var requiresReflow = true;
 
         var frameSize = 0;
+        var slideeSize = 0;
         function ensureSizeInfo() {
 
             if (requiresReflow) {
@@ -168,7 +169,7 @@ define(['browser', 'layoutManager', 'dom', 'focusManager', 'scrollStyles'], func
                 // Reset global variables
                 frameSize = o.horizontal ? (frame).offsetWidth : (frame).offsetHeight;
 
-                var slideeSize = o.scrollWidth || Math.max(slideeElement[o.horizontal ? 'offsetWidth' : 'offsetHeight'], slideeElement[o.horizontal ? 'scrollWidth' : 'scrollHeight']);
+                slideeSize = o.scrollWidth || Math.max(slideeElement[o.horizontal ? 'offsetWidth' : 'offsetHeight'], slideeElement[o.horizontal ? 'scrollWidth' : 'scrollHeight']);
 
                 // Set position limits & relativess
                 self._pos.end = max(slideeSize - frameSize, 0);
@@ -233,7 +234,7 @@ define(['browser', 'layoutManager', 'dom', 'focusManager', 'scrollStyles'], func
 		 *
 		 * @return {Void}
 		 */
-        self.slideTo = function(newPos, immediate, fullItemPos) {
+        self.slideTo = function (newPos, immediate, fullItemPos) {
 
             ensureSizeInfo();
             var pos = self._pos;
@@ -595,10 +596,6 @@ define(['browser', 'layoutManager', 'dom', 'focusManager', 'scrollStyles'], func
 		 */
         self.destroy = function () {
 
-            dom.removeEventListener(window, 'resize', onResize, {
-                passive: true
-            });
-
             if (self.frameResizeObserver) {
                 self.frameResizeObserver.disconnect();
                 self.frameResizeObserver = null;
@@ -665,6 +662,19 @@ define(['browser', 'layoutManager', 'dom', 'focusManager', 'scrollStyles'], func
             }
         };
 
+        self.getScrollSize = function () {
+
+            if (transform) {
+                return slideeSize;
+            }
+
+            if (o.horizontal) {
+                return nativeScrollElement.scrollWidth;
+            } else {
+                return nativeScrollElement.scrollHeight;
+            }
+        };
+
         /**
 		 * Initialize.
 		 *
@@ -708,21 +718,13 @@ define(['browser', 'layoutManager', 'dom', 'focusManager', 'scrollStyles'], func
                 });
             }
 
+            initFrameResizeObserver();
+
             if (transform) {
 
                 dom.addEventListener(dragSourceElement, 'touchstart', dragInitSlidee, {
                     passive: true
                 });
-
-                if (window.ResizeObserver) {
-                    initFrameResizeObserver();
-                }
-
-                else if (!o.scrollWidth) {
-                    dom.addEventListener(window, 'resize', onResize, {
-                        passive: true
-                    });
-                }
 
                 if (!o.horizontal) {
                     dom.addEventListener(frame, 'scroll', resetScroll, {

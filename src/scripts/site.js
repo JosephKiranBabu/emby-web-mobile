@@ -1564,6 +1564,17 @@ var AppInfo = {};
         }
     }
 
+    function defineResizeObserver() {
+
+        if (self.ResizeObserver) {
+            define("ResizeObserver", [], function () {
+                return self.ResizeObserver;
+            });
+        } else {
+            define("ResizeObserver", ['bower_components/resize-observer-polyfill/resizeobserver'], returnFirstDependency);
+        }
+    }
+
     function initRequireWithBrowser(browser) {
 
         var bowerPath = getBowerPath();
@@ -1618,6 +1629,7 @@ var AppInfo = {};
             define("alert", [embyWebComponentsBowerPath + "/alert/alert"], returnFirstDependency);
         }
 
+        defineResizeObserver();
         define("dialog", [embyWebComponentsBowerPath + "/dialog/dialog"], returnFirstDependency);
 
         if (preferNativeAlerts && window.confirm) {

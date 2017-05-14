@@ -33,6 +33,11 @@
             this.scroller.toStart(elem, immediate);
         }
     };
+    ScrollerProtoType.toCenter = function (elem, immediate) {
+        if (this.scroller) {
+            this.scroller.toCenter(elem, immediate);
+        }
+    };
 
     ScrollerProtoType.scrollToPosition = function (pos, immediate) {
         if (this.scroller) {
@@ -43,6 +48,12 @@
     ScrollerProtoType.getScrollPosition = function () {
         if (this.scroller) {
             return this.scroller.getScrollPosition();
+        }
+    };
+
+    ScrollerProtoType.getScrollSize = function () {
+        if (this.scroller) {
+            return this.scroller.getScrollSize();
         }
     };
 
@@ -112,7 +123,7 @@
             //immediateSpeed: pageOptions.immediateSpeed,
             elasticBounds: 1,
             dragHandle: 1,
-            scrollWidth: 5000000,
+            scrollWidth: this.getAttribute('data-scrollsize') === 'auto' ? null : 5000000,
             autoImmediate: true,
             skipSlideToWhenVisible: this.getAttribute('data-skipfocuswhenvisible') === 'true',
             dispatchScrollEvent: bindHeader || this.getAttribute('data-scrollevent') === 'true'

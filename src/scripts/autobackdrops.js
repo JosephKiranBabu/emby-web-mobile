@@ -40,7 +40,8 @@
                 IncludeItemTypes: types,
                 ImageTypes: "Backdrop",
                 //Ids: "8114409aa00a2722456c08e298f90bed",
-                ParentId: parentId
+                ParentId: parentId,
+                EnableTotalRecordCount: false
             };
 
             return apiClient.getItems(apiClient.getCurrentUserId(), options).then(function (result) {

@@ -674,8 +674,6 @@
 
         renderOverview([overview], item);
 
-        renderAwardSummary(page.querySelector('#awardSummary'), item);
-
         var i, length;
         var itemMiscInfo = page.querySelectorAll('.itemMiscInfo-primary');
         for (i = 0, length = itemMiscInfo.length; i < length; i++) {
@@ -1516,15 +1514,6 @@
         elem.innerHTML = html;
     }
 
-    function renderAwardSummary(elem, item) {
-        if (item.AwardSummary) {
-            elem.classList.remove('hide');
-            elem.innerHTML = globalize.translate('ValueAwards', item.AwardSummary);
-        } else {
-            elem.classList.add('hide');
-        }
-    }
-
     function filterItemsByCollectionItemType(items, typeInfo) {
 
         return items.filter(function (item) {
@@ -1657,7 +1646,7 @@
 
         ApiClient.getCriticReviews(item.Id, options).then(function (result) {
 
-            if (result.TotalRecordCount || item.AwardSummary) {
+            if (result.TotalRecordCount) {
                 page.querySelector('#criticReviewsCollapsible').classList.remove('hide');
                 renderCriticReviewsContent(page, result, limit);
             } else {

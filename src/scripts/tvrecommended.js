@@ -22,6 +22,9 @@
              name: Globalize.translate('TabNetworks')
          },
          {
+             name: Globalize.translate('TabEpisodes')
+         },
+         {
              name: Globalize.translate('ButtonSearch')
          }];
     }
@@ -241,6 +244,9 @@
                     depends.push('scripts/tvstudios');
                     break;
                 case 6:
+                    depends.push('scripts/episodes');
+                    break;
+                case 7:
                     depends.push('scripts/searchtab');
                     break;
                 default:
@@ -260,7 +266,7 @@
                     if (index === 0) {
                         controller = self;
                     }
-                    else if (index === 6) {
+                    else if (index === 7) {
                         controller = new controllerFactory(view, tabContent, {
                             collectionType: 'tvshows',
                             parentId: params.topParentId

@@ -49,8 +49,7 @@
             { name: Globalize.translate('OptionBlockMovies'), value: 'Movie' },
             { name: Globalize.translate('OptionBlockMusic'), value: 'Music' },
             { name: Globalize.translate('OptionBlockTrailers'), value: 'Trailer' },
-            { name: Globalize.translate('OptionBlockTvShows'), value: 'Series' },
-            { name: Globalize.translate('OptionBlockOthers'), value: 'Other' }
+            { name: Globalize.translate('OptionBlockTvShows'), value: 'Series' }
         ];
 
         var html = '';

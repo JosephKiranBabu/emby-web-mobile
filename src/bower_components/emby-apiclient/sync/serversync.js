@@ -36,8 +36,8 @@
 
             require(['contentuploader'], function (ContentUploader) {
 
-                var uploader = new ContentUploader(connectionManager);
-                uploader.uploadImages(server).then(resolve, reject);
+                var uploader = new ContentUploader();
+                uploader.uploadImages(connectionManager, server).then(resolve, reject);
             });
         });
     }
@@ -77,7 +77,7 @@
         return connectionManager.connectToServer(server, connectionOptions).then(function (result) {
 
             if (result.State === MediaBrowser.ConnectionState.SignedIn) {
-                return performSync(server, options);
+                return performSync(connectionManager, server, options);
             } else {
                 console.log('Unable to connect to server id: ' + server.Id);
                 return Promise.reject();

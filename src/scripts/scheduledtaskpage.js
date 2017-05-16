@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'datetime'], function ($, loading, datetime) {
     'use strict';
 
     // Array Remove - By John Resig (MIT Licensed)
@@ -128,35 +128,12 @@
 
         getDisplayTime: function (ticks) {
 
-            var hours = ticks / 36000000000;
+            var ms = ticks / 10000;
 
-            if (hours < 1) {
-                hours = 0;
-            }
-
-            hours = Math.floor(hours);
-
-            ticks -= (hours * 36000000000);
-
-            var minutes = Math.floor((ticks / 600000000));
-
-            var suffix = "am";
-
-            if (hours > 11) {
-                suffix = "pm";
-            }
-
-            hours = hours % 12;
-
-            if (hours == 0) {
-                hours = 12;
-            }
-
-            if (minutes < 10) {
-                minutes = '0' + minutes;
-            }
-
-            return hours + ':' + minutes + ' ' + suffix;
+            var now = new Date();
+            now.setHours(0, 0, 0, 0);
+            now.setTime(now.getTime() + ms);
+            return datetime.getDisplayTime(now);
         },
 
         showAddTriggerPopup: function () {
@@ -213,7 +190,7 @@
                 $('#fldDayOfWeek', page).hide();
                 $('#fldSelectSystemEvent', page).hide();
                 $('#fldSelectInterval', page).hide();
-                $('#txtTimeOfDay', page).attr('required', 'required');
+                $('#selectTimeOfDay', page).attr('required', 'required');
             }
 
             else if (triggerType == 'WeeklyTrigger') {
@@ -221,7 +198,7 @@
                 $('#fldDayOfWeek', page).show();
                 $('#fldSelectSystemEvent', page).hide();
                 $('#fldSelectInterval', page).hide();
-                $('#txtTimeOfDay', page).attr('required', 'required');
+                $('#selectTimeOfDay', page).attr('required', 'required');
             }
 
             else if (triggerType == 'SystemEventTrigger') {
@@ -229,7 +206,7 @@
                 $('#fldDayOfWeek', page).hide();
                 $('#fldSelectSystemEvent', page).show();
                 $('#fldSelectInterval', page).hide();
-                $('#txtTimeOfDay', page).removeAttr('required');
+                $('#selectTimeOfDay', page).removeAttr('required');
             }
 
             else if (triggerType == 'IntervalTrigger') {
@@ -237,7 +214,7 @@
                 $('#fldDayOfWeek', page).hide();
                 $('#fldSelectSystemEvent', page).hide();
                 $('#fldSelectInterval', page).show();
-                $('#txtTimeOfDay', page).removeAttr('required');
+                $('#selectTimeOfDay', page).removeAttr('required');
             }
 
             else if (triggerType == 'StartupTrigger') {
@@ -245,7 +222,7 @@
                 $('#fldDayOfWeek', page).hide();
                 $('#fldSelectSystemEvent', page).hide();
                 $('#fldSelectInterval', page).hide();
-                $('#txtTimeOfDay', page).removeAttr('required');
+                $('#selectTimeOfDay', page).removeAttr('required');
             }
         },
 
@@ -258,12 +235,12 @@
             };
 
             if (trigger.Type == 'DailyTrigger') {
-                trigger.TimeOfDayTicks = ScheduledTaskPage.getTimeOfDayTicks($('#txtTimeOfDay', page).val());
+                trigger.TimeOfDayTicks = $('#selectTimeOfDay', page).val();
             }
 
             else if (trigger.Type == 'WeeklyTrigger') {
                 trigger.DayOfWeek = $('#selectDayOfWeek', page).val();
-                trigger.TimeOfDayTicks = ScheduledTaskPage.getTimeOfDayTicks($('#txtTimeOfDay', page).val());
+                trigger.TimeOfDayTicks = $('#selectTimeOfDay', page).val();
             }
 
             else if (trigger.Type == 'SystemEventTrigger') {
@@ -280,25 +257,29 @@
             trigger.MaxRuntimeMs = timeLimit || null;
 
             return trigger;
-        },
-
-        getTimeOfDayTicks: function (val) {
-
-            var vals = val.split(':');
-
-            var hours = vals[0];
-            var minutes = vals[1].split(' ')[0];
-
-            // Add hours
-            var ticks = hours * 60 * 60 * 1000 * 10000;
-
-            ticks += minutes * 60 * 1000 * 10000;
-
-            return ticks;
         }
     };
 
     (function () {
+
+        function fillTimeOfDay(select) {
+
+            var options = [];
+
+            for (var i = 0; i < 86400000; i += 900000) {
+
+                options.push({
+                    name: ScheduledTaskPage.getDisplayTime(i * 10000),
+                    value: i * 10000
+                });
+            }
+
+            select.innerHTML = options.map(function (o) {
+
+                return '<option value="' + o.value + '">' + o.name + '</option>';
+
+            }).join('');
+        }
 
         function onSubmit() {
 
@@ -329,7 +310,7 @@
 
             $('.addTriggerForm').off('submit', onSubmit).on('submit', onSubmit);
 
-            page.querySelector('.timeFieldExample').innerHTML = Globalize.translate('ValueExample', '1:00 PM');
+            fillTimeOfDay(page.querySelector('#selectTimeOfDay'));
 
         }).on('pageshow', "#scheduledTaskPage", function () {
 

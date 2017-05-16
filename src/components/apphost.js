@@ -12,6 +12,7 @@ define(['appStorage', 'browser'], function (appStorage, browser) {
 
                 // hls.js does not support this
                 disableHlsVideoAudioCodecs.push('ac3');
+                disableHlsVideoAudioCodecs.push('eac3');
             }
         }
 

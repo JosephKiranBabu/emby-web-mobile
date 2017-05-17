@@ -59,7 +59,7 @@
 
                 updateFilterControls(tabContent);
 
-                var pagingHtml = LibraryBrowser.getQueryPagingHtml({
+                var pagingHtml = libraryBrowser.getQueryPagingHtml({
                     startIndex: query.StartIndex,
                     limit: query.Limit,
                     totalRecordCount: result.TotalRecordCount,

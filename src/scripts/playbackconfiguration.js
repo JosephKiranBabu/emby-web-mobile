@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'libraryMenu'], function ($, loading, libraryMenu) {
     'use strict';
 
     function loadPage(page, config) {
@@ -50,7 +50,7 @@
 
     }).on('pageshow', "#playbackConfigurationPage", function () {
 
-        LibraryMenu.setTabs('playback', 1, getTabs);
+        libraryMenu.setTabs('playback', 1, getTabs);
         loading.show();
 
         var page = this;

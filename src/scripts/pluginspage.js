@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'cardStyle'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'libraryMenu', 'cardStyle'], function ($, loading, libraryMenu) {
     'use strict';
 
     function deletePlugin(page, uniqueid, name) {
@@ -239,7 +239,7 @@
 
     $(document).on('pageshow', "#pluginsPage", function () {
 
-        LibraryMenu.setTabs('plugins', 0, getTabs);
+        libraryMenu.setTabs('plugins', 0, getTabs);
         reloadList(this);
     });
 

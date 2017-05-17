@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'listViewStyle'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'libraryMenu', 'listViewStyle'], function ($, loading, libraryMenu) {
     'use strict';
 
     function reload(page) {
@@ -79,7 +79,7 @@
 
         view.addEventListener('viewshow', function () {
 
-            LibraryMenu.setTabs('notifications', 0, getTabs);
+            libraryMenu.setTabs('notifications', 0, getTabs);
 
             reload(view);
         });

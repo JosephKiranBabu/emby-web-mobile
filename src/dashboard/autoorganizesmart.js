@@ -1,4 +1,4 @@
-﻿define(['loading', 'listViewStyle'], function (loading) {
+﻿define(['loading', 'libraryMenu', 'listViewStyle'], function (loading, libraryMenu) {
     'use strict';
 
     var query = {
@@ -164,7 +164,7 @@
 
         view.addEventListener('viewshow', function (e) {
 
-            LibraryMenu.setTabs('autoorganize', 2, getTabs);
+            libraryMenu.setTabs('autoorganize', 2, getTabs);
             loading.show();
 
             reloadList(view);

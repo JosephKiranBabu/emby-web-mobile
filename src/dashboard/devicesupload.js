@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'fnchecked'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'libraryMenu', 'fnchecked'], function ($, loading, libraryMenu) {
     'use strict';
 
     function load(page, config) {
@@ -83,7 +83,7 @@
 
     }).on('pageshow', "#devicesUploadPage", function () {
 
-        LibraryMenu.setTabs('devices', 1, getTabs);
+        libraryMenu.setTabs('devices', 1, getTabs);
         var page = this;
 
         loadData(page);

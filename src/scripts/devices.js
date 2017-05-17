@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'listViewStyle'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'libraryMenu', 'listViewStyle'], function ($, loading, libraryMenu) {
     'use strict';
 
     function deleteDevice(page, id) {
@@ -116,7 +116,7 @@
 
     $(document).on('pageshow', "#devicesPage", function () {
 
-        LibraryMenu.setTabs('devices', 0, getTabs);
+        libraryMenu.setTabs('devices', 0, getTabs);
 
         var page = this;
 

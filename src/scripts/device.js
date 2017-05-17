@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'libraryMenu'], function ($, loading, libraryMenu) {
     'use strict';
 
     function load(page, device, capabilities) {
@@ -100,7 +100,7 @@
 
     }).on('pageshow', "#devicePage", function () {
 
-        LibraryMenu.setTabs('devices', 0, getTabs);
+        libraryMenu.setTabs('devices', 0, getTabs);
 
         var page = this;
 

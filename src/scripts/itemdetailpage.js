@@ -1,4 +1,4 @@
-﻿define(['loading', 'embyRouter', 'layoutManager', 'connectionManager', 'cardBuilder', 'datetime', 'mediaInfo', 'backdrop', 'listView', 'itemContextMenu', 'itemHelper', 'userdataButtons', 'dom', 'indicators', 'apphost', 'imageLoader', 'libraryMenu', 'globalize', 'browser', 'events', 'scrollHelper', 'playbackManager', 'scrollStyles', 'emby-itemscontainer', 'emby-checkbox', 'emby-linkbutton'], function (loading, embyRouter, layoutManager, connectionManager, cardBuilder, datetime, mediaInfo, backdrop, listView, itemContextMenu, itemHelper, userdataButtons, dom, indicators, appHost, imageLoader, libraryMenu, globalize, browser, events, scrollHelper, playbackManager) {
+﻿define(['loading', 'embyRouter', 'layoutManager', 'connectionManager', 'cardBuilder', 'datetime', 'mediaInfo', 'backdrop', 'listView', 'itemContextMenu', 'itemHelper', 'userdataButtons', 'dom', 'indicators', 'apphost', 'imageLoader', 'libraryMenu', 'globalize', 'browser', 'events', 'scrollHelper', 'playbackManager', 'libraryBrowser', 'scrollStyles', 'emby-itemscontainer', 'emby-checkbox', 'emby-linkbutton'], function (loading, embyRouter, layoutManager, connectionManager, cardBuilder, datetime, mediaInfo, backdrop, listView, itemContextMenu, itemHelper, userdataButtons, dom, indicators, appHost, imageLoader, libraryMenu, globalize, browser, events, scrollHelper, playbackManager, libraryBrowser) {
     'use strict';
 
     function getPromise(params) {
@@ -234,8 +234,8 @@
 
         var context = params.context;
 
-        LibraryBrowser.renderName(item, page.querySelector('.itemName'), false, context);
-        LibraryBrowser.renderParentName(item, page.querySelector('.parentName'), context);
+        libraryBrowser.renderName(item, page.querySelector('.itemName'), false, context);
+        libraryBrowser.renderParentName(item, page.querySelector('.parentName'), context);
         libraryMenu.setTitle('');
 
         Dashboard.getCurrentUser().then(function (user) {
@@ -256,7 +256,7 @@
                 backdrop.clear();
             }
 
-            LibraryBrowser.renderDetailPageBackdrop(page, item, imageLoader);
+            libraryBrowser.renderDetailPageBackdrop(page, item, imageLoader);
 
             libraryMenu.setTransparentMenu(true);
 
@@ -476,7 +476,7 @@
 
         var container = page.querySelector('.detailImageContainer');
 
-        LibraryBrowser.renderDetailImage(page, container, item, user.Policy.IsAdministrator && item.MediaType != 'Photo', null, imageLoader, indicators);
+        libraryBrowser.renderDetailImage(page, container, item, user.Policy.IsAdministrator && item.MediaType != 'Photo', null, imageLoader, indicators);
     }
 
     function refreshDetailImageUserData(elem, item) {

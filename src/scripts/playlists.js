@@ -1,4 +1,4 @@
-﻿define(['loading', 'listView', 'cardBuilder', 'libraryBrowser', 'apphost', 'imageLoader', 'emby-itemscontainer'], function (loading, listView, cardBuilder, libraryBrowser, appHost, imageLoader) {
+﻿define(['loading', 'listView', 'cardBuilder', 'libraryMenu', 'libraryBrowser', 'apphost', 'imageLoader', 'emby-itemscontainer'], function (loading, listView, cardBuilder, libraryMenu, libraryBrowser, appHost, imageLoader) {
     'use strict';
 
     return function (view, params) {
@@ -17,13 +17,13 @@
                         Recursive: true,
                         Fields: "PrimaryImageAspectRatio,SortName,CumulativeRunTimeTicks,CanDelete",
                         StartIndex: 0,
-                        Limit: LibraryBrowser.getDefaultPageSize()
+                        Limit: libraryBrowser.getDefaultPageSize()
                     },
-                    view: LibraryBrowser.getSavedView(key) || 'Poster'
+                    view: libraryBrowser.getSavedView(key) || 'Poster'
                 };
 
-                pageData.query.ParentId = LibraryMenu.getTopParentId();
-                LibraryBrowser.loadSavedQueryValues(key, pageData.query);
+                pageData.query.ParentId = libraryMenu.getTopParentId();
+                libraryBrowser.loadSavedQueryValues(key, pageData.query);
             }
             return pageData;
         }
@@ -88,7 +88,7 @@
                 var html = '';
                 var viewStyle = getPageData(view).view;
 
-                view.querySelector('.listTopPaging').innerHTML = LibraryBrowser.getQueryPagingHtml({
+                view.querySelector('.listTopPaging').innerHTML = libraryBrowser.getQueryPagingHtml({
                     startIndex: query.StartIndex,
                     limit: query.Limit,
                     totalRecordCount: result.TotalRecordCount,
@@ -184,13 +184,13 @@
                     btnChangeLayout.addEventListener('layoutchange', function (e) {
                         var layout = e.detail.viewStyle;
                         getPageData(view).view = layout;
-                        LibraryBrowser.saveViewSetting(getSavedQueryKey(view), layout);
+                        libraryBrowser.saveViewSetting(getSavedQueryKey(view), layout);
                         onViewStyleChange();
                         reloadItems();
                     });
                 }
 
-                LibraryBrowser.saveQueryValues(getSavedQueryKey(view), query);
+                libraryBrowser.saveQueryValues(getSavedQueryKey(view), query);
 
                 hideLoadingMessage();
             });

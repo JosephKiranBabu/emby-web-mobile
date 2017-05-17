@@ -1,4 +1,4 @@
-﻿define(['loading', 'apphost', 'globalize', 'syncJobList', 'events', 'scripts/taskbutton', 'localsync', 'emby-button', 'paper-icon-button-light'], function (loading, appHost, globalize, syncJobList, events, taskButton) {
+﻿define(['loading', 'libraryMenu', 'apphost', 'globalize', 'syncJobList', 'events', 'scripts/taskbutton', 'localsync', 'emby-button', 'paper-icon-button-light'], function (loading, libraryMenu, appHost, globalize, syncJobList, events, taskButton) {
     'use strict';
 
     function getTabs() {
@@ -29,7 +29,7 @@
 
         view.addEventListener('viewshow', function () {
 
-            LibraryMenu.setTabs('syncadmin', 0, getTabs);
+            libraryMenu.setTabs('syncadmin', 0, getTabs);
 
             taskButton({
                 mode: 'on',

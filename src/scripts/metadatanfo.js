@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'libraryMenu'], function ($, loading, libraryMenu) {
     'use strict';
 
     var metadataKey = "xbmcmetadata";
@@ -89,7 +89,7 @@
 
     }).on('pageshow', "#metadataNfoPage", function () {
 
-        LibraryMenu.setTabs('metadata', 3, getTabs);
+        libraryMenu.setTabs('metadata', 3, getTabs);
         loading.show();
 
         var page = this;

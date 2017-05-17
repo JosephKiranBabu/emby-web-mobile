@@ -1,4 +1,4 @@
-﻿define(['globalize', 'loading', 'emby-input', 'emby-button', 'emby-checkbox', 'emby-select'], function (globalize, loading) {
+﻿define(['globalize', 'loading', 'libraryMenu', 'emby-input', 'emby-button', 'emby-checkbox', 'emby-select'], function (globalize, loading, libraryMenu) {
     'use strict';
 
     function fillTypes(view, currentId) {
@@ -190,7 +190,7 @@
 
         view.addEventListener('viewshow', function () {
 
-            LibraryMenu.setTabs('livetvadmin', 0, getTabs);
+            libraryMenu.setTabs('livetvadmin', 0, getTabs);
 
             var currentId = params.id;
             fillTypes(view, currentId).then(function () {

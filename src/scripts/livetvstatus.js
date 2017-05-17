@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'scripts/taskbutton', 'dom', 'layoutManager', 'loading', 'listViewStyle', 'flexStyles', 'emby-itemscontainer', 'cardStyle', 'material-icons'], function ($, taskButton, dom, layoutManager, loading) {
+﻿define(['jQuery', 'scripts/taskbutton', 'dom', 'libraryMenu', 'layoutManager', 'loading', 'listViewStyle', 'flexStyles', 'emby-itemscontainer', 'cardStyle', 'material-icons'], function ($, taskButton, dom, libraryMenu, layoutManager, loading) {
     'use strict';
 
     function resetTuner(page, id) {
@@ -613,7 +613,7 @@
 
     }).on('pageshow', "#liveTvStatusPage", function () {
 
-        LibraryMenu.setTabs('livetvadmin', 0, getTabs);
+        libraryMenu.setTabs('livetvadmin', 0, getTabs);
         var page = this;
 
         reload(page);

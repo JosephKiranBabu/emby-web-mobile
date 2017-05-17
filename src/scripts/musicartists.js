@@ -21,7 +21,7 @@
                         StartIndex: 0,
                         ImageTypeLimit: 1,
                         EnableImageTypes: "Primary,Backdrop,Banner,Thumb",
-                        Limit: LibraryBrowser.getDefaultPageSize()
+                        Limit: libraryBrowser.getDefaultPageSize()
                     },
                     view: libraryBrowser.getSavedView(key) || ('Poster')
                 };
@@ -40,7 +40,7 @@
         function getSavedQueryKey(context) {
 
             if (!context.savedQueryKey) {
-                context.savedQueryKey = LibraryBrowser.getSavedQueryKey(self.mode);
+                context.savedQueryKey = libraryBrowser.getSavedQueryKey(self.mode);
             }
             return context.savedQueryKey;
         }
@@ -81,7 +81,7 @@
 
                 updateFilterControls(page);
 
-                var pagingHtml = LibraryBrowser.getQueryPagingHtml({
+                var pagingHtml = libraryBrowser.getQueryPagingHtml({
                     startIndex: query.StartIndex,
                     limit: query.Limit,
                     totalRecordCount: result.TotalRecordCount,

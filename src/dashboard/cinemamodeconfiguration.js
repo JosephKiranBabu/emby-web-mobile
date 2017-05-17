@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'fnchecked', 'emby-linkbutton'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'libraryMenu', 'fnchecked', 'emby-linkbutton'], function ($, loading, libraryMenu) {
     'use strict';
 
     function loadPage(page, config) {
@@ -128,7 +128,7 @@
 
     }).on('pageshow', "#cinemaModeConfigurationPage", function () {
 
-        LibraryMenu.setTabs('playback', 0, getTabs);
+        libraryMenu.setTabs('playback', 0, getTabs);
 
         loading.show();
 

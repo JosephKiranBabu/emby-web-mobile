@@ -1,4 +1,4 @@
-﻿define(['cardBuilder', 'apphost', 'imageLoader', 'libraryBrowser', 'loading', 'emby-itemscontainer'], function (cardBuilder, appHost, imageLoader, libraryBrowser, loading) {
+﻿define(['cardBuilder', 'apphost', 'imageLoader', 'libraryMenu', 'libraryBrowser', 'loading', 'emby-itemscontainer'], function (cardBuilder, appHost, imageLoader, libraryMenu, libraryBrowser, loading) {
     'use strict';
 
     return function (view, params) {
@@ -114,7 +114,7 @@
 
         view.addEventListener('viewbeforeshow', function () {
 
-            query.ParentId = LibraryMenu.getTopParentId();
+            query.ParentId = libraryMenu.getTopParentId();
 
             var page = this;
 
@@ -158,32 +158,32 @@
             if (params.type == 'Recordings') {
 
                 if (params.IsMovie == 'true') {
-                    LibraryMenu.setTitle(Globalize.translate('TabMovies'));
+                    libraryMenu.setTitle(Globalize.translate('TabMovies'));
                 } else if (params.IsSports == 'true') {
-                    LibraryMenu.setTitle(Globalize.translate('Sports'));
+                    libraryMenu.setTitle(Globalize.translate('Sports'));
                 } else if (params.IsKids == 'true') {
-                    LibraryMenu.setTitle(Globalize.translate('HeaderForKids'));
+                    libraryMenu.setTitle(Globalize.translate('HeaderForKids'));
                 } else {
-                    LibraryMenu.setTitle(Globalize.translate('TabRecordings'));
+                    libraryMenu.setTitle(Globalize.translate('TabRecordings'));
                 }
 
             } else if (params.type == 'RecordingSeries') {
 
-                LibraryMenu.setTitle(Globalize.translate('TabShows'));
+                libraryMenu.setTitle(Globalize.translate('TabShows'));
             } else {
 
                 if (params.IsMovie == 'true') {
-                    LibraryMenu.setTitle(Globalize.translate('HeaderUpcomingMovies'));
+                    libraryMenu.setTitle(Globalize.translate('HeaderUpcomingMovies'));
                 } else if (params.IsSports == 'true') {
-                    LibraryMenu.setTitle(Globalize.translate('HeaderUpcomingSports'));
+                    libraryMenu.setTitle(Globalize.translate('HeaderUpcomingSports'));
                 } else if (params.IsKids == 'true') {
-                    LibraryMenu.setTitle(Globalize.translate('HeaderUpcomingForKids'));
+                    libraryMenu.setTitle(Globalize.translate('HeaderUpcomingForKids'));
                 } else if (params.IsAiring == 'true') {
-                    LibraryMenu.setTitle(Globalize.translate('HeaderOnNow'));
+                    libraryMenu.setTitle(Globalize.translate('HeaderOnNow'));
                 } else if (params.IsNews == 'true') {
-                    LibraryMenu.setTitle(Globalize.translate('HeaderUpcomingNews'));
+                    libraryMenu.setTitle(Globalize.translate('HeaderUpcomingNews'));
                 } else {
-                    LibraryMenu.setTitle(Globalize.translate('HeaderUpcomingPrograms'));
+                    libraryMenu.setTitle(Globalize.translate('HeaderUpcomingPrograms'));
                 }
             }
 

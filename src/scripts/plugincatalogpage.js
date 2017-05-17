@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'cardStyle'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'libraryMenu', 'cardStyle'], function ($, loading, libraryMenu) {
     'use strict';
 
     // The base query options
@@ -294,7 +294,7 @@
 
     }).on('pageshow', "#pluginCatalogPage", function () {
 
-        LibraryMenu.setTabs('plugins', 1, getTabs);
+        libraryMenu.setTabs('plugins', 1, getTabs);
         var page = this;
 
         reloadList(page);

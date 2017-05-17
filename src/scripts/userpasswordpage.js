@@ -1,4 +1,4 @@
-﻿define(['loading'], function (loading) {
+﻿define(['loading', 'libraryMenu'], function (loading, libraryMenu) {
     'use strict';
 
     function loadUser(page, params) {
@@ -9,7 +9,7 @@
 
             Dashboard.getCurrentUser().then(function (loggedInUser) {
 
-                LibraryMenu.setTitle(user.Name);
+                libraryMenu.setTitle(user.Name);
 
                 var showPasswordSection = true;
                 var showLocalAccessSection = false;

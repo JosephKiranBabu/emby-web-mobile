@@ -1,9 +1,9 @@
-﻿define(['jQuery', 'loading'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'libraryMenu'], function ($, loading, libraryMenu) {
     'use strict';
 
     function loadUser(page, user) {
 
-        LibraryMenu.setTitle(user.Name);
+        libraryMenu.setTitle(user.Name);
 
         if (user.ConnectLinkType == 'Guest') {
 

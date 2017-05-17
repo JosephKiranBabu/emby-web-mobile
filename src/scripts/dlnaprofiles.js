@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'listViewStyle'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'libraryMenu', 'listViewStyle'], function ($, loading, libraryMenu) {
     'use strict';
 
     function loadProfiles(page) {
@@ -112,7 +112,7 @@
 
     $(document).on('pageshow', "#dlnaProfilesPage", function () {
 
-        LibraryMenu.setTabs('dlna', 1, getTabs);
+        libraryMenu.setTabs('dlna', 1, getTabs);
         var page = this;
 
         loadProfiles(page);

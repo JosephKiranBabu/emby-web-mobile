@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'dom', 'loading', 'listViewStyle'], function ($, dom, loading) {
+﻿define(['jQuery', 'dom', 'loading', 'libraryMenu', 'listViewStyle'], function ($, dom, loading, libraryMenu) {
     'use strict';
 
     var currentType;
@@ -613,7 +613,7 @@
 
     }).on('pageshow', "#metadataImagesConfigurationPage", function () {
 
-        LibraryMenu.setTabs('metadata', 2, getTabs);
+        libraryMenu.setTabs('metadata', 2, getTabs);
         loading.show();
 
         var page = this;

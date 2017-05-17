@@ -1,4 +1,4 @@
-﻿define(['connectionManager', 'loading', 'libraryBrowser', 'listView', 'cardBuilder', 'imageLoader', 'apphost', 'globalize', 'emby-itemscontainer'], function (connectionManager, loading, libraryBrowser, listView, cardBuilder, imageLoader, appHost, globalize) {
+﻿define(['connectionManager', 'libraryMenu', 'loading', 'libraryBrowser', 'listView', 'cardBuilder', 'imageLoader', 'apphost', 'globalize', 'emby-itemscontainer'], function (connectionManager, libraryMenu, loading, libraryBrowser, listView, cardBuilder, imageLoader, appHost, globalize) {
     'use strict';
 
     return function (view, params) {
@@ -311,7 +311,7 @@
 
             if (parentPromise) {
                 parentPromise.then(function (parent) {
-                    LibraryMenu.setTitle(parent.Name);
+                    libraryMenu.setTitle(parent.Name);
 
                     onViewStyleChange(parent);
                     reloadItems(parent);
@@ -321,25 +321,25 @@
             else {
 
                 if (params.type === 'nextup') {
-                    LibraryMenu.setTitle(globalize.translate('HeaderNextUp'));
+                    libraryMenu.setTitle(globalize.translate('HeaderNextUp'));
                 }
                 else if (params.type === 'Movie' && params.filters === 'IsFavorite') {
-                    LibraryMenu.setTitle(globalize.translate('HeaderFavoriteMovies'));
+                    libraryMenu.setTitle(globalize.translate('HeaderFavoriteMovies'));
                 }
                 else if (params.type === 'Series' && params.filters === 'IsFavorite') {
-                    LibraryMenu.setTitle(globalize.translate('HeaderFavoriteShows'));
+                    libraryMenu.setTitle(globalize.translate('HeaderFavoriteShows'));
                 }
                 else if (params.type === 'Episode' && params.filters === 'IsFavorite') {
-                    LibraryMenu.setTitle(globalize.translate('HeaderFavoriteEpisodes'));
+                    libraryMenu.setTitle(globalize.translate('HeaderFavoriteEpisodes'));
                 }
                 else if (params.type === 'MusicArtist' && params.filters === 'IsFavorite') {
-                    LibraryMenu.setTitle(globalize.translate('HeaderFavoriteArtists'));
+                    libraryMenu.setTitle(globalize.translate('HeaderFavoriteArtists'));
                 }
                 else if (params.type === 'MusicAlbum' && params.filters === 'IsFavorite') {
-                    LibraryMenu.setTitle(globalize.translate('HeaderFavoriteAlbums'));
+                    libraryMenu.setTitle(globalize.translate('HeaderFavoriteAlbums'));
                 }
                 else if (params.type === 'Audio' && params.filters === 'IsFavorite') {
-                    LibraryMenu.setTitle(globalize.translate('HeaderFavoriteSongs'));
+                    libraryMenu.setTitle(globalize.translate('HeaderFavoriteSongs'));
                 }
                 onViewStyleChange();
                 reloadItems();

@@ -1,4 +1,4 @@
-﻿define(['itemHelper'], function (itemHelper) {
+﻿define(['itemHelper', 'libraryMenu'], function (itemHelper, libraryMenu) {
     'use strict';
 
     function initSyncButtons(view) {
@@ -31,7 +31,7 @@
 
         var button = this;
         var category = button.getAttribute('data-category');
-        var parentId = LibraryMenu.getTopParentId();
+        var parentId = libraryMenu.getTopParentId();
 
         require(['syncDialog'], function (syncDialog) {
             syncDialog.showMenu({

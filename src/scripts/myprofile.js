@@ -1,4 +1,4 @@
-﻿define(['scripts/userpasswordpage', 'loading', 'emby-linkbutton'], function (Userpasswordpage, loading) {
+﻿define(['scripts/userpasswordpage', 'loading', 'libraryMenu', 'emby-linkbutton'], function (Userpasswordpage, loading, libraryMenu) {
     'use strict';
 
     var currentFile;
@@ -16,7 +16,7 @@
             uploadUserImage.value = '';
             uploadUserImage.dispatchEvent(new CustomEvent('change', {}));
 
-            LibraryMenu.setTitle(user.Name);
+            libraryMenu.setTitle(user.Name);
 
             var imageUrl;
 

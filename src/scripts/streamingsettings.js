@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading'], function ($, loading) {
+﻿define(['jQuery', 'libraryMenu', 'loading'], function ($, loading, libraryMenu) {
     'use strict';
 
     function loadPage(page, config) {
@@ -87,7 +87,7 @@
 
         loading.show();
 
-        LibraryMenu.setTabs('playback', 2, getTabs);
+        libraryMenu.setTabs('playback', 2, getTabs);
         var page = this;
 
         ApiClient.getServerConfiguration().then(function (config) {

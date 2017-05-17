@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'fnchecked'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'libraryMenu', 'fnchecked'], function ($, loading, libraryMenu) {
     'use strict';
 
     function loadPage(page, config, users) {
@@ -64,7 +64,7 @@
 
     }).on('pageshow', "#dlnaSettingsPage", function () {
 
-        LibraryMenu.setTabs('dlna', 0, getTabs);
+        libraryMenu.setTabs('dlna', 0, getTabs);
         loading.show();
 
         var page = this;

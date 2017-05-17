@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'fnchecked'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'libraryMenu', 'fnchecked'], function ($, loading, libraryMenu) {
     'use strict';
 
     function loadMediaFolders(page, user, mediaFolders) {
@@ -91,7 +91,7 @@
 
         $(page).trigger('userloaded', [user]);
 
-        LibraryMenu.setTitle(user.Name);
+        libraryMenu.setTitle(user.Name);
 
         loadChannels(page, user, channels);
         loadMediaFolders(page, user, mediaFolders);

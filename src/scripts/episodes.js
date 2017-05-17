@@ -79,7 +79,7 @@
                 // Scroll back up so they can see the results from the beginning
                 window.scrollTo(0, 0);
 
-                var pagingHtml = LibraryBrowser.getQueryPagingHtml({
+                var pagingHtml = libraryBrowser.getQueryPagingHtml({
                     startIndex: query.StartIndex,
                     limit: query.Limit,
                     totalRecordCount: result.TotalRecordCount,

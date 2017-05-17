@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'fnchecked', 'emby-checkbox', 'emby-linkbutton'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'libraryMenu', 'fnchecked', 'emby-checkbox', 'emby-linkbutton'], function ($, loading, libraryMenu) {
     'use strict';
 
     function loadPage(page, config) {
@@ -136,7 +136,7 @@
         $('.librarySettingsForm').off('submit', onSubmit).on('submit', onSubmit);
 
         view.addEventListener('viewshow', function () {
-            LibraryMenu.setTabs('librarysetup', 4, getTabs);
+            libraryMenu.setTabs('librarysetup', 4, getTabs);
             loading.show();
 
             var page = this;

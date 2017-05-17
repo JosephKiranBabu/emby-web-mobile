@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'fnchecked'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'libraryMenu', 'fnchecked'], function ($, loading, libraryMenu) {
     'use strict';
 
     function loadPage(page, config) {
@@ -187,7 +187,7 @@
 
     }).on('pageshow', "#liveTvSettingsPage", function () {
 
-        LibraryMenu.setTabs('livetvadmin', 1, getTabs);
+        libraryMenu.setTabs('livetvadmin', 1, getTabs);
         loading.show();
 
         var page = this;

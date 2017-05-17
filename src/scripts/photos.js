@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'cardBuilder', 'imageLoader', 'loading', 'emby-itemscontainer'], function ($, cardBuilder, imageLoader, loading) {
+﻿define(['jQuery', 'cardBuilder', 'imageLoader', 'loading', 'libraryBrowser', 'libraryMenu', 'emby-itemscontainer'], function ($, cardBuilder, imageLoader, loading, libraryBrowser, libraryMenu) {
     'use strict';
 
     var view = 'Poster';
@@ -18,22 +18,22 @@
                     ImageTypeLimit: 1,
                     EnableImageTypes: "Primary",
                     StartIndex: 0,
-                    Limit: LibraryBrowser.getDefaultPageSize()
+                    Limit: libraryBrowser.getDefaultPageSize()
                 }
             };
 
             pageData.query.Recursive = false;
             pageData.query.MediaTypes = null;
-            pageData.query.ParentId = getParameterByName('parentId') || LibraryMenu.getTopParentId();
+            pageData.query.ParentId = getParameterByName('parentId') || libraryMenu.getTopParentId();
 
-            LibraryBrowser.loadSavedQueryValues(key, pageData.query);
+            libraryBrowser.loadSavedQueryValues(key, pageData.query);
         }
         return pageData.query;
     }
 
     function getSavedQueryKey() {
 
-        return LibraryBrowser.getSavedQueryKey('v1');
+        return libraryBrowser.getSavedQueryKey('v1');
     }
 
     function reloadItems(page) {
@@ -47,7 +47,7 @@
             window.scrollTo(0, 0);
 
             var html = '';
-            var pagingHtml = LibraryBrowser.getQueryPagingHtml({
+            var pagingHtml = libraryBrowser.getQueryPagingHtml({
                 startIndex: query.StartIndex,
                 limit: query.Limit,
                 totalRecordCount: result.TotalRecordCount,
@@ -85,7 +85,7 @@
                 reloadItems(page);
             });
 
-            LibraryBrowser.saveQueryValues(getSavedQueryKey(), query);
+            libraryBrowser.saveQueryValues(getSavedQueryKey(), query);
 
             loading.hide();
         });
@@ -137,7 +137,7 @@
     function onListItemClick(e) {
 
         var page = $(this).parents('.page')[0];
-        var info = LibraryBrowser.getListItemInfo(this);
+        var info = libraryBrowser.getListItemInfo(this);
 
         if (info.mediaType == 'Photo') {
             var query = getQuery();

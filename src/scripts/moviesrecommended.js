@@ -1,4 +1,4 @@
-﻿define(['events', 'layoutManager', 'userSettings', 'libraryBrowser', 'mainTabsManager', 'components/categorysyncbuttons', 'cardBuilder', 'dom', 'apphost', 'imageLoader', 'playbackManager', 'scrollStyles', 'emby-itemscontainer', 'emby-tabs', 'emby-button'], function (events, layoutManager, userSettings, libraryBrowser, mainTabsManager, categorysyncbuttons, cardBuilder, dom, appHost, imageLoader, playbackManager) {
+﻿define(['events', 'layoutManager', 'userSettings', 'libraryMenu', 'libraryBrowser', 'mainTabsManager', 'components/categorysyncbuttons', 'cardBuilder', 'dom', 'apphost', 'imageLoader', 'playbackManager', 'scrollStyles', 'emby-itemscontainer', 'emby-tabs', 'emby-button'], function (events, layoutManager, userSettings, libraryMenu, libraryBrowser, mainTabsManager, categorysyncbuttons, cardBuilder, dom, appHost, imageLoader, playbackManager) {
     'use strict';
 
     function enableScrollX() {
@@ -395,13 +395,13 @@
                     ApiClient.getItem(Dashboard.getCurrentUserId(), parentId).then(function (item) {
 
                         view.setAttribute('data-title', item.Name);
-                        LibraryMenu.setTitle(item.Name);
+                        libraryMenu.setTitle(item.Name);
                     });
 
 
                 } else {
                     view.setAttribute('data-title', Globalize.translate('TabMovies'));
-                    LibraryMenu.setTitle(Globalize.translate('TabMovies'));
+                    libraryMenu.setTitle(Globalize.translate('TabMovies'));
                 }
             }
 

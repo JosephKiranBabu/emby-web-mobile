@@ -1,4 +1,4 @@
-﻿define(['globalize', 'loading', 'emby-checkbox', 'emby-button', 'emby-linkbutton'], function (globalize, loading) {
+﻿define(['globalize', 'loading', 'libraryMenu', 'emby-checkbox', 'emby-button', 'emby-linkbutton'], function (globalize, loading, libraryMenu) {
     'use strict';
 
     function getTabs() {
@@ -63,7 +63,7 @@
         }
 
         view.addEventListener('viewshow', function () {
-            LibraryMenu.setTabs('librarysetup', 1, getTabs);
+            libraryMenu.setTabs('librarysetup', 1, getTabs);
             loadData();
         });
     };

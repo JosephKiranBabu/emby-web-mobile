@@ -1,4 +1,4 @@
-﻿define(['listView', 'cardBuilder', 'imageLoader', 'emby-itemscontainer'], function (listView, cardBuilder, imageLoader) {
+﻿define(['listView', 'cardBuilder', 'imageLoader', 'libraryBrowser', 'emby-itemscontainer'], function (listView, cardBuilder, imageLoader, libraryBrowser) {
     'use strict';
 
     function renderItems(page, item) {
@@ -371,7 +371,7 @@
             IncludeItemTypes: "",
             Recursive: true,
             Fields: "AudioInfo,SeriesInfo,ParentId,PrimaryImageAspectRatio,BasicSyncInfo",
-            Limit: LibraryBrowser.getDefaultPageSize(),
+            Limit: libraryBrowser.getDefaultPageSize(),
             StartIndex: 0,
             CollapseBoxSetItems: false
         };

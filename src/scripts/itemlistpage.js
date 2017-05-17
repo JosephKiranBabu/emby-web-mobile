@@ -1,4 +1,4 @@
-﻿define(['events', 'layoutManager', 'loading', 'libraryBrowser', 'alphaPicker', 'listView', 'cardBuilder', 'imageLoader', 'emby-itemscontainer'], function (events, layoutManager, loading, libraryBrowser, alphaPicker, listView, cardBuilder, imageLoader) {
+﻿define(['events', 'layoutManager', 'loading', 'libraryMenu', 'libraryBrowser', 'alphaPicker', 'listView', 'cardBuilder', 'imageLoader', 'emby-itemscontainer'], function (events, layoutManager, loading, libraryMenu, libraryBrowser, alphaPicker, listView, cardBuilder, imageLoader) {
     'use strict';
 
     return function (view, params) {
@@ -201,7 +201,7 @@
                     name = item.ParentIndexNumber + "." + name;
                 }
 
-                LibraryMenu.setTitle(name);
+                libraryMenu.setTitle(name);
 
                 view.dispatchEvent(new CustomEvent("displayingitem", {
                     detail: {

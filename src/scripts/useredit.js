@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'fnchecked'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'libraryMenu', 'fnchecked'], function ($, loading, libraryMenu) {
     'use strict';
 
     var currentUser;
@@ -23,7 +23,7 @@
 
         $('.lnkEditUserPreferences', page).attr('href', 'mypreferencesmenu.html?userId=' + user.Id);
 
-        LibraryMenu.setTitle(user.Name);
+        libraryMenu.setTitle(user.Name);
 
         $('#txtUserName', page).val(user.Name);
         $('#txtConnectUserName', page).val(currentUser.ConnectUserName);

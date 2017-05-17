@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'fnchecked', 'emby-checkbox'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'libraryMenu', 'fnchecked', 'emby-checkbox'], function ($, loading, libraryMenu) {
     'use strict';
 
     function onSubmit() {
@@ -129,7 +129,7 @@
         view.querySelector('#txtCertificatePath').addEventListener('change', onCertPathChange);
 
         view.addEventListener('viewshow', function (e) {
-            LibraryMenu.setTabs('adminadvanced', 0, getTabs);
+            libraryMenu.setTabs('adminadvanced', 0, getTabs);
             loading.show();
 
             ApiClient.getServerConfiguration().then(function (config) {

@@ -1,4 +1,4 @@
-﻿define(['datetime', 'jQuery', 'loading'], function (datetime, $, loading) {
+﻿define(['datetime', 'jQuery', 'loading', 'libraryMenu'], function (datetime, $, loading, libraryMenu) {
     'use strict';
 
     function revoke(page, key) {
@@ -149,7 +149,7 @@
     });
     pageIdOn('pagebeforeshow', "serverSecurityPage", function () {
 
-        LibraryMenu.setTabs('adminadvanced', 1, getTabs);
+        libraryMenu.setTabs('adminadvanced', 1, getTabs);
         var page = this;
 
         loadData(page);

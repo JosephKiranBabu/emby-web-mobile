@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'libraryMenu'], function ($, loading, libraryMenu) {
     'use strict';
 
     function reloadList(page) {
@@ -84,15 +84,15 @@
         var context = getParameterByName('context');
 
         if (context == 'sync') {
-            LibraryMenu.setTitle(Globalize.translate('TitleSync'));
+            libraryMenu.setTitle(Globalize.translate('TitleSync'));
             page.setAttribute('data-helpurl', 'https://github.com/MediaBrowser/Wiki/wiki/Sync');
         }
         else if (context == 'livetv') {
-            LibraryMenu.setTitle(Globalize.translate('TitleLiveTV'));
+            libraryMenu.setTitle(Globalize.translate('TitleLiveTV'));
             page.setAttribute('data-helpurl', 'https://github.com/MediaBrowser/Wiki/wiki/Live%20TV');
         }
         else if (context == 'notifications') {
-            LibraryMenu.setTitle(Globalize.translate('TitleNotifications'));
+            libraryMenu.setTitle(Globalize.translate('TitleNotifications'));
             page.setAttribute('data-helpurl', 'https://github.com/MediaBrowser/Wiki/wiki/Notifications');
         }
 

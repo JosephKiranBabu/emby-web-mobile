@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'apphost', 'scripts/taskbutton', 'loading', 'cardStyle'], function ($, appHost, taskButton, loading) {
+﻿define(['jQuery', 'apphost', 'scripts/taskbutton', 'loading', 'libraryMenu', 'cardStyle'], function ($, appHost, taskButton, loading, libraryMenu) {
     'use strict';
 
     function changeCollectionType(page, virtualFolder) {
@@ -466,7 +466,7 @@
 
     pageIdOn('pageshow', "mediaLibraryPage", function () {
 
-        LibraryMenu.setTabs('librarysetup', 0, getTabs);
+        libraryMenu.setTabs('librarysetup', 0, getTabs);
         var page = this;
 
         // on here

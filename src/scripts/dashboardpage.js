@@ -1,4 +1,4 @@
-﻿define(['datetime', 'jQuery', 'events', 'dom', 'loading', 'humanedate', 'cardStyle', 'listViewStyle', 'emby-linkbutton'], function (datetime, $, events, dom, loading) {
+﻿define(['datetime', 'jQuery', 'events', 'dom', 'loading', 'libraryBrowser', 'humanedate', 'cardStyle', 'listViewStyle', 'emby-linkbutton'], function (datetime, $, events, dom, loading, libraryBrowser) {
     'use strict';
 
     function renderNoHealthAlertsMessage(page) {
@@ -233,7 +233,7 @@
 
                 var pagingHtml = '';
                 pagingHtml += '<div>';
-                pagingHtml += LibraryBrowser.getQueryPagingHtml({
+                pagingHtml += libraryBrowser.getQueryPagingHtml({
                     startIndex: query.StartIndex,
                     limit: query.Limit,
                     totalRecordCount: result.TotalRecordCount,
@@ -1147,7 +1147,7 @@
 
                 var query = { StartIndex: startIndex, Limit: limit };
 
-                html += LibraryBrowser.getQueryPagingHtml({
+                html += libraryBrowser.getQueryPagingHtml({
                     startIndex: query.StartIndex,
                     limit: query.Limit,
                     totalRecordCount: result.TotalRecordCount,

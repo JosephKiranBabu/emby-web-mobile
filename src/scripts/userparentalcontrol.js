@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'datetime', 'loading', 'listViewStyle', 'paper-icon-button-light'], function ($, datetime, loading) {
+﻿define(['jQuery', 'datetime', 'loading', 'libraryMenu', 'listViewStyle', 'paper-icon-button-light'], function ($, datetime, loading, libraryMenu) {
     'use strict';
 
     function populateRatings(allParentalRatings, page) {
@@ -74,7 +74,7 @@
 
     function loadUser(page, user, allParentalRatings) {
 
-        LibraryMenu.setTitle(user.Name);
+        libraryMenu.setTitle(user.Name);
 
         loadUnratedItems(page, user);
         loadBlockedTags(page, user.Policy.BlockedTags);

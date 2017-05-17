@@ -1,4 +1,4 @@
-﻿define(['events', 'layoutManager', 'loading', 'libraryBrowser', 'dom', 'components/categorysyncbuttons', 'userSettings', 'cardBuilder', 'apphost', 'playbackManager', 'mainTabsManager', 'scrollStyles', 'emby-itemscontainer', 'emby-button'], function (events, layoutManager, loading, libraryBrowser, dom, categorysyncbuttons, userSettings, cardBuilder, appHost, playbackManager, mainTabsManager) {
+﻿define(['events', 'libraryMenu', 'layoutManager', 'loading', 'libraryBrowser', 'dom', 'components/categorysyncbuttons', 'userSettings', 'cardBuilder', 'apphost', 'playbackManager', 'mainTabsManager', 'scrollStyles', 'emby-itemscontainer', 'emby-button'], function (events, libraryMenu, layoutManager, loading, libraryBrowser, dom, categorysyncbuttons, userSettings, cardBuilder, appHost, playbackManager, mainTabsManager) {
     'use strict';
 
     function getTabs() {
@@ -72,7 +72,7 @@
                 EnableTotalRecordCount: false
             };
 
-            query.ParentId = LibraryMenu.getTopParentId();
+            query.ParentId = libraryMenu.getTopParentId();
 
             ApiClient.getNextUpEpisodes(query).then(function (result) {
 
@@ -114,7 +114,7 @@
 
         function loadResume() {
 
-            var parentId = LibraryMenu.getTopParentId();
+            var parentId = libraryMenu.getTopParentId();
 
             var screenWidth = dom.getWindowSize().innerWidth;
             var limit = screenWidth >= 1600 ? 5 : 6;
@@ -351,13 +351,13 @@
                     ApiClient.getItem(Dashboard.getCurrentUserId(), parentId).then(function (item) {
 
                         view.setAttribute('data-title', item.Name);
-                        LibraryMenu.setTitle(item.Name);
+                        libraryMenu.setTitle(item.Name);
                     });
 
 
                 } else {
                     view.setAttribute('data-title', Globalize.translate('TabShows'));
-                    LibraryMenu.setTitle(Globalize.translate('TabShows'));
+                    libraryMenu.setTitle(Globalize.translate('TabShows'));
                 }
             }
 

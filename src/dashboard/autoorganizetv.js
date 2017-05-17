@@ -1,4 +1,4 @@
-﻿define([], function () {
+﻿define(['libraryMenu'], function (libraryMenu) {
     'use strict';
 
     function getEpisodeFileName(value, enableMultiEpisode) {
@@ -169,7 +169,7 @@
 
         view.addEventListener('viewshow', function (e) {
 
-            LibraryMenu.setTabs('autoorganize', 1, getTabs);
+            libraryMenu.setTabs('autoorganize', 1, getTabs);
 
             ApiClient.getNamedConfiguration('autoorganize').then(function (config) {
                 loadPage(view, config);

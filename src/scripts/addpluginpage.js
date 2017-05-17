@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'emby-linkbutton'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'libraryMenu', 'emby-linkbutton'], function ($, loading, libraryMenu) {
     'use strict';
 
     function populateHistory(packageInfo, page) {
@@ -265,23 +265,23 @@
 
         if (context == 'sync') {
             page.setAttribute('data-helpurl', 'https://github.com/MediaBrowser/Wiki/wiki/Sync');
-            LibraryMenu.setTitle(Globalize.translate('TitleSync'));
+            libraryMenu.setTitle(Globalize.translate('TitleSync'));
         }
         else if (context == 'livetv') {
 
-            LibraryMenu.setTitle(Globalize.translate('TitleLiveTV'));
+            libraryMenu.setTitle(Globalize.translate('TitleLiveTV'));
             page.setAttribute('data-helpurl', 'https://github.com/MediaBrowser/Wiki/wiki/Live%20TV');
         }
         else if (context == 'notifications') {
 
             $('.notificationsTabs', page).show();
 
-            LibraryMenu.setTitle(Globalize.translate('TitleNotifications'));
+            libraryMenu.setTitle(Globalize.translate('TitleNotifications'));
             page.setAttribute('data-helpurl', 'https://github.com/MediaBrowser/Wiki/wiki/Notifications');
         }
         else {
             page.setAttribute('data-helpurl', 'https://github.com/MediaBrowser/Wiki/wiki/Plugins');
-            LibraryMenu.setTitle(Globalize.translate('TitlePlugins'));
+            libraryMenu.setTitle(Globalize.translate('TitlePlugins'));
         }
     }
 

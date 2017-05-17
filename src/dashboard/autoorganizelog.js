@@ -1,4 +1,4 @@
-﻿define(['serverNotifications', 'events', 'scripts/taskbutton', 'datetime', 'loading', 'paper-icon-button-light'], function (serverNotifications, events, taskButton, datetime, loading) {
+﻿define(['serverNotifications', 'events', 'scripts/taskbutton', 'datetime', 'loading', 'libraryMenu', 'libraryBrowser', 'paper-icon-button-light'], function (serverNotifications, events, taskButton, datetime, loading, libraryMenu, libraryBrowser) {
     'use strict';
 
     var query = {
@@ -187,7 +187,7 @@
 
         resultBody.addEventListener('click', handleItemClick);
 
-        var pagingHtml = LibraryBrowser.getQueryPagingHtml({
+        var pagingHtml = libraryBrowser.getQueryPagingHtml({
             startIndex: query.StartIndex,
             limit: query.Limit,
             totalRecordCount: result.TotalRecordCount,
@@ -383,7 +383,7 @@
 
         view.addEventListener('viewshow', function (e) {
 
-            LibraryMenu.setTabs('autoorganize', 0, getTabs);
+            libraryMenu.setTabs('autoorganize', 0, getTabs);
 
             reloadItems(view, true);
 

@@ -1,4 +1,4 @@
-﻿define(['backdrop', 'appStorage'], function (backdrop, appStorage) {
+﻿define(['backdrop', 'appStorage', 'libraryMenu'], function (backdrop, appStorage, libraryMenu) {
     'use strict';
 
     function enabled() {
@@ -98,7 +98,7 @@
             if (enabled()) {
                 var type = page.getAttribute('data-backdroptype');
 
-                var parentId = page.classList.contains('globalBackdropPage') ? '' : LibraryMenu.getTopParentId();
+                var parentId = page.classList.contains('globalBackdropPage') ? '' : libraryMenu.getTopParentId();
                 showBackdrop(type, parentId);
 
             } else {

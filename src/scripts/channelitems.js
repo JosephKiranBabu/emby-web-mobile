@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'cardBuilder', 'imageLoader', 'loading', 'events', 'emby-itemscontainer'], function ($, cardBuilder, imageLoader, loading, events) {
+﻿define(['jQuery', 'cardBuilder', 'imageLoader', 'loading', 'events', 'libraryMenu', 'libraryBrowser', 'emby-itemscontainer'], function ($, cardBuilder, imageLoader, loading, events, libraryMenu, libraryBrowser) {
     'use strict';
 
     var data = {};
@@ -14,11 +14,11 @@
                     SortOrder: "Ascending",
                     Fields: "PrimaryImageAspectRatio",
                     StartIndex: 0,
-                    Limit: LibraryBrowser.getDefaultPageSize()
+                    Limit: libraryBrowser.getDefaultPageSize()
                 }
             };
 
-            LibraryBrowser.loadSavedQueryValues(key, pageData.query);
+            libraryBrowser.loadSavedQueryValues(key, pageData.query);
         }
         return pageData;
     }
@@ -31,7 +31,7 @@
     function getSavedQueryKey(context) {
 
         if (!context.savedQueryKey) {
-            context.savedQueryKey = LibraryBrowser.getSavedQueryKey('channelitems');
+            context.savedQueryKey = libraryBrowser.getSavedQueryKey('channelitems');
         }
         return context.savedQueryKey;
     }
@@ -97,14 +97,14 @@
 
             ApiClient.getItem(query.UserId, folderId).then(function (item) {
 
-                LibraryMenu.setTitle(item.Name);
+                libraryMenu.setTitle(item.Name);
             });
 
         } else {
 
             ApiClient.getItem(query.UserId, channelId).then(function (item) {
 
-                LibraryMenu.setTitle(item.Name);
+                libraryMenu.setTitle(item.Name);
             });
         }
 
@@ -116,7 +116,7 @@
             window.scrollTo(0, 0);
 
             var html = '';
-            var pagingHtml = LibraryBrowser.getQueryPagingHtml({
+            var pagingHtml = libraryBrowser.getQueryPagingHtml({
                 startIndex: query.StartIndex,
                 limit: query.Limit,
                 totalRecordCount: result.TotalRecordCount,
@@ -241,7 +241,7 @@
             });
         }
 
-        LibraryBrowser.showSortMenu({
+        libraryBrowser.showSortMenu({
             items: items,
             callback: function () {
                 reloadItems(page);

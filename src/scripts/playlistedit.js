@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'listView', 'imageLoader'], function ($, loading, listView, imageLoader) {
+﻿define(['jQuery', 'loading', 'listView', 'imageLoader', 'libraryMenu', 'libraryBrowser'], function ($, loading, listView, imageLoader, libraryMenu, libraryBrowser) {
     'use strict';
 
     var data = {};
@@ -14,11 +14,11 @@
                     StartIndex: 0,
                     Limit: 200
                 },
-                view: LibraryBrowser.getSavedView(key) || 'List'
+                view: libraryBrowser.getSavedView(key) || 'List'
             };
 
-            pageData.query.ParentId = LibraryMenu.getTopParentId();
-            LibraryBrowser.loadSavedQueryValues(key, pageData.query);
+            pageData.query.ParentId = libraryMenu.getTopParentId();
+            libraryBrowser.loadSavedQueryValues(key, pageData.query);
         }
         return pageData;
     }
@@ -30,7 +30,7 @@
 
     function getSavedQueryKey() {
 
-        return LibraryBrowser.getSavedQueryKey();
+        return libraryBrowser.getSavedQueryKey();
     }
 
     function reloadItems(page, item) {
@@ -48,7 +48,7 @@
 
             var html = '';
 
-            html += LibraryBrowser.getQueryPagingHtml({
+            html += libraryBrowser.getQueryPagingHtml({
                 startIndex: query.StartIndex,
                 limit: query.Limit,
                 totalRecordCount: result.TotalRecordCount,

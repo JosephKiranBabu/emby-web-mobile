@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'fnchecked'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'libraryMenu', 'fnchecked'], function ($, loading, libraryMenu) {
     'use strict';
 
     function loadPage(page, config) {
@@ -75,7 +75,7 @@
 
         loading.show();
 
-        LibraryMenu.setTabs('syncadmin', 2, getTabs);
+        libraryMenu.setTabs('syncadmin', 2, getTabs);
         var page = this;
 
         ApiClient.getNamedConfiguration("sync").then(function (config) {

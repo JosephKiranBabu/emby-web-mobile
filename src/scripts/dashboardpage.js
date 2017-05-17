@@ -1,4 +1,4 @@
-﻿define(['datetime', 'jQuery', 'dom', 'loading', 'humanedate', 'cardStyle', 'listViewStyle', 'emby-linkbutton'], function (datetime, $, dom, loading) {
+﻿define(['datetime', 'jQuery', 'events', 'dom', 'loading', 'humanedate', 'cardStyle', 'listViewStyle', 'emby-linkbutton'], function (datetime, $, events, dom, loading) {
     'use strict';
 
     function renderNoHealthAlertsMessage(page) {
@@ -83,8 +83,8 @@
             DashboardPage.pollForInfo(page);
             DashboardPage.startInterval(apiClient);
 
-            Events.on(apiClient, 'websocketmessage', DashboardPage.onWebSocketMessage);
-            Events.on(apiClient, 'websocketopen', DashboardPage.onWebSocketOpen);
+            events.on(apiClient, 'websocketmessage', DashboardPage.onWebSocketMessage);
+            events.on(apiClient, 'websocketopen', DashboardPage.onWebSocketOpen);
 
             DashboardPage.lastAppUpdateCheck = null;
             DashboardPage.lastPluginUpdateCheck = null;
@@ -116,8 +116,8 @@
             var apiClient = ApiClient;
 
             if (apiClient) {
-                Events.off(apiClient, 'websocketmessage', DashboardPage.onWebSocketMessage);
-                Events.off(apiClient, 'websocketopen', DashboardPage.onWebSocketOpen);
+                events.off(apiClient, 'websocketmessage', DashboardPage.onWebSocketMessage);
+                events.off(apiClient, 'websocketopen', DashboardPage.onWebSocketOpen);
                 DashboardPage.stopInterval(apiClient);
             }
 
@@ -1220,8 +1220,8 @@
                 return;
             }
 
-            Events.on(apiClient, 'websocketopen', onSocketOpen);
-            Events.on(apiClient, 'websocketmessage', onSocketMessage);
+            events.on(apiClient, 'websocketopen', onSocketOpen);
+            events.on(apiClient, 'websocketmessage', onSocketMessage);
         }
 
         function startListening(apiClient) {
@@ -1265,8 +1265,8 @@
             var apiClient = ApiClient;
 
             if (apiClient) {
-                Events.off(apiClient, 'websocketopen', onSocketOpen);
-                Events.off(apiClient, 'websocketmessage', onSocketMessage);
+                events.off(apiClient, 'websocketopen', onSocketOpen);
+                events.off(apiClient, 'websocketmessage', onSocketMessage);
 
                 stopListening(apiClient);
             }

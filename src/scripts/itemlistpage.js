@@ -1,4 +1,4 @@
-﻿define(['layoutManager', 'loading', 'libraryBrowser', 'alphaPicker', 'listView', 'cardBuilder', 'imageLoader', 'emby-itemscontainer'], function (layoutManager, loading, libraryBrowser, alphaPicker, listView, cardBuilder, imageLoader) {
+﻿define(['events', 'layoutManager', 'loading', 'libraryBrowser', 'alphaPicker', 'listView', 'cardBuilder', 'imageLoader', 'emby-itemscontainer'], function (events, layoutManager, loading, libraryBrowser, alphaPicker, listView, cardBuilder, imageLoader) {
     'use strict';
 
     return function (view, params) {
@@ -222,7 +222,7 @@
                     query: getQuery()
                 });
 
-                Events.on(filterDialog, 'filterchange', function () {
+                events.on(filterDialog, 'filterchange', function () {
                     reloadItems();
                 });
 

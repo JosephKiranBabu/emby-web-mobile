@@ -1,4 +1,4 @@
-﻿define(['cardBuilder', 'imageLoader', 'libraryBrowser', 'loading', 'emby-itemscontainer'], function (cardBuilder, imageLoader, libraryBrowser, loading) {
+﻿define(['cardBuilder', 'imageLoader', 'libraryBrowser', 'loading', 'events', 'emby-itemscontainer'], function (cardBuilder, imageLoader, libraryBrowser, loading, events) {
     'use strict';
 
     return function (view, params, tabContent) {
@@ -90,7 +90,7 @@
                     mode: 'livetvchannels'
                 });
 
-                Events.on(filterDialog, 'filterchange', function () {
+                events.on(filterDialog, 'filterchange', function () {
                     reloadItems(context);
                 });
 

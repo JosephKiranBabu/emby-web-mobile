@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'cardBuilder', 'imageLoader', 'loading', 'emby-itemscontainer'], function ($, cardBuilder, imageLoader, loading) {
+﻿define(['jQuery', 'cardBuilder', 'imageLoader', 'loading', 'events', 'emby-itemscontainer'], function ($, cardBuilder, imageLoader, loading, events) {
     'use strict';
 
     var data = {};
@@ -185,7 +185,7 @@
                 query: getQuery(page)
             });
 
-            Events.on(filterDialog, 'filterchange', function () {
+            events.on(filterDialog, 'filterchange', function () {
                 reloadItems(page);
             });
 

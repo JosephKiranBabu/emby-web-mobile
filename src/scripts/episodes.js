@@ -172,7 +172,7 @@
                     mode: 'episodes'
                 });
 
-                Events.on(filterDialog, 'filterchange', function () {
+                events.on(filterDialog, 'filterchange', function () {
                     reloadItems(tabContent);
                 });
 

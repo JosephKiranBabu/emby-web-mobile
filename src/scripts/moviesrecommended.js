@@ -1,4 +1,4 @@
-﻿define(['layoutManager', 'userSettings', 'libraryBrowser', 'mainTabsManager', 'components/categorysyncbuttons', 'cardBuilder', 'dom', 'apphost', 'imageLoader', 'playbackManager', 'scrollStyles', 'emby-itemscontainer', 'emby-tabs', 'emby-button'], function (layoutManager, userSettings, libraryBrowser, mainTabsManager, categorysyncbuttons, cardBuilder, dom, appHost, imageLoader, playbackManager) {
+﻿define(['events', 'layoutManager', 'userSettings', 'libraryBrowser', 'mainTabsManager', 'components/categorysyncbuttons', 'cardBuilder', 'dom', 'apphost', 'imageLoader', 'playbackManager', 'scrollStyles', 'emby-itemscontainer', 'emby-tabs', 'emby-button'], function (events, layoutManager, userSettings, libraryBrowser, mainTabsManager, categorysyncbuttons, cardBuilder, dom, appHost, imageLoader, playbackManager) {
     'use strict';
 
     function enableScrollX() {
@@ -422,7 +422,7 @@
         }
 
         view.addEventListener('viewshow', function (e) {
-            Events.on(playbackManager, 'playbackstop', onPlaybackStop);
+            events.on(playbackManager, 'playbackstop', onPlaybackStop);
             mainTabsManager.getTabsElement().triggerTabChange();
         });
 

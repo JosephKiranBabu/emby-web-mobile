@@ -1,4 +1,4 @@
-﻿define(['loading', 'libraryBrowser', 'libraryMenu', 'playbackManager', 'mainTabsManager', 'homeSections', 'globalize', 'emby-button'], function (loading, libraryBrowser, libraryMenu, playbackManager, mainTabsManager, homeSections, globalize) {
+﻿define(['loading', 'libraryBrowser', 'libraryMenu', 'playbackManager', 'mainTabsManager', 'homeSections', 'globalize', 'serverNotifications', 'events', 'emby-button'], function (loading, libraryBrowser, libraryMenu, playbackManager, mainTabsManager, homeSections, globalize, serverNotifications, events) {
     'use strict';
 
     var homePageDismissValue = '14';
@@ -14,10 +14,12 @@
 
     function dismissWelcome(page, userId) {
 
-        getDisplayPreferences('home', userId).then(function (result) {
+        var apiClient = ApiClient;
+
+        getDisplayPreferences(apiClient, 'home', userId).then(function (result) {
 
             result.CustomPrefs[homePageTourKey] = homePageDismissValue;
-            ApiClient.updateDisplayPreferences('home', result, userId, displayPreferencesKey());
+            apiClient.updateDisplayPreferences('home', result, userId, displayPreferencesKey());
         });
     }
 
@@ -93,7 +95,9 @@
 
     function loadHomeTab(page, tabContent) {
 
-        if (window.ApiClient) {
+        var apiClient = ApiClient;
+
+        if (apiClient) {
             var userId = Dashboard.getCurrentUserId();
             loading.show();
 
@@ -106,23 +110,23 @@
                 var user = responses[0];
                 var userSettings = responses[1];
 
-                homeSections.loadSections(tabContent.querySelector('.sections'), ApiClient, user, userSettings).then(function () {
+                homeSections.loadSections(tabContent.querySelector('.sections'), apiClient, user, userSettings).then(function () {
 
                     loading.hide();
                 });
             });
 
             if (!AppInfo.isNativeApp) {
-                getDisplayPreferences('home', userId).then(function (displayPreferences) {
+                getDisplayPreferences(apiClient, 'home', userId).then(function (displayPreferences) {
                     showWelcomeIfNeeded(page, displayPreferences);
                 });
             }
         }
     }
 
-    function getDisplayPreferences(key, userId) {
+    function getDisplayPreferences(apiClient, key, userId) {
 
-        return ApiClient.getDisplayPreferences(key, userId, displayPreferencesKey());
+        return apiClient.getDisplayPreferences(key, userId, displayPreferencesKey());
     }
 
     function getTabs() {
@@ -275,16 +279,11 @@
             }
         }
 
-        function onWebSocketMessage(e, data) {
+        function onUserDataChanged(e, apiClient, userData) {
 
-            var msg = data;
+            if (userData.UserId == Dashboard.getCurrentUserId()) {
 
-            if (msg.MessageType === "UserDataChanged") {
-
-                if (msg.Data.UserId == Dashboard.getCurrentUserId()) {
-
-                    renderedTabs = [];
-                }
+                renderedTabs = [];
             }
         }
 
@@ -304,13 +303,13 @@
 
             mainTabsManager.getTabsElement().triggerTabChange();
 
-            Events.on(playbackManager, 'playbackstop', onPlaybackStop);
-            Events.on(ApiClient, "websocketmessage", onWebSocketMessage);
+            events.on(playbackManager, 'playbackstop', onPlaybackStop);
+            events.on(serverNotifications, 'UserDataChanged', onUserDataChanged);
         });
 
         view.addEventListener('viewbeforehide', function (e) {
-            Events.off(playbackManager, 'playbackstop', onPlaybackStop);
-            Events.off(ApiClient, "websocketmessage", onWebSocketMessage);
+            events.off(playbackManager, 'playbackstop', onPlaybackStop);
+            events.off(serverNotifications, 'UserDataChanged', onUserDataChanged);
         });
 
         view.addEventListener('viewdestroy', function (e) {

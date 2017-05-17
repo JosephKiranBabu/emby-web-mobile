@@ -1,4 +1,4 @@
-﻿define(['libraryBrowser', 'listViewStyle'], function (libraryBrowser) {
+﻿define(['libraryBrowser', 'events', 'listViewStyle'], function (libraryBrowser, events) {
     'use strict';
 
     function notifications() {
@@ -185,23 +185,23 @@
     }
 
     function initializeApiClient(apiClient) {
-        Events.off(apiClient, "websocketmessage", onWebSocketMessage);
-        Events.on(apiClient, "websocketmessage", onWebSocketMessage);
+        events.off(apiClient, "websocketmessage", onWebSocketMessage);
+        events.on(apiClient, "websocketmessage", onWebSocketMessage);
     }
 
     if (window.ApiClient) {
         initializeApiClient(window.ApiClient);
     }
 
-    Events.on(ConnectionManager, 'apiclientcreated', function (e, apiClient) {
+    events.on(ConnectionManager, 'apiclientcreated', function (e, apiClient) {
         initializeApiClient(apiClient);
     });
 
-    Events.on(ConnectionManager, 'localusersignedin', function () {
+    events.on(ConnectionManager, 'localusersignedin', function () {
         needsRefresh = true;
     });
 
-    Events.on(ConnectionManager, 'localusersignedout', function () {
+    events.on(ConnectionManager, 'localusersignedout', function () {
         needsRefresh = true;
     });
 

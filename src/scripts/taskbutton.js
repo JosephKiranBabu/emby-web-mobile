@@ -1,4 +1,4 @@
-﻿define(['userSettings', 'emby-button'], function (userSettings) {
+﻿define(['events', 'userSettings', 'emby-button'], function (events, userSettings) {
     'use strict';
 
     return function (options) {
@@ -130,8 +130,8 @@
         if (options.mode == 'off') {
 
             button.removeEventListener('click', onButtonClick);
-            Events.off(ApiClient, 'websocketmessage', onSocketMessage);
-            Events.off(ApiClient, 'websocketopen', onSocketOpen);
+            events.off(ApiClient, 'websocketmessage', onSocketMessage);
+            events.off(ApiClient, 'websocketopen', onSocketOpen);
             stopInterval();
 
         } else {
@@ -142,8 +142,8 @@
 
             startInterval();
 
-            Events.on(ApiClient, 'websocketmessage', onSocketMessage);
-            Events.on(ApiClient, 'websocketopen', onSocketOpen);
+            events.on(ApiClient, 'websocketmessage', onSocketMessage);
+            events.on(ApiClient, 'websocketopen', onSocketOpen);
         }
     };
 });

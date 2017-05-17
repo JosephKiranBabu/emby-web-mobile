@@ -122,7 +122,7 @@
                     mode: 'songs'
                 });
 
-                Events.on(filterDialog, 'filterchange', function () {
+                events.on(filterDialog, 'filterchange', function () {
                     getQuery(tabContent).StartIndex = 0;
                     reloadItems(tabContent);
                 });

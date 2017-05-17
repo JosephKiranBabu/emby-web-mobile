@@ -1,4 +1,4 @@
-﻿define(['layoutManager', 'loading', 'libraryBrowser', 'dom', 'components/categorysyncbuttons', 'userSettings', 'cardBuilder', 'apphost', 'playbackManager', 'mainTabsManager', 'scrollStyles', 'emby-itemscontainer', 'emby-button'], function (layoutManager, loading, libraryBrowser, dom, categorysyncbuttons, userSettings, cardBuilder, appHost, playbackManager, mainTabsManager) {
+﻿define(['events', 'layoutManager', 'loading', 'libraryBrowser', 'dom', 'components/categorysyncbuttons', 'userSettings', 'cardBuilder', 'apphost', 'playbackManager', 'mainTabsManager', 'scrollStyles', 'emby-itemscontainer', 'emby-button'], function (events, layoutManager, loading, libraryBrowser, dom, categorysyncbuttons, userSettings, cardBuilder, appHost, playbackManager, mainTabsManager) {
     'use strict';
 
     function getTabs() {
@@ -367,8 +367,8 @@
                 tabs.triggerBeforeTabChange();
             }
 
-            Events.on(playbackManager, 'playbackstop', onPlaybackStop);
-            Events.on(ApiClient, "websocketmessage", onWebSocketMessage);
+            events.on(playbackManager, 'playbackstop', onPlaybackStop);
+            events.on(ApiClient, "websocketmessage", onWebSocketMessage);
         });
 
         view.addEventListener('viewshow', function (e) {
@@ -378,8 +378,8 @@
 
         view.addEventListener('viewbeforehide', function (e) {
 
-            Events.off(playbackManager, 'playbackstop', onPlaybackStop);
-            Events.off(ApiClient, "websocketmessage", onWebSocketMessage);
+            events.off(playbackManager, 'playbackstop', onPlaybackStop);
+            events.off(ApiClient, "websocketmessage", onWebSocketMessage);
         });
 
         view.addEventListener('viewdestroy', function (e) {

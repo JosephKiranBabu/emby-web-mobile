@@ -1,4 +1,4 @@
-﻿define(['layoutManager', 'viewManager', 'libraryBrowser', 'embyRouter', 'playbackManager', 'browser', 'paper-icon-button-light', 'material-icons', 'scrollStyles', 'flexStyles'], function (layoutManager, viewManager, libraryBrowser, embyRouter, playbackManager, browser) {
+﻿define(['layoutManager', 'events', 'viewManager', 'libraryBrowser', 'embyRouter', 'playbackManager', 'browser', 'paper-icon-button-light', 'material-icons', 'scrollStyles', 'flexStyles'], function (layoutManager, events, viewManager, libraryBrowser, embyRouter, playbackManager, browser) {
     'use strict';
 
     var enableBottomTabs = layoutManager.mobile;
@@ -924,9 +924,9 @@
 
     function initializeApiClient(apiClient) {
 
-        Events.off(apiClient, 'websocketmessage', onWebSocketMessage);
+        events.off(apiClient, 'websocketmessage', onWebSocketMessage);
 
-        Events.on(apiClient, 'websocketmessage', onWebSocketMessage);
+        events.on(apiClient, 'websocketmessage', onWebSocketMessage);
     }
 
     if (window.ApiClient) {
@@ -1007,11 +1007,11 @@
 
     renderHeader();
 
-    Events.on(ConnectionManager, 'apiclientcreated', function (e, apiClient) {
+    events.on(ConnectionManager, 'apiclientcreated', function (e, apiClient) {
         initializeApiClient(apiClient);
     });
 
-    Events.on(ConnectionManager, 'localusersignedin', function (e, user) {
+    events.on(ConnectionManager, 'localusersignedin', function (e, user) {
         setDrawerClass();
         ConnectionManager.user(ConnectionManager.getApiClient(user.ServerId)).then(function (user) {
             refreshLibraryDrawer(user);
@@ -1019,8 +1019,8 @@
         });
     });
 
-    Events.on(ConnectionManager, 'localusersignedout', updateUserInHeader);
-    Events.on(playbackManager, 'playerchange', updateCastIcon);
+    events.on(ConnectionManager, 'localusersignedout', updateUserInHeader);
+    events.on(playbackManager, 'playerchange', updateCastIcon);
 
     setDrawerClass();
 

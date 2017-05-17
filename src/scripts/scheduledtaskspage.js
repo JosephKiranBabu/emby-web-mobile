@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'humanedate', 'listViewStyle'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'events', 'humanedate', 'listViewStyle'], function ($, loading, events) {
     'use strict';
 
     function reloadList(page) {
@@ -286,15 +286,15 @@
 
         reloadList(page);
 
-        Events.on(ApiClient, "websocketmessage", onWebSocketMessage);
-        Events.on(ApiClient, "websocketopen", onWebSocketConnectionOpen);
+        events.on(ApiClient, "websocketmessage", onWebSocketMessage);
+        events.on(ApiClient, "websocketopen", onWebSocketConnectionOpen);
 
     }).on('pagebeforehide', "#scheduledTasksPage", function () {
 
         var page = this;
 
-        Events.off(ApiClient, "websocketmessage", onWebSocketMessage);
-        Events.off(ApiClient, "websocketopen", onWebSocketConnectionOpen);
+        events.off(ApiClient, "websocketmessage", onWebSocketMessage);
+        events.off(ApiClient, "websocketopen", onWebSocketConnectionOpen);
         stopInterval();
     });
 

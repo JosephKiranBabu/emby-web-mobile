@@ -1,4 +1,4 @@
-﻿define(['appSettings', 'dom', 'browser', 'datetime', 'embyRouter', 'scrollStyles'], function (appSettings, dom, browser, datetime, embyRouter) {
+﻿define(['appSettings', 'dom', 'browser', 'datetime', 'embyRouter', 'events', 'scrollStyles'], function (appSettings, dom, browser, datetime, embyRouter, events) {
     'use strict';
 
     function fadeInRight(elem) {
@@ -144,8 +144,8 @@
 
                     var touchHelper = new TouchHelper(ownerpage.parentNode.parentNode);
 
-                    Events.on(touchHelper, 'swipeleft', onSwipeLeft);
-                    Events.on(touchHelper, 'swiperight', onSwipeRight);
+                    events.on(touchHelper, 'swipeleft', onSwipeLeft);
+                    events.on(touchHelper, 'swiperight', onSwipeRight);
 
                     ownerpage.addEventListener('viewdestroy', function () {
                         touchHelper.destroy();

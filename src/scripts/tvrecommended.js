@@ -3,18 +3,18 @@
 
     function getTabs() {
         return [
-        {
-            name: Globalize.translate('TabSuggestions')
-        },
-         {
-             name: Globalize.translate('TabLatest')
-         },
          {
              name: Globalize.translate('TabShows')
          },
          {
-             name: Globalize.translate('TabUpcoming')
+             name: Globalize.translate('TabSuggestions')
          },
+         {
+             name: Globalize.translate('TabLatest')
+         },
+        {
+            name: Globalize.translate('TabUpcoming')
+        },
          {
              name: Globalize.translate('TabGenres')
          },
@@ -33,13 +33,13 @@
 
         switch (userSettings.get('landing-' + folderId)) {
 
-            case 'latest':
+            case 'suggestions':
                 return 1;
-            case 'shows':
+            case 'latest':
                 return 2;
             case 'favorites':
                 // TODO
-                return 0;
+                return 1;
             case 'genres':
                 return 4;
             default:
@@ -227,12 +227,12 @@
             switch (index) {
 
                 case 0:
+                    depends.push('scripts/tvshows');
                     break;
                 case 1:
-                    depends.push('scripts/tvlatest');
                     break;
                 case 2:
-                    depends.push('scripts/tvshows');
+                    depends.push('scripts/tvlatest');
                     break;
                 case 3:
                     depends.push('scripts/tvupcoming');
@@ -255,7 +255,7 @@
 
             require(depends, function (controllerFactory) {
                 var tabContent;
-                if (index == 0) {
+                if (index === 1) {
                     tabContent = view.querySelector('.pageTabContent[data-index=\'' + index + '\']');
                     self.tabContent = tabContent;
                 }
@@ -263,7 +263,7 @@
                 if (!controller) {
                     tabContent = view.querySelector('.pageTabContent[data-index=\'' + index + '\']');
 
-                    if (index === 0) {
+                    if (index === 1) {
                         controller = self;
                     }
                     else if (index === 7) {

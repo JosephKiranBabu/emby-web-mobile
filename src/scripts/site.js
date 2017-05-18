@@ -1382,7 +1382,7 @@ var AppInfo = {};
 
                         if (options) {
                             if (options.section === 'latest') {
-                                url += '&tab=1';
+                                url += '&tab=2';
                             }
                         }
 

@@ -666,7 +666,7 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
 }
 
 .layout-tv .sectionTitleContainer {
-    margin-bottom: .1em;
+    margin-bottom: 0;
 }
 
 .sectionTitle {
@@ -704,7 +704,7 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
 }
 
 .sectionTitle-cards {
-    margin-left: .1em;
+    margin-left: .15em;
 }
 
 .verticalSection .sectionTitle {

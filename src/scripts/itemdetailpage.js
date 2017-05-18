@@ -1467,7 +1467,12 @@
 
         var html = '';
 
-        var genres = item.Genres || [];
+        var genres = item.GenreItems || item.Genres.map(function (name) {
+            return {
+                Name: name
+            };
+        }) || [];
+
 
         for (var i = 0, length = genres.length; i < length; i++) {
 
@@ -1479,14 +1484,8 @@
                 html += '<span class="bulletSeparator">&bull;</span>';
             }
 
-            var param = item.Type == "Audio" || item.Type == "MusicArtist" || item.Type == "MusicAlbum" || item.Type == "MusicVideo" ? "musicgenre" : "genre";
-
-            if (item.MediaType == "Game") {
-                param = "gamegenre";
-            }
-
             if (isStatic) {
-                html += genres[i];
+                html += genres[i].Name;
             } else {
 
                 var type;
@@ -1505,9 +1504,23 @@
                         break;
                 }
 
-                var url = "secondaryitems.html?type=" + type + "&" + param + "=" + ApiClient.encodeName(genres[i]);
+                var param;
+                var paramValue;
+                if (genres[i].Id) {
+                    param = 'genreId';
+                    paramValue = genres[i].Id;
+                } else {
+                    param = item.Type == "Audio" || item.Type == "MusicArtist" || item.Type == "MusicAlbum" || item.Type == "MusicVideo" ? "musicgenre" : "genre";
 
-                html += '<a class="textlink" href="' + url + '">' + genres[i] + '</a>';
+                    if (item.MediaType == "Game") {
+                        param = "gamegenre";
+                    }
+                    paramValue = ApiClient.encodeName(genres[i]);
+                }
+
+                var url = "secondaryitems.html?type=" + type + "&" + param + "=" + paramValue;
+
+                html += '<a class="textlink" href="' + url + '">' + genres[i].Name + '</a>';
             }
         }
 
@@ -2243,7 +2256,7 @@
         function onMoreCommandsClick() {
             var button = this;
 
-            connectionManager.getApiClient(currentItem.ServerId).getCurrentUser().then(function(user) {
+            connectionManager.getApiClient(currentItem.ServerId).getCurrentUser().then(function (user) {
                 itemContextMenu.show(getContextMenuOptions(currentItem, user, button)).then(function (result) {
 
                     if (result.deleted) {

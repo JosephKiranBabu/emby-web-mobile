@@ -1580,17 +1580,17 @@
 
         var html = '';
 
-        html += '<div class="detailSection">';
+        html += '<div class="verticalSection">';
 
-        html += '<div style="display:flex;align-items:center;">';
-        html += '<h1>';
+        html += '<div class="sectionTitleContainer padded-left">';
+        html += '<h2 class="sectionTitle sectionTitle-cards">';
         html += '<span>' + type.name + '</span>';
 
-        html += '</h1>';
-        html += '<button class="btnAddToCollection autoSize" type="button" is="paper-icon-button-light" style="margin-left:1em;"><i class="md-icon" icon="add">add</i></button>';
+        html += '</h2>';
+        html += '<button class="btnAddToCollection sectionTitleButton" type="button" is="paper-icon-button-light" style="margin-left:1em;"><i class="md-icon" icon="add">add</i></button>';
         html += '</div>';
 
-        html += '<div is="emby-itemscontainer" class="detailSectionContent itemsContainer vertical-wrap padded-left padded-right">';
+        html += '<div is="emby-itemscontainer" class="itemsContainer vertical-wrap padded-left padded-right">';
 
         var shape = type.type == 'MusicAlbum' ? getSquareShape(false) : getPortraitShape(false);
 

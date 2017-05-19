@@ -327,7 +327,7 @@
         }
     }
 
-    function dockedTabs(options) {
+    function DockedTabs(options) {
 
         var self = this;
         instance = self;
@@ -346,7 +346,7 @@
         document.addEventListener('viewshow', onViewShow);
     }
 
-    dockedTabs.prototype.destroy = function () {
+    DockedTabs.prototype.destroy = function () {
 
         document.removeEventListener('viewshow', onViewShow);
         instance = null;
@@ -359,13 +359,13 @@
         self.element = null;
     };
 
-    dockedTabs.prototype.show = function () {
+    DockedTabs.prototype.show = function () {
         this.element.classList.remove('hide');
     };
 
-    dockedTabs.prototype.hide = function () {
+    DockedTabs.prototype.hide = function () {
         this.element.classList.add('hide');
     };
 
-    return dockedTabs;
+    return DockedTabs;
 });

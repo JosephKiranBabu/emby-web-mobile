@@ -1,4 +1,4 @@
-﻿define(['layoutManager', 'events', 'viewManager', 'libraryBrowser', 'embyRouter', 'playbackManager', 'browser', 'paper-icon-button-light', 'material-icons', 'scrollStyles', 'flexStyles'], function (layoutManager, events, viewManager, libraryBrowser, embyRouter, playbackManager, browser) {
+﻿define(['layoutManager', 'events', 'viewManager', 'libraryBrowser', 'embyRouter', 'apphost', 'playbackManager', 'browser', 'appfooter-shared', 'dockedtabs', 'paper-icon-button-light', 'material-icons', 'scrollStyles', 'flexStyles'], function (layoutManager, events, viewManager, libraryBrowser, embyRouter, appHost, playbackManager, browser, appFooter, DockedTabs) {
     'use strict';
 
     var enableBottomTabs = layoutManager.mobile;
@@ -34,8 +34,6 @@
         html += '<button is="paper-icon-button-light" class="btnCast headerButton-btnCast headerButton headerButtonRight hide autoSize"><i class="md-icon">cast</i></button>';
 
         html += '<button type="button" is="paper-icon-button-light" class="headerButton headerButtonRight headerSearchButton hide autoSize"><i class="md-icon">search</i></button>';
-
-        html += '<button is="paper-icon-button-light" class="headerButton headerButtonRight headerVoiceButton hide autoSize"><i class="md-icon">mic</i></button>';
 
         html += '<button is="paper-icon-button-light" class="headerButton headerButtonRight btnNotifications"><div class="btnNotificationsInner">0</div></button>';
 
@@ -142,17 +140,9 @@
                 }
             }
 
-            require(['apphost'], function (apphost) {
-                if (apphost.supports('voiceinput')) {
-                    skinHeader.querySelector('.headerVoiceButton').classList.add('hide');
-                } else {
-                    skinHeader.querySelector('.headerVoiceButton').classList.add('hide');
-                }
-            });
-
         } else {
             btnCast.classList.add('hide');
-            skinHeader.querySelector('.headerVoiceButton').classList.add('hide');
+
             if (headerSearchButton) {
                 headerSearchButton.classList.add('hide');
             }
@@ -161,12 +151,6 @@
                 dashboardEntryHeaderButton.classList.add('hide');
             }
         }
-    }
-
-    function showVoice() {
-        require(['voiceDialog'], function (voiceDialog) {
-            voiceDialog.showDialog();
-        });
     }
 
     function showSearch() {
@@ -193,11 +177,6 @@
         var headerBackButton = document.querySelector('.headerBackButton');
         if (headerBackButton) {
             headerBackButton.addEventListener('click', onBackClick);
-        }
-
-        var headerVoiceButton = document.querySelector('.headerVoiceButton');
-        if (headerVoiceButton) {
-            headerVoiceButton.addEventListener('click', showVoice);
         }
 
         var headerSearchButton = document.querySelector('.headerSearchButton');
@@ -472,13 +451,11 @@
             showBySelector('.lnkSyncToOtherDevices', false);
         }
 
-        require(['apphost'], function (appHost) {
-            if (user.Policy.EnableContentDownloading && appHost.supports('sync')) {
-                showBySelector('.lnkManageOffline', true);
-            } else {
-                showBySelector('.lnkManageOffline', false);
-            }
-        });
+        if (user.Policy.EnableContentDownloading && appHost.supports('sync')) {
+            showBySelector('.lnkManageOffline', true);
+        } else {
+            showBySelector('.lnkManageOffline', false);
+        }
 
         var userId = Dashboard.getCurrentUserId();
 
@@ -1025,10 +1002,8 @@
     setDrawerClass();
 
     if (enableBottomTabs) {
-        require(['appfooter-shared', 'dockedtabs'], function (footer, dockedtabs) {
-            new dockedtabs({
-                appFooter: footer
-            });
+        new DockedTabs({
+            appFooter: appFooter
         });
     }
 

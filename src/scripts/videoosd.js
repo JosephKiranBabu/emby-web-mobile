@@ -222,9 +222,6 @@
 
             updateRecordingButton(displayItem);
             setPoster(displayItem, item);
-            setTitle(displayItem);
-
-            var osdParentTitle = view.querySelector('.osdParentTitle');
 
             var parentName = displayItem.SeriesName || displayItem.Album;
 
@@ -232,35 +229,27 @@
                 parentName = displayItem.Name;
             }
 
-            osdParentTitle.innerHTML = parentName || '';
-            var isShowingParentName;
-            if (parentName) {
-                view.querySelector('.osdParentTitleContainer').classList.remove('hide');
-                isShowingParentName = true;
-            } else {
-                view.querySelector('.osdParentTitleContainer').classList.add('hide');
-            }
+            setTitle(displayItem, parentName);
 
             var osdTitle = view.querySelector('.osdTitle');
             var osdTitleSmall = view.querySelector('.osdTitleSmall');
             var titleElement;
 
-            if (isShowingParentName) {
-                titleElement = osdTitleSmall;
-                osdTitle.classList.add('hide');
-                osdTitle.innerHTML = '';
-            } else {
-                titleElement = osdTitle;
-                osdTitleSmall.classList.add('hide');
-                osdTitleSmall.innerHTML = '';
-            }
+            titleElement = osdTitle;
+            osdTitleSmall.classList.add('hide');
+            osdTitleSmall.innerHTML = '';
 
             // Don't use this for live tv programs because this is contained in mediaInfo.getPrimaryMediaInfoHtml
-            var displayName = displayItem.Type === 'Program' && isShowingParentName ? '' :
-                itemHelper.getDisplayName(displayItem, {
-                    includeParentInfo: displayItem.Type !== 'Program',
-                    includeIndexNumber: displayItem.Type !== 'Program'
-                });
+            var displayName = itemHelper.getDisplayName(displayItem, {
+                includeParentInfo: displayItem.Type !== 'Program',
+                includeIndexNumber: displayItem.Type !== 'Program'
+            });
+
+            // Use the series name if there is no episode info
+            if (!displayName && displayItem.Type === 'Program') {
+                displayName = displayItem.Name;
+            }
+                
             titleElement.innerHTML = displayName;
 
             if (displayName) {
@@ -274,7 +263,7 @@
                 subtitles: false,
                 tomatoes: false,
                 endsAt: false,
-                episodeTitle: true,
+                episodeTitle: false,
                 originalAirDate: displayItem.Type !== 'Program',
                 episodeTitleIndexNumber: displayItem.Type !== 'Program',
                 programIndicator: false
@@ -344,11 +333,13 @@
             }
         }
 
-        function setTitle(item) {
+        function setTitle(item, parentName) {
 
             var url = logoImageUrl(item, connectionManager.getApiClient(item.ServerId), {});
 
             if (url) {
+
+                Emby.Page.setTitle('');
 
                 //var pageTitle = document.querySelector('.pageTitle');
                 //pageTitle.style.backgroundImage = "url('" + url + "')";
@@ -356,7 +347,7 @@
                 //pageTitle.innerHTML = '';
                 //document.querySelector('.headerLogo').classList.add('hide');
             } else {
-                Emby.Page.setTitle('');
+                Emby.Page.setTitle(parentName);
             }
         }
 

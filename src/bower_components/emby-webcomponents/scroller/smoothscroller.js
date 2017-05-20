@@ -209,6 +209,10 @@ define(['browser', 'layoutManager', 'dom', 'focusManager', 'ResizeObserver', 'sc
 
         self.reload = function () { load(); };
 
+        self.getScrollEventName = function () {
+            return transform ? 'scrollanimate' : 'scroll';
+        };
+
         function nativeScrollTo(container, pos, immediate) {
 
             if (!immediate && container.scrollTo) {
@@ -268,7 +272,8 @@ define(['browser', 'layoutManager', 'dom', 'focusManager', 'ResizeObserver', 'sc
             // Start animation rendering
             if (newPos !== pos.dest) {
                 pos.dest = newPos;
-                renderAnimate(animation);
+
+                renderAnimateWithTransform();
 
                 animation.lastAnimate = now;
             }
@@ -276,18 +281,27 @@ define(['browser', 'layoutManager', 'dom', 'focusManager', 'ResizeObserver', 'sc
 
         function setStyleProperty(elem, name, value, speed, resetTransition) {
 
+            var style = elem.style;
+
             if (resetTransition || browser.edge) {
-                elem.style.transition = 'none';
+                style.transition = 'none';
                 void elem.offsetWidth;
             }
 
-            elem.style.transition = 'transform ' + speed + 'ms ease-out';
-            elem.style[name] = value;
+            style.transition = 'transform ' + speed + 'ms ease-out';
+            style[name] = value;
         }
 
-        var currentAnimation;
+        function dispatchScrollEventIfNeeded() {
+            if (o.dispatchScrollEvent) {
+                frame.dispatchEvent(new CustomEvent(self.getScrollEventName(), {
+                    bubbles: true,
+                    cancelable: false
+                }));
+            }
+        }
 
-        function renderAnimate() {
+        function renderAnimateWithTransform() {
 
             var speed = o.speed;
 
@@ -302,12 +316,7 @@ define(['browser', 'layoutManager', 'dom', 'focusManager', 'ResizeObserver', 'sc
             }
             self._pos.cur = animation.to;
 
-            if (o.dispatchScrollEvent) {
-                frame.dispatchEvent(new CustomEvent('scroll', {
-                    bubbles: true,
-                    cancelable: false
-                }));
-            }
+            dispatchScrollEventIfNeeded();
         }
 
         function getBoundingClientRect(elem) {

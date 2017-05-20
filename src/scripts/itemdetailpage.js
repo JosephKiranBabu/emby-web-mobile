@@ -1467,7 +1467,7 @@
 
         var html = '';
 
-        var genres = item.GenreItems || item.Genres.map(function (name) {
+        var genres = item.GenreItems || (item.Genres || []).map(function (name) {
             return {
                 Name: name
             };

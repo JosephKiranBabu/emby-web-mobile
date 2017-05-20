@@ -14,7 +14,7 @@
     opacity: 0;
 }
 
-.osdHeader .headerButton:not(.headerBackButton) {
+.osdHeader .headerButton:not(.headerBackButton):not(.libraryMenuButtonText) {
     display: none;
 }
 
@@ -151,11 +151,6 @@
         -ms-user-select: none;
     }
 
-.osdParentTitle {
-    color: #fff !important;
-    margin: 0;
-}
-
 .osdTitle {
     margin: 0;
     color: #fff !important;
@@ -184,6 +179,10 @@
     user-select: none;
     margin-bottom: .7em;
     padding-left: .5em;
+}
+
+.osdMainTextContainer {
+    align-items: baseline;
 }
 
 .pageContainer {

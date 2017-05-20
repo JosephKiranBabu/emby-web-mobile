@@ -1312,7 +1312,8 @@ var AppInfo = {};
                 Dashboard.navigate('mypreferencesmenu.html');
             };
 
-            embyRouter.setTitle = function () {
+            embyRouter.setTitle = function (title) {
+                LibraryMenu.setTitle(title);
             };
 
             embyRouter.getRouteUrl = function (item, options) {

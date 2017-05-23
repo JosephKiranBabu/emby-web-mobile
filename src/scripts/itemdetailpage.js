@@ -94,6 +94,10 @@
 
     function renderSyncLocalContainer(page, params, user, item) {
 
+        if (!appHost.supports('sync')) {
+            return;
+        }
+
         if (page.syncToggleInstance) {
             page.syncToggleInstance.refresh(item);
             return;
@@ -1467,12 +1471,14 @@
 
         var html = '';
 
-        var genres = item.GenreItems || (item.Genres || []).map(function (name) {
-            return {
-                Name: name
-            };
-        }) || [];
-
+        var genres = item.GenreItems;
+        if (!genres) {
+            genres = (item.Genres || []).map(function (name) {
+                return {
+                    Name: name
+                };
+            }) || [];
+        }
 
         for (var i = 0, length = genres.length; i < length; i++) {
 
@@ -1515,7 +1521,7 @@
                     if (item.MediaType == "Game") {
                         param = "gamegenre";
                     }
-                    paramValue = ApiClient.encodeName(genres[i]);
+                    paramValue = ApiClient.encodeName(genres[i].Name);
                 }
 
                 var url = "secondaryitems.html?type=" + type + "&" + param + "=" + paramValue;

@@ -11,7 +11,7 @@
         $('#chkRequirePerfectMatch', page).checked(config.RequirePerfectMatch);
 
         $('#txtOpenSubtitleUsername', page).val(config.OpenSubtitlesUsername);
-        $('#txtOpenSubtitlePassword', page).val('');
+        $('#txtOpenSubtitlePassword', page).val(config.OpenSubtitlesPasswordHash || '');
 
         populateLanguages(page, config, languages);
 

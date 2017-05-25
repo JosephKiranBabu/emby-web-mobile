@@ -2756,6 +2756,7 @@ var AppInfo = {};
                 if (browserInfo.android) {
                     postInitDependencies.push('cordova/mediasession');
                     postInitDependencies.push('cordova/chromecast');
+                    postInitDependencies.push('cordova/videopause');
 
                 } else if (browserInfo.safari) {
 

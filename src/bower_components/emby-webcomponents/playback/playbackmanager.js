@@ -591,7 +591,7 @@
             name: player.name,
             id: player.id,
             playerName: player.name,
-            playableMediaTypes: ['Audio', 'Video', 'Game'].map(player.canPlayMediaType),
+            playableMediaTypes: ['Audio', 'Video', 'Game', 'Photo', 'Book'].map(player.canPlayMediaType),
             isLocalPlayer: player.isLocalPlayer,
             supportedCommands: getSupportedCommands(player)
         };

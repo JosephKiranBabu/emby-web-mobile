@@ -2619,6 +2619,7 @@ var AppInfo = {};
         }
 
         list.push('bower_components/emby-webcomponents/htmlvideoplayer/plugin');
+        list.push('bower_components/emby-webcomponents/photoplayer/plugin');
 
         if (appHost.supports('remotecontrol')) {
 

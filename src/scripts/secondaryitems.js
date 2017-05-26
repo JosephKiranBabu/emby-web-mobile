@@ -94,22 +94,6 @@
 
             return elem;
         }
-        function onListItemClick(e) {
-
-            var mediaItem = parentWithClass(e.target, 'mediaItem');
-            if (mediaItem) {
-                var info = libraryBrowser.getListItemInfo(mediaItem);
-
-                if (info.mediaType == 'Photo') {
-                    var query = getQuery();
-
-                    require(['scripts/photos'], function () {
-                        Photos.startSlideshow(view, query, info.id);
-                    });
-                    return false;
-                }
-            }
-        }
 
         function onViewStyleChange(parentItem) {
 
@@ -273,8 +257,6 @@
                 loading.hide();
             });
         }
-
-        view.addEventListener('click', onListItemClick);
 
         function getItemPromise() {
 

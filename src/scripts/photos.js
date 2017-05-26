@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'cardBuilder', 'imageLoader', 'loading', 'libraryBrowser', 'libraryMenu', 'emby-itemscontainer'], function ($, cardBuilder, imageLoader, loading, libraryBrowser, libraryMenu) {
+﻿define(['cardBuilder', 'imageLoader', 'loading', 'libraryBrowser', 'libraryMenu', 'emby-itemscontainer'], function (cardBuilder, imageLoader, loading, libraryBrowser, libraryMenu) {
     'use strict';
 
     var view = 'Poster';
@@ -61,13 +61,14 @@
                 // Poster
                 html = cardBuilder.getCardsHtml({
                     items: result.Items,
-                    shape: "square",
+                    shape: "auto",
                     context: getParameterByName('context') || 'photos',
                     overlayText: true,
                     lazy: true,
                     coverImage: true,
                     showTitle: false,
-                    centerText: true
+                    centerText: true,
+                    showVideoIndicator: true
                 });
             }
 
@@ -75,36 +76,30 @@
             elem.innerHTML = html + pagingHtml;
             imageLoader.lazyChildren(elem);
 
-            $('.btnNextPage', page).on('click', function () {
+            function onNextPageClick() {
                 query.StartIndex += query.Limit;
                 reloadItems(page);
-            });
+            }
 
-            $('.btnPreviousPage', page).on('click', function () {
+            function onPreviousPageClick() {
                 query.StartIndex -= query.Limit;
                 reloadItems(page);
-            });
+            }
+
+            var elems = page.querySelectorAll('.btnNextPage');
+            var i, length;
+            for (i = 0, length = elems.length; i < length; i++) {
+                elems[i].addEventListener('click', onNextPageClick);
+            }
+
+            elems = page.querySelectorAll('.btnPreviousPage');
+            for (i = 0, length = elems.length; i < length; i++) {
+                elems[i].addEventListener('click', onPreviousPageClick);
+            }
 
             libraryBrowser.saveQueryValues(getSavedQueryKey(), query);
 
             loading.hide();
-        });
-    }
-
-    function startSlideshow(page, itemQuery, startItemId) {
-
-        var userId = Dashboard.getCurrentUserId();
-
-        var localQuery = $.extend({}, itemQuery);
-        localQuery.StartIndex = 0;
-        localQuery.Limit = null;
-        localQuery.MediaTypes = "Photo";
-        localQuery.Recursive = true;
-        localQuery.Filters = "IsNotFolder";
-
-        ApiClient.getItems(userId, localQuery).then(function (result) {
-
-            showSlideshow(page, result.Items, startItemId);
         });
     }
 
@@ -134,31 +129,10 @@
         });
     }
 
-    function onListItemClick(e) {
-
-        var page = $(this).parents('.page')[0];
-        var info = libraryBrowser.getListItemInfo(this);
-
-        if (info.mediaType == 'Photo') {
-            var query = getQuery();
-
-            Photos.startSlideshow(page, query, info.id);
-            return false;
-        }
-    }
-
     pageIdOn('pageinit', "photosPage", function () {
 
         var page = this;
 
         reloadItems(page, 0);
-
-        $(page).on('click', '.mediaItem', onListItemClick);
-
     });
-
-    window.Photos = {
-        startSlideshow: startSlideshow
-    };
-
 });

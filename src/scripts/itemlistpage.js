@@ -113,7 +113,9 @@
                     centerText: true,
                     lazy: true,
                     coverImage: item.Type == 'PhotoAlbum',
-                    context: 'folders'
+                    context: 'folders',
+                    showVideoIndicator: item.Type === 'PhotoAlbum',
+                    action: item.Type === 'PhotoAlbum' ? 'play' : null
                 };
 
                 if (viewStyle == "PosterCard") {

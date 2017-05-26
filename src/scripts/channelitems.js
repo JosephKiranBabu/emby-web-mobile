@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'cardBuilder', 'imageLoader', 'loading', 'events', 'libraryMenu', 'libraryBrowser', 'emby-itemscontainer'], function ($, cardBuilder, imageLoader, loading, events, libraryMenu, libraryBrowser) {
+﻿define(['cardBuilder', 'imageLoader', 'loading', 'events', 'libraryMenu', 'libraryBrowser', 'emby-itemscontainer'], function (cardBuilder, imageLoader, loading, events, libraryMenu, libraryBrowser) {
     'use strict';
 
     var data = {};
@@ -37,7 +37,7 @@
     }
 
     function getParam(context, name) {
-        
+
         if (!context.pageParams) {
             context.pageParams = {};
         }
@@ -54,21 +54,6 @@
         var channelId = getParam(page, 'id');
 
         ApiClient.getJSON(ApiClient.getUrl("Channels/" + channelId + "/Features")).then(function (features) {
-
-            if (features.CanFilter) {
-
-                $('.filterControls', page).show();
-
-            } else {
-                $('.filterControls', page).hide();
-            }
-
-            if (features.SupportsSortOrderToggle) {
-
-                $('.sortOrderToggle', page).show();
-            } else {
-                $('.sortOrderToggle', page).hide();
-            }
 
             var maxPageSize = features.MaxPageSize;
 
@@ -150,22 +135,32 @@
             elem.innerHTML = html;
             imageLoader.lazyChildren(elem);
 
-            $('.btnNextPage', page).on('click', function () {
+            function onNextPageClick() {
                 query.StartIndex += query.Limit;
                 reloadItems(page);
-            });
+            }
 
-            $('.btnPreviousPage', page).on('click', function () {
+            function onPreviousPageClick() {
                 query.StartIndex -= query.Limit;
                 reloadItems(page);
-            });
+            }
 
-            $('.btnFilter', page).on('click', function () {
+            elems = page.querySelectorAll('.btnNextPage');
+            for (i = 0, length = elems.length; i < length; i++) {
+                elems[i].addEventListener('click', onNextPageClick);
+            }
+
+            elems = page.querySelectorAll('.btnPreviousPage');
+            for (i = 0, length = elems.length; i < length; i++) {
+                elems[i].addEventListener('click', onPreviousPageClick);
+            }
+
+            page.querySelector('.btnFilter').addEventListener('click', function () {
                 showFilterMenu(page);
             });
 
             // On callback make sure to set StartIndex = 0
-            $('.btnSort', page).on('click', function () {
+            page.querySelector('.btnSort').addEventListener('click', function () {
                 showSortMenu(page);
             });
 

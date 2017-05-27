@@ -945,6 +945,7 @@ var AppInfo = {};
             itemShortcuts: embyWebComponentsBowerPath + "/shortcuts",
             serverNotifications: embyWebComponentsBowerPath + '/servernotifications',
             playbackManager: embyWebComponentsBowerPath + '/playback/playbackmanager',
+            playQueueManager: embyWebComponentsBowerPath + '/playback/playqueuemanager',
             autoPlayDetect: embyWebComponentsBowerPath + '/playback/autoplaydetect',
             nowPlayingHelper: embyWebComponentsBowerPath + '/playback/nowplayinghelper',
             pluginManager: embyWebComponentsBowerPath + '/pluginmanager',
@@ -2581,12 +2582,12 @@ var AppInfo = {};
         // Load installed plugins
 
         var list = [
-        //'plugins/defaultskin/plugin',
-        //'plugins/logoscreensaver/plugin',
-        //'plugins/backdropscreensaver/plugin',
-        //'plugins/defaultsoundeffects/plugin',
-        'bower_components/emby-webcomponents/playback/playbackvalidation',
-        'bower_components/emby-webcomponents/playback/playaccessvalidation'
+            //'plugins/defaultskin/plugin',
+            //'plugins/logoscreensaver/plugin',
+            //'plugins/backdropscreensaver/plugin',
+            //'plugins/defaultsoundeffects/plugin',
+            'bower_components/emby-webcomponents/playback/playbackvalidation',
+            'bower_components/emby-webcomponents/playback/playaccessvalidation'
         ];
 
         if (Dashboard.isRunningInCordova() && browser.android) {

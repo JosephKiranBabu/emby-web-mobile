@@ -652,10 +652,16 @@ define(['browser'], function (browser) {
         });
 
         if (!browser.edgeUwp && !browser.tizen && !browser.orsay && !browser.web0s) {
-            profile.CodecProfiles[profile.CodecProfiles.length - 1].Conditions.push({
+            profile.CodecProcfiles[profile.CodecProfiles.length - 1].Conditions.push({
                 Condition: 'NotEquals',
                 Property: 'IsAVC',
                 Value: 'false',
+                IsRequired: false
+            });
+            profile.CodecProfiles[profile.CodecProfiles.length - 1].Conditions.push({
+                Condition: 'NotEquals',
+                Property: 'IsInterlaced',
+                Value: 'true',
                 IsRequired: false
             });
         }

@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'libraryMenu', 'loading'], function ($, loading, libraryMenu) {
+﻿define(['jQuery', 'libraryMenu', 'loading'], function ($, libraryMenu, loading) {
     'use strict';
 
     function loadPage(page, config) {

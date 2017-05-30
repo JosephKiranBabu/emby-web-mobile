@@ -328,13 +328,13 @@
 
     function refreshDashboardInfoInDrawer(page, user) {
 
-        loadNavDrawer().then(function () {
-            if (!navDrawerScrollContainer.querySelector('.adminDrawerLogo')) {
-                createDashboardMenu(page);
-            } else {
-                updateDashboardMenuSelectedItem();
-            }
-        });
+        loadNavDrawer();
+
+        if (!navDrawerScrollContainer.querySelector('.adminDrawerLogo')) {
+            createDashboardMenu(page);
+        } else {
+            updateDashboardMenuSelectedItem();
+        }
     }
 
     function updateDashboardMenuSelectedItem() {
@@ -922,27 +922,27 @@
             admin = true;
         }
 
-        loadNavDrawer().then(function () {
-            if (admin) {
-                navDrawerElement.classList.add('adminDrawer');
-                navDrawerElement.classList.remove('darkDrawer');
-            } else {
-                navDrawerElement.classList.add('darkDrawer');
-                navDrawerElement.classList.remove('adminDrawer');
-            }
-        });
+        loadNavDrawer();
+
+        if (admin) {
+            navDrawerElement.classList.add('adminDrawer');
+            navDrawerElement.classList.remove('darkDrawer');
+        } else {
+            navDrawerElement.classList.add('darkDrawer');
+            navDrawerElement.classList.remove('adminDrawer');
+        }
     }
 
     function refreshLibraryDrawer(user) {
 
-        loadNavDrawer().then(function () {
-            var promise = user ? Promise.resolve(user) : ConnectionManager.user(window.ApiClient);
+        loadNavDrawer();
 
-            promise.then(function (user) {
-                refreshLibraryInfoInDrawer(user);
+        var promise = user ? Promise.resolve(user) : ConnectionManager.user(window.ApiClient);
 
-                updateLibraryMenu(user.localUser);
-            });
+        promise.then(function (user) {
+            refreshLibraryInfoInDrawer(user);
+
+            updateLibraryMenu(user.localUser);
         });
     }
 
@@ -969,10 +969,10 @@
             return Promise.resolve(navDrawerInstance);
         }
 
-        return new Promise(function (resolve, reject) {
+        navDrawerElement = document.querySelector('.mainDrawer');
+        navDrawerScrollContainer = navDrawerElement.querySelector('.scrollContainer');
 
-            navDrawerElement = document.querySelector('.mainDrawer');
-            navDrawerScrollContainer = navDrawerElement.querySelector('.scrollContainer');
+        return new Promise(function (resolve, reject) {
 
             require(['navdrawer'], function (navdrawer) {
                 navDrawerInstance = new navdrawer(getNavDrawerOptions());

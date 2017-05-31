@@ -18,6 +18,8 @@
     function updateValues(range, backgroundLower, backgroundUpper) {
 
         var value = range.value;
+
+        // put this on a callback. Doing it within the event sometimes causes the slider to get hung up and not respond
         requestAnimationFrame(function () {
 
             if (backgroundLower) {
@@ -133,15 +135,15 @@
                 }
 
             }, {
-                passive: true
-            });
+                    passive: true
+                });
 
             dom.addEventListener(this, 'mouseleave', function () {
                 sliderBubble.classList.add('hide');
                 hasHideClass = true;
             }, {
-                passive: true
-            });
+                    passive: true
+                });
         }
 
         if (!supportsNativeProgressStyle) {

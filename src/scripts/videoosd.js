@@ -740,7 +740,7 @@
             events.on(player, 'playbackstop', onPlaybackStopped);
             events.on(player, 'volumechange', onVolumeChanged);
             events.on(player, 'pause', onPlayPauseStateChanged);
-            events.on(player, 'playing', onPlayPauseStateChanged);
+            events.on(player, 'unpause', onPlayPauseStateChanged);
             events.on(player, 'timeupdate', onTimeUpdate);
             events.on(player, 'fullscreenchange', updateFullscreenIcon);
 
@@ -757,7 +757,7 @@
                 events.off(player, 'playbackstop', onPlaybackStopped);
                 events.off(player, 'volumechange', onVolumeChanged);
                 events.off(player, 'pause', onPlayPauseStateChanged);
-                events.off(player, 'playing', onPlayPauseStateChanged);
+                events.off(player, 'unpause', onPlayPauseStateChanged);
                 events.off(player, 'timeupdate', onTimeUpdate);
                 events.off(player, 'fullscreenchange', updateFullscreenIcon);
 

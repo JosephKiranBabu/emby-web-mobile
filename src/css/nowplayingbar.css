@@ -81,11 +81,7 @@
     .mediaButton i {
         height: 1em;
         width: 1em;
-        font-size: 36px;
-    }
-
-    .mediaButton.muteButton i, .mediaButton.unmuteButton i, .mediaButton.castButton i, .mediaButton.infoButton i {
-        font-size: 24px;
+        font-size: 200%;
     }
 
 .nowPlayingImage {
@@ -99,12 +95,12 @@
     }
 
     .nowPlayingImage img {
-        height: 64px;
+        height: 50px;
     }
 
 .nowPlayingBar .nowPlayingImage {
-    width: 64px;
-    height: 64px;
+    width: 50px;
+    height: 50px;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -169,7 +165,7 @@
 
 .nowPlayingBarPositionContainer {
     position: absolute !important;
-    left: 64px;
+    left: 50px;
     top: -8px;
     right: 0;
     z-index: 1;

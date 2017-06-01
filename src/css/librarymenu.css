@@ -64,7 +64,6 @@
     margin: 0 0 0 .5em;
     /* Avoid pushing right header off the screen */
     flex-shrink: 1;
-    color: #ddd;
 }
 
 .skinHeader {

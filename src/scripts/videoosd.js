@@ -347,7 +347,7 @@
                 //pageTitle.innerHTML = '';
                 //document.querySelector('.headerLogo').classList.add('hide');
             } else {
-                Emby.Page.setTitle(parentName);
+                Emby.Page.setTitle(parentName || '');
             }
         }
 

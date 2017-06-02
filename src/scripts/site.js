@@ -978,8 +978,7 @@ var AppInfo = {};
         define("mainTabsManager", ["components/maintabsmanager"], returnFirstDependency);
 
         define("imageLoader", [embyWebComponentsBowerPath + "/images/imagehelper"], returnFirstDependency);
-        define("appfooter", ["components/appfooter/appfooter"], returnFirstDependency);
-        define("dockedtabs", ["components/dockedtabs/dockedtabs"], returnFirstDependency);
+        define("appFooter", [embyWebComponentsBowerPath + "/appfooter/appfooter"], returnFirstDependency);
         define("directorybrowser", ["components/directorybrowser/directorybrowser"], returnFirstDependency);
         define("metadataEditor", [embyWebComponentsBowerPath + "/metadataeditor/metadataeditor"], returnFirstDependency);
         define("personEditor", [embyWebComponentsBowerPath + "/metadataeditor/personeditor"], returnFirstDependency);
@@ -1229,7 +1228,7 @@ var AppInfo = {};
         define("historyManager", ['embyRouter'], returnFirstDependency);
 
         define("headroom-window", ['headroom'], createWindowHeadroom);
-        define("appfooter-shared", ['appfooter'], createSharedAppFooter);
+        define("appFooter-shared", ['appFooter'], createSharedAppFooter);
 
         // mock this for now. not used in this app
         define("skinManager", [], function () {

@@ -149,13 +149,6 @@ progress {
         height: 2.2em;
     }
 
-@media all and (max-width: 40em) {
-
-    .dashboardDocument .headerAppsButton {
-        display: none;
-    }
-}
-
 /* Links */
 .ui-body-a a {
     color: #388E3C /*{a-link-color}*/;

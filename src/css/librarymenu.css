@@ -84,7 +84,7 @@
 }
 
 .headerTop {
-    padding: .3em 0;
+    padding: .9em 0;
 }
 
 .headerLeft {
@@ -101,11 +101,7 @@
     }
 }
 
-/*.withTallToolbar .headerTop {
-    padding-bottom: 0 !important;
-}*/
-
-.headerTabs {
+.sectionTabs {
     width: 100%;
     text-align: center;
     font-size: 92%;
@@ -205,10 +201,6 @@ body:not(.dashboardDocument) .btnNotifications {
         color: #52B54B !important;
     }
 
-body:not(.dashboardDocument) .headerAppsButton {
-    display: none;
-}
-
 .mainDrawer-scrollContainer {
     padding-bottom: 10vh;
 }
@@ -248,7 +240,7 @@ body:not(.dashboardDocument) .headerAppsButton {
         margin-top: 4.3em !important;
     }
 
-    .dashboardDocument.withTallToolbar .mainDrawer-scrollContainer {
+    .dashboardDocument.withSectionTabs .mainDrawer-scrollContainer {
         margin-top: 7em !important;
     }
 
@@ -274,6 +266,13 @@ body:not(.dashboardDocument) .headerAppsButton {
 
     .dashboardDocument .darkDrawer {
         background-color: rgba(28,28,31,.3) !important;
+    }
+}
+
+@media all and (max-width: 84em) {
+
+    .withSectionTabs .headerTop {
+        padding-bottom: .3em;
     }
 }
 

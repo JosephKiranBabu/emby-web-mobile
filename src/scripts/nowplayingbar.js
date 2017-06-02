@@ -159,10 +159,7 @@
             }
         });
 
-        elem.querySelector('.remoteControlButton').addEventListener('click', function () {
-
-            showRemoteControl();
-        });
+        elem.querySelector('.remoteControlButton').addEventListener('click', showRemoteControl);
 
         toggleRepeatButton = elem.querySelector('.toggleRepeatButton');
         toggleRepeatButton.addEventListener('click', function () {
@@ -228,15 +225,18 @@
 
             return datetime.getDisplayRunningTime(ticks);
         };
+
+        elem.addEventListener('click', function (e) {
+
+            if (!dom.parentWithTag(e.target, ['BUTTON', 'INPUT', 'A'])) {
+                showRemoteControl(0);
+            }
+        });
     }
 
     function showRemoteControl(tabIndex) {
 
-        if (tabIndex) {
-            Dashboard.navigate('nowplaying.html?tab=' + tabIndex);
-        } else {
-            Dashboard.navigate('nowplaying.html');
-        }
+        Dashboard.navigate('nowplaying.html');
     }
 
     var nowPlayingBarElement;
@@ -248,7 +248,7 @@
 
         return new Promise(function (resolve, reject) {
 
-            require(['appfooter-shared', 'itemShortcuts', 'css!css/nowplayingbar.css', 'emby-slider'], function (appfooter, itemShortcuts) {
+            require(['appFooter-shared', 'itemShortcuts', 'css!css/nowplayingbar.css', 'emby-slider'], function (appfooter, itemShortcuts) {
 
                 var parentContainer = appfooter.element;
                 nowPlayingBarElement = parentContainer.querySelector('.nowPlayingBar');
@@ -540,7 +540,7 @@
 
         if (nowPlayingItem.Id) {
             if (isRefreshing) {
-                ApiClient.getItem(Dashboard.getCurrentUserId(), nowPlayingItem.Id).then(function (item) {
+                ApiClient.getItem(ApiClient.getCurrentUserId(), nowPlayingItem.Id).then(function (item) {
                     userdataButtons.fill({
                         item: item,
                         includePlayed: false,

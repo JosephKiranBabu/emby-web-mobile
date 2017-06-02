@@ -11,10 +11,7 @@
 
         var currentIndex = playbackManager.getAudioStreamIndex(player);
 
-        var streams = (item.MediaStreams || []).filter(function (i) {
-
-            return i.Type == 'Audio';
-        });
+        var streams = playbackManager.audioTracks(player);
 
         var menuItems = streams.map(function (s) {
 
@@ -48,10 +45,7 @@
 
         var currentIndex = playbackManager.getSubtitleStreamIndex(player);
 
-        var streams = (item.MediaStreams || []).filter(function (i) {
-
-            return i.Type == 'Subtitle';
-        });
+        var streams = playbackManager.subtitleTracks(player);
 
         var menuItems = streams.map(function (s) {
 
@@ -93,12 +87,6 @@
 
     function hideButton(button) {
         button.classList.add('hide');
-    }
-
-    function hasStreams(item, type) {
-        return item && item.MediaStreams && item.MediaStreams.filter(function (i) {
-            return i.Type == type;
-        }).length > 0;
     }
 
     function getNowPlayingNameHtml(nowPlayingItem, includeNonNameInfo) {
@@ -283,7 +271,7 @@
             }
         }
 
-        function updatePlayerState(context, state) {
+        function updatePlayerState(player, context, state) {
 
             lastPlayerState = state;
 
@@ -292,11 +280,13 @@
             var playerInfo = playbackManager.getPlayerInfo();
 
             var supportedCommands = playerInfo.supportedCommands;
+            currentPlayerSupportedCommands = supportedCommands;
+
             var playState = state.PlayState || {};
 
             buttonVisible(context.querySelector('.btnToggleFullscreen'), item && item.MediaType == 'Video' && supportedCommands.indexOf('ToggleFullscreen') != -1);
-            buttonVisible(context.querySelector('.btnAudioTracks'), hasStreams(item, 'Audio') && supportedCommands.indexOf('SetAudioStreamIndex') != -1);
-            buttonVisible(context.querySelector('.btnSubtitles'), hasStreams(item, 'Subtitle') && supportedCommands.indexOf('SetSubtitleStreamIndex') != -1);
+            updateAudioTracksDisplay(player, context);
+            updateSubtitleTracksDisplay(player, context);
 
             if (supportedCommands.indexOf('DisplayMessage') != -1) {
                 context.querySelector('.sendMessageSection').classList.remove('hide');
@@ -334,6 +324,18 @@
 
             updateRepeatModeDisplay(playState.RepeatMode);
             updateNowPlayingInfo(context, state);
+        }
+
+        function updateAudioTracksDisplay(player, context) {
+
+            var supportedCommands = currentPlayerSupportedCommands;
+            buttonVisible(context.querySelector('.btnAudioTracks'), playbackManager.audioTracks(player).length > 1 && supportedCommands.indexOf('SetAudioStreamIndex') != -1);
+        }
+
+        function updateSubtitleTracksDisplay(player, context) {
+
+            var supportedCommands = currentPlayerSupportedCommands;
+            buttonVisible(context.querySelector('.btnSubtitles'), playbackManager.subtitleTracks(player).length && supportedCommands.indexOf('SetSubtitleStreamIndex') != -1);
         }
 
         function updateRepeatModeDisplay(repeatMode) {
@@ -488,11 +490,11 @@
                     action: 'setplaylistindex',
                     enableUserDataButtons: false,
                     rightButtons: [
-                    {
-                        icon: '&#xE15D;',
-                        title: globalize.translate('ButtonRemove'),
-                        id: 'remove'
-                    }],
+                        {
+                            icon: '&#xE15D;',
+                            title: globalize.translate('ButtonRemove'),
+                            id: 'remove'
+                        }],
                     dragHandle: true
                 });
 
@@ -537,6 +539,20 @@
             updateRepeatModeDisplay(playbackManager.getRepeatMode(player));
         }
 
+        function onAudioTrackListChange(e) {
+
+            var player = this;
+
+            updateAudioTracksDisplay(player, context);
+        }
+
+        function onSubtitleTrackListChange(e) {
+
+            var player = this;
+
+            updateSubtitleTracksDisplay(player, context);
+        }
+
         function onPlaylistUpdate(e) {
 
             var player = this;
@@ -566,7 +582,7 @@
             var player = this;
 
             if (!state.NextMediaType) {
-                updatePlayerState(dlg, {});
+                updatePlayerState(player, dlg, {});
                 loadPlaylist(dlg);
             }
         }
@@ -582,7 +598,7 @@
             //console.log('nowplaying event: ' + e.type);
             var player = this;
 
-            updatePlayerState(dlg, state);
+            updatePlayerState(player, dlg, state);
             loadPlaylist(dlg, player);
         }
 
@@ -624,6 +640,8 @@
                 events.off(player, 'pause', onPlayPauseStateChanged);
                 events.off(player, 'unpause', onPlayPauseStateChanged);
                 events.off(player, 'timeupdate', onTimeUpdate);
+                events.off(player, 'audiotracklistchange', onAudioTrackListChange);
+                events.off(player, 'subtitletracklistchange', onSubtitleTrackListChange);
 
                 currentPlayer = null;
             }
@@ -654,6 +672,8 @@
             events.on(player, 'pause', onPlayPauseStateChanged);
             events.on(player, 'unpause', onPlayPauseStateChanged);
             events.on(player, 'timeupdate', onTimeUpdate);
+            events.on(player, 'audiotracklistchange', onAudioTrackListChange);
+            events.on(player, 'subtitletracklistchange', onSubtitleTrackListChange);
 
             var playerInfo = playbackManager.getPlayerInfo();
 
@@ -693,7 +713,7 @@
         }
 
         function getSaveablePlaylistItems() {
-            
+
             return getPlaylistItems(currentPlayer).then(function (items) {
 
                 return items.filter(function (i) {
@@ -703,7 +723,7 @@
         }
 
         function savePlaylist() {
-            
+
             require(['playlistEditor'], function (playlistEditor) {
 
                 getSaveablePlaylistItems().then(function (items) {
@@ -711,7 +731,7 @@
                     var serverId = items.length ? items[0].ServerId : ApiClient.serverId();
 
                     new playlistEditor().show({
-                        items: items.map(function(i) {
+                        items: items.map(function (i) {
                             return i.Id;
                         }),
                         serverId: serverId,

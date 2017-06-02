@@ -1,36 +1,5 @@
-﻿.nowPlayingText {
-    display: inline-block;
-    position: relative;
-    top: -7px;
-    margin: 0 0 0 3px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    vertical-align: middle;
-    text-align: left;
-    max-width: 130px;
-}
-
-.mediaButton.active {
+﻿.mediaButton.active {
     color: #52B54B;
-}
-
-@media (min-width: 31.25em) {
-    .nowPlayingText {
-        max-width: 180px;
-    }
-}
-
-@media (min-width: 37.5em) {
-    .nowPlayingText {
-        max-width: 200px;
-    }
-}
-
-@media (min-width: 50em) {
-    .nowPlayingText {
-        margin-right: 30px;
-    }
 }
 
 .nowPlayingBarInfoContainer {
@@ -38,22 +7,13 @@
     align-items: center;
 }
 
-.currentTime {
-    display: inline-block;
-    vertical-align: middle;
-    max-width: 110px;
-    margin-right: 2em;
-    font-weight: normal;
-}
-
 /* Now playing bar */
 .nowPlayingBar {
     /* Above everything, except for the video player and popup overlays */
-    color: #fff;
+    color: #ddd;
     text-align: center;
     will-change: transform;
     contain: layout style;
-    font-size: 90%;
     transition: transform 200ms ease-out;
 }
 
@@ -73,7 +33,6 @@
 
 .mediaButton, .nowPlayingBarUserDataButtons .btnUserItemRating {
     vertical-align: middle;
-    color: #e8e8e8;
     margin: 0;
     text-align: center;
 }
@@ -95,12 +54,12 @@
     }
 
     .nowPlayingImage img {
-        height: 50px;
+        height: 3.9em;
     }
 
 .nowPlayingBar .nowPlayingImage {
-    width: 50px;
-    height: 50px;
+    width: 3.9em;
+    height: 3.9em;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -112,8 +71,10 @@
     text-overflow: ellipsis;
     vertical-align: middle;
     text-align: left;
-    max-width: 130px;
+    max-width: 10em;
     flex-grow: 1;
+    font-size: 88%;
+    margin-right: 2.4em;
 }
 
 .repeatActive {
@@ -122,50 +83,48 @@
 
 @media (min-width: 31.25em) {
     .nowPlayingBarText {
-        max-width: 180px;
+        max-width: 15.3em;
     }
 }
 
 @media (min-width: 37.5em) {
     .nowPlayingBarText {
-        max-width: 200px;
+        max-width: 17em;
     }
 }
 
 @media (min-width: 43.75em) {
     .nowPlayingBarText {
-        max-width: 240px;
+        max-width: 20.4em;
     }
 }
 
 @media (min-width: 50em) {
     .nowPlayingBarText {
-        max-width: 300px;
-        margin-right: 30px;
+        max-width: 25.5em;
     }
 }
 
 @media (min-width: 56.25em) {
     .nowPlayingBarText {
-        max-width: 400px;
+        max-width: 34em;
     }
 }
 
 .nowPlayingBarCenter {
     vertical-align: middle;
     text-align: center;
-    margin-top: 6px;
     /* Need this to make sure it's on top of nowPlayingBarPositionContainer so that buttons are fully clickable */
     z-index: 2;
-    position: absolute;
-    left: 200px;
-    right: 200px;
-    top: 0;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .nowPlayingBarPositionContainer {
     position: absolute !important;
-    left: 50px;
+    left: 3.9em;
     top: -8px;
     right: 0;
     z-index: 1;
@@ -185,7 +144,7 @@
 
 .nowPlayingBarRight {
     position: relative;
-    margin: 0 1em 0 auto;
+    margin: 0 .5em 0 auto;
     /* Need this to make sure it's on top of nowPlayingBarPositionContainer so that buttons are fully clickable */
     z-index: 2;
     display: flex;
@@ -197,8 +156,7 @@
     font-weight: normal;
     text-align: center;
     display: inline-block;
-    margin: 0 auto;
-    padding-left: 50px;
+    padding-left: 1.5em;
 }
 
 .nowPlayingBarVolumeSliderContainer {
@@ -207,8 +165,8 @@
 
 .nowPlayingBarUserDataButtons {
     display: inline-block;
-    margin-left: 2em;
-    margin-right: 2em;
+    margin-left: 1em;
+    margin-right: 1em;
 }
 
 
@@ -228,14 +186,7 @@
 
 @media all and (max-width: 50em) {
 
-    .nowPlayingBarCurrentTime {
-        padding-left: 0;
-        top: 22px;
-        right: 140px;
-        position: absolute;
-    }
-
-    .nowPlayingBarCenter > *:not(.nowPlayingBarCurrentTime) {
+    .nowPlayingBarCenter > * {
         display: none !important;
     }
 
@@ -247,13 +198,6 @@
 @media all and (min-width: 50em) {
 
     .nowPlayingBarRight .playPauseButton {
-        display: none;
-    }
-}
-
-@media all and (max-width: 37.5em) {
-
-    .nowPlayingBarCurrentTime {
         display: none;
     }
 }

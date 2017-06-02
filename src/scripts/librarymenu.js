@@ -1,8 +1,7 @@
-﻿define(['layoutManager', 'events', 'viewManager', 'libraryBrowser', 'embyRouter', 'apphost', 'playbackManager', 'browser', 'appfooter-shared', 'dockedtabs', 'paper-icon-button-light', 'material-icons', 'scrollStyles', 'flexStyles'], function (layoutManager, events, viewManager, libraryBrowser, embyRouter, appHost, playbackManager, browser, appFooter, DockedTabs) {
+﻿define(['layoutManager', 'events', 'viewManager', 'libraryBrowser', 'embyRouter', 'apphost', 'playbackManager', 'browser', 'paper-icon-button-light', 'material-icons', 'scrollStyles', 'flexStyles'], function (layoutManager, events, viewManager, libraryBrowser, embyRouter, appHost, playbackManager, browser) {
     'use strict';
 
-    var enableBottomTabs = layoutManager.mobile;
-    var enableLibraryNavDrawer = !enableBottomTabs;
+    var enableLibraryNavDrawer = layoutManager.desktop;
 
     var navDrawerElement;
     var navDrawerScrollContainer;
@@ -10,6 +9,7 @@
 
     var mainDrawerButton;
     var skinHeader = document.querySelector('.skinHeader');
+    var btnHome;
 
     function renderHeader() {
 
@@ -22,8 +22,8 @@
 
         html += '<button type="button" is="paper-icon-button-light" class="headerButton headerButtonLeft headerBackButton hide"><i class="md-icon">' + backIcon + '</i></button>';
 
+        html += '<button type="button" is="paper-icon-button-light" class="headerButton headerAppsButton hide barsMenuButton headerButtonLeft"><i class="md-icon">home</i></button>';
         html += '<button type="button" is="paper-icon-button-light" class="headerButton mainDrawerButton barsMenuButton headerButtonLeft hide"><i class="md-icon">menu</i></button>';
-        html += '<button type="button" is="paper-icon-button-light" class="headerButton headerAppsButton barsMenuButton headerButtonLeft"><i class="md-icon">home</i></button>';
 
         html += '<h3 class="libraryMenuButtonText headerButton"></h3>';
         html += '</div>';
@@ -47,10 +47,12 @@
 
         html += '</div>';
 
-        html += '<div class="headerTabs hide">';
+        html += '<div class="headerTabs sectionTabs hide">';
         html += '</div>';
 
         skinHeader.innerHTML = html;
+
+        btnHome = skinHeader.querySelector('.headerAppsButton');
 
         if (!browser.chrome) {
             skinHeader.classList.add('skinHeader-blurred');
@@ -788,18 +790,20 @@
 
         if (!page.classList.contains('withTabs')) {
             LibraryMenu.setTabs(null);
-
-            if (page.classList.contains('pageWithAbsoluteTabs')) {
-                document.body.classList.add('withTallToolbar');
-            } else {
-                document.body.classList.remove('withTallToolbar');
-            }
         }
     });
 
     pageClassOn('pageshow', 'page', function (e) {
 
         var page = this;
+
+        if (btnHome) {
+            if (page.id === 'indexPage') {
+                btnHome.classList.add('hide');
+            } else {
+                btnHome.classList.remove('hide');
+            }
+        }
 
         var isDashboardPage = page.classList.contains('type-interior');
 
@@ -1000,12 +1004,6 @@
     events.on(playbackManager, 'playerchange', updateCastIcon);
 
     setDrawerClass();
-
-    if (enableBottomTabs) {
-        new DockedTabs({
-            appFooter: appFooter
-        });
-    }
 
     return LibraryMenu;
 });

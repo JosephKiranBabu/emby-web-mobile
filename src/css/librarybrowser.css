@@ -502,7 +502,7 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
 .alphabetPicker {
     position: fixed;
     left: .4em;
-    bottom: 56px;
+    bottom: 48px;
     text-align: center;
     display: none;
     line-height: 1;
@@ -654,7 +654,7 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
 }
 
 .verticalSection {
-    margin-bottom: 2.8em;
+    margin-bottom: 2.7em;
 }
 
 .layout-tv .verticalSection {

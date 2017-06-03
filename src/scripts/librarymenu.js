@@ -272,8 +272,6 @@
 
         html += '<a class="sidebarLink lnkMediaFolder" href="' + homeHref + '" onclick="return LibraryMenu.onLinkClicked(event, this);"><span class="sidebarLinkText">' + Globalize.translate('ButtonHome') + '</span></a>';
 
-        html += '<a class="sidebarLink lnkMediaFolder" data-itemid="remote" href="nowplaying.html" onclick="return LibraryMenu.onLinkClicked(event, this);"><span class="sidebarLinkText">' + Globalize.translate('ButtonRemote') + '</span></a>';
-
         html += '<div class="sidebarDivider"></div>';
 
         html += '<div class="libraryMenuOptions">';

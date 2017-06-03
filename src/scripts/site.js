@@ -1312,6 +1312,10 @@ var AppInfo = {};
                 Dashboard.navigate('mypreferencesmenu.html');
             };
 
+            embyRouter.showNowPlaying = function () {
+                Dashboard.navigate('nowplaying.html');
+            };
+
             embyRouter.setTitle = function (title) {
                 LibraryMenu.setTitle(title);
             };

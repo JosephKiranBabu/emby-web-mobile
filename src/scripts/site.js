@@ -2769,7 +2769,9 @@ var AppInfo = {};
                 }
             }
 
-            postInitDependencies.push('scripts/nowplayingbar');
+            if (!browserInfo.tv && !browserInfo.xboxOne && !browserInfo.ps4) {
+                postInitDependencies.push('bower_components/emby-webcomponents/nowplayingbar/nowplayingbar');
+            }
 
             if (appHost.supports('remotecontrol')) {
 

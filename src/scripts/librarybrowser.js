@@ -504,7 +504,7 @@
                 editable = false;
             }
 
-            if ((item.MediaType === 'Video' && item.Type !== 'Movie') || (item.MediaType && item.MediaType !== 'Video')) {
+            if ((item.MediaType === 'Video' && item.Type !== 'Movie' && item.Type !== 'Trailer') || (item.MediaType && item.MediaType !== 'Video')) {
                 elem.classList.add('detailimg-hidemobile');
                 page.querySelector('.detailPageContent').classList.add('detailPageContent-nodetailimg');
             } else {
@@ -663,7 +663,7 @@
             var hasbackdrop = false;
 
             var itemBackdropElement = page.querySelector('#itemBackdrop');
-            var usePrimaryImage = (item.MediaType === 'Video' && item.Type !== 'Movie') || (item.MediaType && item.MediaType !== 'Video');
+            var usePrimaryImage = (item.MediaType === 'Video' && item.Type !== 'Movie' && item.Type !== 'Trailer') || (item.MediaType && item.MediaType !== 'Video');
             //usePrimaryImage = false;
             var useThumbImage = false;
 

@@ -90,6 +90,8 @@
 .headerLeft {
     display: flex;
     align-items: center;
+    flex-grow: 1;
+    overflow: hidden;
 }
 
 @supports ( (backdrop-filter: blur(1.5em)) or (-webkit-backdrop-filter: blur(1.5em)) ) {
@@ -132,7 +134,6 @@
 .headerRight {
     display: flex;
     align-items: center;
-    flex-grow: 1;
     justify-content: flex-end;
 }
 

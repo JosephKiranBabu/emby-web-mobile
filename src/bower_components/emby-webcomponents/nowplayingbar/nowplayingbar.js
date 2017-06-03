@@ -1,4 +1,4 @@
-﻿define(['datetime', 'userdataButtons', 'itemHelper', 'events', 'browser', 'imageLoader', 'playbackManager', 'nowPlayingHelper', 'apphost', 'dom', 'connectionManager', 'paper-icon-button-light'], function (datetime, userdataButtons, itemHelper, events, browser, imageLoader, playbackManager, nowPlayingHelper, appHost, dom, connectionManager) {
+﻿define(['require', 'datetime', 'userdataButtons', 'itemHelper', 'events', 'browser', 'imageLoader', 'layoutManager', 'playbackManager', 'nowPlayingHelper', 'apphost', 'dom', 'connectionManager', 'paper-icon-button-light'], function (require, datetime, userdataButtons, itemHelper, events, browser, imageLoader, layoutManager, playbackManager, nowPlayingHelper, appHost, dom, connectionManager) {
     'use strict';
 
     var currentPlayer;
@@ -40,31 +40,31 @@
         // The onclicks are needed due to the return false above
         html += '<div class="nowPlayingBarCenter">';
 
-        html += '<button is="paper-icon-button-light" class="previousTrackButton mediaButton autoSize"><i class="md-icon">skip_previous</i></button>';
+        html += '<button is="paper-icon-button-light" class="previousTrackButton mediaButton autoSize"><i class="md-icon">&#xE045;</i></button>';
 
-        html += '<button is="paper-icon-button-light" class="playPauseButton mediaButton autoSize"><i class="md-icon">pause</i></button>';
+        html += '<button is="paper-icon-button-light" class="playPauseButton mediaButton autoSize"><i class="md-icon">&#xE034;</i></button>';
 
         html += '<button is="paper-icon-button-light" class="stopButton mediaButton autoSize"><i class="md-icon">stop</i></button>';
-        html += '<button is="paper-icon-button-light" class="nextTrackButton mediaButton autoSize"><i class="md-icon">skip_next</i></button>';
+        html += '<button is="paper-icon-button-light" class="nextTrackButton mediaButton autoSize"><i class="md-icon">&#xE044;</i></button>';
 
         html += '<div class="nowPlayingBarCurrentTime"></div>';
         html += '</div>';
 
         html += '<div class="nowPlayingBarRight">';
 
-        html += '<button is="paper-icon-button-light" class="muteButton mediaButton autoSize"><i class="md-icon">volume_up</i></button>';
+        html += '<button is="paper-icon-button-light" class="muteButton mediaButton autoSize"><i class="md-icon">&#xE050;</i></button>';
 
         html += '<div class="sliderContainer nowPlayingBarVolumeSliderContainer hide" style="width:100px;vertical-align:middle;display:inline-flex;">';
         html += '<input type="range" is="emby-slider" pin step="1" min="0" max="100" value="0" class="nowPlayingBarVolumeSlider"/>';
         html += '</div>';
 
-        html += '<button is="paper-icon-button-light" class="toggleRepeatButton mediaButton autoSize"><i class="md-icon">repeat</i></button>';
+        html += '<button is="paper-icon-button-light" class="toggleRepeatButton mediaButton autoSize"><i class="md-icon">&#xE040;</i></button>';
 
         html += '<div class="nowPlayingBarUserDataButtons">';
         html += '</div>';
 
-        html += '<button is="paper-icon-button-light" class="playPauseButton mediaButton autoSize"><i class="md-icon">pause</i></button>';
-        html += '<button is="paper-icon-button-light" class="remoteControlButton mediaButton autoSize"><i class="md-icon">playlist_play</i></button>';
+        html += '<button is="paper-icon-button-light" class="playPauseButton mediaButton autoSize"><i class="md-icon">&#xE034;</i></button>';
+        html += '<button is="paper-icon-button-light" class="remoteControlButton mediaButton autoSize"><i class="md-icon">&#xE05F;</i></button>';
 
         html += '</div>';
         html += '</div>';
@@ -96,7 +96,7 @@
     function slideUp(elem) {
 
         // This setTimeout is a hack but resolves the issue of the bar not showing if calling slideDown then slideUp rapidly
-        setTimeout(function() {
+        setTimeout(function () {
             dom.removeEventListener(elem, dom.whichTransitionEvent(), onSlideDownComplete, {
                 once: true
             });
@@ -234,9 +234,11 @@
         });
     }
 
-    function showRemoteControl(tabIndex) {
+    function showRemoteControl() {
 
-        Dashboard.navigate('nowplaying.html');
+        require(['embyRouter'], function (embyRouter) {
+            embyRouter.showNowPlaying();
+        });
     }
 
     var nowPlayingBarElement;
@@ -248,7 +250,7 @@
 
         return new Promise(function (resolve, reject) {
 
-            require(['appFooter-shared', 'itemShortcuts', 'css!css/nowplayingbar.css', 'emby-slider'], function (appfooter, itemShortcuts) {
+            require(['appFooter-shared', 'itemShortcuts', 'css!./nowplayingbar.css', 'emby-slider'], function (appfooter, itemShortcuts) {
 
                 var parentContainer = appfooter.element;
                 nowPlayingBarElement = parentContainer.querySelector('.nowPlayingBar');
@@ -340,14 +342,14 @@
     function updateRepeatModeDisplay(repeatMode) {
 
         if (repeatMode == 'RepeatAll') {
-            toggleRepeatButtonIcon.innerHTML = "repeat";
+            toggleRepeatButtonIcon.innerHTML = "&#xE040;";
             toggleRepeatButton.classList.add('repeatActive');
         }
         else if (repeatMode == 'RepeatOne') {
-            toggleRepeatButtonIcon.innerHTML = "repeat_one";
+            toggleRepeatButtonIcon.innerHTML = "&#xE041;";
             toggleRepeatButton.classList.add('repeatActive');
         } else {
-            toggleRepeatButtonIcon.innerHTML = "repeat";
+            toggleRepeatButtonIcon.innerHTML = "&#xE040;";
             toggleRepeatButton.classList.remove('repeatActive');
         }
     }
@@ -540,7 +542,10 @@
 
         if (nowPlayingItem.Id) {
             if (isRefreshing) {
-                ApiClient.getItem(ApiClient.getCurrentUserId(), nowPlayingItem.Id).then(function (item) {
+
+                var apiClient = connectionManager.getApiClient(nowPlayingItem.ServerId);
+
+                apiClient.getItem(apiClient.getCurrentUserId(), nowPlayingItem.Id).then(function (item) {
                     userdataButtons.fill({
                         item: item,
                         includePlayed: false,
@@ -633,7 +638,7 @@
         //console.log('nowplaying event: ' + e.type);
         var player = this;
 
-        if (!state.NowPlayingItem) {
+        if (!state.NowPlayingItem || layoutManager.tv) {
             hideNowPlayingBar();
             return;
         }

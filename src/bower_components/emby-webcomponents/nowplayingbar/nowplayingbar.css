@@ -54,12 +54,12 @@
     }
 
     .nowPlayingImage img {
-        height: 3.9em;
+        height: 4em;
     }
 
 .nowPlayingBar .nowPlayingImage {
-    width: 3.9em;
-    height: 3.9em;
+    width: 4em;
+    height: 4em;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -124,7 +124,7 @@
 
 .nowPlayingBarPositionContainer {
     position: absolute !important;
-    left: 3.9em;
+    left: 4em;
     top: -8px;
     right: 0;
     z-index: 1;

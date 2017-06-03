@@ -142,8 +142,11 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
     position: relative;
 }
 
-.noBackdrop {
-    background: #181818;
+.itemBackdropProgressBar {
+    position: absolute !important;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 .itemBackdropContent {
@@ -208,6 +211,12 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
 @media all and (max-width: 68.75em) {
 
     .detailLogo {
+        width: 14.91em;
+        height: 3.5em;
+        right: 5%;
+        bottom: 5%;
+        top: auto;
+        background-position: center right;
         display: none;
     }
 }

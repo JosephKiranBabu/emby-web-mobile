@@ -21,7 +21,7 @@
 
         libraryBrowser.renderName(item, $('.itemName', page)[0], false);
         libraryBrowser.renderParentName(item, $('.parentName', page)[0]);
-        libraryBrowser.renderDetailPageBackdrop(page, item, imageLoader);
+        libraryBrowser.renderDetailPageBackdrop(page, item, imageLoader, indicators);
 
         renderImage(page, item);
 

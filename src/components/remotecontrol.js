@@ -539,20 +539,6 @@
             updateRepeatModeDisplay(playbackManager.getRepeatMode(player));
         }
 
-        function onAudioTrackListChange(e) {
-
-            var player = this;
-
-            updateAudioTracksDisplay(player, context);
-        }
-
-        function onSubtitleTrackListChange(e) {
-
-            var player = this;
-
-            updateSubtitleTracksDisplay(player, context);
-        }
-
         function onPlaylistUpdate(e) {
 
             var player = this;
@@ -640,8 +626,6 @@
                 events.off(player, 'pause', onPlayPauseStateChanged);
                 events.off(player, 'unpause', onPlayPauseStateChanged);
                 events.off(player, 'timeupdate', onTimeUpdate);
-                events.off(player, 'audiotracklistchange', onAudioTrackListChange);
-                events.off(player, 'subtitletracklistchange', onSubtitleTrackListChange);
 
                 currentPlayer = null;
             }
@@ -672,8 +656,6 @@
             events.on(player, 'pause', onPlayPauseStateChanged);
             events.on(player, 'unpause', onPlayPauseStateChanged);
             events.on(player, 'timeupdate', onTimeUpdate);
-            events.on(player, 'audiotracklistchange', onAudioTrackListChange);
-            events.on(player, 'subtitletracklistchange', onSubtitleTrackListChange);
 
             var playerInfo = playbackManager.getPlayerInfo();
 

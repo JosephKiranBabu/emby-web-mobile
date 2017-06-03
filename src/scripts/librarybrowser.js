@@ -6,8 +6,8 @@
         var pct = browser.mobile ? '4%' : '0.5%';
 
         var keyframes = [
-          { opacity: '0', transform: 'translate3d(' + pct + ', 0, 0)', offset: 0 },
-          { opacity: '1', transform: 'none', offset: 1 }];
+            { opacity: '0', transform: 'translate3d(' + pct + ', 0, 0)', offset: 0 },
+            { opacity: '1', transform: 'none', offset: 1 }];
 
         elem.animate(keyframes, {
             duration: 160,
@@ -504,7 +504,7 @@
                 editable = false;
             }
 
-            if (item.Type === 'Episode') {
+            if ((item.MediaType === 'Video' && item.Type !== 'Movie') || (item.MediaType && item.MediaType !== 'Video')) {
                 elem.classList.add('detailimg-hidemobile');
                 page.querySelector('.detailPageContent').classList.add('detailPageContent-nodetailimg');
             } else {
@@ -655,7 +655,7 @@
             }
         },
 
-        renderDetailPageBackdrop: function (page, item, imageLoader) {
+        renderDetailPageBackdrop: function (page, item, imageLoader, indicators) {
 
             var screenWidth = screen.availWidth;
 
@@ -663,7 +663,7 @@
             var hasbackdrop = false;
 
             var itemBackdropElement = page.querySelector('#itemBackdrop');
-            var usePrimaryImage = item.Type === 'Episode';
+            var usePrimaryImage = (item.MediaType === 'Video' && item.Type !== 'Movie') || (item.MediaType && item.MediaType !== 'Video');
             //usePrimaryImage = false;
             var useThumbImage = false;
 
@@ -736,6 +736,21 @@
 
                 itemBackdropElement.classList.add('noBackdrop');
                 itemBackdropElement.style.backgroundImage = '';
+            }
+
+            var progress = itemBackdropElement.querySelector('.itemBackdropProgress');
+            if (progress) {
+                progress.parentNode.removeChild(progress);
+            }
+
+            if (usePrimaryImage) {
+                var progressHtml = indicators.getProgressBarHtml(item, {
+                    containerClass: 'itemBackdropProgressBar'
+                });
+
+                if (progressHtml) {
+                    itemBackdropElement.insertAdjacentHTML('beforeend', progressHtml);
+                }
             }
 
             return hasbackdrop;

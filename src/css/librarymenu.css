@@ -108,7 +108,8 @@
 }
 
 .skinHeader.semiTransparent {
-    background-color: rgba(15, 15, 15, .3);
+    background-color: rgba(15, 15, 15, .4);
+    color: #fff;
 }
 
 .viewMenuLink {

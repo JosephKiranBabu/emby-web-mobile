@@ -260,7 +260,7 @@
                 backdrop.clear();
             }
 
-            libraryBrowser.renderDetailPageBackdrop(page, item, imageLoader);
+            libraryBrowser.renderDetailPageBackdrop(page, item, imageLoader, indicators);
 
             libraryMenu.setTransparentMenu(true);
 

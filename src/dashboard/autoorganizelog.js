@@ -27,7 +27,7 @@
 
         var item = currentResult.Items.filter(function (i) {
 
-            return i.Id == id;
+            return i.Id === id;
         })[0];
 
         Dashboard.alert({
@@ -41,7 +41,7 @@
 
         var item = currentResult.Items.filter(function (i) {
 
-            return i.Id == id;
+            return i.Id === id;
         })[0];
 
         var message = Globalize.translate('MessageFileWillBeDeleted') + '<br/><br/>' + item.OriginalPath + '<br/><br/>' + Globalize.translate('MessageSureYouWishToProceed');
@@ -82,12 +82,12 @@
 
         var item = currentResult.Items.filter(function (i) {
 
-            return i.Id == id;
+            return i.Id === id;
         })[0];
 
         if (!item.TargetPath) {
 
-            if (item.Type == "Episode") {
+            if (item.Type === "Episode") {
                 organizeFileWithCorrections(page, item);
             }
 
@@ -142,14 +142,14 @@
 
         var color = null;
 
-        if (status == 'SkippedExisting') {
+        if (status === 'SkippedExisting') {
             status = Globalize.translate('StatusSkipped');
         }
-        else if (status == 'Failure') {
+        else if (status === 'Failure') {
             color = '#cc0000';
             status = Globalize.translate('StatusFailed');
         }
-        if (status == 'Success') {
+        if (status === 'Success') {
             color = 'green';
             status = Globalize.translate('StatusSuccess');
         }
@@ -265,12 +265,12 @@
             html += item.OriginalFileName;
             html += '</span>';
         }
-        else if (status == 'SkippedExisting') {
+        else if (status === 'SkippedExisting') {
             html += '<a data-resultid="' + item.Id + '" style="color:blue;" href="#" class="btnShowStatusMessage">';
             html += item.OriginalFileName;
             html += '</a>';
         }
-        else if (status == 'Failure') {
+        else if (status === 'Failure') {
             html += '<a data-resultid="' + item.Id + '" style="color:red;" href="#" class="btnShowStatusMessage">';
             html += item.OriginalFileName;
             html += '</a>';
@@ -287,7 +287,7 @@
 
         html += '<td class="organizerButtonCell" style="whitespace:no-wrap;">';
 
-        if (item.Status != 'Success') {
+        if (item.Status !== 'Success') {
 
             html += '<button type="button" is="paper-icon-button-light" data-resultid="' + item.Id + '" class="btnProcessResult organizerButton autoSize" title="' + Globalize.translate('ButtonOrganizeFile') + '"><i class="md-icon">folder</i></button>';
             html += '<button type="button" is="paper-icon-button-light" data-resultid="' + item.Id + '" class="btnDeleteResult organizerButton autoSize" title="' + Globalize.translate('ButtonDeleteFile') + '"><i class="md-icon">delete</i></button>';
@@ -326,12 +326,12 @@
 
     function onServerEvent(e, apiClient, data) {
 
-        if (e.type == 'ScheduledTaskEnded') {
+        if (e.type === 'ScheduledTaskEnded') {
 
-            if (data && data.Key == 'AutoOrganize') {
+            if (data && data.Key === 'AutoOrganize') {
                 reloadItems(page, false);
             }
-        } else if (e.type == 'AutoOrganize_ItemUpdated' && data) {
+        } else if (e.type === 'AutoOrganize_ItemUpdated' && data) {
 
             updateItemStatus(page, data);
         } else {

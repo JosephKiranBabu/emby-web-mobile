@@ -10,7 +10,7 @@
 
         var os = systemInfo.OperatingSystem.toLowerCase();
 
-        if (os.indexOf('windows') != -1) {
+        if (os.indexOf('windows') !== -1) {
             $('#windowsStartupDescription', page).show();
         } else {
             $('#windowsStartupDescription', page).hide();
@@ -72,7 +72,7 @@
 
             var requiresReload = false;
 
-            if (config.UICulture != currentLanguage) {
+            if (config.UICulture !== currentLanguage) {
                 requiresReload = true;
             }
 
@@ -88,7 +88,7 @@
 
                     brandingConfig.LoginDisclaimer = form.querySelector('#txtLoginDisclaimer').value;
                     brandingConfig.CustomCss = form.querySelector('#txtCustomCss').value;
-                    if (currentBrandingOptions && brandingConfig.CustomCss != currentBrandingOptions.CustomCss) {
+                    if (currentBrandingOptions && brandingConfig.CustomCss !== currentBrandingOptions.CustomCss) {
                         requiresReload = true;
                     }
 

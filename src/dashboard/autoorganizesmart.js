@@ -40,6 +40,32 @@
         });
     }
 
+    function getHtmlFromMatchStrings(info, i) {
+
+        var matchStringIndex = 0;
+
+        return info.MatchStrings.map(function (m) {
+
+            var matchStringHtml = '';
+
+            matchStringHtml += '<div class="listItem">';
+
+            matchStringHtml += '<div class="listItemBody" style="padding: .1em 1em .4em 5.5em; min-height: 1.5em;">';
+
+            matchStringHtml += "<div class='listItemBodyText secondary'>" + m + "</div>";
+
+            matchStringHtml += '</div>';
+
+            matchStringHtml += '<button type="button" is="emby-button" class="btnDeleteMatchEntry" style="padding: 0;" data-index="' + i + '" data-matchindex="' + matchStringIndex + '" title="' + Globalize.translate('ButtonDelete') + '"><i class="md-icon">delete</i></button>';
+
+            matchStringHtml += '</div>';
+            matchStringIndex++;
+
+            return matchStringHtml;
+
+        }).join('');
+    }
+
     function populateList(page, result) {
 
         var infos = result.Items;
@@ -50,7 +76,7 @@
                 a = a.OrganizerType + " " + (a.DisplayName || a.ItemName);
                 b = b.OrganizerType + " " + (b.DisplayName || b.ItemName);
 
-                if (a == b) {
+                if (a === b) {
                     return 0;
                 }
 
@@ -84,28 +110,7 @@
 
             html += '</div>';
 
-            var matchStringIndex = 0;
-
-            html += info.MatchStrings.map(function (m) {
-
-                var matchStringHtml = '';
-
-                matchStringHtml += '<div class="listItem">';
-
-                matchStringHtml += '<div class="listItemBody" style="padding: .1em 1em .4em 5.5em; min-height: 1.5em;">';
-
-                matchStringHtml += "<div class='listItemBodyText secondary'>" + m + "</div>";
-
-                matchStringHtml += '</div>';
-
-                matchStringHtml += '<button type="button" is="emby-button" class="btnDeleteMatchEntry" style="padding: 0;" data-index="' + i + '" data-matchindex="' + matchStringIndex + '" title="' + Globalize.translate('ButtonDelete') + '"><i class="md-icon">delete</i></button>';
-
-                matchStringHtml += '</div>';
-                matchStringIndex++;
-
-                return matchStringHtml;
-
-            }).join('');
+            html += getHtmlFromMatchStrings(info, i);
         }
 
         if (infos.length) {
@@ -118,18 +123,18 @@
 
     function getTabs() {
         return [
-        {
-            href: 'autoorganizelog.html',
-            name: Globalize.translate('TabActivityLog')
-        },
-         {
-             href: 'autoorganizetv.html',
-             name: Globalize.translate('TabTV')
-         },
-         {
-             href: 'autoorganizesmart.html',
-             name: Globalize.translate('TabSmartMatches')
-         }];
+            {
+                href: 'autoorganizelog.html',
+                name: Globalize.translate('TabActivityLog')
+            },
+            {
+                href: 'autoorganizetv.html',
+                name: Globalize.translate('TabTV')
+            },
+            {
+                href: 'autoorganizesmart.html',
+                name: Globalize.translate('TabSmartMatches')
+            }];
     }
 
     return function (view, params) {
@@ -149,10 +154,10 @@
 
                 var info = currentResult.Items[index];
                 var entries = [
-                {
-                    Name: info.ItemName,
-                    Value: info.MatchStrings[matchIndex]
-                }];
+                    {
+                        Name: info.ItemName,
+                        Value: info.MatchStrings[matchIndex]
+                    }];
 
                 ApiClient.deleteSmartMatchEntries(entries).then(function () {
 

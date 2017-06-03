@@ -46,20 +46,27 @@ module.exports = function (grunt) {
                 '!src/**/*min.js',
                 '!src/bower_components/cryptojslib/**/*.js',
                 '!src/bower_components/document-register-element/**/*.js',
+                '!src/bower_components/jquery/**/*.js',
+                '!src/bower_components/jstree/**/*.js',
                 '!src/bower_components/fetch/**/*.js',
                 '!src/bower_components/hammerjs/**/*.js',
                 '!src/bower_components/native-promise-only/**/*.js',
                 '!src/bower_components/query-string/**/*.js',
                 '!src/bower_components/Sortable/**/*.js',
                 '!src/bower_components/Swiper/**/*.js',
+                '!src/bower_components/resize-observer-polyfill/**/*.js',
                 '!src/bower_components/emby-webcomponents/polyfills/**/*.js',
                 '!src/bower_components/emby-webcomponents/sharing/social-share-kit-1.0.10/**/*.js',
                 '!src/bower_components/emby-webcomponents/native-promise-only/**/*.js',
                 '!src/environments/webos/webos.js',
-                '!src/environments/windows-uwp/mediacontrol.js'
+                '!src/environments/windows-uwp/mediacontrol.js',
+                '!src/components/**/*.js',
+                '!src/scripts/**/*.js',
+                '!src/themes/**/*.js',
+                '!src/thirdparty/**/*.js'
             ]
         },
-		clean: {
+        clean: {
 		    pre: ['dist/'],
             
 		    postMobile: [
@@ -107,6 +114,8 @@ module.exports = function (grunt) {
                         '!bower_components/jquery/external/**/*',
                         '!bower_components/jquery/src/**/*',
                         '!bower_components/jstree/src/**/*',
+                        '!bower_components/resize-observer-polyfill/src/**/*',
+                        '!bower_components/resize-observer-polyfill/tests/**/*',
 
 
                         '!bower_components/cryptojslib/components/**/*',
@@ -180,7 +189,7 @@ module.exports = function (grunt) {
         }
     });
 
-	grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-copy');
@@ -209,7 +218,7 @@ module.exports = function (grunt) {
             handleFetch: handleFetch,
             logger: grunt.log.writeln,
             staticFileGlobs: [
-              rootDir + '/**'
+                rootDir + '/**'
             ],
             stripPrefix: rootDir + '/',
             // verbose defaults to false, but for the purposes of this demo, log more.
@@ -240,7 +249,7 @@ module.exports = function (grunt) {
     function registerTask(name, exclusions) {
 
         var gruntTasks = [];
-        //gruntTasks.push('jshint');
+        gruntTasks.push('jshint');
         gruntTasks.push('clean:pre');
         gruntTasks.push('copy');
         gruntTasks.push('autoprefixer');

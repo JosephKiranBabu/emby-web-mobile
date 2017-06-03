@@ -43,7 +43,7 @@
 
         ApiClient.getNamedConfiguration("metadata").then(function (config) {
 
-            config.UseFileCreationTimeForDateAdded = $('#selectDateAdded', form).val() == '1';
+            config.UseFileCreationTimeForDateAdded = $('#selectDateAdded', form).val() === '1';
 
             ApiClient.updateNamedConfiguration("metadata", config);
         });

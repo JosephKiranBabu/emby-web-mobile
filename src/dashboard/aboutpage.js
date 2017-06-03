@@ -11,5 +11,5 @@
 
             elem.innerHTML = elem.innerHTML.replace('{0}', ConnectionManager.appVersion());
         });
-    }
+    };
 });

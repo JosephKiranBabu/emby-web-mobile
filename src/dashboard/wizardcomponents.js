@@ -13,7 +13,7 @@
 
             var operatingSystem = systemInfo.OperatingSystem.toLowerCase();
 
-            if (operatingSystem == 'windows') {
+            if (operatingSystem === 'windows') {
                 view.querySelector('.fldSelectEncoderPathType').classList.add('hide');
                 view.querySelector('.markExec').classList.add('hide');
             } else {
@@ -21,29 +21,29 @@
                 view.querySelector('.markExec').classList.remove('hide');
             }
 
-            if (operatingSystem == 'windows' && systemInfo.SystemArchitecture != 'Arm') {
+            if (operatingSystem === 'windows' && systemInfo.SystemArchitecture !== 'Arm') {
 
                 view.querySelector('.suggestedLocation').innerHTML = Globalize.translate('FFmpegSuggestedDownload', '<a is="emby-linkbutton" class="button-link" target="_blank" href="https://ffmpeg.zeranoe.com/builds">https://ffmpeg.zeranoe.com</a>');
 
-                if (systemInfo.SystemArchitecture == 'X86') {
+                if (systemInfo.SystemArchitecture === 'X86') {
                     instructions = 'Download FFmpeg 32-Bit Static';
                 }
-                else if (systemInfo.SystemArchitecture == 'X64') {
+                else if (systemInfo.SystemArchitecture === 'X64') {
                     instructions = 'Download FFmpeg 64-Bit Static';
                 }
 
-            } else if (operatingSystem == 'linux') {
+            } else if (operatingSystem === 'linux') {
 
                 view.querySelector('.suggestedLocation').innerHTML = Globalize.translate('FFmpegSuggestedDownload', '<a is="emby-linkbutton" class="button-link" target="_blank" href="http://johnvansickle.com/ffmpeg">http://johnvansickle.com/ffmpeg</a>');
 
-                if (systemInfo.SystemArchitecture == 'X86') {
+                if (systemInfo.SystemArchitecture === 'X86') {
                     instructions = 'Download x86 build';
                 }
-                else if (systemInfo.SystemArchitecture == 'X64') {
+                else if (systemInfo.SystemArchitecture === 'X64') {
                     instructions = 'Download x86_64 build';
                 }
 
-            } else if (operatingSystem == 'osx' && systemInfo.SystemArchitecture == 'X64') {
+            } else if (operatingSystem === 'osx' && systemInfo.SystemArchitecture === 'X64') {
 
                 view.querySelector('.suggestedLocation').innerHTML = Globalize.translate('FFmpegSuggestedDownload', '<a is="emby-linkbutton" class="button-link" target="_blank" href="http://evermeet.cx/ffmpeg">http://evermeet.cx/ffmpeg</a>');
                 instructions = 'Download both ffmpeg and ffprobe, and extract them to the same folder.';
@@ -89,7 +89,7 @@
 
         var page = parentWithClass(this, 'page');
 
-        if (this.value == 'Custom') {
+        if (this.value === 'Custom') {
             page.querySelector('.fldEncoderPath').classList.remove('hide');
         } else {
             page.querySelector('.fldEncoderPath').classList.add('hide');

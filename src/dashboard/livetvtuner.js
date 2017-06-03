@@ -28,7 +28,7 @@
             ApiClient.getNamedConfiguration("livetv").then(function (config) {
 
                 var info = config.TunerHosts.filter(function (i) {
-                    return i.Id == providerId;
+                    return i.Id === providerId;
                 })[0];
 
                 fillTunerHostInfo(view, info);
@@ -111,18 +111,18 @@
 
     function getTabs() {
         return [
-        {
-            href: 'livetvstatus.html',
-            name: Globalize.translate('TabDevices')
-        },
-         {
-             href: 'livetvsettings.html',
-             name: Globalize.translate('TabSettings')
-         },
-         {
-             href: 'appservices.html?context=livetv',
-             name: Globalize.translate('TabServices')
-         }];
+            {
+                href: 'livetvstatus.html',
+                name: Globalize.translate('TabDevices')
+            },
+            {
+                href: 'livetvsettings.html',
+                name: Globalize.translate('TabSettings')
+            },
+            {
+                href: 'appservices.html?context=livetv',
+                name: Globalize.translate('TabServices')
+            }];
     }
 
     return function (view, params) {

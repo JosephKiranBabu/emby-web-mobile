@@ -2320,7 +2320,9 @@ var AppInfo = {};
             autoFocus: false,
             transition: 'fade',
             fullscreen: true,
-            supportsThemeMedia: true
+            supportsThemeMedia: true,
+            // the page has it's own
+            enableMediaControl: false
         });
 
         defineRoute({
@@ -2558,7 +2560,9 @@ var AppInfo = {};
             autoFocus: false,
             type: 'video-osd',
             supportsThemeMedia: true,
-            fullscreen: true
+            fullscreen: true,
+            // the page has it's own
+            enableMediaControl: false
         });
 
         defineRoute({

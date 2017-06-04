@@ -10,7 +10,6 @@
 
         view.addEventListener('viewbeforeshow', function (e) {
             document.body.classList.add('hiddenViewMenuBar');
-            document.body.classList.add('hiddenNowPlayingBar');
 
             if (remoteControl) {
                 remoteControl.onShow();
@@ -24,7 +23,6 @@
             }
 
             document.body.classList.remove('hiddenViewMenuBar');
-            document.body.classList.remove('hiddenNowPlayingBar');
         });
     };
 

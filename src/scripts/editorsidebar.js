@@ -221,7 +221,9 @@
 
         var query = {
             ParentId: id,
-            Fields: 'Settings'
+            Fields: 'Settings',
+            IsVirtualUnaired: false,
+            IsMissing: false
         };
 
         var itemtype = node.li_attr.itemtype;

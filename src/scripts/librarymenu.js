@@ -10,6 +10,7 @@
     var mainDrawerButton;
     var skinHeader = document.querySelector('.skinHeader');
     var btnHome;
+    var currentDrawerType;
 
     function renderHeader() {
 
@@ -328,6 +329,7 @@
 
     function refreshDashboardInfoInDrawer(page, user) {
 
+        currentDrawerType = 'admin';
         loadNavDrawer();
 
         if (!navDrawerScrollContainer.querySelector('.adminDrawerLogo')) {
@@ -820,7 +822,7 @@
                 }
             }
 
-            if ((navDrawerElement && navDrawerElement.classList.contains('adminDrawer')) || (!navDrawerElement)) {
+            if (currentDrawerType !== 'library') {
                 refreshLibraryDrawer();
             }
         }
@@ -938,6 +940,7 @@
     function refreshLibraryDrawer(user) {
 
         loadNavDrawer();
+        currentDrawerType = 'library';
 
         var promise = user ? Promise.resolve(user) : ConnectionManager.user(window.ApiClient);
 
@@ -993,7 +996,6 @@
     events.on(ConnectionManager, 'localusersignedin', function (e, user) {
         setDrawerClass();
         ConnectionManager.user(ConnectionManager.getApiClient(user.ServerId)).then(function (user) {
-            refreshLibraryDrawer(user);
             updateUserInHeader(user);
         });
     });

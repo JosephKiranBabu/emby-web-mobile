@@ -289,10 +289,6 @@ button {
     text-align: center;
 }
 
-.cardFooter-transparent > .cardText {
-    color: #ccc;
-}
-
 .cardText-secondary {
     color: #888 !important;
 }
@@ -371,15 +367,10 @@ button {
     position: absolute;
     bottom: 0;
     right: 0;
-    margin: 0 .35em .5em 0;
+    margin: 0 .35em .35em 0;
     z-index: 1;
     padding: .427em;
 }
-
-    .cardOverlayButton:hover {
-        background-color: rgba(0,0,0,.9) !important;
-        transition: background-color .5s ease-out;
-    }
 
 .defaultCardColor1 {
     background-color: #009688;

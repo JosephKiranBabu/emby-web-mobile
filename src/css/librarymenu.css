@@ -16,7 +16,7 @@
     z-index: 1;
     margin: 0 !important;
     /* Page needs to supply padding */
-    top: 6.8em !important;
+    top: 6.9em !important;
     transition: transform 200ms ease-out;
 }
 
@@ -28,6 +28,7 @@
     height: 1px;
     background: #eaeaea;
     margin: .5em 0;
+    display: none;
 }
 
 .headerUserImage {
@@ -114,23 +115,6 @@
     color: #fff;
 }
 
-.viewMenuLink {
-    text-decoration: none;
-    color: #eee !important;
-    padding: .5em;
-    display: inline-block;
-    vertical-align: middle;
-}
-
-    .viewMenuLink:hover {
-        color: #fff;
-    }
-
-    .viewMenuLink img {
-        height: 1.5em;
-        vertical-align: top;
-    }
-
 .headerRight {
     display: flex;
     align-items: center;
@@ -145,7 +129,7 @@
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: #111 !important;
+    color: inherit !important;
     font-weight: normal !important;
     vertical-align: middle;
     padding: 1em 0 1em 2.4em;
@@ -161,13 +145,12 @@
 
 .sidebarLinkIcon {
     margin-right: 1em;
-    color: #444 !important;
 }
 
 .sidebarHeader {
     padding-left: 1.4em;
     margin: 1.2em 0 .7em;
-    color: #555;
+    font-weight: 500;
 }
 
 body:not(.dashboardDocument) .btnNotifications {
@@ -176,19 +159,8 @@ body:not(.dashboardDocument) .btnNotifications {
 
 .darkDrawer {
     background-color: #181818 !important;
+    color: #ccc;
 }
-
-    .darkDrawer .sidebarLinkIcon {
-        color: #bbb !important;
-    }
-
-    .darkDrawer .sidebarLink {
-        color: #fff !important;
-    }
-
-    .darkDrawer .sidebarHeader {
-        color: #bbb !important;
-    }
 
     .darkDrawer .sidebarDivider {
         background: #262626 !important;
@@ -302,5 +274,23 @@ body:not(.dashboardDocument) .btnNotifications {
     .absolutePageTabContent {
         /* Page needs to supply padding */
         top: 4.8em !important;
+    }
+}
+
+.paper-icon-button-light.btnActiveCast {
+    color: #4285F4;
+}
+
+.headerSelectedPlayer {
+    font-weight: normal;
+    max-width: 10em;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+@media all and (max-width: 37.5em) {
+    .headerSelectedPlayer {
+        display: none;
     }
 }

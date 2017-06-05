@@ -2757,7 +2757,6 @@ var AppInfo = {};
             }
 
             postInitDependencies.push('bower_components/emby-webcomponents/thememediaplayer');
-            postInitDependencies.push('css!css/chromecast.css');
             postInitDependencies.push('scripts/autobackdrops');
 
             if (Dashboard.isRunningInCordova()) {

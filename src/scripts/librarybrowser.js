@@ -122,19 +122,13 @@
             var pageCount = ownerpage.querySelectorAll('.pageTabContent').length;
             var onSwipeLeft = function (e, target) {
                 if (libraryBrowser.allowSwipe(target) && ownerpage.contains(target)) {
-                    var selected = parseInt(tabs.selectedIndex() || '0');
-                    if (selected < (pageCount - 1)) {
-                        tabs.selectedIndex(selected + 1);
-                    }
+                    tabs.selectNext();
                 }
             };
 
             var onSwipeRight = function (e, target) {
                 if (libraryBrowser.allowSwipe(target) && ownerpage.contains(target)) {
-                    var selected = parseInt(tabs.selectedIndex() || '0');
-                    if (selected > 0) {
-                        tabs.selectedIndex(selected - 1);
-                    }
+                    tabs.selectPrevious();
                 }
             };
 

@@ -32,7 +32,7 @@
         html += '<div class="headerRight">';
 
         html += '<span class="headerSelectedPlayer"></span>';
-        html += '<button is="paper-icon-button-light" class="btnCast headerButton-btnCast headerButton headerButtonRight hide autoSize"><i class="md-icon">cast</i></button>';
+        html += '<button is="paper-icon-button-light" class="btnCast headerButton-btnCast headerButton headerButtonRight hide autoSize"><i class="md-icon">&#xE307;</i></button>';
 
         html += '<button type="button" is="paper-icon-button-light" class="headerButton headerButtonRight headerSearchButton hide autoSize"><i class="md-icon">search</i></button>';
 
@@ -691,12 +691,12 @@
 
         if (info && !info.isLocalPlayer) {
 
-            btnCast.querySelector('i').icon = 'cast_connected';
+            btnCast.querySelector('i').innerHTML = '&#xE308;';
             btnCast.classList.add('btnActiveCast');
             context.querySelector('.headerSelectedPlayer').innerHTML = info.deviceName || info.name;
 
         } else {
-            btnCast.querySelector('i').innerHTML = 'cast';
+            btnCast.querySelector('i').innerHTML = '&#xE307;';
             btnCast.classList.remove('btnActiveCast');
 
             context.querySelector('.headerSelectedPlayer').innerHTML = '';

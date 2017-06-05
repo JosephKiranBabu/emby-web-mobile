@@ -61,6 +61,10 @@
 
                 var tabClass = 'emby-tab-button';
 
+                if (t.enabled === false) {
+                    tabClass += ' hide';
+                }
+
                 var tabHtml;
 
                 if (t.href) {

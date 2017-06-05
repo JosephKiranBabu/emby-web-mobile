@@ -120,15 +120,6 @@ progress {
     background: #fff !important;
 }
 
-    .adminDrawer .sidebarLink {
-        color: #333 !important;
-    }
-
-    .adminDrawer .sidebarHeader {
-        color: #666 !important;
-        font-weight: 500 !important;
-    }
-
     .adminDrawer .sidebarLink:hover {
         color: #00897B !important;
     }

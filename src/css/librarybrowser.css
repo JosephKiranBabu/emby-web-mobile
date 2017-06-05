@@ -18,7 +18,7 @@
 
 .ui-body-b {
     /* Need the important tag for paper dialogs with this class */
-    color: #fff !important;
+    color: #ccc !important;
 }
 
 .backdropContainer {
@@ -136,7 +136,7 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
 
 .itemBackdrop {
     background-size: cover;
-    background-position: center 15%;
+    background-position: center center;
     background-repeat: no-repeat;
     height: 45vh;
     position: relative;

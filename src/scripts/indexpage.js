@@ -1,4 +1,4 @@
-﻿define(['loading', 'libraryBrowser', 'libraryMenu', 'playbackManager', 'mainTabsManager', 'homeSections', 'globalize', 'serverNotifications', 'events', 'emby-button'], function (loading, libraryBrowser, libraryMenu, playbackManager, mainTabsManager, homeSections, globalize, serverNotifications, events) {
+﻿define(['loading', 'libraryBrowser', 'libraryMenu', 'playbackManager', 'mainTabsManager', 'homeSections', 'globalize', 'apphost', 'serverNotifications', 'events', 'emby-button'], function (loading, libraryBrowser, libraryMenu, playbackManager, mainTabsManager, homeSections, globalize, appHost, serverNotifications, events) {
     'use strict';
 
     var homePageDismissValue = '14';
@@ -135,8 +135,12 @@
             name: globalize.translate('TabHome')
         },
          {
-             name: globalize.translate('TabFavorites')
-         },
+             name: globalize.translate('Downloads'),
+             enabled: appHost.supports('sync')
+        },
+        {
+            name: globalize.translate('TabFavorites')
+        },
          {
              name: globalize.translate('TabUpcoming')
          },
@@ -194,12 +198,14 @@
                 case 0:
                     break;
                 case 1:
-                    depends.push('scripts/homefavorites');
                     break;
                 case 2:
-                    depends.push('scripts/tvupcoming');
+                    depends.push('scripts/homefavorites');
                     break;
                 case 3:
+                    depends.push('scripts/tvupcoming');
+                    break;
+                case 4:
                     depends.push('scripts/searchtab');
                     break;
                 default:
@@ -219,7 +225,7 @@
                     if (index === 0) {
                         controller = self;
                     }
-                    else if (index === 3) {
+                    else if (index === 4) {
                         controller = new controllerFactory(view, tabContent, {});
                     } else {
                         controller = new controllerFactory(view, params, tabContent);

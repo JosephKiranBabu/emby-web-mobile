@@ -211,11 +211,7 @@ body:not(.dashboardDocument) .btnNotifications {
     }
 
     .dashboardDocument .mainDrawer-scrollContainer {
-        margin-top: 4.3em !important;
-    }
-
-    .dashboardDocument.withSectionTabs .mainDrawer-scrollContainer {
-        margin-top: 7em !important;
+        margin-top: 4.9em !important;
     }
 
     .dashboardDocument .tmla-mask {
@@ -240,6 +236,13 @@ body:not(.dashboardDocument) .btnNotifications {
 
     .dashboardDocument .darkDrawer {
         background-color: rgba(28,28,31,.3) !important;
+    }
+}
+
+@media all and (min-width: 40em) and (max-width: 84em) {
+
+    .dashboardDocument.withSectionTabs .mainDrawer-scrollContainer {
+        margin-top: 7em !important;
     }
 }
 

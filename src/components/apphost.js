@@ -176,10 +176,10 @@ define(['appStorage', 'browser'], function (appStorage, browser) {
         }
 
         return window.SpeechRecognition ||
-               window.webkitSpeechRecognition ||
-               window.mozSpeechRecognition ||
-               window.oSpeechRecognition ||
-               window.msSpeechRecognition;
+            window.webkitSpeechRecognition ||
+            window.mozSpeechRecognition ||
+            window.oSpeechRecognition ||
+            window.msSpeechRecognition;
     }
 
     function supportsFullscreen() {
@@ -248,6 +248,10 @@ define(['appStorage', 'browser'], function (appStorage, browser) {
         return null;
     }
 
+    function isXboxUWP() {
+        return false;
+    }
+
     var supportedFeatures = function () {
 
         var features = [
@@ -255,22 +259,33 @@ define(['appStorage', 'browser'], function (appStorage, browser) {
             'externalpremium'
         ];
 
-        if (!browser.edgeUwp && !browser.tv && !browser.xboxOne && !browser.ps4) {
+        if (!browser.edgeUwp && !browser.tv && !browser.xboxOne && !browser.ps4 && !isXboxUWP()) {
             features.push('filedownload');
         }
 
-        if (browser.operaTv || browser.tizen || browser.web0s) {
+        if (browser.operaTv || browser.tizen || browser.orsay || browser.web0s) {
             features.push('exit');
         } else {
             features.push('exitmenu');
+            features.push('plugins');
         }
 
-        if (!browser.operaTv) {
+        // the app stores may reject over navigation that pops open the browser
+        if (!browser.operaTv && !browser.tizen && !browser.orsay && !browser.web0s && !browser.ps4) {
             features.push('externallinks');
+        }
+
+        // opera won't even allow a link to be displayed
+        if (!browser.operaTv) {
+            features.push('externallinkdisplay');
         }
 
         if (supportsVoiceInput()) {
             features.push('voiceinput');
+        }
+
+        if (!browser.tv && !browser.xboxOne && !browser.ps4 && !isXboxUWP()) {
+            features.push('displaymode');
         }
 
         if (supportsHtmlMediaAutoplay()) {
@@ -278,13 +293,21 @@ define(['appStorage', 'browser'], function (appStorage, browser) {
             features.push('htmlvideoautoplay');
         }
 
-        if (window.SyncRegistered) {
-            //features.push('sync');
+        if (browser.edgeUwp /*|| self.ServiceWorkerSyncRegistered*/) {
+            if (!isXboxUWP()) {
+                features.push('sync');
+            }
         }
 
         if (supportsFullscreen()) {
             features.push('fullscreenchange');
         }
+        //if (supportsSoundEffects()) {
+        //    features.push('soundeffects');
+        //}
+        //if (supportInAppConnectSignup()) {
+        //    features.push('connectsignup');
+        //}
 
         if (browser.chrome || (browser.edge && !browser.slow)) {
             // This is not directly related to image analysis but it't a hint the device is probably too slow for it
@@ -297,11 +320,11 @@ define(['appStorage', 'browser'], function (appStorage, browser) {
             features.push('multiserver');
         }
 
-        if (browser.tv || browser.xboxOne || browser.ps4 || browser.mobile) {
+        if (browser.tv || browser.xboxOne || browser.ps4 || browser.mobile || isXboxUWP()) {
             features.push('physicalvolumecontrol');
         }
 
-        if (!browser.tv && !browser.xboxOne && !browser.ps4) {
+        if (!browser.tv && !browser.xboxOne && !browser.ps4 && !isXboxUWP()) {
             features.push('remotecontrol');
         }
 

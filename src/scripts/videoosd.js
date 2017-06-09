@@ -91,6 +91,10 @@
         var isEnabled;
         var currentItem;
         var recordingButtonManager;
+        var enableProgressByTimeOfDay;
+        var programStartDateMs = 0;
+        var programEndDateMs = 0;
+        var playbackStartTimeTicks = 0;
 
         var nowPlayingVolumeSlider = view.querySelector('.osdVolumeSlider');
         var nowPlayingVolumeSliderContainer = view.querySelector('.osdVolumeSliderContainer');
@@ -99,6 +103,8 @@
 
         var nowPlayingPositionText = view.querySelector('.osdPositionText');
         var nowPlayingDurationText = view.querySelector('.osdDurationText');
+        var startTimeText = view.querySelector('.startTimeText');
+        var endTimeText = view.querySelector('.endTimeText');
         var endsAtText = view.querySelector('.endsAtText');
 
         var btnRewind = view.querySelector('.btnRewind');
@@ -249,7 +255,7 @@
             if (!displayName && displayItem.Type === 'Program') {
                 displayName = displayItem.Name;
             }
-                
+
             titleElement.innerHTML = displayName;
 
             if (displayName) {
@@ -280,7 +286,8 @@
 
             var secondaryMediaInfo = view.querySelector('.osdSecondaryMediaInfo');
             var secondaryMediaInfoHtml = mediaInfo.getSecondaryMediaInfoHtml(displayItem, {
-                startDate: false
+                startDate: false,
+                programTime: false
             });
             secondaryMediaInfo.innerHTML = secondaryMediaInfoHtml;
 
@@ -289,6 +296,46 @@
             } else {
                 secondaryMediaInfo.classList.add('hide');
             }
+
+            if (enableProgressByTimeOfDay) {
+
+                setDisplayTime(startTimeText, displayItem.StartDate);
+                setDisplayTime(endTimeText, displayItem.EndDate);
+
+                startTimeText.classList.remove('hide');
+                endTimeText.classList.remove('hide');
+
+                programStartDateMs = displayItem.StartDate ? datetime.parseISO8601Date(displayItem.StartDate).getTime() : 0;
+                programEndDateMs = displayItem.EndDate ? datetime.parseISO8601Date(displayItem.EndDate).getTime() : 0;
+
+            } else {
+                startTimeText.classList.add('hide');
+                endTimeText.classList.add('hide');
+
+                startTimeText.innerHTML = '';
+                endTimeText.innerHTML = '';
+
+                programStartDateMs = 0;
+                programEndDateMs = 0;
+            }
+        }
+
+        function getDisplayTimeWithoutAmPm(date) {
+
+            return datetime.getDisplayTime(date).toLowerCase().replace('am', '').replace('pm', '').trim();
+        }
+
+        function setDisplayTime(elem, date) {
+
+            var html;
+
+            if (date) {
+                date = datetime.parseISO8601Date(date);
+
+                html = getDisplayTimeWithoutAmPm(date);
+            }
+
+            elem.innerHTML = html || '';
         }
 
         function updateNowPlayingInfo(state) {
@@ -313,6 +360,7 @@
                 return;
             }
 
+            enableProgressByTimeOfDay = item.Type === 'TvChannel';
             getDisplayItem(item).then(updateDisplayItem);
 
             nowPlayingVolumeSlider.disabled = false;
@@ -363,8 +411,8 @@
 
                 if (!imgUrl && secondaryItem) {
                     imgUrl = seriesImageUrl(secondaryItem, { type: 'Primary' }) ||
-                       seriesImageUrl(secondaryItem, { type: 'Thumb' }) ||
-                       imageUrl(secondaryItem, { type: 'Primary' });
+                        seriesImageUrl(secondaryItem, { type: 'Thumb' }) ||
+                        imageUrl(secondaryItem, { type: 'Primary' });
                 }
 
                 if (imgUrl) {
@@ -785,7 +833,7 @@
             currentRuntimeTicks = playbackManager.duration(player);
 
             var currentTime = playbackManager.currentTime(player);
-            updateTimeDisplay(currentTime, currentRuntimeTicks);
+            updateTimeDisplay(currentTime, currentRuntimeTicks, playbackManager.playbackStartTime(player));
 
             refreshProgramInfoIfNeeded(player);
             showComingUpNextIfNeeded(player, currentTime, currentRuntimeTicks);
@@ -897,7 +945,9 @@
             btnRewind.disabled = !playState.CanSeek;
 
             var nowPlayingItem = state.NowPlayingItem || {};
-            updateTimeDisplay(playState.PositionTicks, nowPlayingItem.RunTimeTicks);
+
+            playbackStartTimeTicks = playState.PlaybackStartTimeTicks;
+            updateTimeDisplay(playState.PositionTicks, nowPlayingItem.RunTimeTicks, playState.PlaybackStartTimeTicks);
 
             updateNowPlayingInfo(state);
 
@@ -922,30 +972,52 @@
             updateFullscreenIcon();
         }
 
-        function updateTimeDisplay(positionTicks, runtimeTicks) {
+        function updateTimeDisplay(positionTicks, runtimeTicks, playbackStartTimeTicks) {
 
-            if (nowPlayingPositionSlider && !nowPlayingPositionSlider.dragging) {
-                if (runtimeTicks) {
+            if (enableProgressByTimeOfDay) {
 
-                    var pct = positionTicks / runtimeTicks;
-                    pct *= 100;
+                if (nowPlayingPositionSlider && !nowPlayingPositionSlider.dragging) {
 
-                    nowPlayingPositionSlider.value = pct;
+                    if (programStartDateMs && programEndDateMs) {
 
-                } else {
+                        var currentTimeMs = (playbackStartTimeTicks + (positionTicks || 0)) / 10000;
+                        var programRuntimeMs = programEndDateMs - programStartDateMs;
 
-                    nowPlayingPositionSlider.value = 0;
+                        nowPlayingPositionSlider.value = ((currentTimeMs - programStartDateMs) / programRuntimeMs) * 100;
+
+                    } else {
+                        nowPlayingPositionSlider.value = 0;
+                    }
                 }
 
-                if (runtimeTicks && positionTicks != null) {
-                    endsAtText.innerHTML = '&nbsp;&nbsp;-&nbsp;&nbsp;' + mediaInfo.getEndsAtFromPosition(runtimeTicks, positionTicks, true);
-                } else {
-                    endsAtText.innerHTML = '';
+                nowPlayingPositionText.innerHTML = '';
+                nowPlayingDurationText.innerHTML = '';
+
+
+            } else {
+                if (nowPlayingPositionSlider && !nowPlayingPositionSlider.dragging) {
+                    if (runtimeTicks) {
+
+                        var pct = positionTicks / runtimeTicks;
+                        pct *= 100;
+
+                        nowPlayingPositionSlider.value = pct;
+
+                    } else {
+
+                        nowPlayingPositionSlider.value = 0;
+                    }
+
+                    if (runtimeTicks && positionTicks != null && currentRuntimeTicks && !enableProgressByTimeOfDay) {
+                        endsAtText.innerHTML = '&nbsp;&nbsp;-&nbsp;&nbsp;' + mediaInfo.getEndsAtFromPosition(runtimeTicks, positionTicks, true);
+                    } else {
+                        endsAtText.innerHTML = '';
+                    }
                 }
+
+                updateTimeText(nowPlayingPositionText, positionTicks);
+                updateTimeText(nowPlayingDurationText, runtimeTicks, true);
             }
-
-            updateTimeText(nowPlayingPositionText, positionTicks);
-            updateTimeText(nowPlayingDurationText, runtimeTicks, true);
         }
 
         function updatePlayerVolumeState(isMuted, volumeLevel) {
@@ -1179,7 +1251,17 @@
 
                 var newPercent = parseFloat(this.value);
 
-                playbackManager.seekPercent(newPercent, currentPlayer);
+                if (enableProgressByTimeOfDay) {
+
+                    var seekAirTimeTicks = (programEndDateMs - programStartDateMs) * (newPercent / 100) * 10000;
+                    seekAirTimeTicks += (programStartDateMs * 10000);
+                    seekAirTimeTicks -= playbackStartTimeTicks;
+
+                    playbackManager.seek(seekAirTimeTicks, currentPlayer);
+                }
+                else {
+                    playbackManager.seekPercent(newPercent, currentPlayer);
+                }
             }
         });
 
@@ -1245,24 +1327,44 @@
 
             showOsd();
 
-            if (!currentRuntimeTicks) {
-                return '--:--';
-            }
+            if (enableProgressByTimeOfDay) {
 
-            var ticks = currentRuntimeTicks;
-            ticks /= 100;
-            ticks *= value;
+                if (programStartDateMs && programEndDateMs) {
 
-            var item = currentItem;
-            if (item && item.Chapters && item.Chapters.length && item.Chapters[0].ImageTag) {
-                var html = getChapterBubbleHtml(connectionManager.getApiClient(item.ServerId), item, item.Chapters, ticks);
+                    var ms = programEndDateMs - programStartDateMs;
+                    ms /= 100;
+                    ms *= value;
 
-                if (html) {
-                    return html;
+                    ms += programStartDateMs;
+
+                    var date = new Date(parseInt(ms));
+
+                    return '<h1 class="sliderBubbleText">' + getDisplayTimeWithoutAmPm(date) + '</h1>';
+
+                } else {
+                    return '--:--';
                 }
-            }
 
-            return '<h1 class="sliderBubbleText">' + datetime.getDisplayRunningTime(ticks) + '</h1>';
+            } else {
+                if (!currentRuntimeTicks) {
+                    return '--:--';
+                }
+
+                var ticks = currentRuntimeTicks;
+                ticks /= 100;
+                ticks *= value;
+
+                var item = currentItem;
+                if (item && item.Chapters && item.Chapters.length && item.Chapters[0].ImageTag) {
+                    var html = getChapterBubbleHtml(connectionManager.getApiClient(item.ServerId), item, item.Chapters, ticks);
+
+                    if (html) {
+                        return html;
+                    }
+                }
+
+                return '<h1 class="sliderBubbleText">' + datetime.getDisplayRunningTime(ticks) + '</h1>';
+            }
         };
 
         view.querySelector('.btnPreviousTrack').addEventListener('click', function () {

@@ -24,7 +24,7 @@
 
         var options = {
             IncludeItemTypes: "Audio",
-            Limit: itemsPerRow(),
+            Limit: enableScrollX() ? (itemsPerRow() * 3) : (itemsPerRow() * 2),
             Fields: "PrimaryImageAspectRatio,BasicSyncInfo",
             ParentId: parentId,
             ImageTypeLimit: 1,
@@ -185,30 +185,30 @@
 
     function getTabs() {
         return [
-        {
-            name: Globalize.translate('TabSuggestions')
-        },
-         {
-             name: Globalize.translate('TabAlbums')
-         },
-         {
-             name: Globalize.translate('TabAlbumArtists')
-         },
-         {
-             name: Globalize.translate('TabArtists')
-         },
-         {
-             name: Globalize.translate('TabPlaylists')
-         },
-         {
-             name: Globalize.translate('TabSongs')
-         },
-         {
-             name: Globalize.translate('TabGenres')
-         },
-         {
-             name: Globalize.translate('ButtonSearch')
-         }];
+            {
+                name: Globalize.translate('TabSuggestions')
+            },
+            {
+                name: Globalize.translate('TabAlbums')
+            },
+            {
+                name: Globalize.translate('TabAlbumArtists')
+            },
+            {
+                name: Globalize.translate('TabArtists')
+            },
+            {
+                name: Globalize.translate('TabPlaylists')
+            },
+            {
+                name: Globalize.translate('TabSongs')
+            },
+            {
+                name: Globalize.translate('TabGenres')
+            },
+            {
+                name: Globalize.translate('ButtonSearch')
+            }];
     }
 
     return function (view, params) {

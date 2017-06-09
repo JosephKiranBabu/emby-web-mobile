@@ -603,17 +603,28 @@
                 bottomText = nowPlayingItem.ProductionYear;
             }
 
-            if (nowPlayingItem.LogoItemId) {
+            if (nowPlayingItem.ImageTags && nowPlayingItem.ImageTags.Logo) {
 
-                imgUrl = ApiClient.getScaledImageUrl(nowPlayingItem.LogoItemId, {
+                imgUrl = ApiClient.getScaledImageUrl(nowPlayingItem.Id, {
 
-                    tag: session.LogoImageTag,
+                    tag: nowPlayingItem.ImageTags.Logo,
                     maxHeight: 24,
                     maxWidth: 130,
                     type: 'Logo'
 
                 });
+            } else if (nowPlayingItem.ParentLogoImageTag) {
 
+                imgUrl = ApiClient.getScaledImageUrl(nowPlayingItem.ParentLogoItemId, {
+
+                    tag: nowPlayingItem.ParentLogoImageTag,
+                    maxHeight: 24,
+                    maxWidth: 130,
+                    type: 'Logo'
+                });
+            }
+
+            if (imgUrl) {
                 topText = '<img src="' + imgUrl + '" style="max-height:24px;max-width:130px;" />';
             }
 
@@ -766,6 +777,24 @@
 
         getNowPlayingImageUrl: function (item) {
 
+            if (item && item.BackdropImageTags && item.BackdropImageTags.length) {
+
+                return ApiClient.getScaledImageUrl(item.Id, {
+                    type: "Backdrop",
+                    width: 275,
+                    tag: item.BackdropImageTags[0]
+                });
+            }
+            if (item && item.ParentBackdropImageTags && item.ParentBackdropImageTags.length) {
+
+                return ApiClient.getScaledImageUrl(item.ParentBackdropItemId, {
+                    type: "Backdrop",
+                    width: 275,
+                    tag: item.ParentBackdropImageTags[0]
+                });
+            }
+
+            // deprecated
             if (item && item.BackdropImageTag) {
 
                 return ApiClient.getScaledImageUrl(item.BackdropItemId, {
@@ -775,6 +804,25 @@
                 });
             }
 
+            var imageTags = (item || {}).ImageTags || {};
+            if (item && imageTags.Thumb) {
+
+                return ApiClient.getScaledImageUrl(item.Id, {
+                    type: "Thumb",
+                    width: 275,
+                    tag: imageTags.Thumb
+                });
+            }
+            if (item && item.ParentThumbImageTag) {
+
+                return ApiClient.getScaledImageUrl(item.ParentThumbItemId, {
+                    type: "Thumb",
+                    width: 275,
+                    tag: item.ParentThumbImageTag
+                });
+            }
+
+            // deprecated
             if (item && item.ThumbImageTag) {
 
                 return ApiClient.getScaledImageUrl(item.ThumbItemId, {
@@ -784,6 +832,16 @@
                 });
             }
 
+            if (item && imageTags.Primary) {
+
+                return ApiClient.getScaledImageUrl(item.Id, {
+                    type: "Primary",
+                    width: 275,
+                    tag: imageTags.Primary
+                });
+            }
+
+            // deprecated
             if (item && item.PrimaryImageTag) {
 
                 return ApiClient.getScaledImageUrl(item.PrimaryImageItemId, {
@@ -1339,18 +1397,18 @@
             require(['slideshow'], function () {
 
                 var slides = [
-                        { imageUrl: 'css/images/tour/admin/dashboard.png', title: Globalize.translate('DashboardTourDashboard') },
-                        { imageUrl: 'css/images/tour/admin/help.png', title: Globalize.translate('DashboardTourHelp') },
-                        { imageUrl: 'css/images/tour/admin/users.png', title: Globalize.translate('DashboardTourUsers') },
-                        { imageUrl: 'css/images/tour/admin/sync.png', title: Globalize.translate('DashboardTourSync') },
-                        { imageUrl: 'css/images/tour/admin/cinemamode.png', title: Globalize.translate('DashboardTourCinemaMode') },
-                        { imageUrl: 'css/images/tour/admin/chapters.png', title: Globalize.translate('DashboardTourChapters') },
-                        { imageUrl: 'css/images/tour/admin/subtitles.png', title: Globalize.translate('DashboardTourSubtitles') },
-                        { imageUrl: 'css/images/tour/admin/plugins.png', title: Globalize.translate('DashboardTourPlugins') },
-                        { imageUrl: 'css/images/tour/admin/notifications.png', title: Globalize.translate('DashboardTourNotifications') },
-                        { imageUrl: 'css/images/tour/admin/scheduledtasks.png', title: Globalize.translate('DashboardTourScheduledTasks') },
-                        { imageUrl: 'css/images/tour/admin/mobile.png', title: Globalize.translate('DashboardTourMobile') },
-                        { imageUrl: 'css/images/tour/enjoy.jpg', title: Globalize.translate('MessageEnjoyYourStay') }
+                    { imageUrl: 'css/images/tour/admin/dashboard.png', title: Globalize.translate('DashboardTourDashboard') },
+                    { imageUrl: 'css/images/tour/admin/help.png', title: Globalize.translate('DashboardTourHelp') },
+                    { imageUrl: 'css/images/tour/admin/users.png', title: Globalize.translate('DashboardTourUsers') },
+                    { imageUrl: 'css/images/tour/admin/sync.png', title: Globalize.translate('DashboardTourSync') },
+                    { imageUrl: 'css/images/tour/admin/cinemamode.png', title: Globalize.translate('DashboardTourCinemaMode') },
+                    { imageUrl: 'css/images/tour/admin/chapters.png', title: Globalize.translate('DashboardTourChapters') },
+                    { imageUrl: 'css/images/tour/admin/subtitles.png', title: Globalize.translate('DashboardTourSubtitles') },
+                    { imageUrl: 'css/images/tour/admin/plugins.png', title: Globalize.translate('DashboardTourPlugins') },
+                    { imageUrl: 'css/images/tour/admin/notifications.png', title: Globalize.translate('DashboardTourNotifications') },
+                    { imageUrl: 'css/images/tour/admin/scheduledtasks.png', title: Globalize.translate('DashboardTourScheduledTasks') },
+                    { imageUrl: 'css/images/tour/admin/mobile.png', title: Globalize.translate('DashboardTourMobile') },
+                    { imageUrl: 'css/images/tour/enjoy.jpg', title: Globalize.translate('MessageEnjoyYourStay') }
                 ];
 
                 require(['slideshow'], function (slideshow) {

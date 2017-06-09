@@ -846,7 +846,7 @@
             document.body.classList.remove('hideMainDrawer');
 
             if (navDrawerInstance) {
-                navDrawerInstance.setEdgeSwipeEnabled(false);
+                navDrawerInstance.setEdgeSwipeEnabled(true);
             }
         }
         else if (isDashboardPage) {

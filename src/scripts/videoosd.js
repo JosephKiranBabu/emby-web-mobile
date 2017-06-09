@@ -320,7 +320,17 @@
             }
         }
 
-        function getDisplayTimeWithoutAmPm(date) {
+        function getDisplayTimeWithoutAmPm(date, showSeconds) {
+
+            if (showSeconds) {
+                return datetime.toLocaleTimeString(date, {
+
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    second: '2-digit'
+
+                }).toLowerCase().replace('am', '').replace('pm', '').trim();
+            }
 
             return datetime.getDisplayTime(date).toLowerCase().replace('am', '').replace('pm', '').trim();
         }
@@ -713,7 +723,7 @@
 
             isEnabled = true;
 
-            updatePlayerStateInternal(event, state);
+            updatePlayerStateInternal(event, player, state);
             updatePlaylist(player);
 
             enableStopOnBack(true);
@@ -904,15 +914,13 @@
             }
         }
 
-        function updatePlayerStateInternal(event, state) {
-
-            var playerInfo = playbackManager.getPlayerInfo();
+        function updatePlayerStateInternal(event, player, state) {
 
             var playState = state.PlayState || {};
 
             updatePlayPauseState(playState.IsPaused);
 
-            var supportedCommands = playerInfo.supportedCommands;
+            var supportedCommands = playbackManager.getSupportedCommands(player);
             currentPlayerSupportedCommands = supportedCommands;
 
             supportsBrightnessChange = supportedCommands.indexOf('SetBrightness') !== -1;
@@ -1339,7 +1347,7 @@
 
                     var date = new Date(parseInt(ms));
 
-                    return '<h1 class="sliderBubbleText">' + getDisplayTimeWithoutAmPm(date) + '</h1>';
+                    return '<h1 class="sliderBubbleText">' + getDisplayTimeWithoutAmPm(date, true) + '</h1>';
 
                 } else {
                     return '--:--';

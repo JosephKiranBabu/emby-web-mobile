@@ -255,7 +255,7 @@ body:not(.dashboardDocument) .btnNotifications {
 
 @media all and (min-width: 84em) {
 
-    .headerTabs {
+    .libraryDocument .headerTabs {
         align-self: center;
         width: auto;
         align-items: center;
@@ -266,7 +266,7 @@ body:not(.dashboardDocument) .btnNotifications {
         top: -.39em;
     }
 
-    .headerTop {
+   .libraryDocument .headerTop {
         padding: .9em 0;
     }
 

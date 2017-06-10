@@ -58,18 +58,23 @@ define(['actionsheet', 'datetime', 'playbackManager', 'globalize', 'appSettings'
 
         var menuItems = [];
 
-        menuItems.push({
-            name: globalize.translate('sharedcomponents#RepeatOne'),
-            id: 'RepeatOne'
-        });
+        var currentValue = playbackManager.getRepeatMode(player);
 
         menuItems.push({
             name: globalize.translate('sharedcomponents#RepeatAll'),
-            id: 'RepeatAll'
+            id: 'RepeatAll',
+            selected: currentValue === 'RepeatAll'
         });
         menuItems.push({
+            name: globalize.translate('sharedcomponents#RepeatOne'),
+            id: 'RepeatOne',
+            selected: currentValue === 'RepeatOne'
+        });
+
+        menuItems.push({
             name: globalize.translate('sharedcomponents#None'),
-            id: 'RepeatNone'
+            id: 'RepeatNone',
+            selected: currentValue === 'RepeatNone'
         });
 
         return actionsheet.show({
@@ -202,7 +207,7 @@ define(['actionsheet', 'datetime', 'playbackManager', 'globalize', 'appSettings'
 
             var repeatMode = playbackManager.getRepeatMode(player);
 
-            if (supportedCommands.indexOf('SetRepeatMode') !== -1) {
+            if (supportedCommands.indexOf('SetRepeatMode') !== -1 && playbackManager.currentMediaSource(player).RunTimeTicks) {
 
                 menuItems.push({
                     name: globalize.translate('sharedcomponents#RepeatMode'),

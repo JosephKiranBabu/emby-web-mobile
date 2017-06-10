@@ -238,12 +238,9 @@
             setTitle(displayItem, parentName);
 
             var osdTitle = view.querySelector('.osdTitle');
-            var osdTitleSmall = view.querySelector('.osdTitleSmall');
             var titleElement;
 
             titleElement = osdTitle;
-            osdTitleSmall.classList.add('hide');
-            osdTitleSmall.innerHTML = '';
 
             // Don't use this for live tv programs because this is contained in mediaInfo.getPrimaryMediaInfoHtml
             var displayName = itemHelper.getDisplayName(displayItem, {
@@ -253,7 +250,7 @@
 
             // Use the series name if there is no episode info
             if (!displayName && displayItem.Type === 'Program') {
-                displayName = displayItem.Name;
+                //displayName = displayItem.Name;
             }
 
             titleElement.innerHTML = displayName;
@@ -295,6 +292,12 @@
                 secondaryMediaInfo.classList.remove('hide');
             } else {
                 secondaryMediaInfo.classList.add('hide');
+            }
+
+            if (displayName) {
+                view.querySelector('.osdMainTextContainer').classList.remove('hide');
+            } else {
+                view.querySelector('.osdMainTextContainer').classList.add('hide');
             }
 
             if (enableProgressByTimeOfDay) {
@@ -365,7 +368,6 @@
                 view.querySelector('.btnAudio').classList.add('hide');
 
                 view.querySelector('.osdTitle').innerHTML = '';
-                view.querySelector('.osdTitleSmall').innerHTML = '';
                 view.querySelector('.osdMediaInfo').innerHTML = '';
                 return;
             }

@@ -207,31 +207,6 @@
 
             renderItems(page, result.Items, 'upcomingNewsItems');
         });
-
-        ApiClient.getLiveTvRecommendedPrograms({
-
-            userId: Dashboard.getCurrentUserId(),
-            IsAiring: false,
-            HasAired: false,
-            limit: getLimit(),
-            IsMovie: false,
-            IsSports: false,
-            IsKids: false,
-            IsSeries: false,
-            EnableTotalRecordCount: false,
-            Fields: "ChannelInfo",
-            EnableImageTypes: "Primary,Thumb"
-
-        }).then(function (result) {
-
-            if (result.Items.length) {
-                page.querySelector('.upcomingPrograms').classList.remove('hide');
-            } else {
-                page.querySelector('.upcomingPrograms').classList.add('hide');
-            }
-
-            renderItems(page, result.Items, 'upcomingProgramItems');
-        });
     }
 
     function renderItems(page, items, sectionClass, overlayButton, cardOptions) {
@@ -266,27 +241,27 @@
 
     function getTabs() {
         return [
-        {
-            name: Globalize.translate('TabSuggestions')
-        },
-         {
-             name: Globalize.translate('TabGuide')
-         },
-         {
-             name: Globalize.translate('TabChannels')
-         },
-         {
-             name: Globalize.translate('TabRecordings')
-         },
-         {
-             name: Globalize.translate('HeaderSchedule')
-         },
-         {
-             name: Globalize.translate('TabSeries')
-         },
-         {
-             name: Globalize.translate('ButtonSearch')
-         }];
+            {
+                name: Globalize.translate('Programs')
+            },
+            {
+                name: Globalize.translate('TabGuide')
+            },
+            {
+                name: Globalize.translate('TabChannels')
+            },
+            {
+                name: Globalize.translate('TabRecordings')
+            },
+            {
+                name: Globalize.translate('HeaderSchedule')
+            },
+            {
+                name: Globalize.translate('TabSeries')
+            },
+            {
+                name: Globalize.translate('ButtonSearch')
+            }];
     }
 
     return function (view, params) {

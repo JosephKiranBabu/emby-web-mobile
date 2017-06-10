@@ -78,8 +78,8 @@
             }
 
             var enableImageTypes = viewStyle == 'Thumb' || viewStyle == 'ThumbCard' ?
-              "Primary,Backdrop,Thumb" :
-              "Primary";
+                "Primary,Backdrop,Thumb" :
+                "Primary";
 
             var query = {
                 SortBy: "SortName",
@@ -148,7 +148,7 @@
                 }
 
                 if (result.Items.length >= query.Limit) {
-                    tabContent.querySelector('.btnMoreFromGenre' + id).classList.remove('hide');
+                    tabContent.querySelector('.btnMoreFromGenre' + id + ' i').classList.remove('hide');
                 }
             });
         }
@@ -171,14 +171,14 @@
                     html += '<div class="verticalSection">';
 
                     html += '<div class="sectionTitleContainer padded-left">';
-                    html += '<h2 class="sectionTitle sectionTitle-cards">';
-                    html += item.Name;
-                    html += '</h2>';
                     html += '<a is="emby-linkbutton" href="' + embyRouter.getRouteUrl(item, {
                         context: 'tvshows',
                         parentId: params.topParentId
-                    }) + '" class="raised more raised-mini hide sectionTitleButton btnMoreFromGenre' + item.Id + '">';
-                    html += globalize.translate('ButtonMore');
+                    }) + '" class="more button-flat button-flat-mini sectionTitleTextButton btnMoreFromGenre' + item.Id + '">';
+                    html += '<h2 class="sectionTitle sectionTitle-cards">';
+                    html += item.Name;
+                    html += '</h2>';
+                    html += '<i class="md-icon hide">&#xE5CC;</i>';
                     html += '</a>';
                     html += '</div>';
 

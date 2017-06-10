@@ -77,7 +77,7 @@
     display: flex;
     flex-direction: column;
     background-color: #101010;
-    color: #ddd;
+    color: #ccc;
 }
 
 .hiddenViewMenuBar .skinHeader {
@@ -111,8 +111,15 @@
 }
 
 .skinHeader.semiTransparent {
-    background-color: rgba(15, 15, 15, .4);
-    color: #fff;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+
+    background-color: rgba(0,0,0,.4);
+    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(10%,rgba(0,0,0,.7)),color-stop(10%,rgba(0,0,0,0)));
+    background-image: -webkit-linear-gradient(top,rgba(0,0,0,.7) 10%,rgba(0,0,0,0));
+    background-image: -moz-linear-gradient(top,rgba(0,0,0,.7) 10%,rgba(0,0,0,0));
+    background-image: -o-linear-gradient(top,rgba(0,0,0,.7) 10%,rgba(0,0,0,0));
+    background-image: linear-gradient(to bottom,rgba(0,0,0,.7) 10%,rgba(0,0,0,0));
 }
 
 .headerRight {
@@ -249,7 +256,7 @@ body:not(.dashboardDocument) .btnNotifications {
 @media all and (max-width: 84em) {
 
     .withSectionTabs .headerTop {
-        padding-bottom: .3em;
+        padding-bottom: 0;
     }
 }
 
@@ -266,7 +273,7 @@ body:not(.dashboardDocument) .btnNotifications {
         top: -.39em;
     }
 
-   .libraryDocument .headerTop {
+    .libraryDocument .headerTop {
         padding: .9em 0;
     }
 

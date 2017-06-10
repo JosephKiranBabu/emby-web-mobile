@@ -104,7 +104,7 @@
                 cardFooterAside: 'none',
                 preferThumb: true,
                 coverImage: true,
-                allowBottomPadding: !enableScrollX(),
+                allowBottomPadding: false,
                 overlayText: false
 
             });

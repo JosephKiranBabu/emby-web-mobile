@@ -670,6 +670,10 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
     margin-bottom: 1.7em;
 }
 
+.layout-mobile .verticalSection {
+    margin-bottom: 2.5em;
+}
+
 .sectionTitleContainer {
     margin-bottom: .3em;
 }
@@ -723,6 +727,25 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
 .horizontalItemsContainer {
     display: flex;
 }
+
+.sectionTitleTextButton {
+    margin: 0 0 .1em !important;
+    display: inline-flex !important;
+}
+
+    .sectionTitleTextButton:not(.padded-left) {
+        padding: 0 !important;
+    }
+
+    .sectionTitleTextButton.padded-left {
+        padding-bottom: 0 !important;
+        padding-right: 0 !important;
+        padding-top: 0 !important;
+    }
+
+    .sectionTitleTextButton > .sectionTitle {
+        margin-bottom: 0;
+    }
 
 .padded-left {
     padding-left: 2%;

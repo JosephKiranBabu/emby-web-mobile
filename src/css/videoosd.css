@@ -6,6 +6,7 @@
     z-index: 1;
     background-color: rgba(0, 0, 0, .3);
     background: linear-gradient(rgba(0, 0, 0, .6), rgba(0, 0, 0, 0));
+    -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
 }
 
@@ -87,7 +88,7 @@
     flex-direction: row;
     will-change: transform;
     transition: transform 300ms ease-out, opacity 300ms ease-out;
-    background: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, 1));
+    background: linear-gradient(rgba(0, 0, 0, .4), rgba(0, 0, 0, .8));
     color: #fff;
 }
 
@@ -168,7 +169,7 @@
 }
 
 .osdSecondaryMediaInfo {
-    padding-left: .6em;
+    padding-left: .6em !important;
 }
 
 .osdTextContainer {

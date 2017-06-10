@@ -73,13 +73,21 @@
 
             if (result.Items.length) {
 
-                html += '<div class="sectionTitleContainer">';
-                html += '<h2 class="sectionTitle sectionTitle-cards padded-left">' + globalize.translate(section.name) + '</h2>';
+                html += '<div class="sectionTitleContainer padded-left">';
 
                 if (!layoutManager.tv && options.Limit && result.Items.length >= options.Limit) {
+
                     var href = "secondaryitems.html?type=" + section.types + "&filters=IsFavorite";
 
-                    html += '<a class="clearLink" href="' + href + '" style="margin-left:1.5em;"><button is="emby-button" type="button" class="raised more raised-mini">' + globalize.translate('ButtonMore') + '</button></a>';
+                    html += '<a is="emby-linkbutton" href="' + href + '" class="more button-flat button-flat-mini sectionTitleTextButton">';
+                    html += '<h2 class="sectionTitle sectionTitle-cards">';
+                    html += globalize.translate(section.name);
+                    html += '</h2>';
+                    html += '<i class="md-icon">&#xE5CC;</i>';
+                    html += '</a>';
+
+                } else {
+                    html += '<h2 class="sectionTitle sectionTitle-cards">' + globalize.translate(section.name) + '</h2>';
                 }
 
                 html += '</div>';

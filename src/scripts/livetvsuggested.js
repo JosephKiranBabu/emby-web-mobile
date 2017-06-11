@@ -121,6 +121,7 @@
 
         loadRecommendedPrograms(page);
 
+        // series
         ApiClient.getLiveTvRecommendedPrograms({
 
             userId: Dashboard.getCurrentUserId(),
@@ -141,6 +142,7 @@
             renderItems(page, result.Items, 'upcomingEpisodeItems');
         });
 
+        // movies
         ApiClient.getLiveTvRecommendedPrograms({
 
             userId: Dashboard.getCurrentUserId(),
@@ -156,10 +158,12 @@
 
             renderItems(page, result.Items, 'upcomingTvMovieItems', null, {
                 shape: getPortraitShape(),
-                preferThumb: null
+                preferThumb: null,
+                showParentTitle: false
             });
         });
 
+        // sports
         ApiClient.getLiveTvRecommendedPrograms({
 
             userId: Dashboard.getCurrentUserId(),
@@ -176,6 +180,7 @@
             renderItems(page, result.Items, 'upcomingSportsItems');
         });
 
+        // kids
         ApiClient.getLiveTvRecommendedPrograms({
 
             userId: Dashboard.getCurrentUserId(),
@@ -192,6 +197,7 @@
             renderItems(page, result.Items, 'upcomingKidsItems');
         });
 
+        // news
         ApiClient.getLiveTvRecommendedPrograms({
 
             userId: Dashboard.getCurrentUserId(),
@@ -205,21 +211,24 @@
 
         }).then(function (result) {
 
-            renderItems(page, result.Items, 'upcomingNewsItems');
+            renderItems(page, result.Items, 'upcomingNewsItems', null, {
+
+                showParentTitleOrTitle: true,
+                showTitle: false,
+                showParentTitle: false
+            });
         });
     }
 
     function renderItems(page, items, sectionClass, overlayButton, cardOptions) {
-
-        cardOptions = cardOptions || {};
 
         var html = cardBuilder.getCardsHtml(Object.assign({
             items: items,
             preferThumb: true,
             inheritThumb: false,
             shape: (enableScrollX() ? 'overflowBackdrop' : 'backdrop'),
-            showParentTitleOrTitle: true,
-            showTitle: false,
+            showParentTitle: true,
+            showTitle: true,
             centerText: true,
             coverImage: true,
             overlayText: false,
@@ -228,10 +237,10 @@
             overlayPlayButton: overlayButton == 'play',
             allowBottomPadding: !enableScrollX(),
             showAirTime: true,
-            showAirDateTime: true,
-            showChannelName: true
+            //showChannelName: true,
+            showAirDateTime: true
 
-        }, cardOptions));
+        }, cardOptions || {}));
 
         var elem = page.querySelector('.' + sectionClass);
 

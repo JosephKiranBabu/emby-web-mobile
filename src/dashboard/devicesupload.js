@@ -41,18 +41,6 @@
         return false;
     }
 
-    function getTabs() {
-        return [
-        {
-            href: 'devices.html',
-            name: Globalize.translate('TabDevices')
-        },
-         {
-             href: 'devicesupload.html',
-             name: Globalize.translate('TabCameraUpload')
-         }];
-    }
-
     $(document).on('pageinit', "#devicesUploadPage", function () {
 
         var page = this;
@@ -83,7 +71,6 @@
 
     }).on('pageshow', "#devicesUploadPage", function () {
 
-        libraryMenu.setTabs('devices', 1, getTabs);
         var page = this;
 
         loadData(page);

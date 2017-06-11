@@ -430,11 +430,6 @@ var Dashboard = {
             pageIds: ['dashboardGeneralPage'],
             icon: 'settings'
         }, {
-            name: Globalize.translate('TabDevices'),
-            href: "devices.html",
-            pageIds: ['devicesPage', 'devicePage', 'devicesUploadPage'],
-            icon: 'tablet'
-        }, {
             name: Globalize.translate('TabUsers'),
             href: "userprofiles.html",
             pageIds: ['userProfilesPage', 'newUserPage', 'editUserPage', 'userLibraryAccessPage', 'userParentalControlPage', 'userPasswordPage'],
@@ -463,16 +458,29 @@ var Dashboard = {
             href: "cinemamodeconfiguration.html",
             pageIds: ['cinemaModeConfigurationPage', 'playbackConfigurationPage', 'streamingSettingsPage']
         }, {
-            name: Globalize.translate('TabSync'),
-            icon: 'sync',
-            href: "syncactivity.html",
-            pageIds: ['syncActivityPage', 'syncJobPage', 'syncSettingsPage'],
-            color: '#009688'
-        }, {
             name: Globalize.translate('TabTranscoding'),
             icon: 'transform',
             href: "encodingsettings.html",
             pageIds: ['encodingSettingsPage']
+        }, {
+            divider: true,
+            name: Globalize.translate('TabDevices')
+        }, {
+            name: Globalize.translate('TabDevices'),
+            href: "devices.html",
+            pageIds: ['devicesPage', 'devicePage'],
+            icon: 'tablet'
+        }, {
+            name: Globalize.translate('HeaderDownloadSync'),
+            icon: 'file_download',
+            href: "syncactivity.html",
+            pageIds: ['syncActivityPage', 'syncJobPage', 'syncSettingsPage'],
+            color: '#009688'
+        }, {
+            name: Globalize.translate('TabCameraUpload'),
+            href: "devicesupload.html",
+            pageIds: ['devicesUploadPage'],
+            icon: 'photo_camera'
         }, {
             divider: true,
             name: Globalize.translate('TabExtras')

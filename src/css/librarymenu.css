@@ -76,7 +76,7 @@
     border: 0;
     display: flex;
     flex-direction: column;
-    background-color: #0d0d0d;
+    background-color: #0f0f0f;
     color: #ccc;
 }
 
@@ -85,7 +85,7 @@
 }
 
 .headerTop {
-    padding: .9em 0;
+    padding: 1em 0;
 }
 
 .headerLeft {
@@ -107,13 +107,11 @@
 .sectionTabs {
     width: 100%;
     text-align: center;
-    font-size: 88%;
 }
 
 .skinHeader.semiTransparent {
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
-
     background-color: rgba(0,0,0,.4);
     background-image: -webkit-gradient(linear,left top,left bottom,color-stop(10%,rgba(0,0,0,.7)),color-stop(10%,rgba(0,0,0,0)));
     background-image: -webkit-linear-gradient(top,rgba(0,0,0,.7) 10%,rgba(0,0,0,0));
@@ -221,6 +219,10 @@ body:not(.dashboardDocument) .btnNotifications {
         margin-top: 4.9em !important;
     }
 
+    .withSectionTabs .mainDrawer-scrollContainer {
+        margin-top: 8.5em !important;
+    }
+
     .dashboardDocument .tmla-mask {
         display: none !important;
     }
@@ -256,7 +258,11 @@ body:not(.dashboardDocument) .btnNotifications {
 @media all and (max-width: 84em) {
 
     .withSectionTabs .headerTop {
-        padding-bottom: 0;
+        padding-bottom: .3em;
+    }
+
+    .sectionTabs {
+        font-size: 88%;
     }
 }
 
@@ -267,10 +273,9 @@ body:not(.dashboardDocument) .btnNotifications {
         width: auto;
         align-items: center;
         justify-content: center;
-        font-size: inherit;
         margin-top: -3.34em;
         position: relative;
-        top: -.39em;
+        top: -.45em;
     }
 
     .libraryDocument .headerTop {
@@ -278,11 +283,11 @@ body:not(.dashboardDocument) .btnNotifications {
     }
 
     .libraryPage:not(.noSecondaryNavPage) {
-        padding-top: 5.2em !important;
+        padding-top: 5.3em !important;
     }
 
     .pageWithAbsoluteTabs:not(.noSecondaryNavPage) {
-        padding-top: 7.3em !important;
+        padding-top: 7.4em !important;
     }
 
     .absolutePageTabContent {

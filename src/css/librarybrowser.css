@@ -38,10 +38,6 @@
     contain: style;
 }
 
-.pageWithAbsoluteTabs .pageTabContent {
-    padding-top: 2.1em;
-}
-
 .flexPageTabContent.is-active {
     display: flex !important;
 }

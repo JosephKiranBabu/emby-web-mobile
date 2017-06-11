@@ -921,7 +921,7 @@
             });
 
             context.querySelector('.btnExitRemoteControl').addEventListener('click', function () {
-                history.back();
+                Emby.Page.back();
             });
 
             //context.querySelector('.btnSlideshow').addEventListener('click', function () {

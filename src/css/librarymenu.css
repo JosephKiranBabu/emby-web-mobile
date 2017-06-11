@@ -1,9 +1,9 @@
 ﻿.libraryPage {
-    padding-top: 4.6em !important;
+    padding-top: 5.5em !important;
 }
 
     .libraryPage:not(.noSecondaryNavPage) {
-        padding-top: 6.6em !important;
+        padding-top: 8.7em !important;
     }
 
 .absolutePageTabContent {
@@ -76,7 +76,7 @@
     border: 0;
     display: flex;
     flex-direction: column;
-    background-color: #101010;
+    background-color: #0d0d0d;
     color: #ccc;
 }
 
@@ -278,7 +278,11 @@ body:not(.dashboardDocument) .btnNotifications {
     }
 
     .libraryPage:not(.noSecondaryNavPage) {
-        padding-top: 5em !important;
+        padding-top: 5.2em !important;
+    }
+
+    .pageWithAbsoluteTabs:not(.noSecondaryNavPage) {
+        padding-top: 7.3em !important;
     }
 
     .absolutePageTabContent {

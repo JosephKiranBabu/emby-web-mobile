@@ -116,7 +116,6 @@
             html = cardBuilder.getCardsHtml({
                 items: result.Items,
                 shape: "auto",
-                defaultShape: 'square',
                 context: 'channels',
                 showTitle: true,
                 coverImage: true,

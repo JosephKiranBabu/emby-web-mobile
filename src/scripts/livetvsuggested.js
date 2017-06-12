@@ -93,7 +93,7 @@
             ImageTypeLimit: 1,
             EnableImageTypes: "Primary,Thumb,Backdrop",
             EnableTotalRecordCount: false,
-            Fields: "ChannelInfo"
+            Fields: "ChannelInfo,PrimaryImageAspectRatio"
 
         }).then(function (result) {
 
@@ -134,7 +134,7 @@
             IsNews: false,
             IsSeries: true,
             EnableTotalRecordCount: false,
-            Fields: "ChannelInfo",
+            Fields: "ChannelInfo,PrimaryImageAspectRatio",
             EnableImageTypes: "Primary,Thumb"
 
         }).then(function (result) {
@@ -172,7 +172,7 @@
             limit: getLimit(),
             IsSports: true,
             EnableTotalRecordCount: false,
-            Fields: "ChannelInfo",
+            Fields: "ChannelInfo,PrimaryImageAspectRatio",
             EnableImageTypes: "Primary,Thumb"
 
         }).then(function (result) {
@@ -189,7 +189,7 @@
             limit: getLimit(),
             IsKids: true,
             EnableTotalRecordCount: false,
-            Fields: "ChannelInfo",
+            Fields: "ChannelInfo,PrimaryImageAspectRatio",
             EnableImageTypes: "Primary,Thumb"
 
         }).then(function (result) {
@@ -206,7 +206,7 @@
             limit: getLimit(),
             IsNews: true,
             EnableTotalRecordCount: false,
-            Fields: "ChannelInfo",
+            Fields: "ChannelInfo,PrimaryImageAspectRatio",
             EnableImageTypes: "Primary,Thumb"
 
         }).then(function (result) {
@@ -224,9 +224,10 @@
 
         var html = cardBuilder.getCardsHtml(Object.assign({
             items: items,
-            preferThumb: true,
+            preferThumb: 'auto',
             inheritThumb: false,
-            shape: (enableScrollX() ? 'overflowBackdrop' : 'backdrop'),
+            shape: (enableScrollX() ? 'autooverflow' : 'auto'),
+            defaultShape: getBackdropShape(),
             showParentTitle: true,
             showTitle: true,
             centerText: true,

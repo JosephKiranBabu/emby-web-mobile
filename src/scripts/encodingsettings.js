@@ -4,6 +4,8 @@
     function loadPage(page, config, systemInfo) {
 
         page.querySelector('#chkEnableThrottle').checked = config.EnableThrottling;
+        page.querySelector('#chkHardwareDecoding').checked = config.EnableHardwareDecoding;
+        page.querySelector('#chkHardwareEncoding').checked = config.EnableHardwareEncoding;
 
         $('#selectVideoDecoder', page).val(config.HardwareAccelerationType);
         $('#selectThreadCount', page).val(config.EncodingThreadCount);
@@ -74,6 +76,8 @@
                 config.H264Preset = form.querySelector('#selectH264Preset').value;
                 config.H264Crf = parseInt(form.querySelector('#txtH264Crf').value || '0');
 
+                config.EnableHardwareDecoding = form.querySelector('#chkHardwareDecoding').checked;
+                config.EnableHardwareEncoding = form.querySelector('#chkHardwareEncoding').checked;
                 config.EnableThrottling = form.querySelector('#chkEnableThrottle').checked;
 
                 ApiClient.updateNamedConfiguration("encoding", config).then(function () {
@@ -129,6 +133,13 @@
                 page.querySelector('.fldVaapiDevice').classList.add('hide');
                 page.querySelector('#txtVaapiDevice').removeAttribute('required');
             }
+
+            if (this.value) {
+                page.querySelector('.hardwareAccelerationOptions').classList.remove('hide');
+            } else {
+                page.querySelector('.hardwareAccelerationOptions').classList.add('hide');
+            }
+
         });
 
         $('#btnSelectEncoderPath', page).on("click.selectDirectory", function () {

@@ -341,7 +341,13 @@
 
         var limit = 12;
 
-        if (!enableScrollX()) {
+        if (enableScrollX()) {
+
+            if (parent.CollectionType === 'music') {
+                limit = 30;
+            }
+        }
+        else {
 
             if (parent.CollectionType === 'tvshows') {
                 limit = 5;
@@ -841,11 +847,11 @@
 
             userId: apiClient.getCurrentUserId(),
             IsAiring: true,
-            limit: enableScrollX() ? 18 : 5,
+            limit: enableScrollX() ? 18 : 8,
             ImageTypeLimit: 1,
             EnableImageTypes: "Primary,Thumb,Backdrop",
             EnableTotalRecordCount: false,
-            Fields: "ChannelInfo"
+            Fields: "ChannelInfo,PrimaryImageAspectRatio"
 
         }).then(function (result) {
 
@@ -889,20 +895,21 @@
 
                 html += cardBuilder.getCardsHtml({
                     items: result.Items,
-                    preferThumb: true,
+                    preferThumb: 'auto',
                     inheritThumb: false,
-                    shape: (enableScrollX() ? 'overflowBackdrop' : 'backdrop'),
+                    shape: (enableScrollX() ? 'autooverflow' : 'auto'),
                     showParentTitleOrTitle: true,
-                    showTitle: false,
+                    showTitle: true,
                     centerText: true,
                     coverImage: true,
                     overlayText: false,
                     overlayPlayButton: true,
                     allowBottomPadding: !enableScrollX(),
                     showAirTime: true,
-                    showChannelName: true,
+                    showChannelName: false,
                     showAirDateTime: false,
-                    showAirEndTime: true
+                    showAirEndTime: true,
+                    defaultShape: getThumbShape()
                 });
 
                 if (enableScrollX()) {

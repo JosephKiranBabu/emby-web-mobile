@@ -7,7 +7,7 @@
         var query = {
             UserId: Dashboard.getCurrentUserId(),
             StartIndex: 0,
-            Fields: "ChannelInfo",
+            Fields: "ChannelInfo,PrimaryImageAspectRatio",
             Limit: libraryBrowser.getDefaultPageSize()
         };
 
@@ -61,8 +61,9 @@
 
                 html = cardBuilder.getCardsHtml({
                     items: result.Items,
-                    shape: query.IsMovie || params.type == 'RecordingSeries' ? 'portrait' : "backdrop",
-                    preferThumb: !query.IsMovie && params.type != 'RecordingSeries',
+                    shape: query.IsMovie || params.type == 'RecordingSeries' ? 'portrait' : "auto",
+                    preferThumb: query.IsMovie || params.type == 'RecordingSeries' ? false : "auto",
+                    defaultShape: query.IsMovie || params.type == 'RecordingSeries' ? 'portrait' : "backdrop",
                     inheritThumb: params.type == 'Recordings',
                     context: 'livetv',
                     centerText: true,

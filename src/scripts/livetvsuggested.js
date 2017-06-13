@@ -125,7 +125,6 @@
         ApiClient.getLiveTvRecommendedPrograms({
 
             userId: Dashboard.getCurrentUserId(),
-            IsAiring: false,
             HasAired: false,
             limit: getLimit(),
             IsMovie: false,
@@ -146,7 +145,6 @@
         ApiClient.getLiveTvRecommendedPrograms({
 
             userId: Dashboard.getCurrentUserId(),
-            IsAiring: false,
             HasAired: false,
             limit: getLimit(),
             IsMovie: true,
@@ -167,7 +165,6 @@
         ApiClient.getLiveTvRecommendedPrograms({
 
             userId: Dashboard.getCurrentUserId(),
-            IsAiring: false,
             HasAired: false,
             limit: getLimit(),
             IsSports: true,
@@ -184,7 +181,6 @@
         ApiClient.getLiveTvRecommendedPrograms({
 
             userId: Dashboard.getCurrentUserId(),
-            IsAiring: false,
             HasAired: false,
             limit: getLimit(),
             IsKids: true,
@@ -201,7 +197,6 @@
         ApiClient.getLiveTvRecommendedPrograms({
 
             userId: Dashboard.getCurrentUserId(),
-            IsAiring: false,
             HasAired: false,
             limit: getLimit(),
             IsNews: true,

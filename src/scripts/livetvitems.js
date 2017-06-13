@@ -38,10 +38,10 @@
             var promise = params.type == 'Recordings' ?
                 ApiClient.getLiveTvRecordings(query) :
                 params.type == 'RecordingSeries' ?
-                ApiClient.getLiveTvRecordingSeries(query) :
-                params.IsAiring == 'true' ?
-                ApiClient.getLiveTvRecommendedPrograms(query) :
-                ApiClient.getLiveTvPrograms(query);
+                    ApiClient.getLiveTvRecordingSeries(query) :
+                    params.IsAiring == 'true' ?
+                        ApiClient.getLiveTvRecommendedPrograms(query) :
+                        ApiClient.getLiveTvPrograms(query);
 
             promise.then(function (result) {
 
@@ -173,17 +173,19 @@
             } else {
 
                 if (params.IsMovie == 'true') {
-                    libraryMenu.setTitle(Globalize.translate('HeaderUpcomingMovies'));
+                    libraryMenu.setTitle(Globalize.translate('TabMovies'));
                 } else if (params.IsSports == 'true') {
-                    libraryMenu.setTitle(Globalize.translate('HeaderUpcomingSports'));
+                    libraryMenu.setTitle(Globalize.translate('Sports'));
                 } else if (params.IsKids == 'true') {
-                    libraryMenu.setTitle(Globalize.translate('HeaderUpcomingForKids'));
+                    libraryMenu.setTitle(Globalize.translate('HeaderForKids'));
                 } else if (params.IsAiring == 'true') {
                     libraryMenu.setTitle(Globalize.translate('HeaderOnNow'));
                 } else if (params.IsNews == 'true') {
-                    libraryMenu.setTitle(Globalize.translate('HeaderUpcomingNews'));
+                    libraryMenu.setTitle(Globalize.translate('News'));
+                } else if (params.IsSeries == 'true') {
+                    libraryMenu.setTitle(Globalize.translate('TabShows'));
                 } else {
-                    libraryMenu.setTitle(Globalize.translate('HeaderUpcomingPrograms'));
+                    libraryMenu.setTitle(Globalize.translate('Programs'));
                 }
             }
 

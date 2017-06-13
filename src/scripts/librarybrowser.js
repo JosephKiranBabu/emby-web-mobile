@@ -492,9 +492,11 @@
             });
         },
 
-        renderDetailImage: function (page, elem, item, editable, preferThumb, imageLoader, indicators) {
+        renderDetailImage: function (page, elem, item, editable, imageLoader, indicators) {
 
-            if (item.Type === 'SeriesTimer') {
+            var preferThumb = false;
+
+            if (item.Type === 'SeriesTimer' || item.Type === 'Program') {
                 editable = false;
             }
 
@@ -659,28 +661,28 @@
             var itemBackdropElement = page.querySelector('#itemBackdrop');
             var usePrimaryImage = (item.MediaType === 'Video' && item.Type !== 'Movie' && item.Type !== 'Trailer') || (item.MediaType && item.MediaType !== 'Video');
             //usePrimaryImage = false;
-            var useThumbImage = false;
+            var useThumbImage = item.Type === 'Program';
 
-            if (usePrimaryImage && item.ImageTags && item.ImageTags.Primary) {
-
-                imgUrl = ApiClient.getScaledImageUrl(item.Id, {
-                    type: "Primary",
-                    index: 0,
-                    maxWidth: screenWidth,
-                    tag: item.ImageTags.Primary
-                });
-
-                itemBackdropElement.classList.remove('noBackdrop');
-                imageLoader.lazyImage(itemBackdropElement, imgUrl, false);
-                hasbackdrop = true;
-            }
-            else if (useThumbImage && item.ImageTags && item.ImageTags.Thumb) {
+            if (useThumbImage && item.ImageTags && item.ImageTags.Thumb) {
 
                 imgUrl = ApiClient.getScaledImageUrl(item.Id, {
                     type: "Thumb",
                     index: 0,
                     maxWidth: screenWidth,
                     tag: item.ImageTags.Thumb
+                });
+
+                itemBackdropElement.classList.remove('noBackdrop');
+                imageLoader.lazyImage(itemBackdropElement, imgUrl, false);
+                hasbackdrop = true;
+            }
+            else if (usePrimaryImage && item.ImageTags && item.ImageTags.Primary) {
+
+                imgUrl = ApiClient.getScaledImageUrl(item.Id, {
+                    type: "Primary",
+                    index: 0,
+                    maxWidth: screenWidth,
+                    tag: item.ImageTags.Primary
                 });
 
                 itemBackdropElement.classList.remove('noBackdrop');

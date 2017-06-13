@@ -1342,6 +1342,9 @@ var AppInfo = {};
                 var topParentId = options ? (options.topParentId || options.parentId) : null;
 
                 if (typeof (item) === 'string') {
+                    if (item === 'recordedtv') {
+                        return 'livetv.html?tab=3&serverId=' + options.serverId;
+                    }
                     if (item === 'nextup') {
                         return 'secondaryitems.html?type=nextup&serverId=' + options.serverId;
                     }
@@ -1349,6 +1352,27 @@ var AppInfo = {};
 
                         if (options.section === 'guide') {
                             return 'livetv.html?tab=1&serverId=' + options.serverId;
+                        }
+                        if (options.section === 'movies') {
+                            return 'livetvitems.html?type=Programs&IsMovie=true&serverId=' + options.serverId;
+                        }
+                        if (options.section === 'shows') {
+                            return 'livetvitems.html?type=Programs&IsSeries=true&IsMovie=false&IsNews=false&serverId=' + options.serverId;
+                        }
+                        if (options.section === 'sports') {
+                            return 'livetvitems.html?type=Programs&IsSports=true&serverId=' + options.serverId;
+                        }
+                        if (options.section === 'kids') {
+                            return 'livetvitems.html?type=Programs&IsKids=true&serverId=' + options.serverId;
+                        }
+                        if (options.section === 'news') {
+                            return 'livetvitems.html?type=Programs&IsNews=true&serverId=' + options.serverId;
+                        }
+                        if (options.section === 'onnow') {
+                            return 'livetvitems.html?type=Programs&IsAiring=true&serverId=' + options.serverId;
+                        }
+                        if (options.section === 'dvrschedule') {
+                            return 'livetv.html?tab=4&serverId=' + options.serverId;
                         }
                         return 'livetv.html?serverId=' + options.serverId;
                     }
@@ -1658,7 +1682,7 @@ var AppInfo = {};
             define("prompt", [embyWebComponentsBowerPath + "/prompt/prompt"], returnFirstDependency);
         }
 
-        if (browser.tizen || browser.operaTv) {
+        if (browser.tizen || browser.operaTv || browser.chromecast || browser.orsay || browser.web0s || browser.ps4) {
             // Need the older version due to artifacts
             define("loading", [embyWebComponentsBowerPath + "/loading/loading-legacy"], returnFirstDependency);
         } else {

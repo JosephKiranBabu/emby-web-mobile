@@ -219,7 +219,7 @@ body:not(.dashboardDocument) .btnNotifications {
         margin-top: 4.9em !important;
     }
 
-    .withSectionTabs .mainDrawer-scrollContainer {
+    .dashboardDocument.withSectionTabs .mainDrawer-scrollContainer {
         margin-top: 8.5em !important;
     }
 

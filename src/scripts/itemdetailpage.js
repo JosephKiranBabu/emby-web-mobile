@@ -480,7 +480,7 @@
 
         var container = page.querySelector('.detailImageContainer');
 
-        libraryBrowser.renderDetailImage(page, container, item, user.Policy.IsAdministrator && item.MediaType != 'Photo', null, imageLoader, indicators);
+        libraryBrowser.renderDetailImage(page, container, item, user.Policy.IsAdministrator && item.MediaType != 'Photo', imageLoader, indicators);
     }
 
     function refreshDetailImageUserData(elem, item) {

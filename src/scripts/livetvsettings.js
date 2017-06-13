@@ -8,7 +8,6 @@
 
         $('#selectGuideDays', page).val(config.GuideDays || '');
 
-        $('#chkMovies', page).checked(config.EnableMovieProviders);
         $('#chkConvertRecordings', page).checked(config.EnableRecordingEncoding);
         $('#chkPreserveAudio', page).checked(config.EnableOriginalAudioWithEncodedRecordings || false);
         $('#chkPreserveVideo', page).checked(config.RecordedVideoCodec == 'copy');
@@ -36,7 +35,6 @@
         ApiClient.getNamedConfiguration("livetv").then(function (config) {
 
             config.GuideDays = $('#selectGuideDays', form).val() || null;
-            config.EnableMovieProviders = $('#chkMovies', form).checked();
             config.EnableRecordingEncoding = $('#chkConvertRecordings', form).checked();
             config.EnableOriginalAudioWithEncodedRecordings = $('#chkPreserveAudio', form).checked();
             config.RecordedVideoCodec = $('#chkPreserveVideo', form).checked() ? 'copy' : null;

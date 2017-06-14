@@ -332,8 +332,7 @@
 
             var recordsEnd = Math.min(startIndex + limit, totalRecordCount);
 
-            // 20 is the minimum page size
-            var showControls = totalRecordCount > 20 || limit < totalRecordCount;
+            var showControls = limit < totalRecordCount;
 
             html += '<div class="listPaging">';
 
@@ -372,27 +371,6 @@
                 }
 
                 html += '</div>';
-
-                if (showControls && options.showLimit) {
-
-                    var id = "selectPageSize";
-
-                    var pageSizes = options.pageSizes || [20, 50, 100, 200, 300, 400, 500];
-
-                    var optionsHtml = pageSizes.map(function (val) {
-
-                        if (limit == val) {
-
-                            return '<option value="' + val + '" selected="selected">' + val + '</option>';
-
-                        } else {
-                            return '<option value="' + val + '">' + val + '</option>';
-                        }
-                    }).join('');
-
-                    // Add styles to defeat jquery mobile
-                    html += '<div class="pageSizeContainer"><label class="labelPageSize" for="' + id + '">' + Globalize.translate('LabelLimit') + '</label><select style="width:auto;" class="selectPageSize" id="' + id + '" data-inline="true" data-mini="true">' + optionsHtml + '</select></div>';
-                }
             }
 
             html += '</div>';

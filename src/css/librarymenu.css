@@ -3,7 +3,7 @@
 }
 
     .libraryPage:not(.noSecondaryNavPage) {
-        padding-top: 8.7em !important;
+        padding-top: 9.2em !important;
     }
 
 .absolutePageTabContent {
@@ -258,7 +258,7 @@ body:not(.dashboardDocument) .btnNotifications {
 @media all and (max-width: 84em) {
 
     .withSectionTabs .headerTop {
-        padding-bottom: .3em;
+        padding-bottom: .2em;
     }
 
     .sectionTabs {

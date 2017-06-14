@@ -896,7 +896,8 @@
             IncludeItemTypes: "MusicAlbum",
             ArtistIds: item.AlbumArtists[0].Id,
             Recursive: true,
-            ExcludeItemIds: item.Id
+            ExcludeItemIds: item.Id,
+            SortBy: 'ProductionYear,SortName'
 
         }).then(function (result) {
 
@@ -1182,6 +1183,10 @@
         else if (item.Type == "MusicAlbum") {
 
             _childrenItemsFunction = getAlbumSongsFunction(query);
+        }
+        else if (item.Type == "MusicArtist") {
+
+            query.SortBy = 'ProductionYear,SortName';
         }
 
         promise = promise || ApiClient.getItems(Dashboard.getCurrentUserId(), query);

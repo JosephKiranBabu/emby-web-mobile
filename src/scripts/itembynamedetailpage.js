@@ -123,16 +123,16 @@
                     ArtistIds: "",
                     Limit: 10
                 }, {
-                    shape: "backdrop",
-                    showTitle: true,
-                    centerText: true,
-                    overlayMoreButton: true,
-                    preferThumb: true,
-                    overlayText: false,
-                    showAirTime: true,
-                    showAirDateTime: true,
-                    showChannelName: true
-                });
+                        shape: "backdrop",
+                        showTitle: true,
+                        centerText: true,
+                        overlayMoreButton: true,
+                        preferThumb: true,
+                        overlayText: false,
+                        showAirTime: true,
+                        showAirDateTime: true,
+                        showChannelName: true
+                    });
                 break;
 
             case 'Movie':
@@ -143,12 +143,12 @@
                     ArtistIds: "",
                     Limit: 10
                 }, {
-                    shape: "portrait",
-                    showTitle: true,
-                    centerText: true,
-                    overlayMoreButton: true,
-                    overlayText: false
-                });
+                        shape: "portrait",
+                        showTitle: true,
+                        centerText: true,
+                        overlayMoreButton: true,
+                        overlayText: false
+                    });
                 break;
 
             case 'MusicVideo':
@@ -159,11 +159,11 @@
                     ArtistIds: "",
                     Limit: 10
                 }, {
-                    shape: "portrait",
-                    showTitle: true,
-                    centerText: true,
-                    overlayPlayButton: true
-                });
+                        shape: "portrait",
+                        showTitle: true,
+                        centerText: true,
+                        overlayPlayButton: true
+                    });
                 break;
 
             case 'Game':
@@ -174,11 +174,11 @@
                     ArtistIds: "",
                     Limit: 10
                 }, {
-                    shape: "portrait",
-                    showTitle: true,
-                    centerText: true,
-                    overlayMoreButton: true
-                });
+                        shape: "portrait",
+                        showTitle: true,
+                        centerText: true,
+                        overlayMoreButton: true
+                    });
                 break;
 
             case 'Trailer':
@@ -189,11 +189,11 @@
                     ArtistIds: "",
                     Limit: 10
                 }, {
-                    shape: "portrait",
-                    showTitle: true,
-                    centerText: true,
-                    overlayPlayButton: true
-                });
+                        shape: "portrait",
+                        showTitle: true,
+                        centerText: true,
+                        overlayPlayButton: true
+                    });
                 break;
 
             case 'Series':
@@ -204,11 +204,11 @@
                     ArtistIds: "",
                     Limit: 10
                 }, {
-                    shape: "portrait",
-                    showTitle: true,
-                    centerText: true,
-                    overlayMoreButton: true
-                });
+                        shape: "portrait",
+                        showTitle: true,
+                        centerText: true,
+                        overlayMoreButton: true
+                    });
                 break;
 
             case 'MusicAlbum':
@@ -219,14 +219,14 @@
                     ArtistIds: "",
                     Limit: 8
                 }, {
-                    shape: "square",
-                    playFromHere: true,
-                    showTitle: true,
-                    showParentTitle: true,
-                    coverImage: true,
-                    centerText: true,
-                    overlayPlayButton: true
-                });
+                        shape: "square",
+                        playFromHere: true,
+                        showTitle: true,
+                        showParentTitle: true,
+                        coverImage: true,
+                        centerText: true,
+                        overlayPlayButton: true
+                    });
                 break;
 
             case 'MusicArtist':
@@ -237,14 +237,14 @@
                     ArtistIds: "",
                     Limit: 8
                 }, {
-                    shape: "square",
-                    playFromHere: true,
-                    showTitle: true,
-                    showParentTitle: true,
-                    coverImage: true,
-                    centerText: true,
-                    overlayPlayButton: true
-                });
+                        shape: "square",
+                        playFromHere: true,
+                        showTitle: true,
+                        showParentTitle: true,
+                        coverImage: true,
+                        centerText: true,
+                        overlayPlayButton: true
+                    });
                 break;
 
             case 'Episode':
@@ -255,12 +255,12 @@
                     ArtistIds: "",
                     Limit: 6
                 }, {
-                    shape: "backdrop",
-                    showTitle: true,
-                    showParentTitle: true,
-                    centerText: true,
-                    overlayPlayButton: true
-                });
+                        shape: "backdrop",
+                        showTitle: true,
+                        showParentTitle: true,
+                        centerText: true,
+                        overlayPlayButton: true
+                    });
                 break;
 
             case 'Audio':
@@ -271,11 +271,11 @@
                     ArtistIds: "",
                     Limit: 40
                 }, {
-                    playFromHere: true,
-                    action: 'playallfromhere',
-                    smallIcon: true,
-                    artist: true
-                });
+                        playFromHere: true,
+                        action: 'playallfromhere',
+                        smallIcon: true,
+                        artist: true
+                    });
                 break;
 
             default:
@@ -359,6 +359,7 @@
         }
         else if (item.Type == "MusicArtist") {
             query.ArtistIds = item.Id;
+            query.SortBy = 'ProductionYear,SortName';
         }
     }
 
@@ -378,11 +379,11 @@
 
         query = Object.assign(query, options || {});
 
+        addCurrentItemToQuery(query, item);
+
         if (query.IncludeItemTypes == "Audio") {
             query.SortBy = "AlbumArtist,Album,SortName";
         }
-
-        addCurrentItemToQuery(query, item);
 
         return query;
     }

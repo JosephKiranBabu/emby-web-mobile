@@ -994,6 +994,7 @@
     });
 
     events.on(ConnectionManager, 'localusersignedin', function (e, user) {
+        currentDrawerType = null;
         setDrawerClass();
         ConnectionManager.user(ConnectionManager.getApiClient(user.ServerId)).then(function (user) {
             updateUserInHeader(user);

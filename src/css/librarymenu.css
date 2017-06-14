@@ -287,7 +287,7 @@ body:not(.dashboardDocument) .btnNotifications {
     }
 
     .pageWithAbsoluteTabs:not(.noSecondaryNavPage) {
-        padding-top: 7.4em !important;
+        padding-top: 7.6em !important;
     }
 
     .absolutePageTabContent {

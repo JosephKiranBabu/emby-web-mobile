@@ -1,4 +1,4 @@
-﻿define(['events', 'datetime', 'appSettings', 'pluginManager', 'playQueueManager', 'userSettings', 'globalize', 'connectionManager', 'loading', 'serverNotifications', 'apphost', 'fullscreenManager', 'layoutManager'], function (events, datetime, appSettings, pluginManager, PlayQueueManager, userSettings, globalize, connectionManager, loading, serverNotifications, apphost, fullscreenManager, layoutManager) {
+﻿define(['events', 'datetime', 'appSettings', 'itemHelper', 'pluginManager', 'playQueueManager', 'userSettings', 'globalize', 'connectionManager', 'loading', 'serverNotifications', 'apphost', 'fullscreenManager', 'layoutManager'], function (events, datetime, appSettings, itemHelper, pluginManager, PlayQueueManager, userSettings, globalize, connectionManager, loading, serverNotifications, apphost, fullscreenManager, layoutManager) {
     'use strict';
 
     function enableLocalPlaylistManagement(player) {
@@ -352,7 +352,7 @@
         allowVideoStreamCopy,
         allowAudioStreamCopy) {
 
-        if (item.MediaType === 'Audio' && apiClient.isMinServerVersion('3.2.17.5')) {
+        if (!itemHelper.isLocalItem(item) && item.MediaType === 'Audio' && apiClient.isMinServerVersion('3.2.17.5')) {
 
             return Promise.resolve({
                 MediaSources: [
@@ -1342,7 +1342,9 @@
                 return player.seekable();
             }
 
-            if (self.playMethod(player) === 'Transcode') {
+            var isPlayMethodTranscode = self.playMethod(player) === 'Transcode';
+
+            if (isPlayMethodTranscode) {
                 return false;
             }
 
@@ -1897,7 +1899,7 @@
             }, reject);
         }
 
-        function sendPlaybackListToPLayer(player, items, deviceProfile, maxBitrate, apiClient, startPosition) {
+        function sendPlaybackListToPlayer(player, items, deviceProfile, maxBitrate, apiClient, startPosition) {
 
             return setStreamUrls(items, deviceProfile, maxBitrate, apiClient, startPosition).then(function () {
 
@@ -1951,7 +1953,7 @@
 
                 if (player && !enableLocalPlaylistManagement(player)) {
 
-                    return sendPlaybackListToPLayer(player, playOptions.items, deviceProfile, maxBitrate, apiClient, startPosition);
+                    return sendPlaybackListToPlayer(player, playOptions.items, deviceProfile, maxBitrate, apiClient, startPosition);
                 }
 
                 return getPlaybackMediaSource(player, apiClient, deviceProfile, maxBitrate, item, startPosition).then(function (mediaSource) {

@@ -255,8 +255,7 @@ define(['appStorage', 'browser'], function (appStorage, browser) {
     var supportedFeatures = function () {
 
         var features = [
-            'sharing',
-            'externalpremium'
+            'sharing'
         ];
 
         if (!browser.edgeUwp && !browser.tv && !browser.xboxOne && !browser.ps4 && !isXboxUWP()) {
@@ -273,6 +272,7 @@ define(['appStorage', 'browser'], function (appStorage, browser) {
         // the app stores may reject over navigation that pops open the browser
         if (!browser.operaTv && !browser.tizen && !browser.orsay && !browser.web0s && !browser.ps4) {
             features.push('externallinks');
+            features.push('externalpremium');
         }
 
         // opera won't even allow a link to be displayed

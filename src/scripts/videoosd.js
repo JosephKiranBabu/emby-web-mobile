@@ -116,6 +116,8 @@
         var osdBottomElement = document.querySelector('.videoOsdBottom');
         var supportsBrightnessChange;
 
+        var currentVisibleMenu;
+
         function onVerticalSwipe(e, elem, data) {
             var player = currentPlayer;
             if (player) {
@@ -436,12 +438,6 @@
             osdPoster.innerHTML = '';
         }
 
-        var _osdOpen = true;
-
-        function isOsdOpen() {
-            return _osdOpen;
-        }
-
         function showOsd() {
 
             slideDownToShow(headerElement);
@@ -488,11 +484,11 @@
 
         function slideUpToShow(elem) {
 
-            if (_osdOpen) {
+            if (currentVisibleMenu === 'osd') {
                 return;
             }
 
-            _osdOpen = true;
+            currentVisibleMenu = 'osd';
 
             clearBottomPanelAnimationEventListeners(elem);
 
@@ -531,7 +527,7 @@
 
         function slideDownToHide(elem) {
 
-            if (!_osdOpen) {
+            if (currentVisibleMenu !== 'osd') {
                 return;
             }
 
@@ -546,7 +542,7 @@
                 once: true
             });
 
-            _osdOpen = false;
+            currentVisibleMenu = null;
         }
 
         var lastMouseMoveData;
@@ -581,7 +577,7 @@
             switch (e.detail.command) {
 
                 case 'left':
-                    if (isOsdOpen()) {
+                    if (currentVisibleMenu === 'osd') {
                         showOsd();
                     } else {
                         e.preventDefault();
@@ -589,7 +585,7 @@
                     }
                     break;
                 case 'right':
-                    if (isOsdOpen()) {
+                    if (currentVisibleMenu === 'osd') {
                         showOsd();
                     } else {
                         e.preventDefault();
@@ -764,7 +760,6 @@
         function onPlaybackStopped(e, state) {
 
             currentRuntimeTicks = null;
-            comingUpNextDisplayed = false;
             hideComingUpNext();
 
             console.log('nowplaying event: ' + e.type);
@@ -866,14 +861,19 @@
 
         function showComingUpNext(player, currentTimeTicks, runtimeTicks) {
 
-            if (comingUpNextDisplayed) {
+            if (currentVisibleMenu) {
                 return;
             }
-            comingUpNextDisplayed = true;
+            currentVisibleMenu = 'upnext';
         }
 
         function hideComingUpNext() {
 
+            if (currentVisibleMenu !== 'upnext') {
+                return;
+            }
+
+            currentVisibleMenu = null;
         }
 
         function refreshProgramInfoIfNeeded(player) {
@@ -1229,7 +1229,7 @@
         });
 
         function onWindowKeyDown(e) {
-            if (e.keyCode === 32 && !isOsdOpen()) {
+            if (e.keyCode === 32 && !currentVisibleMenu) {
                 playbackManager.playPause(currentPlayer);
                 showOsd();
             }

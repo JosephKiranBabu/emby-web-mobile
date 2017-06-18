@@ -1065,9 +1065,6 @@ var AppInfo = {};
         define("syncToggle", [embyWebComponentsBowerPath + "/sync/synctoggle"], returnFirstDependency);
         define("syncJobEditor", [embyWebComponentsBowerPath + "/sync/syncjobeditor"], returnFirstDependency);
         define("syncJobList", [embyWebComponentsBowerPath + "/sync/syncjoblist"], returnFirstDependency);
-        define("voiceDialog", [embyWebComponentsBowerPath + "/voice/voicedialog"], returnFirstDependency);
-        define("voiceReceiver", [embyWebComponentsBowerPath + "/voice/voicereceiver"], returnFirstDependency);
-        define("voiceProcessor", [embyWebComponentsBowerPath + "/voice/voiceprocessor"], returnFirstDependency);
 
         define("viewManager", [embyWebComponentsBowerPath + "/viewmanager/viewmanager"], function (viewManager) {
             window.ViewManager = viewManager;
@@ -1619,9 +1616,9 @@ var AppInfo = {};
         var embyWebComponentsBowerPath = bowerPath + '/emby-webcomponents';
 
         if (Dashboard.isRunningInCordova() && browser.android) {
-            //define("apiclientcore", ['bower_components/emby-apiclient/apiclient'], returnFirstDependency);
-            //define("apiclient", ['bower_components/emby-apiclient/apiclientex'], returnFirstDependency);
-            define("apiclient", ['bower_components/emby-apiclient/apiclient'], returnFirstDependency);
+            define("apiclientcore", ['bower_components/emby-apiclient/apiclient'], returnFirstDependency);
+            define("apiclient", ['bower_components/emby-apiclient/apiclientex'], returnFirstDependency);
+            //define("apiclient", ['bower_components/emby-apiclient/apiclient'], returnFirstDependency);
         } else {
             define("apiclient", ['bower_components/emby-apiclient/apiclient'], returnFirstDependency);
         }
@@ -2285,7 +2282,7 @@ var AppInfo = {};
 
         defineRoute({
             path: '/offline/offline.html',
-            transition: 'false',
+            transition: 'fade',
             controller: 'offline/offline',
             dependencies: [],
             anonymous: true,

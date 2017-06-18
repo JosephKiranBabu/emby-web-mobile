@@ -180,10 +180,6 @@ body:not(.dashboardDocument) .btnNotifications {
         color: #52B54B !important;
     }
 
-.mainDrawer-scrollContainer {
-    padding-bottom: 10vh;
-}
-
 .dashboardDocument .skinBody {
     transition: left ease-in-out 0.3s, padding ease-in-out 0.3s;
     position: absolute;
@@ -197,6 +193,10 @@ body:not(.dashboardDocument) .btnNotifications {
 
     .sidebarLink {
         font-size: 110%;
+    }
+
+    .mainDrawer-scrollContainer {
+        padding-bottom: 10vh;
     }
 }
 

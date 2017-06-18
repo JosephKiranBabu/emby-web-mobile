@@ -260,7 +260,7 @@
 
         function getItemPromise() {
 
-            var id = params.genreId || params.studioId || params.artistId || params.personId || params.parentId;
+            var id = params.genreId || params.musicGenreId || params.studioId || params.artistId || params.personId || params.parentId;
 
             if (id) {
                 return apiClient.getItem(Dashboard.getCurrentUserId(), id);

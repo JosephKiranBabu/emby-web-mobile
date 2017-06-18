@@ -1,17 +1,19 @@
-﻿define(['globalize', 'shell', 'browser'], function (globalize, shell, browser) {
+﻿define(['globalize', 'shell', 'browser', 'apphost'], function (globalize, shell, browser, appHost) {
     'use strict';
 
     function getProductInfo(feature) {
         return null;
     }
 
-    function showExternalPremiereInfo() {
-        shell.openUrl('https://emby.media/premiere');
-    }
-
     function beginPurchase(feature, email) {
-        showExternalPremiereInfo();
-        return Promise.reject();
+        if (appHost.supports('externalpremium')) {
+            shell.openUrl('https://emby.media/premiere');
+        }
+        else {
+            require(['alert'], function (alert) {
+                alert('Learn more about Emby Premiere on the Emby website.');
+            });
+        }
     }
 
     function restorePurchase(id) {

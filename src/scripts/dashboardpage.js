@@ -1,22 +1,6 @@
 ﻿define(['datetime', 'jQuery', 'events', 'dom', 'loading', 'libraryBrowser', 'humanedate', 'cardStyle', 'listViewStyle', 'emby-linkbutton'], function (datetime, $, events, dom, loading, libraryBrowser) {
     'use strict';
 
-    function renderNoHealthAlertsMessage(page) {
-
-        var html = '<p style="padding:0 .5em;display:flex;align-items:center;">';
-
-        html += '<iron-icon icon="check" style="margin-right:.5em;background-color: #52B54B;border-radius:1em;color: #fff;"></iron-icon>';
-
-        html += Globalize.translate('HealthMonitorNoAlerts') + '</p>';
-
-        page.querySelector('.healthMonitor').innerHTML = html;
-    }
-
-    function refreshHealthMonitor(page) {
-
-        renderNoHealthAlertsMessage(page);
-    }
-
     function onConnectionHelpClick(e) {
 
         e.preventDefault();
@@ -103,8 +87,6 @@
             $('.swaggerLink', page).attr('href', apiClient.getUrl('swagger-ui/index.html', {
                 api_key: ApiClient.accessToken()
             }));
-
-            refreshHealthMonitor(page);
         },
 
         onPageHide: function () {
@@ -154,18 +136,18 @@
                     localizedVersion += " " + Globalize.translate('Option' + systemInfo.SystemUpdateLevel).toLowerCase();
                 }
 
+                if (systemInfo.CanSelfRestart) {
+                    $('.btnRestartContainer', page).removeClass('hide');
+                } else {
+                    $('.btnRestartContainer', page).addClass('hide');
+                }
+
                 $('#appVersionNumber', page).html(localizedVersion);
 
                 if (systemInfo.SupportsHttps) {
                     $('#ports', page).html(Globalize.translate('LabelRunningOnPorts', systemInfo.HttpServerPortNumber, systemInfo.HttpsPortNumber));
                 } else {
                     $('#ports', page).html(Globalize.translate('LabelRunningOnPort', systemInfo.HttpServerPortNumber));
-                }
-
-                if (systemInfo.CanSelfRestart) {
-                    $('.btnRestartContainer', page).removeClass('hide');
-                } else {
-                    $('.btnRestartContainer', page).addClass('hide');
                 }
 
                 DashboardPage.renderUrls(page, systemInfo);
@@ -376,12 +358,15 @@
                 html += '<div class="cardPadder cardPadder-backdrop"></div>';
                 html += '<div class="cardContent">';
 
-                html += '<div class="sessionNowPlayingContent"';
-
                 var imgUrl = DashboardPage.getNowPlayingImageUrl(nowPlayingItem);
 
                 if (imgUrl) {
+                    html += '<div class="sessionNowPlayingContent sessionNowPlayingContent-withbackground"';
+
                     html += ' data-src="' + imgUrl + '" style="display:inline-block;background-image:url(\'' + imgUrl + '\');"';
+                } else {
+                    html += '<div class="sessionNowPlayingContent"';
+
                 }
 
                 html += '></div>';
@@ -442,7 +427,7 @@
                 // cardScalable
                 html += '</div>';
 
-                html += '<div style="padding:1em;border-top:1px solid #eee;background:#fff;text-align:center;">';
+                html += '<div class="sessionCardFooter">';
 
                 html += '<div class="sessionNowPlayingStreamInfo" style="padding:0 0 1em;">';
                 html += DashboardPage.getSessionNowPlayingStreamInfo(session);
@@ -547,7 +532,13 @@
 
         getSessionNowPlayingTime: function (session) {
 
+            var nowPlayingItem = session.NowPlayingItem;
+
             var html = '';
+
+            if (!nowPlayingItem) {
+                return html;
+            }
 
             if (session.PlayState.PositionTicks) {
                 html += datetime.getDisplayRunningTime(session.PlayState.PositionTicks);
@@ -556,8 +547,6 @@
             }
 
             html += ' / ';
-
-            var nowPlayingItem = session.NowPlayingItem;
 
             if (nowPlayingItem && nowPlayingItem.RunTimeTicks) {
                 html += datetime.getDisplayRunningTime(nowPlayingItem.RunTimeTicks);
@@ -721,6 +710,12 @@
             if (imgUrl != imgElem.getAttribute('data-src')) {
                 imgElem.style.backgroundImage = imgUrl ? 'url(\'' + imgUrl + '\')' : '';
                 imgElem.setAttribute('data-src', imgUrl);
+
+                if (imgUrl) {
+                    imgElem.classList.add('sessionNowPlayingContent-withbackground');
+                } else {
+                    imgElem.classList.remove('sessionNowPlayingContent-withbackground');
+                }
             }
         },
 
@@ -864,6 +859,12 @@
                 return t.State != 'Idle' && !t.IsHidden;
             });
 
+            if (tasks.length) {
+                page.querySelector('.runningTasksContainer').classList.remove('hide');
+            } else {
+                page.querySelector('.runningTasksContainer').classList.add('hide');
+            }
+
             if (tasks.filter(function (t) {
 
                 return t.Key == DashboardPage.systemUpdateTaskKey;
@@ -873,12 +874,6 @@
                 $('#btnUpdateApplication', page).buttonEnabled(false);
             } else {
                 $('#btnUpdateApplication', page).buttonEnabled(true);
-            }
-
-            if (!tasks.length) {
-                $('#runningTasksCollapsible', page).hide();
-            } else {
-                $('#runningTasksCollapsible', page).show();
             }
 
             for (var i = 0, length = tasks.length; i < length; i++) {
@@ -952,7 +947,7 @@
                 imgUrl = "css/images/supporter/supporterbadge.png";
                 text = Globalize.translate('MessageThankYouForSupporting');
 
-                supporterIconContainer.innerHTML = '<a is="emby-linkbutton" class="button-link imageLink supporterIcon" href="http://emby.media/premiere" target="_blank" title="' + text + '"><img src="' + imgUrl + '" style="height:32px;vertical-align: middle; margin-right: .5em;" /></a><span style="position:relative;top:2px;text-decoration:none;">' + text + '</span>';
+                supporterIconContainer.innerHTML = '<a is="emby-linkbutton" class="button-link imageLink supporterIcon" href="http://emby.media/premiere" target="_blank" title="' + text + '"><img src="' + imgUrl + '" style="height:32px;vertical-align: middle; margin-right: .5em;" /></a><span style="text-decoration:none;">' + text + '</span>';
             } else {
 
                 supporterIconContainer.classList.add('hide');
@@ -999,10 +994,10 @@
 
             if (systemInfo.CompletedInstallations.length) {
 
-                $('#collapsiblePendingInstallations', page).show();
+                $('#collapsiblePendingInstallations', page).removeClass('hide');
 
             } else {
-                $('#collapsiblePendingInstallations', page).hide();
+                $('#collapsiblePendingInstallations', page).addClass('hide');
 
                 return;
             }

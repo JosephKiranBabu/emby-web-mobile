@@ -199,8 +199,7 @@ div[data-role="controlgroup"] a.ui-btn-active {
 }
 
 .content-primary {
-    padding-top:6em;
-    font-size: 92%;
+    padding-top: 6em;
     padding-right: 1em;
     padding-left: 1em;
 }
@@ -233,66 +232,56 @@ div[data-role="controlgroup"] a.ui-btn-active {
     margin-top: 0;
 }
 
-@media all and (max-width: 90em) {
+.dashboardSections {
+    display: flex;
+    flex-direction: column;
+}
 
-    .dashboardHomeRightColumn {
-        margin-top: 1em;
+.dashboardSection {
+    flex-shrink: 0;
+    flex-grow: 1;
+    margin: 0 0 2em;
+}
+
+    .dashboardSection h2 {
+        margin: 0 0 .5em;
+    }
+
+@media all and (min-width: 40em) {
+
+    .dashboardSectionContent {
+        padding: .5em;
     }
 }
 
-.dashboardContent {
-    margin-top: -.7em;
-}
+@media all and (min-width: 60em) {
 
-.dashboardHomeRightColumn {
-    vertical-align: top;
+    .dashboardSections {
+        flex-wrap: wrap;
+        flex-direction: row;
+    }
+
+    .dashboardSection {
+        width: 50%;
+    }
+
+    .dashboardSectionContent .paperList {
+        margin: 0;
+    }
 }
 
 @media all and (min-width: 90em) {
 
-    .dashboardHomeLeftColumn {
-        width: 600px;
-        display: inline-block;
-        vertical-align: top;
+    .dashboardSection {
+        width: 33.3%;
     }
 
-    .dashboardHomeRightColumn {
-        vertical-align: top;
+    .dashboardSection-large {
+        width: 66.6%;
     }
 
-    .firstDashboardHomeRightColumn {
-        display: inline-block;
-        width: 440px;
-        margin-left: 2em;
-        min-width: 300px;
-    }
-}
-
-@media all and (min-width: 98.75em) {
-
-    .dashboardHomeRightColumn {
-        display: inline-block;
-        margin-left: 1em;
-        width: 300px;
-        min-width: 300px;
-    }
-}
-
-@media all and (min-width: 105em) {
-
-    .dashboardHomeRightColumn {
-        width: 350px;
-        min-width: 350px;
-    }
-}
-
-
-@media all and (min-width: 117.5em) {
-
-    .dashboardHomeRightColumn {
-        max-width: 440px;
-        margin-left: 2em;
-        min-width: 440px;
+    .dashboardSectionContent {
+        padding: 0 1em 2em;
     }
 }
 
@@ -339,6 +328,12 @@ div[data-role="controlgroup"] a.ui-btn-active {
     }
 }
 
+.sessionCardFooter {
+    padding: 1em;
+    border-top: 1px solid #eee;
+    text-align: center;
+}
+
 .sessionNowPlayingContent {
     background-size: cover;
     background-repeat: no-repeat;
@@ -351,14 +346,17 @@ div[data-role="controlgroup"] a.ui-btn-active {
 }
 
 .sessionNowPlayingInnerContent {
-    background-color: rgba(0, 0, 0, .6);
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    color: #fff;
     font-weight: 400;
+}
+
+.sessionNowPlayingContent-withbackground + .sessionNowPlayingInnerContent {
+    color: #fff !important;
+    background: rgba(0,0,0,.7);
 }
 
 .sessionAppInfo {
@@ -401,17 +399,11 @@ div[data-role="controlgroup"] a.ui-btn-active {
     display: none;
 }
 
-.activeSession:not(.playingSession) .sessionNowPlayingInnerContent {
-    background-color: #fff;
-    color: #000;
-}
-
 .activeSession:not(.playingSession) .sessionNowPlayingInfo {
     bottom: 0;
 }
 
 .sessionNowPlayingTime {
-    color: #fff;
     position: absolute;
     right: 10px;
     bottom: 19px;

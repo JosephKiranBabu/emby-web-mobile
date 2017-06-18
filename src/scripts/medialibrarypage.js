@@ -322,7 +322,7 @@
             html += '<div class="cardImageContainer editLibrary" style="cursor:pointer;background-image:url(\'' + imgUrl + '\');"></div>';
         } else if (!virtualFolder.showNameWithIcon) {
             html += '<div class="cardImageContainer editLibrary" style="cursor:pointer;">';
-            html += '<i class="cardImageIcon md-icon" style="color:#444;">' + (virtualFolder.icon || getIcon(virtualFolder.CollectionType)) + '</i>';
+            html += '<i class="cardImageIcon md-icon">' + (virtualFolder.icon || getIcon(virtualFolder.CollectionType)) + '</i>';
 
             html += '</div>';
         }
@@ -330,10 +330,10 @@
         if (!imgUrl && virtualFolder.showNameWithIcon) {
             html += '<h1 class="cardImageContainer addLibrary" style="position:absolute;top:0;left:0;right:0;bottom:0;cursor:pointer;flex-direction:column;">';
 
-            html += '<i class="cardImageIcon md-icon" style="font-size:240%;color:#888;height:auto;width:auto;">' + (virtualFolder.icon || getIcon(virtualFolder.CollectionType)) + '</i>';
+            html += '<i class="cardImageIcon md-icon" style="font-size:240%;height:auto;width:auto;">' + (virtualFolder.icon || getIcon(virtualFolder.CollectionType)) + '</i>';
 
             if (virtualFolder.showNameWithIcon) {
-                html += '<div style="margin:1em 0;position:width:100%;font-weight:500;color:#444;">';
+                html += '<div style="margin:1em 0;position:width:100%;font-weight:500;">';
                 html += virtualFolder.Name;
                 html += "</div>";
             }

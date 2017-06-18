@@ -138,6 +138,7 @@
     font-weight: normal !important;
     vertical-align: middle;
     padding: 1em 0 1em 2.4em;
+    flex-grow: 1;
 }
 
     .sidebarLink:hover {
@@ -150,6 +151,7 @@
 
 .sidebarLinkIcon {
     margin-right: 1em;
+    flex-shrink: 0;
 }
 
 .sidebarHeader {
@@ -163,7 +165,7 @@ body:not(.dashboardDocument) .btnNotifications {
 }
 
 .darkDrawer {
-    background-color: #181818 !important;
+    background-color: #1c1c1f !important;
     color: #ccc;
 }
 
@@ -212,7 +214,7 @@ body:not(.dashboardDocument) .btnNotifications {
         left: 0 !important;
         top: 0 !important;
         transform: none !important;
-        font-size: 92%;
+        font-size: 93%;
     }
 
     .dashboardDocument .mainDrawer-scrollContainer {
@@ -241,10 +243,6 @@ body:not(.dashboardDocument) .btnNotifications {
 
     .dashboardDocument .adminDrawerLogo {
         display: none !important;
-    }
-
-    .dashboardDocument .darkDrawer {
-        background-color: rgba(28,28,31,.3) !important;
     }
 }
 

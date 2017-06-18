@@ -8,7 +8,8 @@
 }
 
 .background-theme-b .backgroundContainer, .dialog.background-theme-b {
-    background-color: #171717;
+    background-color: #121314;
+    background-color: #161616;
 }
 
     .background-theme-b .backgroundContainer.withBackdrop {
@@ -723,7 +724,7 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
 .sectionTitleTextButton {
     margin: 0 0 .1em !important;
     display: inline-flex !important;
-    color: inherit!important;
+    color: inherit !important;
 }
 
     .sectionTitleTextButton:not(.padded-left) {

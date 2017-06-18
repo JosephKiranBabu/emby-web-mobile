@@ -214,7 +214,6 @@ body:not(.dashboardDocument) .btnNotifications {
         left: 0 !important;
         top: 0 !important;
         transform: none !important;
-        font-size: 93%;
     }
 
     .dashboardDocument .mainDrawer-scrollContainer {
@@ -266,7 +265,7 @@ body:not(.dashboardDocument) .btnNotifications {
 
 @media all and (min-width: 84em) {
 
-    .libraryDocument .headerTabs {
+    .headerTabs {
         align-self: center;
         width: auto;
         align-items: center;
@@ -276,7 +275,7 @@ body:not(.dashboardDocument) .btnNotifications {
         top: -.45em;
     }
 
-    .libraryDocument .headerTop {
+    .headerTop {
         padding: .9em 0;
     }
 
@@ -291,6 +290,10 @@ body:not(.dashboardDocument) .btnNotifications {
     .absolutePageTabContent {
         /* Page needs to supply padding */
         top: 4.8em !important;
+    }
+
+    .dashboardDocument.withSectionTabs .mainDrawer-scrollContainer {
+        margin-top: 4.9em !important;
     }
 }
 

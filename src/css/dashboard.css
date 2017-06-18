@@ -208,12 +208,12 @@ div[data-role="controlgroup"] a.ui-btn-active {
     padding-top: 9em !important;
 }
 
-@media all and (min-width: 50em) {
+@media all and (min-width: 40em) {
 
     .content-primary {
         padding-top: 7em;
-        padding-right: 1.5em;
-        padding-left: 1.5em;
+        padding-right: 2em;
+        padding-left: 2em;
     }
 
     .withTabs .content-primary {
@@ -224,7 +224,14 @@ div[data-role="controlgroup"] a.ui-btn-active {
 @media all and (min-width: 75em) {
 
     .content-primary {
-        padding-left: 2em;
+        padding-left: 3em;
+    }
+}
+
+@media all and (min-width: 84em) {
+
+    .withTabs .content-primary {
+        padding-top: 7em !important;
     }
 }
 

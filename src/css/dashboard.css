@@ -291,6 +291,14 @@ div[data-role="controlgroup"] a.ui-btn-active {
     .dashboardSectionContent {
         padding: 0 1em 2em;
     }
+
+    .dashboardSection-30 {
+        width: 30%;
+    }
+
+    .dashboardSection-40 {
+        width: 40%;
+    }
 }
 
 .premiumBanner img {

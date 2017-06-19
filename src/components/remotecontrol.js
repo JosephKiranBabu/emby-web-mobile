@@ -1,4 +1,4 @@
-﻿define(['browser', 'datetime', 'backdrop', 'libraryBrowser', 'listView', 'userdataButtons', 'imageLoader', 'playbackManager', 'nowPlayingHelper', 'events', 'connectionManager', 'apphost', 'globalize', 'cardStyle', 'emby-itemscontainer', 'css!css/nowplaying.css'], function (browser, datetime, backdrop, libraryBrowser, listView, userdataButtons, imageLoader, playbackManager, nowPlayingHelper, events, connectionManager, appHost, globalize) {
+﻿define(['browser', 'datetime', 'backdrop', 'libraryBrowser', 'listView', 'imageLoader', 'playbackManager', 'nowPlayingHelper', 'events', 'connectionManager', 'apphost', 'globalize', 'cardStyle', 'emby-itemscontainer', 'css!css/nowplaying.css', 'emby-ratingbutton'], function (browser, datetime, backdrop, libraryBrowser, listView, imageLoader, playbackManager, nowPlayingHelper, events, connectionManager, appHost, globalize) {
     'use strict';
 
     function showSlideshowMenu(context) {
@@ -191,20 +191,17 @@
             backdrop.setBackdrops([item]);
 
             ApiClient.getItem(Dashboard.getCurrentUserId(), item.Id).then(function (fullItem) {
-                userdataButtons.fill({
-                    item: fullItem,
-                    includePlayed: false,
-                    style: 'icon',
-                    element: context.querySelector('.nowPlayingPageUserDataButtons'),
-                });
+
+                var userData = fullItem.UserData || {};
+                var likes = userData.Likes == null ? '' : userData.Likes;
+
+                context.querySelector('.nowPlayingPageUserDataButtons').innerHTML = '<button is="emby-ratingbutton" type="button" class="listItemButton paper-icon-button-light" data-id="' + fullItem.Id + '" data-serverid="' + fullItem.ServerId + '" data-itemtype="' + fullItem.Type + '" data-likes="' + likes + '" data-isfavorite="' + (userData.IsFavorite) + '"><i class="md-icon">&#xE87D;</i></button>';
             });
         } else {
 
             backdrop.clear();
 
-            userdataButtons.destroy({
-                element: context.querySelector('.nowPlayingPageUserDataButtons')
-            });
+            context.querySelector('.nowPlayingPageUserDataButtons').innerHTML = '';
         }
     }
 

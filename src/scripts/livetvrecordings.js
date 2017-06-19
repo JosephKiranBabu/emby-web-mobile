@@ -1,4 +1,4 @@
-﻿define(['layoutManager', 'loading', 'components/categorysyncbuttons', 'cardBuilder', 'apphost', 'imageLoader', 'scripts/livetvcomponents', 'emby-button', 'listViewStyle', 'emby-itemscontainer'], function (layoutManager, loading, categorysyncbuttons, cardBuilder, appHost, imageLoader) {
+﻿define(['layoutManager', 'loading', 'components/categorysyncbuttons', 'cardBuilder', 'apphost', 'imageLoader', 'scripts/livetvcomponents', 'listViewStyle', 'emby-itemscontainer'], function (layoutManager, loading, categorysyncbuttons, cardBuilder, appHost, imageLoader) {
     'use strict';
 
     function getRecordingGroupHtml(group) {
@@ -7,7 +7,7 @@
 
         html += '<div class="listItem">';
 
-        html += '<button type="button" is="emby-button" class="fab mini autoSize blue" item-icon><i class="md-icon">live_tv</i></button>';
+        html += '<i class="md-icon listItemIcon">live_tv</i>';
 
         html += '<div class="listItemBody two-line">';
         html += '<a href="livetvitems.html?type=Recordings&groupid=' + group.Id + '" class="clearLink">';
@@ -232,7 +232,8 @@
         for (var i = 0, length = moreButtons.length; i < length; i++) {
             moreButtons[i].addEventListener('click', onMoreClick);
         }
-        tabContent.querySelector('#activeRecordings .recordingItems').addEventListener('timercancelled', function () {
+
+        tabContent.querySelector('#activeRecordings .recordingItems').addEventListener('timercancelled', function () {
             self.preRender();
             self.renderTab();
         });

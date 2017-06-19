@@ -478,7 +478,7 @@
                 editable = false;
             }
 
-            if ((item.MediaType === 'Video' && item.Type !== 'Movie' && item.Type !== 'Trailer') || (item.MediaType && item.MediaType !== 'Video')) {
+            if (item.Type !== 'Person') {
                 elem.classList.add('detailimg-hidemobile');
                 page.querySelector('.detailPageContent').classList.add('detailPageContent-nodetailimg');
             } else {

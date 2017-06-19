@@ -1,4 +1,4 @@
-﻿define(['loading', 'embyRouter', 'layoutManager', 'connectionManager', 'cardBuilder', 'datetime', 'mediaInfo', 'backdrop', 'listView', 'itemContextMenu', 'itemHelper', 'userdataButtons', 'dom', 'indicators', 'apphost', 'imageLoader', 'libraryMenu', 'globalize', 'browser', 'events', 'scrollHelper', 'playbackManager', 'libraryBrowser', 'scrollStyles', 'emby-itemscontainer', 'emby-checkbox', 'emby-linkbutton'], function (loading, embyRouter, layoutManager, connectionManager, cardBuilder, datetime, mediaInfo, backdrop, listView, itemContextMenu, itemHelper, userdataButtons, dom, indicators, appHost, imageLoader, libraryMenu, globalize, browser, events, scrollHelper, playbackManager, libraryBrowser) {
+﻿define(['loading', 'embyRouter', 'layoutManager', 'connectionManager', 'cardBuilder', 'datetime', 'mediaInfo', 'backdrop', 'listView', 'itemContextMenu', 'itemHelper', 'dom', 'indicators', 'apphost', 'imageLoader', 'libraryMenu', 'globalize', 'browser', 'events', 'scrollHelper', 'playbackManager', 'libraryBrowser', 'scrollStyles', 'emby-itemscontainer', 'emby-checkbox', 'emby-linkbutton', 'emby-playstatebutton', 'emby-ratingbutton'], function (loading, embyRouter, layoutManager, connectionManager, cardBuilder, datetime, mediaInfo, backdrop, listView, itemContextMenu, itemHelper, dom, indicators, appHost, imageLoader, libraryMenu, globalize, browser, events, scrollHelper, playbackManager, libraryBrowser) {
     'use strict';
 
     function getPromise(params) {
@@ -122,7 +122,7 @@
         options = options || {};
 
         var html = '';
-        html += '<div is="emby-itemscontainer" class="itemsContainer vertical-list padded-left padded-right" data-contextmenu="false">';
+        html += '<div is="emby-itemscontainer" class="itemsContainer vertical-list" data-contextmenu="false">';
         html += listView.getListViewHtml({
             items: items,
             enableUserDataButtons: false,
@@ -230,6 +230,33 @@
         }
 
         return canPlay;
+    }
+
+    function reloadUserDataButtons(page, item) {
+
+        var btnPlaystate = page.querySelector('.btnPlaystate');
+        if (itemHelper.canMarkPlayed(item)) {
+
+            btnPlaystate.classList.remove('hide');
+            btnPlaystate.setItem(item);
+
+        } else {
+            btnPlaystate.classList.add('hide');
+            btnPlaystate.setItem(null);
+        }
+
+        btnPlaystate.querySelector('.detailButton-mobile-text').innerHTML = btnPlaystate.title;
+
+        var btnUserRating = page.querySelector('.btnUserRating');
+        if (itemHelper.canRate(item)) {
+
+            btnUserRating.classList.remove('hide');
+            btnUserRating.setItem(item);
+
+        } else {
+            btnUserRating.classList.add('hide');
+            btnUserRating.setItem(null);
+        }
     }
 
     function reloadFromItem(page, params, item) {
@@ -707,11 +734,9 @@
             renderGenres(itemGenres[i], item, null, isStatic);
         }
 
+        reloadUserDataButtons(page, item);
         renderStudios(page.querySelector('.itemStudios'), item, isStatic);
-        renderUserDataIcons(page, item);
         renderLinks(externalLinksElem, item);
-
-        page.querySelector('.criticRatingScore').innerHTML = (item.CriticRating || '0') + '%';
 
         renderTags(page, item);
 
@@ -1635,26 +1660,6 @@
         });
     }
 
-    function renderUserDataIcons(page, item) {
-
-        var userDataIcons = page.querySelectorAll('.userDataIcons');
-
-        for (var i = 0, length = userDataIcons.length; i < length; i++) {
-
-            if (item.Type == 'Program' || item.Type == 'SeriesTimer') {
-                userDataIcons[i].classList.add('hide');
-            } else {
-                userDataIcons[i].classList.remove('hide');
-            }
-
-            userdataButtons.fill({
-                item: item,
-                style: 'fab-mini',
-                element: userDataIcons[i]
-            });
-        }
-    }
-
     function renderCriticReviews(page, item, limit) {
 
         if (item.Type != "Movie" && item.Type != "Trailer" && item.Type != "MusicVideo") {
@@ -1733,7 +1738,7 @@
             html += '</div>';
 
             if (review.Url) {
-                html += '<div class="secondary listItemBodyText"><a is="emby-linkbutton" class="button-link textlink" href="' + review.Url + '" target="_blank">' + globalize.translate('ButtonFullReview') + '</a></div>';
+                html += '<div class="secondary listItemBodyText"><a is="emby-linkbutton" class="button-link textlink" href="' + review.Url + '" target="_blank" data-autohide="true">' + globalize.translate('ButtonFullReview') + '</a></div>';
             }
 
             html += '</div>';

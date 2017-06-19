@@ -1,4 +1,12 @@
-﻿.hidingAnimatedTab {
+﻿.playstatebutton-played > i {
+    color: #cc3333;
+}
+
+.ratingbutton-withrating > i {
+    color: #cc3333;
+}
+
+.hidingAnimatedTab {
     visibility: hidden;
 }
 
@@ -127,10 +135,6 @@ a.itemTag:hover {
     left: .8em;
 }
 
-span.itemCommunityRating:not(:empty) + .userDataIcons {
-    margin-left: 1.25em;
-}
-
 .itemBackdrop {
     background-size: cover;
     background-position: center center;
@@ -146,27 +150,18 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
     right: 0;
 }
 
-.itemBackdropContent {
+.itemBackdropFader {
     position: absolute;
-    bottom: 0;
+    bottom: -2px;
     left: 0;
     right: 0;
-    background-color: rgba(0,0,0,0.7);
-    min-height: 9em;
-}
-
-.noBackdrop .itemBackdropContent {
-    background-color: transparent;
+    background: linear-gradient(rgba(0,0,0,0), #161616);
+    height: 15vh;
 }
 
 .desktopMiscInfoContainer {
     position: absolute;
     bottom: .75em;
-}
-
-.detailUserDataIcons {
-    display: flex;
-    align-items: center;
 }
 
 .detailImageContainer {
@@ -314,10 +309,6 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
         margin-bottom: 1em;
     }
 
-    .itemBackdropContent {
-        min-height: 0;
-    }
-
     .itemDetailPage {
         padding-top: 0 !important;
     }
@@ -359,25 +350,25 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
 }
 
 .mainDetailButtons {
-    padding: .5em 0;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    margin-left: -.5em;
 }
 
-    .mainDetailButtons button, .recordingFields button {
-        margin-left: 0;
-        margin-right: .5em;
-        flex-shrink: 0;
-    }
+.recordingFields button {
+    margin-left: 0;
+    margin-right: .5em;
+    flex-shrink: 0;
+}
 
-    .mainDetailButtons.hide + .recordingFields {
-        margin-top: 1.5em !important;
-    }
+.mainDetailButtons.hide + .recordingFields {
+    margin-top: 1.5em !important;
+}
 
-    .mainDetailButtons > .raised {
-        justify-content: center;
-    }
+.mainDetailButtons > .raised {
+    justify-content: center;
+}
 
 @media all and (min-width: 25em) {
 
@@ -387,12 +378,47 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
     }
 }
 
+.detailButton-mobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 .6em 0 0 !important;
+    padding-top: .25em;
+    padding-bottom: .25em;
+    text-align: center;
+}
+
+.detailButton-mobile-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.detailButton-mobile-icon {
+    font-size: 1.9em !important;
+}
+
+.detailButton-mobile-text {
+    margin-top: .7em;
+    font-size: 80%;
+    font-weight: normal;
+    color: #aaa;
+}
+
 .detailImageProgressContainer {
     position: absolute;
     bottom: 4px;
     right: 1px;
     left: 1px;
     text-align: center;
+}
+
+.detailButton-mobile-icon {
+    /*border: 2px solid #777;
+    padding: .3em;
+    border-radius: 100em;*/
 }
 
 .viewControls, .listTopPaging {
@@ -436,7 +462,8 @@ span.itemCommunityRating:not(:empty) + .userDataIcons {
 
 @media all and (max-width: 50em) {
     .detailPageContent-nodetailimg {
-        padding-top: 1em;
+        padding-top: 0;
+        margin-top: -3em;
     }
 }
 

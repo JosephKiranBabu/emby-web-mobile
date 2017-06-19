@@ -53,6 +53,13 @@
                             </div>
                         </button>
 
+                        <button is="emby-button" type="button" class="button-flat btnPlayTrailer hide detailButton-mobile">
+                            <div class="detailButton-mobile-content">
+                                <i class="md-icon detailButton-mobile-icon">&#xE8DA;</i>
+                                <div class="detailButton-mobile-text">${ButtonTrailer}</div>
+                            </div>
+                        </button>
+
                         <button is="emby-button" type="button" class="button-flat btnInstantMix hide detailButton-mobile">
                             <div class="detailButton-mobile-content">
                                 <i class="md-icon detailButton-mobile-icon">&#xE043;</i>
@@ -64,13 +71,6 @@
                             <div class="detailButton-mobile-content">
                                 <i class="md-icon detailButton-mobile-icon">&#xE043;</i>
                                 <div class="detailButton-mobile-text">${ButtonShuffle}</div>
-                            </div>
-                        </button>
-
-                        <button is="emby-button" type="button" class="button-flat btnPlayTrailer hide detailButton-mobile">
-                            <div class="detailButton-mobile-content">
-                                <i class="md-icon detailButton-mobile-icon">&#xE8DA;</i>
-                                <div class="detailButton-mobile-text">${ButtonTrailer}</div>
                             </div>
                         </button>
 
@@ -108,6 +108,35 @@
                                 <div class="detailButton-mobile-text">${Rate}</div>
                             </div>
                         </button>
+                    </div>
+
+                    <div class="mainDetailButtons mainDetailButtons-nonmobile">
+
+                        <button is="emby-button" type="button" class="raised subdued btnPlaySimple btnResume hide" data-mode="resume">
+                            <span>${ButtonResume}</span>
+                        </button>
+                        <button is="emby-button" type="button" class="raised subdued btnPlay btnPlaySimple hide" data-mode="play">
+                            <span>${ButtonPlay}</span>
+                        </button>
+                        <button is="emby-button" type="button" class="raised subdued btnInstantMix hide">
+                            <span>${HeaderInstantMix}</span>
+                        </button>
+                        <button is="emby-button" type="button" class="raised subdued btnShuffle hide">
+                            <span>${ButtonShuffle}</span>
+                        </button>
+                        <button is="emby-button" type="button" class="raised subdued btnPlayTrailer hide">
+                            <span>${ButtonTrailer}</span>
+                        </button>
+                        <button is="emby-button" type="button" class="raised subdued btnCancelSeriesTimer hide">
+                            <span>${ButtonCancelSeries}</span>
+                        </button>
+
+                        <div style="margin-left:.5em; display: flex; align-items: center;">
+                            <button is="emby-button" type="button" class="btnMoreCommands fab mini hide" title="${ButtonMore}"><i class="md-icon">more_vert</i></button>
+                            <button is="emby-button" type="button" class="btnDeleteItem fab mini hide" title="${DeleteMedia}"><i class="md-icon">&#xE872;</i></button>
+                            <button is="emby-playstatebutton" type="button" class="btnPlaystate fab mini hide"><i class="md-icon">check</i></button>
+                            <button is="emby-ratingbutton" type="button" class="btnUserRating fab mini hide"><i class="md-icon">&#xE87D;</i></button>
+                        </div>
                     </div>
 
                     <div class="syncLocalContainer hide" style="margin: 1em 0;">

@@ -712,21 +712,6 @@
                 itemBackdropElement.style.backgroundImage = '';
             }
 
-            var progress = itemBackdropElement.querySelector('.itemBackdropProgress');
-            if (progress) {
-                progress.parentNode.removeChild(progress);
-            }
-
-            if (usePrimaryImage) {
-                var progressHtml = indicators.getProgressBarHtml(item, {
-                    containerClass: 'itemBackdropProgressBar'
-                });
-
-                if (progressHtml) {
-                    itemBackdropElement.insertAdjacentHTML('beforeend', progressHtml);
-                }
-            }
-
             return hasbackdrop;
         }
     };

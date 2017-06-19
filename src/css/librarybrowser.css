@@ -1,8 +1,8 @@
-﻿.playstatebutton-played > i {
+﻿.playstatebutton-played i {
     color: #cc3333;
 }
 
-.ratingbutton-withrating > i {
+.ratingbutton-withrating i {
     color: #cc3333;
 }
 
@@ -152,7 +152,7 @@ a.itemTag:hover {
 
 .itemBackdropFader {
     position: absolute;
-    bottom: -2px;
+    bottom: -1px;
     left: 0;
     right: 0;
     background: linear-gradient(rgba(0,0,0,0), #161616);
@@ -256,6 +256,10 @@ a.itemTag:hover {
     .btnPlaySimple {
         display: none !important;
     }
+
+    .mainDetailButtons-nonmobile {
+        display: none !important;
+    }
 }
 
 @media all and (min-width: 50em) {
@@ -267,6 +271,10 @@ a.itemTag:hover {
     .detailPagePrimaryContainer {
         display: flex;
         margin-bottom: 3.6em;
+    }
+
+    .mainDetailButtons-mobile {
+        display: none !important;
     }
 }
 
@@ -383,9 +391,9 @@ a.itemTag:hover {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 0 .6em 0 0 !important;
-    padding-top: .25em;
-    padding-bottom: .25em;
+    margin: 0 .5em 0 0 !important;
+    padding-top: .5em !important;
+    padding-bottom: .5em !important;
     text-align: center;
 }
 

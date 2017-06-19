@@ -175,7 +175,7 @@
 
         if (!user.Policy.EnableLiveTvManagement) {
             page.querySelector('.seriesTimerScheduleSection').classList.add('hide');
-            page.querySelector('.btnCancelSeriesTimer').classList.add('hide');
+            hideAll(page, 'btnCancelSeriesTimer');
             return;
         }
 
@@ -186,7 +186,7 @@
         });
 
         page.querySelector('.seriesTimerScheduleSection').classList.remove('hide');
-        page.querySelector('.btnCancelSeriesTimer').classList.remove('hide');
+        hideAll(page, 'btnCancelSeriesTimer', true);
 
         renderSeriesTimerSchedule(page, item.Id);
     }
@@ -234,28 +234,42 @@
 
     function reloadUserDataButtons(page, item) {
 
-        var btnPlaystate = page.querySelector('.btnPlaystate');
-        if (itemHelper.canMarkPlayed(item)) {
+        var i, length;
+        var btnPlaystates = page.querySelectorAll('.btnPlaystate');
 
-            btnPlaystate.classList.remove('hide');
-            btnPlaystate.setItem(item);
+        for (i = 0, length = btnPlaystates.length; i < length; i++) {
 
-        } else {
-            btnPlaystate.classList.add('hide');
-            btnPlaystate.setItem(null);
+            var btnPlaystate = btnPlaystates[i];
+            if (itemHelper.canMarkPlayed(item)) {
+
+                btnPlaystate.classList.remove('hide');
+                btnPlaystate.setItem(item);
+
+            } else {
+                btnPlaystate.classList.add('hide');
+                btnPlaystate.setItem(null);
+            }
+
+            var textElem = btnPlaystate.querySelector('.detailButton-mobile-text');
+            if (textElem) {
+                textElem.innerHTML = btnPlaystate.title;
+            }
         }
 
-        btnPlaystate.querySelector('.detailButton-mobile-text').innerHTML = btnPlaystate.title;
+        var btnUserRatings = page.querySelectorAll('.btnUserRating');
+        for (i = 0, length = btnUserRatings.length; i < length; i++) {
 
-        var btnUserRating = page.querySelector('.btnUserRating');
-        if (itemHelper.canRate(item)) {
+            var btnUserRating = btnUserRatings[i];
 
-            btnUserRating.classList.remove('hide');
-            btnUserRating.setItem(item);
+            if (itemHelper.canRate(item)) {
 
-        } else {
-            btnUserRating.classList.add('hide');
-            btnUserRating.setItem(null);
+                btnUserRating.classList.remove('hide');
+                btnUserRating.setItem(item);
+
+            } else {
+                btnUserRating.classList.add('hide');
+                btnUserRating.setItem(null);
+            }
         }
     }
 
@@ -2263,6 +2277,15 @@
         });
     }
 
+    function bindAll(view, selector, eventName, fn) {
+
+        var elems = view.querySelectorAll(selector);
+        var i, length;
+        for (i = 0, length = elems.length; i < length; i++) {
+            elems[i].addEventListener(eventName, fn);
+        }
+    }
+
     return function (view, params) {
 
         function onPlayTrailerClick() {
@@ -2287,38 +2310,21 @@
 
         var elems = view.querySelectorAll('.btnPlay');
         var i, length;
-        for (i = 0, length = elems.length; i < length; i++) {
-            elems[i].addEventListener('click', onPlayClick);
-        }
 
-        view.querySelector('.btnResume').addEventListener('click', onPlayClick);
-        view.querySelector('.btnInstantMix').addEventListener('click', onInstantMixClick);
-        view.querySelector('.btnShuffle').addEventListener('click', onShuffleClick);
-
-        elems = view.querySelectorAll('.btnPlayTrailer');
-        for (i = 0, length = elems.length; i < length; i++) {
-            elems[i].addEventListener('click', onPlayTrailerClick);
-        }
-
-        elems = view.querySelectorAll('.btnCancelSeriesTimer');
-        for (i = 0, length = elems.length; i < length; i++) {
-            elems[i].addEventListener('click', onCancelSeriesTimerClick);
-        }
-
-        elems = view.querySelectorAll('.btnDeleteItem');
-        for (i = 0, length = elems.length; i < length; i++) {
-            elems[i].addEventListener('click', onDeleteClick);
-        }
+        bindAll(view, '.btnPlay', 'click', onPlayClick);
+        bindAll(view, '.btnResume', 'click', onPlayClick);
+        bindAll(view, '.btnInstantMix', 'click', onInstantMixClick);
+        bindAll(view, '.btnShuffle', 'click', onShuffleClick);
+        bindAll(view, '.btnPlayTrailer', 'click', onPlayTrailerClick);
+        bindAll(view, '.btnCancelSeriesTimer', 'click', onCancelSeriesTimerClick);
+        bindAll(view, '.btnDeleteItem', 'click', onDeleteClick);
 
         view.querySelector('.btnSplitVersions').addEventListener('click', function () {
 
             splitVersions(view, params);
         });
 
-        elems = view.querySelectorAll('.btnMoreCommands');
-        for (i = 0, length = elems.length; i < length; i++) {
-            elems[i].addEventListener('click', onMoreCommandsClick);
-        }
+        bindAll(view, '.btnMoreCommands', 'click', onMoreCommandsClick);
 
         view.addEventListener('click', function (e) {
 

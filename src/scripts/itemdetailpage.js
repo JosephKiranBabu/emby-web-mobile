@@ -1,4 +1,4 @@
-﻿define(['loading', 'embyRouter', 'layoutManager', 'connectionManager', 'cardBuilder', 'datetime', 'mediaInfo', 'backdrop', 'listView', 'itemContextMenu', 'itemHelper', 'dom', 'indicators', 'apphost', 'imageLoader', 'libraryMenu', 'globalize', 'browser', 'events', 'scrollHelper', 'playbackManager', 'libraryBrowser', 'scrollStyles', 'emby-itemscontainer', 'emby-checkbox', 'emby-linkbutton', 'emby-playstatebutton', 'emby-ratingbutton'], function (loading, embyRouter, layoutManager, connectionManager, cardBuilder, datetime, mediaInfo, backdrop, listView, itemContextMenu, itemHelper, dom, indicators, appHost, imageLoader, libraryMenu, globalize, browser, events, scrollHelper, playbackManager, libraryBrowser) {
+﻿define(['loading', 'embyRouter', 'layoutManager', 'connectionManager', 'cardBuilder', 'datetime', 'mediaInfo', 'backdrop', 'listView', 'itemContextMenu', 'itemHelper', 'dom', 'indicators', 'apphost', 'imageLoader', 'libraryMenu', 'globalize', 'browser', 'events', 'scrollHelper', 'playbackManager', 'libraryBrowser', 'scrollStyles', 'emby-itemscontainer', 'emby-checkbox', 'emby-linkbutton', 'emby-playstatebutton', 'emby-ratingbutton', 'emby-downloadbutton'], function (loading, embyRouter, layoutManager, connectionManager, cardBuilder, datetime, mediaInfo, backdrop, listView, itemContextMenu, itemHelper, dom, indicators, appHost, imageLoader, libraryMenu, globalize, browser, events, scrollHelper, playbackManager, libraryBrowser) {
     'use strict';
 
     function getPromise(params) {
@@ -97,24 +97,19 @@
         if (!appHost.supports('sync')) {
             return;
         }
+        var canSync = itemHelper.canSync(user, item);
 
-        if (page.syncToggleInstance) {
-            page.syncToggleInstance.refresh(item);
-            return;
+        var buttons = page.querySelectorAll('.btnSyncDownload');
+
+        for (var i = 0, length = buttons.length; i < length; i++) {
+            buttons[i].setItem(item);
+
+            if (canSync) {
+                buttons[i].classList.remove('hide');
+            } else {
+                buttons[i].classList.add('hide');
+            }
         }
-
-        require(['syncToggle'], function (syncToggle) {
-
-            page.syncToggleInstance = new syncToggle({
-                user: user,
-                item: item,
-                container: page.querySelector('.syncLocalContainer')
-            });
-
-            events.on(page.syncToggleInstance, 'sync', function () {
-                reload(page, params);
-            });
-        });
     }
 
     function getProgramScheduleHtml(items, options) {
@@ -2292,6 +2287,10 @@
             playTrailer(view);
         }
 
+        function onDownloadChange() {
+            reload(view, params);
+        }
+
         function onMoreCommandsClick() {
             var button = this;
 
@@ -2318,6 +2317,8 @@
         bindAll(view, '.btnPlayTrailer', 'click', onPlayTrailerClick);
         bindAll(view, '.btnCancelSeriesTimer', 'click', onCancelSeriesTimerClick);
         bindAll(view, '.btnDeleteItem', 'click', onDeleteClick);
+        bindAll(view, '.btnSyncDownload', 'download', onDownloadChange);
+        bindAll(view, '.btnSyncDownload', 'download-cancel', onDownloadChange);
 
         view.querySelector('.btnSplitVersions').addEventListener('click', function () {
 
@@ -2420,14 +2421,6 @@
 
             events.off(ApiClient, 'websocketmessage', onWebSocketMessage);
             libraryMenu.setTransparentMenu(false);
-        });
-
-        view.addEventListener('viewdestroy', function () {
-
-            if (view.syncToggleInstance) {
-                view.syncToggleInstance.destroy();
-                view.syncToggleInstance = null;
-            }
         });
     };
 });

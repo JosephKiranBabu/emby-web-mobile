@@ -6,6 +6,14 @@
     color: #cc3333;
 }
 
+.downloadbutton-on i {
+    color: #4285F4;
+}
+
+.downloadbutton-complete i {
+    color: #4285F4;
+}
+
 .hidingAnimatedTab {
     visibility: hidden;
 }

@@ -284,8 +284,8 @@ div[data-role="controlgroup"] a.ui-btn-active {
         margin: 0 0 1em;
     }
 
-    .dashboardSection-large {
-        width: 66.6%;
+    .dashboardSection-70 {
+        width: 70%;
     }
 
     .dashboardSectionContent {

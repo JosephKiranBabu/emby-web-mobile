@@ -265,6 +265,11 @@
                 btnUserRating.classList.add('hide');
                 btnUserRating.setItem(null);
             }
+
+            var textElem = btnUserRating.querySelector('.detailButton-mobile-text');
+            if (textElem) {
+                textElem.innerHTML = btnUserRating.title;
+            }
         }
     }
 

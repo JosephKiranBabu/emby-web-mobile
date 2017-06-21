@@ -221,13 +221,6 @@ div[data-role="controlgroup"] a.ui-btn-active {
     }
 }
 
-@media all and (min-width: 75em) {
-
-    .content-primary {
-        padding-left: 3em;
-    }
-}
-
 @media all and (min-width: 84em) {
 
     .withTabs .content-primary {
@@ -261,7 +254,7 @@ div[data-role="controlgroup"] a.ui-btn-active {
     }
 }
 
-@media all and (min-width: 60em) {
+@media all and (min-width: 70em) {
 
     .dashboardSections {
         flex-wrap: wrap;
@@ -274,6 +267,14 @@ div[data-role="controlgroup"] a.ui-btn-active {
 
     .dashboardSectionContent .paperList {
         margin: 0;
+    }
+
+    .dashboardSection-2-60 {
+        width: 60%;
+    }
+
+    .dashboardSection-2-40 {
+        width: 40%;
     }
 }
 
@@ -292,12 +293,16 @@ div[data-role="controlgroup"] a.ui-btn-active {
         padding: 0 1em 2em;
     }
 
-    .dashboardSection-30 {
-        width: 30%;
+    .dashboardSection-3-27 {
+        width: 27%;
     }
 
-    .dashboardSection-40 {
-        width: 40%;
+    .dashboardSection-3-46 {
+        width: 46%;
+    }
+
+    .dashboardSection-3-73 {
+        width: 73%;
     }
 }
 

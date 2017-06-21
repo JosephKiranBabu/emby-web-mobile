@@ -204,11 +204,6 @@ body:not(.dashboardDocument) .btnNotifications {
 
 @media all and (min-width: 40em) {
 
-    .dashboardDocument .sidebarLink {
-        padding-top: .7em;
-        padding-bottom: .7em;
-    }
-
     .dashboardDocument .mainDrawer {
         z-index: inherit !important;
         left: 0 !important;
@@ -233,7 +228,7 @@ body:not(.dashboardDocument) .btnNotifications {
     }
 
     .dashboardDocument .skinBody {
-        left: 19.5em;
+        left: 20em;
     }
 
     .dashboardDocument .mainDrawer {

@@ -1,4 +1,4 @@
-﻿define(['datetime', 'loading', 'listViewStyle'], function (datetime, loading) {
+﻿define(['datetime', 'loading', 'apphost', 'listViewStyle', 'emby-linkbutton'], function (datetime, loading, appHost) {
     'use strict';
 
     return function (view, params) {
@@ -34,14 +34,11 @@
                     logUrl += "&api_key=" + apiClient.accessToken();
 
                     var logHtml = '';
-                    logHtml += '<div class="listItem">';
+                    logHtml += '<a is="emby-linkbutton" href="' + logUrl + '" target="_blank" class="listItem" style="color:inherit;">';
 
-                    logHtml += '<a item-icon class="clearLink" href="' + logUrl + '" target="_blank">';
                     logHtml += '<i class="md-icon listItemIcon">schedule</i>';
-                    logHtml += "</a>";
 
                     logHtml += '<div class="listItemBody two-line">';
-                    logHtml += '<a class="clearLink" href="' + logUrl + '" target="_blank">';
 
                     logHtml += "<h3 class='listItemBodyText'>" + log.Name + "</h3>";
 
@@ -53,10 +50,9 @@
 
                     logHtml += '<div class="listItemBodyText secondary">' + text + '</div>';
 
-                    logHtml += "</a>";
                     logHtml += '</div>';
 
-                    logHtml += '</div>';
+                    logHtml += '</a>';
 
                     return logHtml;
 

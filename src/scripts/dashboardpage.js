@@ -176,7 +176,7 @@
 
             var query = {
                 StartIndex: DashboardPage.newsStartIndex,
-                Limit: 3
+                Limit: 4
             };
 
             ApiClient.getProductNews(query).then(function (result) {

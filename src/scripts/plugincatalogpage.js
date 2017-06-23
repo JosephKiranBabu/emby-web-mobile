@@ -243,7 +243,7 @@
             return ip.Id == plugin.guid;
         })[0];
 
-        html += "<div class='cardText'>";
+        html += "<div class='cardText cardText-secondary'>";
 
         if (installedPlugin) {
             html += Globalize.translate('LabelVersionInstalled').replace("{0}", installedPlugin.Version);

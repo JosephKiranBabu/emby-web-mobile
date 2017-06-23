@@ -246,7 +246,7 @@ div[data-role="controlgroup"] a.ui-btn-active {
 
 .dashboardSection {
     flex-shrink: 0;
-    margin: 0 0 2em;
+    margin: 0 0 2.5em;
 }
 
     .dashboardSection h2 {
@@ -269,7 +269,7 @@ div[data-role="controlgroup"] a.ui-btn-active {
     }
 
     .dashboardSection {
-        padding: 0 1em;
+        padding: 0 1.25em;
     }
 }
 

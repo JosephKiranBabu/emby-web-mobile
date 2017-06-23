@@ -92,7 +92,7 @@
         html += plugin.Name;
         html += "</div>";
 
-        html += "<div class='cardText'>";
+        html += "<div class='cardText cardText-secondary'>";
         html += plugin.Version;
         html += "</div>";
 

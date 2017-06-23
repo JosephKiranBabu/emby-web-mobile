@@ -196,10 +196,10 @@ body:not(.dashboardDocument) .btnNotifications {
     .sidebarLink {
         font-size: 110%;
     }
+}
 
-    .mainDrawer-scrollContainer {
-        padding-bottom: 10vh;
-    }
+.mainDrawer-scrollContainer {
+    padding-bottom: 10vh;
 }
 
 @media all and (min-width: 40em) {

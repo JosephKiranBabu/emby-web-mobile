@@ -1,12 +1,12 @@
-﻿define(['jQuery', 'apphost', 'scripts/taskbutton', 'loading', 'libraryMenu', 'cardStyle'], function ($, appHost, taskButton, loading, libraryMenu) {
+﻿define(['jQuery', 'apphost', 'scripts/taskbutton', 'loading', 'libraryMenu', 'globalize', 'indicators', 'cardStyle', 'emby-itemrefreshindicator'], function ($, appHost, taskButton, loading, libraryMenu, globalize, indicators) {
     'use strict';
 
     function changeCollectionType(page, virtualFolder) {
 
         require(['alert'], function (alert) {
             alert({
-                title: Globalize.translate('HeaderChangeFolderType'),
-                text: Globalize.translate('HeaderChangeFolderTypeHelp')
+                title: globalize.translate('HeaderChangeFolderType'),
+                text: globalize.translate('HeaderChangeFolderTypeHelp')
             });
         });
     }
@@ -51,16 +51,16 @@
 
     function deleteVirtualFolder(page, virtualFolder) {
 
-        var msg = Globalize.translate('MessageAreYouSureYouWishToRemoveMediaFolder');
+        var msg = globalize.translate('MessageAreYouSureYouWishToRemoveMediaFolder');
 
         if (virtualFolder.Locations.length) {
-            msg += "<br/><br/>" + Globalize.translate("MessageTheFollowingLocationWillBeRemovedFromLibrary") + "<br/><br/>";
+            msg += "<br/><br/>" + globalize.translate("MessageTheFollowingLocationWillBeRemovedFromLibrary") + "<br/><br/>";
             msg += virtualFolder.Locations.join("<br/>");
         }
 
         require(['confirm'], function (confirm) {
 
-            confirm(msg, Globalize.translate('HeaderRemoveMediaFolder')).then(function () {
+            confirm(msg, globalize.translate('HeaderRemoveMediaFolder')).then(function () {
 
                 var refreshAfterChange = shouldRefreshLibraryAfterChanges(page);
 
@@ -71,13 +71,24 @@
         });
     }
 
+    function refreshVirtualFolder(page, virtualFolder) {
+
+        require(['refreshDialog'], function (refreshDialog) {
+            new refreshDialog({
+                itemIds: [virtualFolder.ItemId],
+                serverId: ApiClient.serverId(),
+                mode: 'scan'
+            }).show();
+        });
+    }
+
     function renameVirtualFolder(page, virtualFolder) {
 
         require(['prompt'], function (prompt) {
 
             prompt({
-                label: Globalize.translate('LabelNewName'),
-                confirmText: Globalize.translate('ButtonRename')
+                label: globalize.translate('LabelNewName'),
+                confirmText: globalize.translate('ButtonRename')
 
             }).then(function (newName) {
                 if (newName && newName != virtualFolder.Name) {
@@ -102,33 +113,39 @@
         var menuItems = [];
 
         menuItems.push({
-            name: Globalize.translate('ButtonChangeContentType'),
+            name: globalize.translate('ButtonChangeContentType'),
             id: 'changetype',
             ironIcon: 'videocam'
         });
 
         menuItems.push({
-            name: Globalize.translate('ButtonEditImages'),
+            name: globalize.translate('ButtonEditImages'),
             id: 'editimages',
             ironIcon: 'photo'
         });
 
         menuItems.push({
-            name: Globalize.translate('ButtonManageFolders'),
+            name: globalize.translate('ButtonManageFolders'),
             id: 'edit',
             ironIcon: 'folder_open'
         });
 
         menuItems.push({
-            name: Globalize.translate('ButtonRemove'),
+            name: globalize.translate('ButtonRemove'),
             id: 'delete',
             ironIcon: 'remove'
         });
 
         menuItems.push({
-            name: Globalize.translate('ButtonRename'),
+            name: globalize.translate('ButtonRename'),
             id: 'rename',
             ironIcon: 'mode_edit'
+        });
+
+        menuItems.push({
+            name: globalize.translate('ScanLibrary'),
+            id: 'refresh',
+            ironIcon: 'refresh'
         });
 
         require(['actionsheet'], function (actionsheet) {
@@ -154,6 +171,9 @@
                             break;
                         case 'delete':
                             deleteVirtualFolder(page, virtualFolder);
+                            break;
+                        case 'refresh':
+                            refreshVirtualFolder(page, virtualFolder);
                             break;
                         default:
                             break;
@@ -183,7 +203,7 @@
         var html = '';
 
         virtualFolders.push({
-            Name: Globalize.translate('ButtonAddMediaLibrary'),
+            Name: globalize.translate('ButtonAddMediaLibrary'),
             icon: 'add_circle',
             Locations: [],
             showType: false,
@@ -232,7 +252,7 @@
         require(['imageEditor'], function (imageEditor) {
 
             imageEditor.show({
-                
+
                 itemId: virtualFolder.ItemId,
                 serverId: ApiClient.serverId()
 
@@ -247,15 +267,15 @@
         return [
 
             { name: "", value: "" },
-            { name: Globalize.translate('FolderTypeMovies'), value: "movies" },
-            { name: Globalize.translate('FolderTypeMusic'), value: "music" },
-            { name: Globalize.translate('FolderTypeTvShows'), value: "tvshows" },
-            { name: Globalize.translate('FolderTypeBooks'), value: "books", message: Globalize.translate('BookLibraryHelp') },
-            { name: Globalize.translate('FolderTypeGames'), value: "games", message: Globalize.translate('MessageGamePluginRequired') },
-            { name: Globalize.translate('OptionHomeVideos'), value: "homevideos" },
-            { name: Globalize.translate('FolderTypeMusicVideos'), value: "musicvideos" },
-            { name: Globalize.translate('FolderTypePhotos'), value: "photos" },
-            { name: Globalize.translate('FolderTypeUnset'), value: "mixed", message: Globalize.translate('MessageUnsetContentHelp') }
+            { name: globalize.translate('FolderTypeMovies'), value: "movies" },
+            { name: globalize.translate('FolderTypeMusic'), value: "music" },
+            { name: globalize.translate('FolderTypeTvShows'), value: "tvshows" },
+            { name: globalize.translate('FolderTypeBooks'), value: "books", message: globalize.translate('BookLibraryHelp') },
+            { name: globalize.translate('FolderTypeGames'), value: "games", message: globalize.translate('MessageGamePluginRequired') },
+            { name: globalize.translate('OptionHomeVideos'), value: "homevideos" },
+            { name: globalize.translate('FolderTypeMusicVideos'), value: "musicvideos" },
+            { name: globalize.translate('FolderTypePhotos'), value: "photos" },
+            { name: globalize.translate('FolderTypeUnset'), value: "mixed", message: globalize.translate('MessageUnsetContentHelp') }
         ];
 
     }
@@ -302,7 +322,7 @@
             style += "min-width:33.3%;";
         }
 
-        html += '<div class="card backdropCard scalableCard backdropCard-scalable" style="' + style + '" data-index="' + index + '">';
+        html += '<div class="card backdropCard scalableCard backdropCard-scalable" style="' + style + '" data-index="' + index + '" data-id="' + virtualFolder.ItemId + '">';
 
         html += '<div class="cardBox visualCardBox">';
         html += '<div class="cardScalable visualCardBox-cardScalable">';
@@ -318,22 +338,36 @@
             });
         }
 
+        var hasCardImageContainer;
+
         if (imgUrl) {
-            html += '<div class="cardImageContainer editLibrary" style="cursor:pointer;background-image:url(\'' + imgUrl + '\');"></div>';
+            html += '<div class="cardImageContainer editLibrary" style="cursor:pointer;background-image:url(\'' + imgUrl + '\');">';
+            hasCardImageContainer = true;
+
         } else if (!virtualFolder.showNameWithIcon) {
             html += '<div class="cardImageContainer editLibrary" style="cursor:pointer;">';
             html += '<i class="cardImageIcon md-icon">' + (virtualFolder.icon || getIcon(virtualFolder.CollectionType)) + '</i>';
+            hasCardImageContainer = true;
+        }
 
+        if (hasCardImageContainer) {
+            html += '<div class="cardIndicators backdropCardIndicators">';
+
+            var refreshClass = virtualFolder.RefreshProgress || (virtualFolder.RefreshStatus && virtualFolder.RefreshStatus !== 'Idle') ? '' : ' class="hide"';
+            html += '<div is="emby-itemrefreshindicator"' + refreshClass + ' data-progress="' + (virtualFolder.RefreshProgress || 0) + '" data-status="' + virtualFolder.RefreshStatus + '"></div>';
+
+            html += '</div>';
+            // cardImageContainer
             html += '</div>';
         }
 
         if (!imgUrl && virtualFolder.showNameWithIcon) {
             html += '<h1 class="cardImageContainer addLibrary" style="position:absolute;top:0;left:0;right:0;bottom:0;cursor:pointer;flex-direction:column;">';
 
-            html += '<i class="cardImageIcon md-icon" style="font-size:240%;height:auto;width:auto;">' + (virtualFolder.icon || getIcon(virtualFolder.CollectionType)) + '</i>';
+            html += '<i class="cardImageIcon md-icon" style="font-size:200%;height:auto;width:auto;">' + (virtualFolder.icon || getIcon(virtualFolder.CollectionType)) + '</i>';
 
             if (virtualFolder.showNameWithIcon) {
-                html += '<div style="margin:1em 0;position:width:100%;font-weight:500;">';
+                html += '<div style="margin:1em 0;position:width:100%;">';
                 html += virtualFolder.Name;
                 html += "</div>";
             }
@@ -371,9 +405,9 @@
 
         })[0];
 
-        typeName = typeName ? typeName.name : Globalize.translate('FolderTypeUnset');
+        typeName = typeName ? typeName.name : globalize.translate('FolderTypeUnset');
 
-        html += "<div class='cardText'>";
+        html += "<div class='cardText cardText-secondary'>";
         if (virtualFolder.showType === false) {
             html += '&nbsp;';
         } else {
@@ -382,22 +416,22 @@
         html += "</div>";
 
         if (virtualFolder.showLocations === false) {
-            html += "<div class='cardText'>";
+            html += "<div class='cardText cardText-secondary'>";
             html += '&nbsp;';
             html += "</div>";
         } else if (!virtualFolder.Locations.length) {
-            html += "<div class='cardText' style='color:#cc3333;'>";
-            html += Globalize.translate('NumLocationsValue', virtualFolder.Locations.length);
+            html += "<div class='cardText cardText-secondary'>";
+            html += globalize.translate('NumLocationsValue', virtualFolder.Locations.length);
             html += "</div>";
         }
         else if (virtualFolder.Locations.length == 1) {
-            html += "<div class='cardText'>";
+            html += "<div class='cardText cardText-secondary'>";
             html += virtualFolder.Locations[0];
             html += "</div>";
         }
         else {
-            html += "<div class='cardText'>";
-            html += Globalize.translate('NumLocationsValue', virtualFolder.Locations.length);
+            html += "<div class='cardText cardText-secondary'>";
+            html += globalize.translate('NumLocationsValue', virtualFolder.Locations.length);
             html += "</div>";
         }
 
@@ -437,23 +471,23 @@
         return [
         {
             href: 'library.html',
-            name: Globalize.translate('HeaderLibraries')
+            name: globalize.translate('HeaderLibraries')
         },
          {
              href: 'librarydisplay.html',
-             name: Globalize.translate('TabDisplay')
+             name: globalize.translate('TabDisplay')
          },
          {
              href: 'metadataimages.html',
-             name: Globalize.translate('TabMetadata')
+             name: globalize.translate('TabMetadata')
          },
          {
              href: 'metadatanfo.html',
-             name: Globalize.translate('TabNfoSettings')
+             name: globalize.translate('TabNfoSettings')
          },
          {
              href: 'librarysettings.html',
-             name: Globalize.translate('TabAdvanced')
+             name: globalize.translate('TabAdvanced')
          }];
     }
 

@@ -551,3 +551,17 @@ a[data-role='button'] {
     background: #f6f6f6 !important;
     font-size: 16px;
 }
+
+@keyframes rotating {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.rotatingCircle {
+    animation: rotating 2s linear infinite;
+}

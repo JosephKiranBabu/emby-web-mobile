@@ -43,6 +43,10 @@
             angle = -90 + (progress / 100) * 360;
 
             this.querySelector('.animate-0-25-b').style.transform = 'rotate(' + angle + 'deg)';
+
+            this.querySelector('.animate-25-50-b').style.transform = 'rotate(-90deg)';
+            this.querySelector('.animate-50-75-b').style.transform = 'rotate(-90deg)';
+            this.querySelector('.animate-75-100-b').style.transform = 'rotate(-90deg)';
         }
         else if (progress >= 25 && progress < 50) {
 

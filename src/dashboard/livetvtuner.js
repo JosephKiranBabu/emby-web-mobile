@@ -45,6 +45,7 @@
         view.querySelector('.txtDevicePath').value = info.Url || '';
         view.querySelector('.chkFavorite').checked = info.ImportFavoritesOnly;
         view.querySelector('.chkTranscode').checked = info.AllowHWTranscoding;
+        view.querySelector('.chkStreamLoop').checked = info.EnableStreamLooping;
     }
 
     function submitForm(page) {
@@ -56,6 +57,7 @@
             Url: page.querySelector('.txtDevicePath').value,
             ImportFavoritesOnly: page.querySelector('.chkFavorite').checked,
             AllowHWTranscoding: page.querySelector('.chkTranscode').checked,
+            EnableStreamLooping: page.querySelector('.chkStreamLoop').checked,
             EnableTvgId: true
         };
 
@@ -137,6 +139,7 @@
 
             var supportsTunerIpAddress = value === 'hdhomerun';
             var supportsTunerFileOrUrl = value === 'm3u';
+            var supportsStreamLooping = value === 'm3u';
 
             var suppportsSubmit = value !== 'other';
 
@@ -165,6 +168,13 @@
             }
             else {
                 view.querySelector('.fldTranscode').classList.add('hide');
+            }
+
+            if (supportsStreamLooping) {
+                view.querySelector('.fldStreamLoop').classList.remove('hide');
+            }
+            else {
+                view.querySelector('.fldStreamLoop').classList.add('hide');
             }
 
             if (mayIncludeUnsupportedDrmChannels) {

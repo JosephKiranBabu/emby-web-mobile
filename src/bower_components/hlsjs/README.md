@@ -1,9 +1,11 @@
 [![Build Status](https://travis-ci.org/video-dev/hls.js.svg?branch=master)](https://travis-ci.org/video-dev/hls.js)
 [![npm][npm-image]][npm-url]
+[![Greenkeeper badge](https://badges.greenkeeper.io/video-dev/hls.js.svg)](https://greenkeeper.io/)
 
-Join the discussion: [![Slack Status](http://video-dev.org/badge.svg)](http://video-dev.org/)
+Join the discussion on [Slack#hlsjs](http://video-dev.org) [![Slack Status](http://video-dev.org/badge.svg)](http://video-dev.org/)
 
 # ![hls.js](https://cloud.githubusercontent.com/assets/616833/19739063/e10be95a-9bb9-11e6-8100-2896f8500138.png)
+
 hls.js is a JavaScript library which implements an [HTTP Live Streaming] client.
 It relies on [HTML5 video][] and [MediaSource Extensions][] for playback.
 
@@ -29,13 +31,13 @@ hls.js is written in [ECMAScript6], and transpiled in ECMAScript5 using [Babel].
 ## Getting Started
 
 ```js
-<script src="https://cdn.jsdelivr.net/hls.js/latest/hls.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <video id="video"></video>
 <script>
   if(Hls.isSupported()) {
     var video = document.getElementById('video');
     var hls = new Hls();
-    hls.loadSource('http://www.streambox.fr/playlists/test_001/stream.m3u8');
+    hls.loadSource('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8');
     hls.attachMedia(video);
     hls.on(Hls.Events.MANIFEST_PARSED,function() {
       video.play();
@@ -77,7 +79,7 @@ hls.js is (being) integrated in the following players:
 
 ## Chrome/Firefox integration
 
-made by [gramk](https://github.com/gramk/chrome-hls),plays hls from address bar and m3u8 links 
+made by [gramk](https://github.com/gramk/chrome-hls),plays hls from address bar and m3u8 links
 
  - Chrome [native-hls](https://chrome.google.com/webstore/detail/native-hls-playback/emnphkkblegpebimobpbekeedfgemhof)
  - Firefox [native-hls](https://addons.mozilla.org/en-US/firefox/addon/native_hls_playback/)
@@ -153,14 +155,14 @@ All HLS resources must be delivered with [CORS headers](https://developer.mozill
   - SAMPLE-AES decryption
   - CEA-608/708 captionss
   - WebVTT subtitles
-  - Alternate Audio Track Rendition (Master Playlist with alternative Audio) for VoD and Live playlists    
+  - Alternate Audio Track Rendition (Master Playlist with alternative Audio) for VoD and Live playlists
   - Adaptive streaming
     - Manual & Auto Quality Switching
       - 3 Quality Switching modes are available (controllable through API means)
       	- Instant switching (immediate quality switch at current video position)
       	- Smooth switching (quality switch for next loaded fragment)
       	- Bandwidth conservative switching (quality switch change for next loaded fragment, without flushing the buffer)
-      - In Auto-Quality mode, emergency switch down in case bandwidth is suddenly dropping to minimize buffering.        
+      - In Auto-Quality mode, emergency switch down in case bandwidth is suddenly dropping to minimize buffering.
   - Accurate Seeking on VoD & Live (not limited to fragment or keyframe boundary)
   - Ability to seek in buffer and back buffer without redownloading segments
   - Built-in Analytics
@@ -183,7 +185,7 @@ All HLS resources must be delivered with [CORS headers](https://developer.mozill
   - `#EXT-X-MEDIA-SEQUENCE`
   - `#EXT-X-TARGETDURATION`
   - `#EXT-X-DISCONTINUITY`
-  - `#EXT-X-DISCONTINUITY-SEQUENCE`  
+  - `#EXT-X-DISCONTINUITY-SEQUENCE`
   - `#EXT-X-BYTERANGE`
   - `#EXT-X-MAP`
   - `#EXT-X-KEY` (https://tools.ietf.org/html/draft-pantos-http-live-streaming-08#section-3.4.4)

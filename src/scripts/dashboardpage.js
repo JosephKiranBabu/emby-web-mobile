@@ -1,4 +1,4 @@
-﻿define(['datetime', 'jQuery', 'events', 'dom', 'loading', 'libraryBrowser', 'humanedate', 'cardStyle', 'listViewStyle', 'emby-linkbutton'], function (datetime, $, events, dom, loading, libraryBrowser) {
+﻿define(['datetime', 'jQuery', 'events', 'dom', 'globalize', 'loading', 'libraryBrowser', 'humanedate', 'cardStyle', 'listViewStyle', 'emby-linkbutton'], function (datetime, $, events, dom, globalize, loading, libraryBrowser) {
     'use strict';
 
     function onConnectionHelpClick(e) {
@@ -14,10 +14,10 @@
         require(['prompt'], function (prompt) {
 
             prompt({
-                label: Globalize.translate('LabelFriendlyServerName'),
-                description: Globalize.translate('LabelFriendlyServerNameHelp'),
+                label: globalize.translate('LabelFriendlyServerName'),
+                description: globalize.translate('LabelFriendlyServerNameHelp'),
                 value: page.querySelector('.serverNameHeader').innerHTML,
-                confirmText: Globalize.translate('ButtonSave')
+                confirmText: globalize.translate('ButtonSave')
 
             }).then(function (value) {
 
@@ -39,6 +39,86 @@
         return false;
     }
 
+    function renderSessionOptions(btn, session) {
+
+        require(['alert'], function (alert) {
+
+            var text = [];
+            var isDirectStream = false;
+            var isTranscode = false;
+
+            if (session.TranscodingInfo && session.TranscodingInfo.IsAudioDirect && session.TranscodingInfo.IsVideoDirect) {
+                isDirectStream = true;
+            }
+            else if (session.TranscodingInfo && session.TranscodingInfo.IsVideoDirect) {
+                isDirectStream = true;
+            }
+            else if (session.PlayState.PlayMethod == 'Transcode') {
+                isTranscode = true;
+            }
+
+            var showTranscodeReasons;
+            var title;
+
+            if (isDirectStream) {
+
+                title = globalize.translate('LabelPlayMethodDirectStream');
+
+                text.push(globalize.translate('sharedcomponents#DirectStreamHelp1'));
+                text.push('<br/>');
+                text.push(globalize.translate('sharedcomponents#DirectStreamHelp2'));
+            }
+
+            else if (isTranscode) {
+
+                title = globalize.translate('LabelPlayMethodTranscoding');
+
+                text.push(globalize.translate('sharedcomponents#MediaIsBeingConverted'));
+
+                if (session.TranscodingInfo && session.TranscodingInfo.TranscodeReasons && session.TranscodingInfo.TranscodeReasons.length) {
+                    text.push('<br/>');
+                    text.push('Reasons for transcoding:');
+                    showTranscodeReasons = true;
+                }
+            }
+
+            if (showTranscodeReasons) {
+
+                session.TranscodingInfo.TranscodeReasons.forEach(function (t) {
+                    text.push(t);
+                });
+            }
+            alert({
+                text: text.join('<br/>'),
+                title: title
+            });
+        });
+    }
+
+    function onActiveDevicesClick(e) {
+
+        var btn = dom.parentWithClass(e.target, 'btnCardOptions');
+
+        if (btn) {
+
+            var card = dom.parentWithClass(btn, 'card');
+
+            if (card) {
+
+                var sessionId = card.id;
+
+                var session = (DashboardPage.sessionsList || []).filter(function (s) {
+                    return 'session' + s.Id === sessionId;
+                })[0];
+
+                if (session) {
+                    renderSessionOptions(btn, session);
+                }
+            }
+        }
+
+    }
+
     window.DashboardPage = {
 
         newsStartIndex: 0,
@@ -49,6 +129,8 @@
 
             page.querySelector('.btnConnectionHelp').addEventListener('click', onConnectionHelpClick);
             page.querySelector('.btnEditServerName').addEventListener('click', onEditServerNameClick);
+
+            page.querySelector('.activeDevices').addEventListener('click', onActiveDevicesClick);
         },
 
         onPageShow: function () {
@@ -131,9 +213,9 @@
 
                 page.querySelector('.serverNameHeader').innerHTML = systemInfo.ServerName;
 
-                var localizedVersion = Globalize.translate('LabelVersionNumber', systemInfo.Version);
+                var localizedVersion = globalize.translate('LabelVersionNumber', systemInfo.Version);
                 if (systemInfo.SystemUpdateLevel && systemInfo.SystemUpdateLevel != 'Release') {
-                    localizedVersion += " " + Globalize.translate('Option' + systemInfo.SystemUpdateLevel).toLowerCase();
+                    localizedVersion += " " + globalize.translate('Option' + systemInfo.SystemUpdateLevel).toLowerCase();
                 }
 
                 if (systemInfo.CanSelfRestart) {
@@ -145,9 +227,9 @@
                 $('#appVersionNumber', page).html(localizedVersion);
 
                 if (systemInfo.SupportsHttps) {
-                    $('#ports', page).html(Globalize.translate('LabelRunningOnPorts', systemInfo.HttpServerPortNumber, systemInfo.HttpsPortNumber));
+                    $('#ports', page).html(globalize.translate('LabelRunningOnPorts', systemInfo.HttpServerPortNumber, systemInfo.HttpsPortNumber));
                 } else {
-                    $('#ports', page).html(Globalize.translate('LabelRunningOnPort', systemInfo.HttpServerPortNumber));
+                    $('#ports', page).html(globalize.translate('LabelRunningOnPort', systemInfo.HttpServerPortNumber));
                 }
 
                 DashboardPage.renderUrls(page, systemInfo);
@@ -162,9 +244,9 @@
                 }
 
                 if (systemInfo.PackageName == 'synology') {
-                    $('#btnManualUpdateContainer').html(Globalize.translate('SynologyUpdateInstructions'));
+                    $('#btnManualUpdateContainer').html(globalize.translate('SynologyUpdateInstructions'));
                 } else {
-                    $('#btnManualUpdateContainer').html('<a href="http://emby.media/download" target="_blank">' + Globalize.translate('PleaseUpdateManually') + '</a>');
+                    $('#btnManualUpdateContainer').html('<a href="http://emby.media/download" target="_blank">' + globalize.translate('PleaseUpdateManually') + '</a>');
                 }
 
                 DashboardPage.renderPaths(page, systemInfo);
@@ -259,7 +341,7 @@
 
         onWebSocketMessage: function (e, msg) {
 
-            var page = $.mobile.activePage;
+            var page = $($.mobile.activePage)[0];
 
             if (msg.MessageType == "Sessions") {
                 DashboardPage.renderInfo(page, msg.Data);
@@ -335,9 +417,9 @@
 
                 var rowId = 'session' + session.Id;
 
-                var elem = $('#' + rowId, page);
+                var elem = page.querySelector('#' + rowId);
 
-                if (elem.length) {
+                if (elem) {
                     DashboardPage.updateSession(elem, session);
                     continue;
                 }
@@ -444,7 +526,14 @@
                 html += '<div class="sessionUserName">';
                 html += DashboardPage.getUsersHtml(session) || '&nbsp;';
                 html += '</div>';
+
                 html += '</div>';
+
+                var optionsClass = 'btnCardOptions';
+                if (!session.TranscodingInfo || !session.TranscodingInfo.TranscodeReasons || !session.TranscodingInfo.TranscodeReasons.length) {
+                    optionsClass += ' hide';
+                }
+                html += '<button is="paper-icon-button-light" class="' + optionsClass + ' paper-icon-button-light" data-action="menu"><i class="md-icon">&#xE88E;</i></button>';
                 html += '</div>';
 
                 // cardBox
@@ -465,27 +554,31 @@
 
             //html += '<div>';
             var showTranscodingInfo = false;
+            var showMoreInfoButton = false;
 
             if (session.TranscodingInfo && session.TranscodingInfo.IsAudioDirect && session.TranscodingInfo.IsVideoDirect) {
-                html += Globalize.translate('LabelPlayMethodDirectStream');
+                html += globalize.translate('LabelPlayMethodDirectStream');
+                showMoreInfoButton = true;
             }
             else if (session.TranscodingInfo && session.TranscodingInfo.IsVideoDirect) {
-                html += Globalize.translate('LabelPlayMethodDirectStream');
+                html += globalize.translate('LabelPlayMethodDirectStream');
+                showMoreInfoButton = true;
             }
             else if (session.PlayState.PlayMethod == 'Transcode') {
-                html += Globalize.translate('LabelPlayMethodTranscoding');
+                html += globalize.translate('LabelPlayMethodTranscoding');
 
                 if (session.TranscodingInfo && session.TranscodingInfo.Framerate) {
 
                     html += ' (' + session.TranscodingInfo.Framerate + ' fps' + ')';
                 }
                 showTranscodingInfo = true;
+                showMoreInfoButton = true;
             }
             else if (session.PlayState.PlayMethod == 'DirectStream') {
-                html += Globalize.translate('LabelPlayMethodDirectPlay');
+                html += globalize.translate('LabelPlayMethodDirectPlay');
             }
             else if (session.PlayState.PlayMethod == 'DirectPlay') {
-                html += Globalize.translate('LabelPlayMethodDirectPlay');
+                html += globalize.translate('LabelPlayMethodDirectPlay');
             }
 
             //html += '</div>';
@@ -658,14 +751,20 @@
 
         updateSession: function (row, session) {
 
-            row.removeClass('deadSession');
+            row.classList.remove('deadSession');
 
             var nowPlayingItem = session.NowPlayingItem;
 
             if (nowPlayingItem) {
-                row.addClass('playingSession');
+                row.classList.add('playingSession');
             } else {
-                row.removeClass('playingSession');
+                row.classList.remove('playingSession');
+            }
+
+            if (!session.TranscodingInfo || !session.TranscodingInfo.TranscodeReasons || !session.TranscodingInfo.TranscodeReasons.length) {
+                row.querySelector('.btnCardOptions').classList.add('hide');
+            } else {
+                row.querySelector('.btnCardOptions').classList.remove('hide');
             }
 
             $('.sessionNowPlayingStreamInfo', row).html(DashboardPage.getSessionNowPlayingStreamInfo(session));
@@ -697,11 +796,11 @@
 
             if (session.TranscodingInfo && session.TranscodingInfo.CompletionPercentage) {
 
-                row.addClass('transcodingSession');
+                row.classList.add('transcodingSession');
                 $('.transcodingProgress', row).show().val(session.TranscodingInfo.CompletionPercentage);
             } else {
                 $('.transcodingProgress', row).hide();
-                row.removeClass('transcodingSession');
+                row.classList.remove('transcodingSession');
             }
 
             var imgUrl = DashboardPage.getNowPlayingImageUrl(nowPlayingItem) || '';
@@ -893,10 +992,10 @@
 
                     html += "<span style='color:#009F00;margin-left:5px;margin-right:5px;'>" + progress + "%</span>";
 
-                    html += '<button type="button" is="paper-icon-button-light" title="' + Globalize.translate('ButtonStop') + '" onclick="DashboardPage.stopTask(\'' + task.Id + '\');" class="autoSize"><i class="md-icon">cancel</i></button>';
+                    html += '<button type="button" is="paper-icon-button-light" title="' + globalize.translate('ButtonStop') + '" onclick="DashboardPage.stopTask(\'' + task.Id + '\');" class="autoSize"><i class="md-icon">cancel</i></button>';
                 }
                 else if (task.State == "Cancelling") {
-                    html += '<span style="color:#cc0000;">' + Globalize.translate('LabelStopping') + '</span>';
+                    html += '<span style="color:#cc0000;">' + globalize.translate('LabelStopping') + '</span>';
                 }
 
                 html += '</p>';
@@ -908,11 +1007,11 @@
 
         renderUrls: function (page, systemInfo) {
 
-            var helpButton = '<a is="emby-linkbutton" class="button-link" href="https://github.com/MediaBrowser/Wiki/wiki/Connectivity" target="_blank" style="margin-left:.7em;font-size:88%;color:#fff;background:#52B54B;padding:.25em .8em;">' + Globalize.translate('ButtonHelp') + '</a>';
+            var helpButton = '<a is="emby-linkbutton" class="button-link" href="https://github.com/MediaBrowser/Wiki/wiki/Connectivity" target="_blank" style="margin-left:.7em;font-size:88%;color:#fff;background:#52B54B;padding:.25em .8em;">' + globalize.translate('ButtonHelp') + '</a>';
 
             if (systemInfo.LocalAddress) {
 
-                var localAccessHtml = Globalize.translate('LabelLocalAccessUrl', '<a is="emby-linkbutton" class="button-link" href="' + systemInfo.LocalAddress + '" target="_blank">' + systemInfo.LocalAddress + '</a>');
+                var localAccessHtml = globalize.translate('LabelLocalAccessUrl', '<a is="emby-linkbutton" class="button-link" href="' + systemInfo.LocalAddress + '" target="_blank">' + systemInfo.LocalAddress + '</a>');
 
                 $('.localUrl', page).html(localAccessHtml + helpButton).show().trigger('create');
             } else {
@@ -923,7 +1022,7 @@
 
                 var externalUrl = systemInfo.WanAddress;
 
-                var remoteAccessHtml = Globalize.translate('LabelRemoteAccessUrl', '<a is="emby-linkbutton" class="button-link" href="' + externalUrl + '" target="_blank">' + externalUrl + '</a>');
+                var remoteAccessHtml = globalize.translate('LabelRemoteAccessUrl', '<a is="emby-linkbutton" class="button-link" href="' + externalUrl + '" target="_blank">' + externalUrl + '</a>');
 
                 $('.externalUrl', page).html(remoteAccessHtml + helpButton).show().trigger('create');
             } else {
@@ -945,7 +1044,7 @@
                 supporterIconContainer.classList.remove('hide');
 
                 imgUrl = "css/images/supporter/supporterbadge.png";
-                text = Globalize.translate('MessageThankYouForSupporting');
+                text = globalize.translate('MessageThankYouForSupporting');
 
                 supporterIconContainer.innerHTML = '<a is="emby-linkbutton" class="button-link imageLink supporterIcon" href="http://emby.media/premiere" target="_blank" title="' + text + '"><img src="' + imgUrl + '" style="height:32px;vertical-align: middle; margin-right: .5em;" /></a><span style="text-decoration:none;">' + text + '</span>';
             } else {
@@ -977,7 +1076,7 @@
 
                         $('#pUpdateNow', page).show();
 
-                        $('#newVersionNumber', page).html(Globalize.translate('VersionXIsAvailableForDownload').replace('{0}', version.versionStr));
+                        $('#newVersionNumber', page).html(globalize.translate('VersionXIsAvailableForDownload').replace('{0}', version.versionStr));
                     }
 
                 });
@@ -1042,9 +1141,9 @@
 
                     var update = updates[i];
 
-                    html += '<p><strong>' + Globalize.translate('NewVersionOfSomethingAvailable').replace('{0}', update.name) + '</strong></p>';
+                    html += '<p><strong>' + globalize.translate('NewVersionOfSomethingAvailable').replace('{0}', update.name) + '</strong></p>';
 
-                    html += '<button type="button" is="emby-button" class="raised block" onclick="DashboardPage.installPluginUpdate(this);" data-name="' + update.name + '" data-guid="' + update.guid + '" data-version="' + update.versionStr + '" data-classification="' + update.classification + '">' + Globalize.translate('ButtonUpdateNow') + '</button>';
+                    html += '<button type="button" is="emby-button" class="raised block" onclick="DashboardPage.installPluginUpdate(this);" data-name="' + update.name + '" data-guid="' + update.guid + '" data-version="' + update.versionStr + '" data-classification="' + update.classification + '">' + globalize.translate('ButtonUpdateNow') + '</button>';
                 }
 
                 elem.html(html);
@@ -1071,7 +1170,7 @@
 
         updateApplication: function () {
 
-            var page = $.mobile.activePage;
+            var page = $($.mobile.activePage)[0];
             $('#btnUpdateApplication', page).buttonEnabled(false);
 
             loading.show();
@@ -1094,7 +1193,7 @@
 
         stopTask: function (id) {
 
-            var page = $.mobile.activePage;
+            var page = $($.mobile.activePage)[0];
 
             ApiClient.stopScheduledTask(id).then(function () {
 
@@ -1109,9 +1208,9 @@
 
                 confirm({
 
-                    title: Globalize.translate('HeaderRestart'),
-                    text: Globalize.translate('MessageConfirmRestart'),
-                    confirmText: Globalize.translate('ButtonRestart'),
+                    title: globalize.translate('HeaderRestart'),
+                    text: globalize.translate('MessageConfirmRestart'),
+                    confirmText: globalize.translate('ButtonRestart'),
                     primary: 'cancel'
 
                 }).then(function () {
@@ -1129,9 +1228,9 @@
 
                 confirm({
 
-                    title: Globalize.translate('HeaderShutdown'),
-                    text: Globalize.translate('MessageConfirmShutdown'),
-                    confirmText: Globalize.translate('ButtonShutdown'),
+                    title: globalize.translate('HeaderShutdown'),
+                    text: globalize.translate('MessageConfirmShutdown'),
+                    confirmText: globalize.translate('ButtonShutdown'),
                     primary: 'cancel'
 
                 }).then(function () {
@@ -1375,13 +1474,13 @@
 
                     if (result.CustomPrefs[welcomeTourKey]) {
 
-                        $('.tourHeader', elem).html(Globalize.translate('HeaderWelcomeBack'));
-                        $('.tourButtonText', elem).html(Globalize.translate('ButtonTakeTheTourToSeeWhatsNew'));
+                        $('.tourHeader', elem).html(globalize.translate('HeaderWelcomeBack'));
+                        $('.tourButtonText', elem).html(globalize.translate('ButtonTakeTheTourToSeeWhatsNew'));
 
                     } else {
 
-                        $('.tourHeader', elem).html(Globalize.translate('HeaderWelcomeToProjectServerDashboard'));
-                        $('.tourButtonText', elem).html(Globalize.translate('ButtonTakeTheTour'));
+                        $('.tourHeader', elem).html(globalize.translate('HeaderWelcomeToProjectServerDashboard'));
+                        $('.tourButtonText', elem).html(globalize.translate('ButtonTakeTheTour'));
                     }
                 }
             });
@@ -1392,18 +1491,18 @@
             require(['slideshow'], function () {
 
                 var slides = [
-                    { imageUrl: 'css/images/tour/admin/dashboard.png', title: Globalize.translate('DashboardTourDashboard') },
-                    { imageUrl: 'css/images/tour/admin/help.png', title: Globalize.translate('DashboardTourHelp') },
-                    { imageUrl: 'css/images/tour/admin/users.png', title: Globalize.translate('DashboardTourUsers') },
-                    { imageUrl: 'css/images/tour/admin/sync.png', title: Globalize.translate('DashboardTourSync') },
-                    { imageUrl: 'css/images/tour/admin/cinemamode.png', title: Globalize.translate('DashboardTourCinemaMode') },
-                    { imageUrl: 'css/images/tour/admin/chapters.png', title: Globalize.translate('DashboardTourChapters') },
-                    { imageUrl: 'css/images/tour/admin/subtitles.png', title: Globalize.translate('DashboardTourSubtitles') },
-                    { imageUrl: 'css/images/tour/admin/plugins.png', title: Globalize.translate('DashboardTourPlugins') },
-                    { imageUrl: 'css/images/tour/admin/notifications.png', title: Globalize.translate('DashboardTourNotifications') },
-                    { imageUrl: 'css/images/tour/admin/scheduledtasks.png', title: Globalize.translate('DashboardTourScheduledTasks') },
-                    { imageUrl: 'css/images/tour/admin/mobile.png', title: Globalize.translate('DashboardTourMobile') },
-                    { imageUrl: 'css/images/tour/enjoy.jpg', title: Globalize.translate('MessageEnjoyYourStay') }
+                    { imageUrl: 'css/images/tour/admin/dashboard.png', title: globalize.translate('DashboardTourDashboard') },
+                    { imageUrl: 'css/images/tour/admin/help.png', title: globalize.translate('DashboardTourHelp') },
+                    { imageUrl: 'css/images/tour/admin/users.png', title: globalize.translate('DashboardTourUsers') },
+                    { imageUrl: 'css/images/tour/admin/sync.png', title: globalize.translate('DashboardTourSync') },
+                    { imageUrl: 'css/images/tour/admin/cinemamode.png', title: globalize.translate('DashboardTourCinemaMode') },
+                    { imageUrl: 'css/images/tour/admin/chapters.png', title: globalize.translate('DashboardTourChapters') },
+                    { imageUrl: 'css/images/tour/admin/subtitles.png', title: globalize.translate('DashboardTourSubtitles') },
+                    { imageUrl: 'css/images/tour/admin/plugins.png', title: globalize.translate('DashboardTourPlugins') },
+                    { imageUrl: 'css/images/tour/admin/notifications.png', title: globalize.translate('DashboardTourNotifications') },
+                    { imageUrl: 'css/images/tour/admin/scheduledtasks.png', title: globalize.translate('DashboardTourScheduledTasks') },
+                    { imageUrl: 'css/images/tour/admin/mobile.png', title: globalize.translate('DashboardTourMobile') },
+                    { imageUrl: 'css/images/tour/enjoy.jpg', title: globalize.translate('MessageEnjoyYourStay') }
                 ];
 
                 require(['slideshow'], function (slideshow) {
@@ -1456,7 +1555,7 @@
 
                 if (!pluginSecurityInfo.IsMBSupporter && AppInfo.enableSupporterMembership) {
 
-                    var html = '<div class="supporterPromotionContainer"><div class="supporterPromotion"><a class="clearLink" href="http://emby.media/premiere" target="_blank"><button is="emby-button" type="button" class="raised block" style="text-transform:none;background-color:#52B54B;color:#fff;"><div>' + Globalize.translate('HeaderSupportTheTeam') + '</div><div style="font-weight:normal;margin-top:5px;">' + Globalize.translate('TextEnjoyBonusFeatures') + '</div></button></a></div></div>';
+                    var html = '<div class="supporterPromotionContainer"><div class="supporterPromotion"><a class="clearLink" href="http://emby.media/premiere" target="_blank"><button is="emby-button" type="button" class="raised block" style="text-transform:none;background-color:#52B54B;color:#fff;"><div>' + globalize.translate('HeaderSupportTheTeam') + '</div><div style="font-weight:normal;margin-top:5px;">' + globalize.translate('TextEnjoyBonusFeatures') + '</div></button></a></div></div>';
 
                     page.querySelector('.content-primary').insertAdjacentHTML('afterbegin', html);
                 }

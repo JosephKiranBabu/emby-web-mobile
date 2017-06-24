@@ -908,7 +908,7 @@
 
         renderUrls: function (page, systemInfo) {
 
-            var helpButton = '<a is="emby-linkbutton" class="button-link" href="https://github.com/MediaBrowser/Wiki/wiki/Connectivity" target="_blank" style="margin-left:1em;color:#fff;background:#52B54B;padding:.25em 1em;border-radius:1em;">' + Globalize.translate('ButtonHelp') + '</a>';
+            var helpButton = '<a is="emby-linkbutton" class="button-link" href="https://github.com/MediaBrowser/Wiki/wiki/Connectivity" target="_blank" style="margin-left:.7em;font-size:88%;color:#fff;background:#52B54B;padding:.25em .8em;">' + Globalize.translate('ButtonHelp') + '</a>';
 
             if (systemInfo.LocalAddress) {
 

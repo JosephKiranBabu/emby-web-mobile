@@ -992,6 +992,7 @@ var AppInfo = {};
         define("personEditor", [embyWebComponentsBowerPath + "/metadataeditor/personeditor"], returnFirstDependency);
         define("playerSelectionMenu", [embyWebComponentsBowerPath + "/playback/playerselection"], returnFirstDependency);
         define("playerSettingsMenu", [embyWebComponentsBowerPath + "/playback/playersettingsmenu"], returnFirstDependency);
+        define("playMethodHelper", [embyWebComponentsBowerPath + "/playback/playmethodhelper"], returnFirstDependency);
         define("brightnessOsd", [embyWebComponentsBowerPath + "/playback/brightnessosd"], returnFirstDependency);
 
         define("libraryMenu", ["scripts/librarymenu"], returnFirstDependency);
@@ -1032,6 +1033,7 @@ var AppInfo = {};
         define("imageEditor", [embyWebComponentsBowerPath + "/imageeditor/imageeditor"], returnFirstDependency);
         define("imageDownloader", [embyWebComponentsBowerPath + "/imagedownloader/imagedownloader"], returnFirstDependency);
         define("dom", [embyWebComponentsBowerPath + "/dom"], returnFirstDependency);
+        define("playerStats", [embyWebComponentsBowerPath + "/playerstats/playerstats"], returnFirstDependency);
 
         define("searchFields", [embyWebComponentsBowerPath + "/search/searchfields"], returnFirstDependency);
         define("searchResults", [embyWebComponentsBowerPath + "/search/searchresults"], returnFirstDependency);

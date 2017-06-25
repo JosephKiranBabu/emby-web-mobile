@@ -82,7 +82,8 @@
 
         recordingItems.innerHTML = cardBuilder.getCardsHtml(Object.assign({
             items: recordings,
-            shape: (enableScrollX() ? 'autooverflow' : 'auto'),
+            shape: enableScrollX() ? 'autooverflow' : 'auto',
+            defaultShape: getBackdropShape(),
             showTitle: true,
             showParentTitle: true,
             coverImage: true,
@@ -113,7 +114,6 @@
             }
 
             renderRecordings(context.querySelector('#activeRecordings'), result.Items, {
-                shape: getBackdropShape(),
                 showParentTitle: false,
                 showParentTitleOrTitle: true,
                 showTitle: false,
@@ -121,7 +121,6 @@
                 showAirEndTime: true,
                 showChannelName: true,
                 cardLayout: false,
-                preferThumb: true,
                 coverImage: true,
                 overlayMoreButton: true
             });
@@ -133,7 +132,6 @@
         promise.then(function (result) {
 
             renderRecordings(context.querySelector('#latestRecordings'), result.Items, {
-                shape: (enableScrollX() ? 'overflowBackdrop' : 'backdrop'),
                 showYear: true,
                 lines: 2
             });
@@ -180,7 +178,6 @@
         promise.then(function (result) {
 
             renderRecordings(context.querySelector('#kidsRecordings'), result.Items, {
-                shape: (enableScrollX() ? 'overflowBackdrop' : 'backdrop'),
                 showYear: true,
                 lines: 2
             });

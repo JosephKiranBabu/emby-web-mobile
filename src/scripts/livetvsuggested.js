@@ -51,14 +51,14 @@
             }
 
             renderRecordings(context.querySelector('#activeRecordings'), result.Items, {
-                shape: getBackdropShape(),
+                shape: enableScrollX() ? 'autooverflow' : 'auto',
+                defaultShape: getBackdropShape(),
                 showParentTitle: false,
                 showParentTitleOrTitle: true,
                 showTitle: false,
                 showAirTime: true,
                 showAirEndTime: true,
                 showChannelName: true,
-                preferThumb: true,
                 coverImage: true,
                 overlayText: false,
                 centerText: true,

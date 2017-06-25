@@ -1,4 +1,4 @@
-﻿define(['datetime', 'jQuery', 'events', 'dom', 'globalize', 'loading', 'libraryBrowser', 'humanedate', 'cardStyle', 'listViewStyle', 'emby-linkbutton'], function (datetime, $, events, dom, globalize, loading, libraryBrowser) {
+﻿define(['datetime', 'jQuery', 'events', 'dom', 'globalize', 'loading', 'playMethodHelper', 'libraryBrowser', 'humanedate', 'cardStyle', 'listViewStyle', 'emby-linkbutton'], function (datetime, $, events, dom, globalize, loading, playMethodHelper, libraryBrowser) {
     'use strict';
 
     function onConnectionHelpClick(e) {
@@ -44,25 +44,16 @@
         require(['alert'], function (alert) {
 
             var text = [];
-            var isDirectStream = false;
-            var isTranscode = false;
-
-            if (session.TranscodingInfo && session.TranscodingInfo.IsAudioDirect && session.TranscodingInfo.IsVideoDirect) {
-                isDirectStream = true;
-            }
-            else if (session.TranscodingInfo && session.TranscodingInfo.IsVideoDirect) {
-                isDirectStream = true;
-            }
-            else if (session.PlayState.PlayMethod == 'Transcode') {
-                isTranscode = true;
-            }
+            var displayPlayMethod = playMethodHelper.getDisplayPlayMethod(session);
+            var isDirectStream = displayPlayMethod === 'DirectStream';
+            var isTranscode = displayPlayMethod === 'Transcode';
 
             var showTranscodeReasons;
             var title;
 
             if (isDirectStream) {
 
-                title = globalize.translate('LabelPlayMethodDirectStream');
+                html += globalize.translate('sharedcomponents#DirectStreaming');
 
                 text.push(globalize.translate('sharedcomponents#DirectStreamHelp1'));
                 text.push('<br/>');
@@ -71,13 +62,13 @@
 
             else if (isTranscode) {
 
-                title = globalize.translate('LabelPlayMethodTranscoding');
+                html += globalize.translate('sharedcomponents#Transcoding');
 
                 text.push(globalize.translate('sharedcomponents#MediaIsBeingConverted'));
 
                 if (session.TranscodingInfo && session.TranscodingInfo.TranscodeReasons && session.TranscodingInfo.TranscodeReasons.length) {
                     text.push('<br/>');
-                    text.push('Reasons for transcoding:');
+                    text.push(globalize.translate('sharedcomponents#LabelReasonForTranscoding'));
                     showTranscodeReasons = true;
                 }
             }
@@ -556,16 +547,14 @@
             var showTranscodingInfo = false;
             var showMoreInfoButton = false;
 
-            if (session.TranscodingInfo && session.TranscodingInfo.IsAudioDirect && session.TranscodingInfo.IsVideoDirect) {
-                html += globalize.translate('LabelPlayMethodDirectStream');
+            var displayPlayMethod = playMethodHelper.getDisplayPlayMethod(session);
+
+            if (displayPlayMethod === 'DirectStream') {
+                html += globalize.translate('sharedcomponents#DirectStreaming');
                 showMoreInfoButton = true;
             }
-            else if (session.TranscodingInfo && session.TranscodingInfo.IsVideoDirect) {
-                html += globalize.translate('LabelPlayMethodDirectStream');
-                showMoreInfoButton = true;
-            }
-            else if (session.PlayState.PlayMethod == 'Transcode') {
-                html += globalize.translate('LabelPlayMethodTranscoding');
+            else if (displayPlayMethod == 'Transcode') {
+                html += globalize.translate('sharedcomponents#Transcoding');
 
                 if (session.TranscodingInfo && session.TranscodingInfo.Framerate) {
 
@@ -574,11 +563,8 @@
                 showTranscodingInfo = true;
                 showMoreInfoButton = true;
             }
-            else if (session.PlayState.PlayMethod == 'DirectStream') {
-                html += globalize.translate('LabelPlayMethodDirectPlay');
-            }
-            else if (session.PlayState.PlayMethod == 'DirectPlay') {
-                html += globalize.translate('LabelPlayMethodDirectPlay');
+            else if (displayPlayMethod == 'DirectPlay') {
+                html += globalize.translate('sharedcomponents#DirectPlaying');
             }
 
             //html += '</div>';

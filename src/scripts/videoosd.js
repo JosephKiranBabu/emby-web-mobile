@@ -117,6 +117,7 @@
         var supportsBrightnessChange;
 
         var currentVisibleMenu;
+        var statsOverlay;
 
         function onVerticalSwipe(e, elem, data) {
             var player = currentPlayer;
@@ -660,6 +661,10 @@
 
         view.addEventListener('viewbeforehide', function () {
 
+            if (statsOverlay) {
+                statsOverlay.enabled(false);
+            }
+
             dom.removeEventListener(window, 'keydown', onWindowKeyDown, {
                 passive: true
             });
@@ -803,6 +808,8 @@
         }
 
         function releaseCurrentPlayer() {
+
+            destroyStats();
 
             var player = currentPlayer;
 
@@ -1112,12 +1119,44 @@
             var btn = this;
 
             require(['playerSettingsMenu'], function (playerSettingsMenu) {
+
                 playerSettingsMenu.show({
                     mediaType: 'Video',
                     player: currentPlayer,
-                    positionTo: btn
+                    positionTo: btn,
+                    stats: true,
+                    onOption: onSettingsOption
+
                 });
             });
+        }
+
+        function onSettingsOption(selectedOption) {
+
+            if (selectedOption === 'stats') {
+                toggleStats();
+            }
+        }
+
+        function toggleStats() {
+            require(['playerStats'], function (PlayerStats) {
+
+                if (statsOverlay) {
+                    statsOverlay.toggle();
+                } else {
+                    statsOverlay = new PlayerStats({
+                        player: currentPlayer
+                    });
+                }
+            });
+        }
+
+        function destroyStats() {
+
+            if (statsOverlay) {
+                statsOverlay.destroy();
+                statsOverlay = null;
+            }
         }
 
         function showAudioTrackSelection() {
@@ -1212,20 +1251,17 @@
             headerElement.classList.remove('hide');
         });
 
-        view.addEventListener('viewhide', function () {
+        view.addEventListener('viewdestroy', function () {
 
             if (self.touchHelper) {
                 self.touchHelper.destroy();
                 self.touchHelper = null;
             }
-        });
-
-        view.addEventListener('viewdestroy', function () {
-
             if (recordingButtonManager) {
                 recordingButtonManager.destroy();
                 recordingButtonManager = null;
             }
+            destroyStats();
         });
 
         function onWindowKeyDown(e) {

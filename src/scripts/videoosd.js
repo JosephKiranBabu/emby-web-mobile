@@ -611,6 +611,9 @@
                     onRecordingCommand();
                     showOsd();
                     break;
+                case 'togglestats':
+                    toggleStats();
+                    break;
                 default:
                     break;
             }

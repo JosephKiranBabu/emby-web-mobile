@@ -76,7 +76,7 @@
             if (showTranscodeReasons) {
 
                 session.TranscodingInfo.TranscodeReasons.forEach(function (t) {
-                    text.push(t);
+                    text.push(globalize.translate('sharedcomponents#' + t));
                 });
             }
             alert({

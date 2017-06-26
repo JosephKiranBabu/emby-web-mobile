@@ -4,12 +4,21 @@
     color: #fff;
     left: 1.5em;
     position: absolute;
-    top: 6em;
+    top: 5em;
     color: #fff;
+}
+
+.playerStats-tv {
+    top: 4em;
 }
 
 .playerStats-content {
     position: relative;
+    font-size: 84%;
+}
+
+.playerStats-content-tv {
+    font-size: 72%;
 }
 
 .playerStats-closeButton {
@@ -17,26 +26,30 @@
     top: .25em;
     right: .25em;
     color: #ccc;
+    z-index: 1;
 }
 
 .playerStats-stats {
     display: flex;
     flex-direction: column;
-    padding: 1em 2em 1em 1em;
+    padding: 0 3em 1em 1em;
     max-width: 50em;
 }
 
 .playerStats-stat {
     display: flex;
+    margin-left: 1em;
 }
 
 .playerStats-stat-label {
     font-weight: 500;
-    margin-right: 1em;
-    width: 12em;
-    text-align: right;
+    margin: 0 .5em 0 0;
 }
 
 .playerStats-stat-header {
-    margin-top: 1em;
+    margin: 1em 1em 0 0;
+}
+
+.playerStats-stat-value {
+    color: #ddd;
 }

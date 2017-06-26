@@ -11,6 +11,7 @@
     var skinHeader = document.querySelector('.skinHeader');
     var btnHome;
     var currentDrawerType;
+    var pageTitleElement;
 
     function renderHeader() {
 
@@ -26,7 +27,7 @@
         html += '<button type="button" is="paper-icon-button-light" class="headerButton headerAppsButton hide barsMenuButton headerButtonLeft"><i class="md-icon">home</i></button>';
         html += '<button type="button" is="paper-icon-button-light" class="headerButton mainDrawerButton barsMenuButton headerButtonLeft hide"><i class="md-icon">menu</i></button>';
 
-        html += '<h3 class="libraryMenuButtonText headerButton"></h3>';
+        html += '<h3 class="pageTitle"></h3>';
         html += '</div>';
 
         html += '<div class="headerRight">';
@@ -638,9 +639,14 @@
 
         setDefaultTitle: function () {
 
-            var libraryMenuButtonText = document.querySelector('.libraryMenuButtonText');
-            if (libraryMenuButtonText) {
-                libraryMenuButtonText.innerHTML = '<img src="css/images/logo.png" style="height:20px;" />';
+            if (!pageTitleElement) {
+                pageTitleElement = document.querySelector('.pageTitle');
+            }
+            if (pageTitleElement) {
+                pageTitleElement.classList.add('pageTitleWithLogo');
+                pageTitleElement.classList.add('pageTitleWithDefaultLogo');
+                pageTitleElement.style.backgroundImage = 'url(css/images/logo.png)';
+                pageTitleElement.innerHTML = '';
             }
 
             document.title = 'Emby';
@@ -659,9 +665,14 @@
                 }
             }
 
-            var libraryMenuButtonText = document.querySelector('.libraryMenuButtonText');
-            if (libraryMenuButtonText) {
-                libraryMenuButtonText.innerHTML = html;
+            if (!pageTitleElement) {
+                pageTitleElement = document.querySelector('.pageTitle');
+            }
+            if (pageTitleElement) {
+                pageTitleElement.classList.remove('pageTitleWithLogo');
+                pageTitleElement.classList.remove('pageTitleWithDefaultLogo');
+                pageTitleElement.style.backgroundImage = null;
+                pageTitleElement.innerHTML = html;
             }
 
             document.title = title || 'Emby';

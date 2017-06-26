@@ -15,7 +15,7 @@
     opacity: 0;
 }
 
-.osdHeader .headerButton:not(.headerBackButton):not(.libraryMenuButtonText) {
+.osdHeader .headerButton:not(.headerBackButton) {
     display: none;
 }
 

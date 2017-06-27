@@ -240,6 +240,7 @@ body:not(.dashboardDocument) .btnNotifications {
 
     .dashboardDocument .mainDrawer {
         width: 20.07em !important;
+        font-size: 92%;
     }
 
     .dashboardDocument .adminDrawerLogo {

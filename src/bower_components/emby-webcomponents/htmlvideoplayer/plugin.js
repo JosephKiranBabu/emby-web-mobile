@@ -1307,11 +1307,13 @@ define(['browser', 'require', 'events', 'apphost', 'loading', 'dom', 'playbackMa
         var mediaElement = this._mediaElement;
         var playOptions = this._currentPlayOptions || [];
 
-        if (!mediaElement) {
-            return Promise.resolve([]);
-        }
-
         var categories = [];
+
+        if (!mediaElement) {
+            return Promise.resolve({
+                categories: categories
+            });
+        }
 
         var mediaCategory = {
             stats: [],
@@ -1404,25 +1406,6 @@ define(['browser', 'require', 'events', 'apphost', 'loading', 'dom', 'playbackMa
         };
         categories.push(audioCategory);
 
-        var audioTrackList = mediaElement.audioTracks || [];
-        var audioTracks = [];
-        for (var i = 0, length = audioTrackList.length; i < length; i++) {
-
-            var audioTrack = audioTrackList[i];
-            if (audioTrack.enabled) {
-                audioTracks.push((audioTrack.language || 'und') + ' (enabled)');
-            } else {
-                audioTracks.push((audioTrack.language || 'und'));
-            }
-        }
-
-        if (audioTracks.length) {
-            audioCategory.stats.push({
-                label: 'Audio tracks:',
-                value: audioTracks.join('<br/>')
-            });
-        }
-
         var sinkId = mediaElement.sinkId;
         if (sinkId) {
             audioCategory.stats.push({
@@ -1431,7 +1414,9 @@ define(['browser', 'require', 'events', 'apphost', 'loading', 'dom', 'playbackMa
             });
         }
 
-        return Promise.resolve(categories);
+        return Promise.resolve({
+            categories: categories
+        });
     };
 
     return HtmlVideoPlayer;

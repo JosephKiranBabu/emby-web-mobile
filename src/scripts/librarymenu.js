@@ -374,7 +374,7 @@
     function createDashboardMenu() {
         var html = '';
 
-        html += '<a class="adminDrawerLogo clearLink" href="home.html">'
+        html += '<a class="adminDrawerLogo clearLink" is="emby-linkbutton" href="home.html" style="text-align:left;">'
         html += '<img src="css/images/logoblack.png" />';
         html += '</a>';
 
@@ -898,7 +898,7 @@
         var backButton = document.querySelector('.headerBackButton');
 
         if (backButton) {
-            if (page.getAttribute('data-backbutton') == 'true' && embyRouter.canGoBack()) {
+            if (page.getAttribute('data-backbutton') !== 'false' && embyRouter.canGoBack()) {
                 backButton.classList.remove('hide');
             } else {
                 backButton.classList.add('hide');

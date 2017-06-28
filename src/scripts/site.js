@@ -2427,6 +2427,7 @@ var AppInfo = {};
         defineRoute({
             path: '/secondaryitems.html',
             dependencies: [],
+            transition: 'fade',
             autoFocus: false,
             controller: 'scripts/secondaryitems'
         });
@@ -2783,7 +2784,7 @@ var AppInfo = {};
             window.Emby.Page = pageObjects;
             defineCoreRoutes(appHost);
             Emby.Page.start({
-                click: true,
+                click: false,
                 hashbang: Dashboard.isRunningInCordova()
             });
 
@@ -2857,7 +2858,10 @@ var AppInfo = {};
             }
 
             require(postInitDependencies);
-            initAutoSync();
+
+            if (appHost.supports('sync')) {
+                initLocalSyncEvents();
+            }
         });
     }
 
@@ -2883,13 +2887,17 @@ var AppInfo = {};
         }
     }
 
-    function initAutoSync() {
+    function syncNow() {
+        require(['localsync'], function (localSync) {
+            localSync.sync();
+        });
+    }
+
+    function initLocalSyncEvents() {
+
         require(['serverNotifications', 'events'], function (serverNotifications, events) {
-            events.on(serverNotifications, 'SyncJobItemReady', function (e, apiClient, data) {
-                require(['localsync'], function (localSync) {
-                    localSync.sync({});
-                });
-            });
+            events.on(serverNotifications, 'SyncJobItemReady', syncNow);
+            events.on(serverNotifications, 'SyncJobCancelled', syncNow);
         });
     }
 

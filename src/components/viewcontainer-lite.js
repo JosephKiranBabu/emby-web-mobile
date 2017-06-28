@@ -245,18 +245,16 @@ define(['browser', 'dom', 'layoutManager', 'css!bower_components/emby-webcompone
 
         return new Promise(function (resolve, reject) {
 
-            var duration = 450;
+            var duration = layoutManager.tv ? 450 : 270;
 
             var animations = [];
 
-            if (oldAnimatedPage) {
-                if (isBack) {
-                    setAnimation(oldAnimatedPage, 'view-slideright-r ' + duration + 'ms ease-out normal both');
-                } else {
-                    setAnimation(oldAnimatedPage, 'view-slideleft-r ' + duration + 'ms ease-out normal both');
-                }
-                animations.push(oldAnimatedPage);
+            if (isBack) {
+                setAnimation(oldAnimatedPage, 'view-slideright-r ' + duration + 'ms ease-out normal both');
+            } else {
+                setAnimation(oldAnimatedPage, 'view-slideleft-r ' + duration + 'ms ease-out normal both');
             }
+            animations.push(oldAnimatedPage);
 
             if (isBack) {
                 setAnimation(newAnimatedPage, 'view-slideright ' + duration + 'ms ease-out normal both');
@@ -284,28 +282,27 @@ define(['browser', 'dom', 'layoutManager', 'css!bower_components/emby-webcompone
 
         return new Promise(function (resolve, reject) {
 
-            var duration = layoutManager.tv ? 450 : 160;
+            var duration = layoutManager.tv ? 450 : 140;
             var animations = [];
 
             newAnimatedPage.style.opacity = 0;
-            setAnimation(newAnimatedPage, 'view-fadein ' + duration + 'ms ease-in normal both');
-            animations.push(newAnimatedPage);
 
-            if (oldAnimatedPage) {
-                setAnimation(oldAnimatedPage, 'view-fadeout ' + duration + 'ms ease-out normal both');
-                animations.push(oldAnimatedPage);
-            }
+            setAnimation(oldAnimatedPage, 'view-fadeout ' + duration + 'ms ease-out normal both');
+            animations.push(oldAnimatedPage);
 
             currentAnimations = animations;
 
             var onAnimationComplete = function () {
-                dom.removeEventListener(newAnimatedPage, dom.whichAnimationEvent(), onAnimationComplete, {
+
+                newAnimatedPage.style.opacity = 1;
+
+                dom.removeEventListener(oldAnimatedPage, dom.whichAnimationEvent(), onAnimationComplete, {
                     once: true
                 });
                 resolve();
             };
 
-            dom.addEventListener(newAnimatedPage, dom.whichAnimationEvent(), onAnimationComplete, {
+            dom.addEventListener(oldAnimatedPage, dom.whichAnimationEvent(), onAnimationComplete, {
                 once: true
             });
         });
@@ -323,7 +320,7 @@ define(['browser', 'dom', 'layoutManager', 'css!bower_components/emby-webcompone
 
         var animations = currentAnimations;
         for (var i = 0, length = animations.length; i < length; i++) {
-            animations[i].animation = 'none';
+            animations[i].style.animation = 'none';
         }
     }
 

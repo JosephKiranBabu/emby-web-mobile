@@ -1,4 +1,4 @@
-﻿define(['dialogHelper', 'jQuery', 'loading', 'emby-input', 'emby-button', 'emby-checkbox', 'paper-icon-button-light', 'formDialogStyle', 'emby-linkbutton'], function (dialogHelper, $, loading) {
+﻿define(['dialogHelper', 'loading', 'require', 'emby-input', 'emby-button', 'emby-checkbox', 'paper-icon-button-light', 'formDialogStyle', 'emby-linkbutton'], function (dialogHelper, loading, require) {
     'use strict';
 
     function renderLibrarySharingList(context, result) {
@@ -24,7 +24,7 @@
 
         loading.show();
 
-        var shareExcludes = $(".chkShareFolder", dlg).get().filter(function (i) {
+        var shareExcludes = Array.prototype.filter.call(dlg.querySelectorAll(".chkShareFolder"), function (i) {
 
             return i.checked;
 
@@ -58,12 +58,8 @@
         show: function () {
             return new Promise(function (resolve, reject) {
 
-                var xhr = new XMLHttpRequest();
-                xhr.open('GET', 'components/guestinviter/guestinviter.template.html', true);
+                require(['text!./guestinviter.template.html'], function (template) {
 
-                xhr.onload = function (e) {
-
-                    var template = this.response;
                     var dlg = dialogHelper.createDialog({
                         removeOnClose: true,
                         size: 'small'
@@ -108,9 +104,7 @@
 
                         renderLibrarySharingList(dlg, result);
                     });
-                }
-
-                xhr.send();
+                });
             });
         }
     };

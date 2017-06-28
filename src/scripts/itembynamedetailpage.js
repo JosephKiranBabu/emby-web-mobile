@@ -1,4 +1,4 @@
-﻿define(['listView', 'cardBuilder', 'imageLoader', 'libraryBrowser', 'emby-itemscontainer'], function (listView, cardBuilder, imageLoader, libraryBrowser) {
+﻿define(['listView', 'cardBuilder', 'imageLoader', 'libraryBrowser', 'emby-itemscontainer', 'emby-linkbutton'], function (listView, cardBuilder, imageLoader, libraryBrowser) {
     'use strict';
 
     function renderItems(page, item) {
@@ -93,7 +93,7 @@
             html += '<h2 class="sectionTitle sectionTitle-cards padded-left">';
             html += section.name;
             html += '</h2>';
-            html += '<a href="#" class="clearLink hide" style="margin-left:1em;vertical-align:middle;"><button is="emby-button" type="button" class="raised more raised-mini noIcon">' + Globalize.translate('ButtonMore') + '</button></a>';
+            html += '<a is="emby-linkbutton" href="#" class="clearLink hide" style="margin-left:1em;vertical-align:middle;"><button is="emby-button" type="button" class="raised more raised-mini noIcon">' + Globalize.translate('ButtonMore') + '</button></a>';
             html += '</div>';
 
             html += '<div is="emby-itemscontainer" class="itemsContainer padded-left padded-right">';

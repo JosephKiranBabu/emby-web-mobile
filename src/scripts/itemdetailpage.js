@@ -1570,7 +1570,7 @@
 
                 var url = "secondaryitems.html?type=" + type + "&" + param + "=" + paramValue;
 
-                html += '<a class="textlink" href="' + url + '">' + genres[i].Name + '</a>';
+                html += '<a class="textlink button-link" is="emby-linkbutton" href="' + url + '">' + genres[i].Name + '</a>';
             }
         }
 

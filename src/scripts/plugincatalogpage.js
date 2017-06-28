@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'libraryMenu', 'cardStyle'], function ($, loading, libraryMenu) {
+﻿define(['jQuery', 'loading', 'libraryMenu', 'cardStyle', 'emby-linkbutton'], function ($, loading, libraryMenu) {
     'use strict';
 
     // The base query options
@@ -196,7 +196,7 @@
 
         html += '<div class="cardPadder cardPadder-backdrop"></div>';
 
-        html += '<a class="cardContent" href="' + href + '"' + target + '>';
+        html += '<a class="cardContent" is="emby-linkbutton" href="' + href + '"' + target + '>';
         if (plugin.thumbImage) {
             html += '<div class="cardImage" style="background-image:url(\'' + plugin.thumbImage + '\');">';
         } else {

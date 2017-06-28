@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'libraryMenu', 'listViewStyle'], function ($, loading, libraryMenu) {
+﻿define(['jQuery', 'loading', 'libraryMenu', 'listViewStyle', 'emby-linkbutton'], function ($, loading, libraryMenu) {
     'use strict';
 
     function deleteDevice(page, id) {
@@ -46,7 +46,7 @@
             } else {
                 deviceHtml += '<div class="listItemBody two-line">';
             }
-            deviceHtml += '<a class="clearLink" href="device.html?id=' + d.Id + '">';
+            deviceHtml += '<a class="clearLink" data-ripple="false" style="display:block;text-align:left;" is="emby-linkbutton" href="device.html?id=' + d.Id + '">';
 
             deviceHtml += '<div class="listItemBodyText">';
             deviceHtml += d.Name;

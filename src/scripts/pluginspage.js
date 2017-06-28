@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'libraryMenu', 'cardStyle'], function ($, loading, libraryMenu) {
+﻿define(['jQuery', 'loading', 'libraryMenu', 'cardStyle', 'emby-linkbutton'], function ($, loading, libraryMenu) {
     'use strict';
 
     function deletePlugin(page, uniqueid, name) {
@@ -52,7 +52,7 @@
         html += '<div class="cardPadder cardPadder-backdrop"></div>';
 
         if (href) {
-            html += '<a class="cardContent" href="' + href + '">';
+            html += '<a class="cardContent" is="emby-linkbutton" href="' + href + '">';
         }
         else if (!configPageUrl) {
             html += '<div class="cardContent noConfigPluginCard noHoverEffect">';

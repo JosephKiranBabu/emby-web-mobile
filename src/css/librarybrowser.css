@@ -300,15 +300,14 @@ a.itemTag:hover {
 
 .emby-button.detailFloatingButton {
     position: absolute;
-    background-color: rgba(0,0,0,.8) !important;
+    background-color: rgba(0,0,0,.5) !important;
     z-index: 1;
     top: 50%;
     left: 50%;
-    margin: -2.4em 0 0 -2.4em;
-    border: 2.4px solid #eee;
-    border: 2.4px solid rgba(255,255,255,.84);
-    padding: .4em !important;
-    color: rgba(255, 255, 255, .84);
+    margin: -2.2em 0 0 -2.2em;
+    border: 2.7px solid rgba(255,255,255,.6);
+    padding: .38em !important;
+    color: rgba(255, 255, 255, .76);
 }
 
     .emby-button.detailFloatingButton i {

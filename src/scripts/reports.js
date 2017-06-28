@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'libraryBrowser', 'loading', 'fnchecked'], function ($, libraryBrowser, loading) {
+﻿define(['jQuery', 'libraryBrowser', 'loading', 'fnchecked', 'emby-linkbutton'], function ($, libraryBrowser, loading) {
     'use strict';
 
     var defaultSortBy = "SortName";
@@ -26,7 +26,7 @@
 
             if (header.ShowHeaderLabel) {
                 if (header.SortField) {
-                    cellHtml += '<a class="lnkColumnSort" href="#" data-sortfield="' + header.SortField + '" style="text-decoration:underline;">';
+                    cellHtml += '<a class="lnkColumnSort" is="emby-linkbutton" href="#" data-sortfield="' + header.SortField + '" style="text-decoration:underline;">';
                 }
 
                 cellHtml += (header.Name || '&nbsp;');
@@ -99,16 +99,16 @@
                 var id = rRow.Id;
                 if (rItem.Id)
                     id = rItem.Id;
-                html += '<a href="itemdetails.html?id=' + id + '">' + rItem.Name + '</a>';
+                html += '<a is="emby-linkbutton" href="itemdetails.html?id=' + id + '">' + rItem.Name + '</a>';
                 break;
             case "Edit":
-                html += '<a href="edititemmetadata.html?id=' + rRow.Id + '">' + rItem.Name + '</a>';
+                html += '<a is="emby-linkbutton" href="edititemmetadata.html?id=' + rRow.Id + '">' + rItem.Name + '</a>';
                 break;
             case "List":
-                html += '<a href="itemlist.html?id=' + rRow.Id + '">' + rItem.Name + '</a>';
+                html += '<a is="emby-linkbutton" href="itemlist.html?id=' + rRow.Id + '">' + rItem.Name + '</a>';
                 break;
             case "ItemByNameDetails":
-                html += '<a href="itemdetails.html?id=' + rItem.Id + '&context=' + rRow.RowType + '">' + rItem.Name + '</a>';
+                html += '<a is="emby-linkbutton" href="itemdetails.html?id=' + rItem.Id + '&context=' + rRow.RowType + '">' + rItem.Name + '</a>';
                 break;
             case "EmbeddedImage":
                 if (rRow.HasEmbeddedImage) {
@@ -137,20 +137,20 @@
                 break;
             case "TagsPrimaryImage":
                 if (!rRow.HasImageTagsPrimary) {
-                    html += '<a href="edititemimages.html?id=' + rRow.Id + '"><img src="css/images/editor/missingprimaryimage.png" title="Missing primary image." style="width:18px"/></a>';
+                    html += '<a is="emby-linkbutton" href="edititemmetadata.html?id=' + rRow.Id + '"><img src="css/images/editor/missingprimaryimage.png" title="Missing primary image." style="width:18px"/></a>';
                 }
                 break;
             case "TagsBackdropImage":
                 if (!rRow.HasImageTagsBackdrop) {
                     if (rRow.RowType !== "Episode" && rRow.RowType !== "Season" && rRow.MediaType !== "Audio" && rRow.RowType !== "TvChannel" && rRow.RowType !== "MusicAlbum") {
-                        html += '<a href="edititemimages.html?id=' + rRow.Id + '"><img src="css/images/editor/missingbackdrop.png" title="Missing backdrop image." style="width:18px"/></a>';
+                        html += '<a is="emby-linkbutton" href="edititemmetadata.html?id=' + rRow.Id + '"><img src="css/images/editor/missingbackdrop.png" title="Missing backdrop image." style="width:18px"/></a>';
                     }
                 }
                 break;
             case "TagsLogoImage":
                 if (!rRow.HasImageTagsLogo) {
                     if (rRow.RowType === "Movie" || rRow.RowType === "Trailer" || rRow.RowType === "Series" || rRow.RowType === "MusicArtist" || rRow.RowType === "BoxSet") {
-                        html += '<a href="edititemimages.html?id=' + rRow.Id + '"><img src="css/images/editor/missinglogo.png" title="Missing logo image." style="width:18px"/></a>';
+                        html += '<a is="emby-linkbutton" href="edititemmetadata.html?id=' + rRow.Id + '"><img src="css/images/editor/missinglogo.png" title="Missing logo image." style="width:18px"/></a>';
                     }
                 }
                 break;
@@ -178,18 +178,18 @@
                 }
 
                 if (!rRow.HasImageTagsPrimary) {
-                    html += '<a href="edititemimages.html?id=' + rRow.Id + '"><img src="css/images/editor/missingprimaryimage.png" title="Missing primary image." style="width:18px"/></a>';
+                    html += '<a is="emby-linkbutton" href="edititemimages.html?id=' + rRow.Id + '"><img src="css/images/editor/missingprimaryimage.png" title="Missing primary image." style="width:18px"/></a>';
                 }
 
                 if (!rRow.HasImageTagsBackdrop) {
                     if (rRow.RowType !== "Episode" && rRow.RowType !== "Season" && rRow.MediaType !== "Audio" && rRow.RowType !== "TvChannel" && rRow.RowType !== "MusicAlbum") {
-                        html += '<a href="edititemimages.html?id=' + rRow.Id + '"><img src="css/images/editor/missingbackdrop.png" title="Missing backdrop image." style="width:18px"/></a>';
+                        html += '<a is="emby-linkbutton" href="edititemimages.html?id=' + rRow.Id + '"><img src="css/images/editor/missingbackdrop.png" title="Missing backdrop image." style="width:18px"/></a>';
                     }
                 }
 
                 if (!rRow.HasImageTagsLogo) {
                     if (rRow.RowType === "Movie" || rRow.RowType === "Trailer" || rRow.RowType === "Series" || rRow.RowType === "MusicArtist" || rRow.RowType === "BoxSet") {
-                        html += '<a href="edititemimages.html?id=' + rRow.Id + '"><img src="css/images/editor/missinglogo.png" title="Missing logo image." style="width:18px"/></a>';
+                        html += '<a is="emby-linkbutton" href="edititemimages.html?id=' + rRow.Id + '"><img src="css/images/editor/missinglogo.png" title="Missing logo image." style="width:18px"/></a>';
                     }
                 }
                 break;

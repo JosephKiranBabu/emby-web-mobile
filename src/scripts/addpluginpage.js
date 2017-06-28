@@ -261,8 +261,6 @@
 
         var context = params.context;
 
-        $('.notificationsTabs', page).hide();
-
         if (context == 'sync') {
             page.setAttribute('data-helpurl', 'https://github.com/MediaBrowser/Wiki/wiki/Sync');
             libraryMenu.setTitle(Globalize.translate('TitleSync'));
@@ -273,8 +271,6 @@
             page.setAttribute('data-helpurl', 'https://github.com/MediaBrowser/Wiki/wiki/Live%20TV');
         }
         else if (context == 'notifications') {
-
-            $('.notificationsTabs', page).show();
 
             libraryMenu.setTitle(Globalize.translate('TitleNotifications'));
             page.setAttribute('data-helpurl', 'https://github.com/MediaBrowser/Wiki/wiki/Notifications');

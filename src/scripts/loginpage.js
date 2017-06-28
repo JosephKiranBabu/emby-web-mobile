@@ -100,12 +100,12 @@
         for (var i = 0, length = users.length; i < length; i++) {
             var user = users[i];
 
-            html += '<div class="card squareCard scalableCard squareCard-scalable"><div class="cardBox cardBox-bottompadded visualCardBox">';
+            html += '<button type="button" class="card squareCard scalableCard squareCard-scalable"><div class="cardBox cardBox-bottompadded visualCardBox">';
 
             html += '<div class="cardScalable visualCardBox-cardScalable">';
 
             html += '<div class="cardPadder cardPadder-square"></div>';
-            html += '<a class="cardContent" href="#" data-haspw="' + user.HasPassword + '" data-username="' + user.Name + '" data-userid="' + user.Id + '">';
+            html += '<div class="cardContent" data-haspw="' + user.HasPassword + '" data-username="' + user.Name + '" data-userid="' + user.Id + '">';
 
             var imgUrl;
 
@@ -128,7 +128,7 @@
                 html += '<div class="cardImageContainer coveredImage coveredImage-noScale" style="background-image:url(\'' + imgUrl + '\');background-color:' + background + ';"></div>';
             }
 
-            html += '</a>';
+            html += '</div>';
             html += '</div>';
 
             html += '<div class="cardFooter visualCardBox-cardFooter">';
@@ -137,7 +137,7 @@
             html += '</div>';
             html += '</div>';
 
-            html += '</div>';
+            html += '</button>';
         }
 
         var container = context.querySelector('#divUsers');

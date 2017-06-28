@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'fnchecked', 'jqmlistview', 'emby-select', 'emby-button', 'emby-input', 'emby-checkbox', 'listViewStyle'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'fnchecked', 'jqmlistview', 'emby-select', 'emby-button', 'emby-input', 'emby-checkbox', 'listViewStyle', 'emby-linkbutton'], function ($, loading) {
     'use strict';
 
     var currentProfile;
@@ -370,7 +370,7 @@
             }
 
             html += '<li>';
-            html += '<a data-profileindex="' + i + '" class="lnkEditSubProfile" href="#">';
+            html += '<a data-profileindex="' + i + '" class="lnkEditSubProfile" is="emby-linkbutton" href="#">';
 
             html += '<p>' + Globalize.translate('ValueContainer').replace('{0}', (profile.Container || allText)) + '</p>';
 
@@ -385,7 +385,7 @@
 
             html += '</a>';
 
-            html += '<a href="#" data-icon="delete" class="btnDeleteProfile" data-profileindex="' + i + '">Delete</a>';
+            html += '<a is="emby-linkbutton" href="#" data-icon="delete" class="btnDeleteProfile" data-profileindex="' + i + '">Delete</a>';
 
             html += '</li>';
         }
@@ -451,7 +451,7 @@
             }
 
             html += '<li>';
-            html += '<a data-profileindex="' + i + '" class="lnkEditSubProfile" href="#">';
+            html += '<a data-profileindex="' + i + '" class="lnkEditSubProfile" is="emby-linkbutton" href="#">';
 
             html += '<p>Protocol: ' + (profile.Protocol || 'Http') + '</p>';
             html += '<p>' + Globalize.translate('ValueContainer').replace('{0}', (profile.Container || allText)) + '</p>';
@@ -465,7 +465,7 @@
 
             html += '</a>';
 
-            html += '<a href="#" data-icon="delete" class="btnDeleteProfile" data-profileindex="' + i + '">Delete</a>';
+            html += '<a is="emby-linkbutton" href="#" data-icon="delete" class="btnDeleteProfile" data-profileindex="' + i + '">Delete</a>';
 
             html += '</li>';
         }
@@ -563,7 +563,7 @@
             }
 
             html += '<li>';
-            html += '<a data-profileindex="' + i + '" class="lnkEditSubProfile" href="#">';
+            html += '<a data-profileindex="' + i + '" class="lnkEditSubProfile" is="emby-linkbutton" href="#">';
 
             html += '<p>' + Globalize.translate('ValueContainer').replace('{0}', (profile.Container || allText)) + '</p>';
 
@@ -580,7 +580,7 @@
 
             html += '</a>';
 
-            html += '<a href="#" data-icon="delete" class="btnDeleteProfile" data-profileindex="' + i + '">Delete</a>';
+            html += '<a is="emby-linkbutton" href="#" data-icon="delete" class="btnDeleteProfile" data-profileindex="' + i + '">Delete</a>';
 
             html += '</li>';
         }
@@ -665,7 +665,7 @@
             }
 
             html += '<li>';
-            html += '<a data-profileindex="' + i + '" class="lnkEditSubProfile" href="#">';
+            html += '<a data-profileindex="' + i + '" class="lnkEditSubProfile" is="emby-linkbutton" href="#">';
 
             html += '<p>' + Globalize.translate('ValueCodec').replace('{0}', (profile.Codec || allText)) + '</p>';
 
@@ -682,7 +682,7 @@
 
             html += '</a>';
 
-            html += '<a href="#" data-icon="delete" class="btnDeleteProfile" data-profileindex="' + i + '">Delete</a>';
+            html += '<a is="emby-linkbutton" href="#" data-icon="delete" class="btnDeleteProfile" data-profileindex="' + i + '">Delete</a>';
 
             html += '</li>';
         }
@@ -765,7 +765,7 @@
             }
 
             html += '<li>';
-            html += '<a data-profileindex="' + i + '" class="lnkEditSubProfile" href="#">';
+            html += '<a data-profileindex="' + i + '" class="lnkEditSubProfile" is="emby-linkbutton" href="#">';
 
             html += '<p>' + Globalize.translate('ValueContainer').replace('{0}', (profile.Container || allText)) + '</p>';
 
@@ -789,7 +789,7 @@
 
             html += '</a>';
 
-            html += '<a href="#" data-icon="delete" class="btnDeleteProfile" data-profileindex="' + i + '">Delete</a>';
+            html += '<a is="emby-linkbutton" href="#" data-icon="delete" class="btnDeleteProfile" data-profileindex="' + i + '">Delete</a>';
 
             html += '</li>';
         }

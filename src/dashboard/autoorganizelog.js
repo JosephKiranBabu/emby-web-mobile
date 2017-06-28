@@ -1,4 +1,4 @@
-﻿define(['serverNotifications', 'events', 'scripts/taskbutton', 'datetime', 'loading', 'libraryMenu', 'libraryBrowser', 'paper-icon-button-light'], function (serverNotifications, events, taskButton, datetime, loading, libraryMenu, libraryBrowser) {
+﻿define(['serverNotifications', 'events', 'scripts/taskbutton', 'datetime', 'loading', 'libraryMenu', 'libraryBrowser', 'paper-icon-button-light', 'emby-linkbutton'], function (serverNotifications, events, taskButton, datetime, loading, libraryMenu, libraryBrowser) {
     'use strict';
 
     var query = {
@@ -158,7 +158,7 @@
 
             if (item.StatusMessage) {
 
-                return '<a style="color:' + color + ';" data-resultid="' + item.Id + '" href="#" class="btnShowStatusMessage">' + status + '</a>';
+                return '<a style="color:' + color + ';" data-resultid="' + item.Id + '" is="emby-linkbutton" href="#" class="btnShowStatusMessage">' + status + '</a>';
             } else {
                 return '<span data-resultid="' + item.Id + '" style="color:' + color + ';">' + status + '</span>';
             }

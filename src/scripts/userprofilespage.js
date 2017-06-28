@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'humanedate', 'paper-icon-button-light', 'cardStyle'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'humanedate', 'paper-icon-button-light', 'cardStyle', 'emby-linkbutton'], function ($, loading) {
     'use strict';
 
     function deleteUser(page, id) {
@@ -107,7 +107,7 @@
         html += '<div class="cardPadder cardPadder-square"></div>';
 
         var href = "useredit.html?userId=" + user.Id + "";
-        html += '<a class="cardContent" href="' + href + '">';
+        html += '<a is="emby-linkbutton" class="cardContent" href="' + href + '">';
 
         var imgUrl;
 
@@ -267,7 +267,7 @@
         html += '<div class="cardPadder cardPadder-square"></div>';
 
         var href = "#";
-        html += '<a class="cardContent" href="' + href + '">';
+        html += '<a class="cardContent" is="emby-linkbutton" href="' + href + '">';
 
         var imgUrl = user.ImageUrl || 'css/images/userflyoutdefault.png';
 

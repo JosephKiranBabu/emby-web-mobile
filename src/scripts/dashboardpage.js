@@ -827,22 +827,6 @@
             return null;
         },
 
-        hasOptions: function (session) {
-
-            if (session.TranscodingInfo && session.TranscodingInfo.TranscodeReasons && session.TranscodingInfo.TranscodeReasons.length) {
-
-                return true;
-            }
-
-            if (session.ServerId && session.DeviceId !== connectionManager.deviceId()) {
-                if (session.SupportedCommands.indexOf('DisplayMessage') !== -1) {
-                    return true;
-                }
-            }
-
-            return false;
-        },
-
         updateSession: function (row, session) {
 
             row.classList.remove('deadSession');
@@ -855,10 +839,10 @@
                 row.classList.remove('playingSession');
             }
 
-            if (session.SupportedCommands.indexOf('DisplayMessage') === -1) {
-                row.querySelector('.btnSessionSendMessage').classList.add('hide');
-            } else {
+            if (session.ServerId && session.SupportedCommands.indexOf('DisplayMessage') !== -1) {
                 row.querySelector('.btnSessionSendMessage').classList.remove('hide');
+            } else {
+                row.querySelector('.btnSessionSendMessage').classList.add('hide');
             }
 
             if (session.TranscodingInfo && session.TranscodingInfo.TranscodeReasons && session.TranscodingInfo && session.TranscodingInfo.TranscodeReasons.length) {
@@ -869,7 +853,7 @@
 
             var btnSessionPlayPause = row.querySelector('.btnSessionPlayPause');
 
-            if (nowPlayingItem && session.SupportsRemoteControl) {
+            if (session.ServerId && nowPlayingItem && session.SupportsRemoteControl) {
                 btnSessionPlayPause.classList.remove('hide');
                 row.querySelector('.btnSessionStop').classList.remove('hide');
             } else {

@@ -1,4 +1,4 @@
-﻿define(['datetime', 'jQuery', 'events', 'dom', 'globalize', 'loading', 'playMethodHelper', 'libraryBrowser', 'humanedate', 'cardStyle', 'listViewStyle', 'emby-linkbutton'], function (datetime, $, events, dom, globalize, loading, playMethodHelper, libraryBrowser) {
+﻿define(['datetime', 'jQuery', 'events', 'dom', 'globalize', 'loading', 'connectionManager', 'playMethodHelper', 'libraryBrowser', 'humanedate', 'cardStyle', 'listViewStyle', 'emby-linkbutton', 'flexStyles'], function (datetime, $, events, dom, globalize, loading, connectionManager, playMethodHelper, libraryBrowser) {
     'use strict';
 
     function onConnectionHelpClick(e) {
@@ -53,7 +53,7 @@
 
             if (isDirectStream) {
 
-                html += globalize.translate('sharedcomponents#DirectStreaming');
+                title = globalize.translate('sharedcomponents#DirectStreaming');
 
                 text.push(globalize.translate('sharedcomponents#DirectStreamHelp1'));
                 text.push('<br/>');
@@ -62,7 +62,7 @@
 
             else if (isTranscode) {
 
-                html += globalize.translate('sharedcomponents#Transcoding');
+                title = globalize.translate('sharedcomponents#Transcoding');
 
                 text.push(globalize.translate('sharedcomponents#MediaIsBeingConverted'));
 
@@ -86,6 +86,71 @@
         });
     }
 
+    function showSendMessageForm(btn, session) {
+
+        require(['prompt'], function (prompt) {
+
+            prompt({
+                title: globalize.translate('HeaderSendMessage'),
+                label: globalize.translate('LabelMessageText'),
+                //description: '',
+                confirmText: globalize.translate('ButtonSend')
+            }).then(function (text) {
+
+                if (text) {
+
+                    var apiClient = connectionManager.getApiClient(session.ServerId);
+                    apiClient.sendMessageCommand(session.Id, {
+
+                        Text: text,
+                        //Header: '',
+                        TimeoutMs: 5000
+
+                    });
+                }
+            });
+        });
+    }
+
+    function showOptionsMenu(btn, session) {
+
+        require(['actionsheet'], function (actionsheet) {
+
+            var menuItems = [];
+
+            if (session.ServerId && session.DeviceId !== connectionManager.deviceId()) {
+                menuItems.push({
+                    name: globalize.translate('SendMessage'),
+                    id: 'sendmessage'
+                });
+            }
+
+            if (session.TranscodingInfo && session.TranscodingInfo.TranscodeReasons && session.TranscodingInfo.TranscodeReasons.length) {
+
+                menuItems.push({
+                    name: globalize.translate('ViewPlaybackInfo'),
+                    id: 'transcodinginfo'
+                });
+            }
+
+            return actionsheet.show({
+                items: menuItems,
+                positionTo: btn
+
+            }).then(function (id) {
+
+                switch (id) {
+                    case 'sendmessage':
+                        showSendMessageForm(btn, session);
+                        break;
+                    case 'transcodinginfo':
+                        renderSessionOptions(btn, session);
+                        break;
+                }
+            });
+        });
+    }
+
     function onActiveDevicesClick(e) {
 
         var btn = dom.parentWithClass(e.target, 'btnCardOptions');
@@ -103,7 +168,8 @@
                 })[0];
 
                 if (session) {
-                    renderSessionOptions(btn, session);
+
+                    showOptionsMenu(btn, session);
                 }
             }
         }
@@ -500,31 +566,33 @@
                 // cardScalable
                 html += '</div>';
 
-                html += '<div class="sessionCardFooter">';
+                html += '<div class="sessionCardFooter cardFooter">';
 
                 html += '<div class="sessionNowPlayingStreamInfo" style="padding:0 0 1em;">';
                 html += DashboardPage.getSessionNowPlayingStreamInfo(session);
                 html += '</div>';
 
-                html += '<div style="display:flex;align-items:center;justify-content:center;text-transform:uppercase;">';
+                html += '<div class="flex align-items-center justify-content-center">';
+
                 var userImage = DashboardPage.getUserImage(session);
                 if (userImage) {
-                    html += '<img style="height:24px;border-radius:50px;margin-right:.5em;" src="' + userImage + '" />';
+                    html += '<img style="height:1.71em;border-radius:50px;margin-right:.5em;" src="' + userImage + '" />';
                 } else {
-                    html += '<div style="height:24px;"></div>';
+                    html += '<div style="height:1.71em;"></div>';
                 }
 
-                html += '<div class="sessionUserName">';
+                html += '<div class="sessionUserName" style="text-transform:uppercase;">';
                 html += DashboardPage.getUsersHtml(session) || '&nbsp;';
                 html += '</div>';
 
                 html += '</div>';
 
                 var optionsClass = 'btnCardOptions';
-                if (!session.TranscodingInfo || !session.TranscodingInfo.TranscodeReasons || !session.TranscodingInfo.TranscodeReasons.length) {
+                if (!DashboardPage.hasOptions(session)) {
                     optionsClass += ' hide';
                 }
-                html += '<button is="paper-icon-button-light" class="' + optionsClass + ' paper-icon-button-light" data-action="menu"><i class="md-icon">&#xE88E;</i></button>';
+                html += '<button is="paper-icon-button-light" class="' + optionsClass + ' paper-icon-button-light"><i class="md-icon">&#xE5D4;</i></button>';
+
                 html += '</div>';
 
                 // cardBox
@@ -735,6 +803,22 @@
             return null;
         },
 
+        hasOptions: function (session) {
+
+            if (session.TranscodingInfo && session.TranscodingInfo.TranscodeReasons && session.TranscodingInfo.TranscodeReasons.length) {
+
+                return true;
+            }
+
+            if (session.ServerId && session.DeviceId !== connectionManager.deviceId()) {
+                if (session.SupportedCommands.indexOf('DisplayMessage') !== -1) {
+                    return true;
+                }
+            }
+
+            return false;
+        },
+
         updateSession: function (row, session) {
 
             row.classList.remove('deadSession');
@@ -747,7 +831,7 @@
                 row.classList.remove('playingSession');
             }
 
-            if (!session.TranscodingInfo || !session.TranscodingInfo.TranscodeReasons || !session.TranscodingInfo.TranscodeReasons.length) {
+            if (!DashboardPage.hasOptions(session)) {
                 row.querySelector('.btnCardOptions').classList.add('hide');
             } else {
                 row.querySelector('.btnCardOptions').classList.remove('hide');
@@ -756,7 +840,7 @@
             $('.sessionNowPlayingStreamInfo', row).html(DashboardPage.getSessionNowPlayingStreamInfo(session));
             $('.sessionNowPlayingTime', row).html(DashboardPage.getSessionNowPlayingTime(session));
 
-            $('.sessionUserName', row).html(DashboardPage.getUsersHtml(session) || '&nbsp;');
+            row.querySelector('.sessionUserName').innerHTML = DashboardPage.getUsersHtml(session) || '&nbsp;';
 
             $('.sessionAppSecondaryText', row).html(DashboardPage.getAppSecondaryText(session));
 

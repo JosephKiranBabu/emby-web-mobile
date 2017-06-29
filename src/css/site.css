@@ -14,25 +14,6 @@ a {
     text-decoration: none;
 }
 
-.button-link {
-    font-weight: 500 !important;
-}
-
-a:visited {
-    color: #52B54B /*{b-link-visited}*/;
-    text-decoration: none;
-}
-
-a:hover {
-    color: #2E7D32 /*{b-link-hover}*/;
-    text-decoration: none;
-}
-
-a:active {
-    color: #2E7D32 /*{b-link-active}*/;
-    text-decoration: none;
-}
-
 /* Remove IE mobile 300ms tap delay */
 html {
     -ms-touch-action: manipulation;

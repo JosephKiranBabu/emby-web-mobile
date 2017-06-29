@@ -112,10 +112,6 @@
     white-space: pre-wrap;
 }
 
-a.itemTag:hover {
-    background-color: #2489ce;
-}
-
 .itemLinks {
     text-align: center;
     padding: 0;
@@ -238,9 +234,7 @@ a.itemTag:hover {
 }
 
 .itemDetailGalleryLink img:hover {
-    -moz-box-shadow: 0 0 1.5em 3px #52B54B;
-    -webkit-box-shadow: 0 0 1.5em 3px #52B54B;
-    box-shadow: 0 0 1.5em 3px #52B54B;
+    border-color: #52B54B;
 }
 
 @media all and (max-width: 50em) {

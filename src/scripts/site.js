@@ -1347,6 +1347,12 @@ var AppInfo = {};
                 var topParentId = options ? (options.topParentId || options.parentId) : null;
 
                 if (typeof (item) === 'string') {
+                    if (item === 'downloads') {
+                        return 'offline/offline.html';
+                    }
+                    if (item === 'managedownloads') {
+                        return 'managedownloads.html';
+                    }
                     if (item === 'recordedtv') {
                         return 'livetv.html?tab=3&serverId=' + options.serverId;
                     }
@@ -2298,6 +2304,13 @@ var AppInfo = {};
         });
 
         defineRoute({
+            path: '/managedownloads.html',
+            transition: 'fade',
+            controller: 'scripts/managedownloads',
+            dependencies: []
+        });
+
+        defineRoute({
             path: '/mysync.html',
             dependencies: [],
             autoFocus: false,
@@ -2785,6 +2798,8 @@ var AppInfo = {};
             defineCoreRoutes(appHost);
             Emby.Page.start({
                 click: false,
+
+                // this will need to be true to support pages in subfolders
                 hashbang: Dashboard.isRunningInCordova()
             });
 

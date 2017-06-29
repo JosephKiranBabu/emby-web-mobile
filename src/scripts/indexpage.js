@@ -135,10 +135,6 @@
                 name: globalize.translate('TabHome')
             },
             {
-                name: globalize.translate('Downloads'),
-                enabled: false
-            },
-            {
                 name: globalize.translate('TabFavorites')
             },
             {
@@ -209,15 +205,12 @@
                 case 0:
                     break;
                 case 1:
-                    depends.push('scripts/homedownloads');
-                    break;
-                case 2:
                     depends.push('scripts/homefavorites');
                     break;
-                case 3:
+                case 2:
                     depends.push('scripts/tvupcoming');
                     break;
-                case 4:
+                case 3:
                     depends.push('scripts/searchtab');
                     break;
                 default:
@@ -237,7 +230,7 @@
                     if (index === 0) {
                         controller = self;
                     }
-                    else if (index === 4) {
+                    else if (index === 3) {
                         controller = new controllerFactory(view, tabContent, {});
                     } else {
                         controller = new controllerFactory(view, params, tabContent);

@@ -306,7 +306,7 @@
             html += '<a class="sidebarLink lnkMediaFolder lnkMySettings" onclick="return LibraryMenu.onLinkClicked(event, this);" href="mypreferencesmenu.html"><span class="sidebarLinkText">' + Globalize.translate('ButtonSettings') + '</span></a>';
         }
 
-        html += '<a class="sidebarLink lnkMediaFolder lnkManageOffline" data-itemid="manageoffline" onclick="return LibraryMenu.onLinkClicked(event, this);" href="mysync.html?mode=offline"><span class="sidebarLinkText">' + Globalize.translate('ManageOfflineDownloads') + '</span></a>';
+        html += '<a class="sidebarLink lnkMediaFolder lnkManageOffline" data-itemid="manageoffline" onclick="return LibraryMenu.onLinkClicked(event, this);" href="managedownloads.html"><span class="sidebarLinkText">' + Globalize.translate('ManageOfflineDownloads') + '</span></a>';
 
         html += '<a class="sidebarLink lnkMediaFolder lnkSyncToOtherDevices" data-itemid="syncotherdevices" onclick="return LibraryMenu.onLinkClicked(event, this);" href="mysync.html"><span class="sidebarLinkText">' + Globalize.translate('SyncToOtherDevices') + '</span></a>';
 

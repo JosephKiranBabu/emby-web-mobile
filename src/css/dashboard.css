@@ -142,8 +142,7 @@ progress {
 
 /* Links */
 .ui-body-a a {
-    color: #388E3C /*{a-link-color}*/;
-    font-weight: 500;
+    color: green;
 }
 
 div[data-role="controlgroup"] a[data-role='button'] {
@@ -326,7 +325,8 @@ div[data-role="controlgroup"] a.ui-btn-active {
 }
 
 .sessionCardFooter {
-    padding: 1em;
+    padding-top: 1em !important;
+    padding-bottom: 1em !important;
     border-top: 1px solid #eee;
     text-align: center;
     position: relative;

@@ -325,11 +325,19 @@ div[data-role="controlgroup"] a.ui-btn-active {
 }
 
 .sessionCardFooter {
-    padding-top: 1em !important;
+    padding-top: .5em !important;
     padding-bottom: 1em !important;
     border-top: 1px solid #eee;
     text-align: center;
     position: relative;
+}
+
+.sessionCardButtons {
+}
+
+.sessionCardButton {
+    margin: 0;
+    color: #555;
 }
 
 .sessionNowPlayingContent {

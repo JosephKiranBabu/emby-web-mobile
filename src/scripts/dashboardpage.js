@@ -39,7 +39,7 @@
         return false;
     }
 
-    function renderSessionOptions(btn, session) {
+    function showPlaybackInfo(btn, session) {
 
         require(['alert'], function (alert) {
 
@@ -144,7 +144,7 @@
                         showSendMessageForm(btn, session);
                         break;
                     case 'transcodinginfo':
-                        renderSessionOptions(btn, session);
+                        showPlaybackInfo(btn, session);
                         break;
                 }
             });
@@ -153,7 +153,7 @@
 
     function onActiveDevicesClick(e) {
 
-        var btn = dom.parentWithClass(e.target, 'btnCardOptions');
+        var btn = dom.parentWithClass(e.target, 'sessionCardButton');
 
         if (btn) {
 
@@ -169,7 +169,28 @@
 
                 if (session) {
 
-                    showOptionsMenu(btn, session);
+                    if (btn.classList.contains('btnCardOptions')) {
+                        showOptionsMenu(btn, session);
+                    }
+                    else if (btn.classList.contains('btnSessionInfo')) {
+                        showPlaybackInfo(btn, session);
+                    }
+                    else if (btn.classList.contains('btnSessionSendMessage')) {
+                        showSendMessageForm(btn, session);
+                    }
+                    else if (btn.classList.contains('btnSessionStop')) {
+                        connectionManager.getApiClient(session.ServerId).sendPlayStateCommand(session.Id, 'Stop');
+                    }
+                    else if (btn.classList.contains('btnSessionPlayPause')) {
+
+                        if (session.PlayState) {
+                            if (session.PlayState.IsPaused) {
+                                connectionManager.getApiClient(session.ServerId).sendPlayStateCommand(session.Id, 'Unpause');
+                            } else {
+                                connectionManager.getApiClient(session.ServerId).sendPlayStateCommand(session.Id, 'Pause');
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -464,7 +485,7 @@
 
             DashboardPage.sessionsList = sessions;
 
-            var parentElement = $('.activeDevices', page);
+            var parentElement = page.querySelector('.activeDevices');
 
             $('.card', parentElement).addClass('deadSession');
 
@@ -529,12 +550,12 @@
 
                 html += '<div class="sessionNowPlayingTime">' + DashboardPage.getSessionNowPlayingTime(session) + '</div>';
 
-                //if (session.TranscodingInfo && session.TranscodingInfo.Framerate) {
+                if (session.TranscodingInfo && session.TranscodingInfo.Framerate) {
 
-                //    html += '<div class="sessionTranscodingFramerate">' + session.TranscodingInfo.Framerate + ' fps</div>';
-                //} else {
-                //    html += '<div class="sessionTranscodingFramerate"></div>';
-                //}
+                    html += '<div class="sessionTranscodingFramerate">' + session.TranscodingInfo.Framerate + ' fps</div>';
+                } else {
+                    html += '<div class="sessionTranscodingFramerate"></div>';
+                }
 
                 var nowPlayingName = DashboardPage.getNowPlayingName(session);
 
@@ -568,7 +589,16 @@
 
                 html += '<div class="sessionCardFooter cardFooter">';
 
-                html += '<div class="sessionNowPlayingStreamInfo" style="padding:0 0 1em;">';
+                html += '<div class="sessionCardButtons flex align-items-center justify-content-center">';
+
+                html += '<button is="paper-icon-button-light" class="sessionCardButton btnSessionPlayPause paper-icon-button-light hide"><i class="md-icon">&#xE034;</i></button>';
+                html += '<button is="paper-icon-button-light" class="sessionCardButton btnSessionStop paper-icon-button-light hide"><i class="md-icon">&#xE047;</i></button>';
+                html += '<button is="paper-icon-button-light" class="sessionCardButton btnSessionInfo paper-icon-button-light hide" title="' + globalize.translate('ViewPlaybackInfo') + '"><i class="md-icon">&#xE88E;</i></button>';
+                html += '<button is="paper-icon-button-light" class="sessionCardButton btnSessionSendMessage paper-icon-button-light hide" title="' + globalize.translate('SendMessage') + '"><i class="md-icon">&#xE0C9;</i></button>';
+
+                html += '</div>';
+
+                html += '<div class="sessionNowPlayingStreamInfo" style="padding:.5em 0 1em;">';
                 html += DashboardPage.getSessionNowPlayingStreamInfo(session);
                 html += '</div>';
 
@@ -587,12 +617,6 @@
 
                 html += '</div>';
 
-                var optionsClass = 'btnCardOptions';
-                if (!DashboardPage.hasOptions(session)) {
-                    optionsClass += ' hide';
-                }
-                html += '<button is="paper-icon-button-light" class="' + optionsClass + ' paper-icon-button-light"><i class="md-icon">&#xE5D4;</i></button>';
-
                 html += '</div>';
 
                 // cardBox
@@ -602,7 +626,7 @@
                 html += '</div>';
             }
 
-            parentElement.append(html);
+            parentElement.insertAdjacentHTML('beforeend', html);
 
             $('.deadSession', parentElement).remove();
         },
@@ -831,27 +855,49 @@
                 row.classList.remove('playingSession');
             }
 
-            if (!DashboardPage.hasOptions(session)) {
-                row.querySelector('.btnCardOptions').classList.add('hide');
+            if (session.SupportedCommands.indexOf('DisplayMessage') === -1) {
+                row.querySelector('.btnSessionSendMessage').classList.add('hide');
             } else {
-                row.querySelector('.btnCardOptions').classList.remove('hide');
+                row.querySelector('.btnSessionSendMessage').classList.remove('hide');
             }
 
-            $('.sessionNowPlayingStreamInfo', row).html(DashboardPage.getSessionNowPlayingStreamInfo(session));
-            $('.sessionNowPlayingTime', row).html(DashboardPage.getSessionNowPlayingTime(session));
+            if (session.TranscodingInfo && session.TranscodingInfo.TranscodeReasons && session.TranscodingInfo && session.TranscodingInfo.TranscodeReasons.length) {
+                row.querySelector('.btnSessionInfo').classList.remove('hide');
+            } else {
+                row.querySelector('.btnSessionInfo').classList.add('hide');
+            }
+
+            var btnSessionPlayPause = row.querySelector('.btnSessionPlayPause');
+
+            if (nowPlayingItem && session.SupportsRemoteControl) {
+                btnSessionPlayPause.classList.remove('hide');
+                row.querySelector('.btnSessionStop').classList.remove('hide');
+            } else {
+                btnSessionPlayPause.classList.add('hide');
+                row.querySelector('.btnSessionStop').classList.add('hide');
+            }
+
+            if (session.PlayState && session.PlayState.IsPaused) {
+                btnSessionPlayPause.querySelector('i').innerHTML = '&#xE037;';
+            } else {
+                btnSessionPlayPause.querySelector('i').innerHTML = '&#xE034;';
+            }
+
+            row.querySelector('.sessionNowPlayingStreamInfo').innerHTML = DashboardPage.getSessionNowPlayingStreamInfo(session);
+            row.querySelector('.sessionNowPlayingTime').innerHTML = DashboardPage.getSessionNowPlayingTime(session);
 
             row.querySelector('.sessionUserName').innerHTML = DashboardPage.getUsersHtml(session) || '&nbsp;';
 
-            $('.sessionAppSecondaryText', row).html(DashboardPage.getAppSecondaryText(session));
+            row.querySelector('.sessionAppSecondaryText').innerHTML = DashboardPage.getAppSecondaryText(session);
 
-            $('.sessionTranscodingFramerate', row).html((session.TranscodingInfo && session.TranscodingInfo.Framerate) ? session.TranscodingInfo.Framerate + ' fps' : '');
+            row.querySelector('.sessionTranscodingFramerate').innerHTML = (session.TranscodingInfo && session.TranscodingInfo.Framerate) ? session.TranscodingInfo.Framerate + ' fps' : '';
 
             var nowPlayingName = DashboardPage.getNowPlayingName(session);
-            var nowPlayingInfoElem = $('.sessionNowPlayingInfo', row);
+            var nowPlayingInfoElem = row.querySelector('.sessionNowPlayingInfo');
 
-            if (!nowPlayingName.image || nowPlayingName.image != nowPlayingInfoElem.attr('data-imgsrc')) {
-                nowPlayingInfoElem.html(nowPlayingName.html);
-                nowPlayingInfoElem.attr('data-imgsrc', nowPlayingName.image || '');
+            if (!nowPlayingName.image || nowPlayingName.image != nowPlayingInfoElem.getAttribute('data-imgsrc')) {
+                nowPlayingInfoElem.innerHTML = nowPlayingName.html;
+                nowPlayingInfoElem.setAttribute('data-imgsrc', nowPlayingName.image || '');
             }
 
             if (nowPlayingItem && nowPlayingItem.RunTimeTicks) {
@@ -874,7 +920,7 @@
             }
 
             var imgUrl = DashboardPage.getNowPlayingImageUrl(nowPlayingItem) || '';
-            var imgElem = $('.sessionNowPlayingContent', row)[0];
+            var imgElem = row.querySelector('.sessionNowPlayingContent');
 
             if (imgUrl != imgElem.getAttribute('data-src')) {
                 imgElem.style.backgroundImage = imgUrl ? 'url(\'' + imgUrl + '\')' : '';
@@ -1072,7 +1118,7 @@
             }
 
 
-            $('#divRunningTasks', page).html(html);
+            page.querySelector('#divRunningTasks').innerHTML = html;
         },
 
         renderUrls: function (page, systemInfo) {
@@ -1083,7 +1129,7 @@
 
                 var localAccessHtml = globalize.translate('LabelLocalAccessUrl', '<a is="emby-linkbutton" class="button-link" href="' + systemInfo.LocalAddress + '" target="_blank">' + systemInfo.LocalAddress + '</a>');
 
-                $('.localUrl', page).html(localAccessHtml + helpButton).show().trigger('create');
+                $('.localUrl', page).html(localAccessHtml + helpButton).show();
             } else {
                 $('.externalUrl', page).hide();
             }
@@ -1094,7 +1140,7 @@
 
                 var remoteAccessHtml = globalize.translate('LabelRemoteAccessUrl', '<a is="emby-linkbutton" class="button-link" href="' + externalUrl + '" target="_blank">' + externalUrl + '</a>');
 
-                $('.externalUrl', page).html(remoteAccessHtml + helpButton).show().trigger('create');
+                $('.externalUrl', page).html(remoteAccessHtml + helpButton).show();
             } else {
                 $('.externalUrl', page).hide();
             }
@@ -1163,10 +1209,10 @@
 
             if (systemInfo.CompletedInstallations.length) {
 
-                $('#collapsiblePendingInstallations', page).removeClass('hide');
+                page.querySelector('#collapsiblePendingInstallations').classList.remove('hide');
 
             } else {
-                $('#collapsiblePendingInstallations', page).addClass('hide');
+                page.querySelector('#collapsiblePendingInstallations').classList.add('hide');
 
                 return;
             }
@@ -1194,14 +1240,14 @@
 
             ApiClient.getAvailablePluginUpdates().then(function (updates) {
 
-                var elem = $('#pPluginUpdates', page);
+                var elem = page.querySelector('#pPluginUpdates');
 
                 if (updates.length) {
 
-                    elem.show();
+                    $(elem).show();
 
                 } else {
-                    elem.hide();
+                    $(elem).hide();
 
                     return;
                 }
@@ -1216,7 +1262,7 @@
                     html += '<button type="button" is="emby-button" class="raised block" onclick="DashboardPage.installPluginUpdate(this);" data-name="' + update.name + '" data-guid="' + update.guid + '" data-version="' + update.versionStr + '" data-classification="' + update.classification + '">' + globalize.translate('ButtonUpdateNow') + '</button>';
                 }
 
-                elem.html(html);
+                elem.innerHTML = html;
 
             });
         },
@@ -1313,7 +1359,9 @@
         }
     };
 
-    $(document).on('pageinit', "#dashboardPage", DashboardPage.onPageInit).on('pageshow', "#dashboardPage", DashboardPage.onPageShow).on('pagebeforehide', "#dashboardPage", DashboardPage.onPageHide);
+    pageIdOn('pageinit', 'dashboardPage', DashboardPage.onPageInit);
+    pageIdOn('pageshow', 'dashboardPage', DashboardPage.onPageShow);
+    pageIdOn('pagebeforehide', 'dashboardPage', DashboardPage.onPageHide);
 
     (function ($, document, window) {
 
@@ -1378,26 +1426,14 @@
                 });
             }
 
-            $(elem).html(html);
+            elem.innerHTML = html;
 
-            $('.btnNextPage', elem).on('click', function () {
+            elem.querySelector('.btnNextPage').addEventListener('click', function () {
                 reloadData(elem, startIndex + limit, limit);
             });
 
-            $('.btnPreviousPage', elem).on('click', function () {
+            elem.querySelector('.btnPreviousPage').addEventListener('click', function () {
                 reloadData(elem, startIndex - limit, limit);
-            });
-
-            $('.btnShowOverview', elem).on('click', function () {
-
-                var item = $(this).parents('.newsItem');
-                var overview = $('.newsItemLongDescription', item).html();
-                var name = $('.notificationName', item).html();
-
-                Dashboard.alert({
-                    message: '<div style="max-height:300px; overflow: auto;">' + overview + '</div>',
-                    title: name
-                });
             });
         }
 

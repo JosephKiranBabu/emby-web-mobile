@@ -1,4 +1,4 @@
-﻿define(['layoutManager', 'events', 'viewManager', 'libraryBrowser', 'embyRouter', 'apphost', 'playbackManager', 'browser', 'paper-icon-button-light', 'material-icons', 'scrollStyles', 'flexStyles'], function (layoutManager, events, viewManager, libraryBrowser, embyRouter, appHost, playbackManager, browser) {
+﻿define(['layoutManager', 'connectionManager', 'events', 'viewManager', 'libraryBrowser', 'embyRouter', 'apphost', 'playbackManager', 'browser', 'globalize', 'paper-icon-button-light', 'material-icons', 'scrollStyles', 'flexStyles'], function (layoutManager, connectionManager, events, viewManager, libraryBrowser, embyRouter, appHost, playbackManager, browser, globalize) {
     'use strict';
 
     var enableLibraryNavDrawer = layoutManager.desktop;
@@ -12,6 +12,7 @@
     var btnHome;
     var currentDrawerType;
     var pageTitleElement;
+    var headerBackButton;
 
     function renderHeader() {
 
@@ -37,7 +38,7 @@
 
         html += '<button type="button" is="paper-icon-button-light" class="headerButton headerButtonRight headerSearchButton hide autoSize"><i class="md-icon">search</i></button>';
 
-        html += '<button is="paper-icon-button-light" class="headerButton headerButtonRight btnNotifications"><div class="btnNotificationsInner">0</div></button>';
+        html += '<button is="paper-icon-button-light" class="headerButton headerButtonRight btnNotifications autoSize"><div class="btnNotificationsInner hide">0</div><i class="md-icon">&#xE7F4;</i></button>';
 
         html += '<button is="paper-icon-button-light" class="headerButton headerButtonRight headerUserButton autoSize"><i class="md-icon">person</i></button>';
 
@@ -270,9 +271,20 @@
 
         html += '<div style="height:.5em;"></div>';
 
-        var homeHref = window.ApiClient ? 'home.html' : 'selectserver.html?showuser=1';
+        //html += '<a class="sidebarLink lnkMediaFolder" href="' + homeHref + '" onclick="return LibraryMenu.onLinkClicked(event, this);"><i class="md-icon sidebarLinkIcon">person</i><span class="sidebarLinkText">' + user.localUser.Name + '</span></a>';
 
-        html += '<a class="sidebarLink lnkMediaFolder" href="' + homeHref + '" onclick="return LibraryMenu.onLinkClicked(event, this);"><span class="sidebarLinkText">' + Globalize.translate('ButtonHome') + '</span></a>';
+        var homeHref = window.ApiClient ? 'home.html' : 'selectserver.html?showuser=1';
+        html += '<a class="sidebarLink lnkMediaFolder" href="' + homeHref + '" onclick="return LibraryMenu.onLinkClicked(event, this);"><i class="md-icon sidebarLinkIcon">home</i><span class="sidebarLinkText">' + globalize.translate('ButtonHome') + '</span></a>';
+
+        html += '<div class="libraryMenuDownloads">';
+        html += '<div class="sidebarDivider"></div>';
+        html += '<div class="sidebarHeader">';
+        html += globalize.translate('sharedcomponents#HeaderMyDownloads');
+        html += '</div>';
+        html += '<a class="sidebarLink lnkMediaFolder" data-itemid="manageoffline" onclick="return LibraryMenu.onLinkClicked(event, this);" href="offline/offline.html"><i class="md-icon sidebarLinkIcon">folder</i><span class="sidebarLinkText">' + globalize.translate('sharedcomponents#Browse') + '</span></a>';
+        html += '<a class="sidebarLink lnkMediaFolder" data-itemid="manageoffline" onclick="return LibraryMenu.onLinkClicked(event, this);" href="managedownloads.html"><i class="md-icon sidebarLinkIcon">edit</i><span class="sidebarLinkText">' + globalize.translate('sharedcomponents#Manage') + '</span></a>';
+
+        html += '</div>';
 
         html += '<div class="sidebarDivider"></div>';
 
@@ -286,14 +298,14 @@
             html += '<div class="sidebarDivider"></div>';
 
             html += '<div class="sidebarHeader">';
-            html += Globalize.translate('HeaderAdmin');
+            html += globalize.translate('HeaderAdmin');
             html += '</div>';
 
-            html += '<a class="sidebarLink lnkMediaFolder lnkManageServer" data-itemid="dashboard" href="#"><span class="sidebarLinkText">' + Globalize.translate('ButtonManageServer') + '</span></a>';
-            html += '<a class="sidebarLink lnkMediaFolder editorViewMenu" data-itemid="editor" onclick="return LibraryMenu.onLinkClicked(event, this);" href="edititemmetadata.html"><span class="sidebarLinkText">' + Globalize.translate('MetadataManager') + '</span></a>';
+            html += '<a class="sidebarLink lnkMediaFolder lnkManageServer" data-itemid="dashboard" onclick="return LibraryMenu.onLinkClicked(event, this);" href="dashboard.html"><span class="sidebarLinkText">' + globalize.translate('ButtonManageServer') + '</span></a>';
+            html += '<a class="sidebarLink lnkMediaFolder editorViewMenu" data-itemid="editor" onclick="return LibraryMenu.onLinkClicked(event, this);" href="edititemmetadata.html"><span class="sidebarLinkText">' + globalize.translate('MetadataManager') + '</span></a>';
 
             if (!layoutManager.mobile) {
-                html += '<a class="sidebarLink lnkMediaFolder" data-itemid="reports" onclick="return LibraryMenu.onLinkClicked(event, this);" href="reports.html"><span class="sidebarLinkText">' + Globalize.translate('ButtonReports') + '</span></a>';
+                html += '<a class="sidebarLink lnkMediaFolder" data-itemid="reports" onclick="return LibraryMenu.onLinkClicked(event, this);" href="reports.html"><span class="sidebarLinkText">' + globalize.translate('ButtonReports') + '</span></a>';
             }
             html += '</div>';
         }
@@ -303,19 +315,17 @@
         html += '<div class="sidebarDivider"></div>';
 
         if (user.localUser) {
-            html += '<a class="sidebarLink lnkMediaFolder lnkMySettings" onclick="return LibraryMenu.onLinkClicked(event, this);" href="mypreferencesmenu.html"><span class="sidebarLinkText">' + Globalize.translate('ButtonSettings') + '</span></a>';
+            html += '<a class="sidebarLink lnkMediaFolder lnkMySettings" onclick="return LibraryMenu.onLinkClicked(event, this);" href="mypreferencesmenu.html"><span class="sidebarLinkText">' + globalize.translate('ButtonSettings') + '</span></a>';
         }
 
-        html += '<a class="sidebarLink lnkMediaFolder lnkManageOffline" data-itemid="manageoffline" onclick="return LibraryMenu.onLinkClicked(event, this);" href="managedownloads.html"><span class="sidebarLinkText">' + Globalize.translate('ManageOfflineDownloads') + '</span></a>';
-
-        html += '<a class="sidebarLink lnkMediaFolder lnkSyncToOtherDevices" data-itemid="syncotherdevices" onclick="return LibraryMenu.onLinkClicked(event, this);" href="mysync.html"><span class="sidebarLinkText">' + Globalize.translate('SyncToOtherDevices') + '</span></a>';
+        html += '<a class="sidebarLink lnkMediaFolder lnkSyncToOtherDevices" data-itemid="syncotherdevices" onclick="return LibraryMenu.onLinkClicked(event, this);" href="mysync.html"><span class="sidebarLinkText">' + globalize.translate('SyncToOtherDevices') + '</span></a>';
 
         if (Dashboard.isConnectMode()) {
-            html += '<a class="sidebarLink lnkMediaFolder" data-itemid="selectserver" onclick="return LibraryMenu.onLinkClicked(event, this);" href="selectserver.html?showuser=1"><span class="sidebarLinkText">' + Globalize.translate('ButtonSelectServer') + '</span></a>';
+            html += '<a class="sidebarLink lnkMediaFolder" data-itemid="selectserver" onclick="return LibraryMenu.onLinkClicked(event, this);" href="selectserver.html?showuser=1"><span class="sidebarLinkText">' + globalize.translate('ButtonSelectServer') + '</span></a>';
         }
 
         if (user.localUser) {
-            html += '<a class="sidebarLink lnkMediaFolder" data-itemid="logout" onclick="return LibraryMenu.onLogoutClicked(this);" href="#"><span class="sidebarLinkText">' + Globalize.translate('ButtonSignOut') + '</span></a>';
+            html += '<a class="sidebarLink lnkMediaFolder" data-itemid="logout" onclick="return LibraryMenu.onLogoutClicked(this);" href="#"><span class="sidebarLinkText">' + globalize.translate('ButtonSignOut') + '</span></a>';
         }
 
         html += '</div>';
@@ -371,6 +381,183 @@
         }
     }
 
+    function getToolsMenuLinks() {
+
+        return [{
+            name: globalize.translate('TabServer')
+        }, {
+            name: globalize.translate('TabDashboard'),
+            href: "dashboard.html",
+            pageIds: ['dashboardPage'],
+            icon: 'dashboard'
+        }, {
+            name: globalize.translate('TabSettings'),
+            href: "dashboardgeneral.html",
+            pageIds: ['dashboardGeneralPage'],
+            icon: 'settings'
+        }, {
+            name: globalize.translate('TabUsers'),
+            href: "userprofiles.html",
+            pageIds: ['userProfilesPage', 'newUserPage', 'editUserPage', 'userLibraryAccessPage', 'userParentalControlPage', 'userPasswordPage'],
+            icon: 'people'
+        }, {
+            name: 'Emby Premiere',
+            href: "supporterkey.html",
+            pageIds: ['supporterKeyPage'],
+            icon: 'star'
+        }, {
+            name: globalize.translate('TabLibrary'),
+            href: "library.html",
+            pageIds: ['mediaLibraryPage', 'librarySettingsPage', 'libraryDisplayPage', 'metadataImagesConfigurationPage', 'metadataNfoPage'],
+            icon: 'folder',
+            color: '#38c'
+        }, {
+            name: globalize.translate('TabSubtitles'),
+            href: "metadatasubtitles.html",
+            pageIds: ['metadataSubtitlesPage'],
+            icon: 'closed_caption'
+        }, {
+            name: globalize.translate('TabPlayback'),
+            icon: 'play_circle_filled',
+            color: '#E5342E',
+            href: "cinemamodeconfiguration.html",
+            pageIds: ['cinemaModeConfigurationPage', 'playbackConfigurationPage', 'streamingSettingsPage']
+        }, {
+            name: globalize.translate('TabTranscoding'),
+            icon: 'transform',
+            href: "encodingsettings.html",
+            pageIds: ['encodingSettingsPage']
+        }, {
+            divider: true,
+            name: globalize.translate('TabDevices')
+        }, {
+            name: globalize.translate('TabDevices'),
+            href: "devices.html",
+            pageIds: ['devicesPage', 'devicePage'],
+            icon: 'tablet'
+        }, {
+            name: globalize.translate('HeaderDownloadSync'),
+            icon: 'file_download',
+            href: "syncactivity.html",
+            pageIds: ['syncActivityPage', 'syncJobPage', 'syncSettingsPage'],
+            color: '#009688'
+        }, {
+            name: globalize.translate('TabCameraUpload'),
+            href: "devicesupload.html",
+            pageIds: ['devicesUploadPage'],
+            icon: 'photo_camera'
+        }, {
+            divider: true,
+            name: globalize.translate('TabExtras')
+        }, {
+            name: globalize.translate('TabAutoOrganize'),
+            color: '#01C0DD',
+            href: "autoorganizelog.html",
+            pageIds: ['libraryFileOrganizerPage', 'libraryFileOrganizerSmartMatchPage', 'libraryFileOrganizerLogPage'],
+            icon: 'folder'
+        }, {
+            name: globalize.translate('DLNA'),
+            href: "dlnasettings.html",
+            pageIds: ['dlnaSettingsPage', 'dlnaProfilesPage', 'dlnaProfilePage'],
+            icon: 'settings'
+        }, {
+            name: globalize.translate('TabLiveTV'),
+            href: "livetvstatus.html",
+            pageIds: ['liveTvStatusPage', 'liveTvSettingsPage', 'liveTvTunerPage'],
+            icon: 'dvr'
+        }, {
+            name: globalize.translate('TabNotifications'),
+            icon: 'notifications',
+            color: 'brown',
+            href: "notificationsettings.html",
+            pageIds: ['notificationSettingsPage', 'notificationSettingPage']
+        }, {
+            name: globalize.translate('TabPlugins'),
+            icon: 'add_shopping_cart',
+            color: '#9D22B1',
+            href: "plugins.html",
+            pageIds: ['pluginsPage', 'pluginCatalogPage']
+        }, {
+            divider: true,
+            name: globalize.translate('TabExpert')
+        }, {
+            name: globalize.translate('TabAdvanced'),
+            icon: 'settings',
+            href: "dashboardhosting.html",
+            color: '#F16834',
+            pageIds: ['dashboardHostingPage', 'serverSecurityPage']
+        }, {
+            name: globalize.translate('TabLogs'),
+            href: "log.html",
+            pageIds: ['logPage'],
+            icon: 'folder_open'
+        }, {
+            name: globalize.translate('TabScheduledTasks'),
+            href: "scheduledtasks.html",
+            pageIds: ['scheduledTasksPage', 'scheduledTaskPage'],
+            icon: 'schedule'
+        }, {
+            name: globalize.translate('MetadataManager'),
+            href: "edititemmetadata.html",
+            pageIds: [],
+            icon: 'mode_edit'
+        }, {
+            name: globalize.translate('ButtonReports'),
+            href: "reports.html",
+            pageIds: [],
+            icon: 'insert_chart'
+        }];
+
+    }
+
+    function getToolsLinkHtml(item) {
+
+        var menuHtml = '';
+        var pageIds = item.pageIds ? item.pageIds.join(',') : '';
+        pageIds = pageIds ? (' data-pageids="' + pageIds + '"') : '';
+        menuHtml += '<a class="sidebarLink" href="' + item.href + '"' + pageIds + '>';
+
+        if (item.icon) {
+            menuHtml += '<i class="md-icon sidebarLinkIcon">' + item.icon + '</i>';
+        }
+
+        menuHtml += '<span class="sidebarLinkText">';
+        menuHtml += item.name;
+        menuHtml += '</span>';
+        menuHtml += '</a>';
+        return menuHtml;
+    }
+
+    function getToolsMenuHtml() {
+
+        var items = getToolsMenuLinks();
+
+        var i, length, item;
+        var menuHtml = '';
+        menuHtml += '<div class="drawerContent">';
+        for (i = 0, length = items.length; i < length; i++) {
+
+            item = items[i];
+
+            if (item.divider) {
+                menuHtml += "<div class='sidebarDivider'></div>";
+            }
+
+            if (item.href) {
+
+                menuHtml += getToolsLinkHtml(item);
+            } else if (item.name) {
+
+                menuHtml += '<div class="sidebarHeader">';
+                menuHtml += item.name;
+                menuHtml += '</div>';
+            }
+        }
+        menuHtml += '</div>';
+
+        return menuHtml;
+    }
+
     function createDashboardMenu() {
         var html = '';
 
@@ -378,7 +565,7 @@
         html += '<img src="css/images/logoblack.png" />';
         html += '</a>';
 
-        html += Dashboard.getToolsMenuHtml();
+        html += getToolsMenuHtml();
 
         html = html.split('href=').join('onclick="return LibraryMenu.onLinkClicked(event, this);" href=');
 
@@ -414,7 +601,7 @@
                     view.icon = 'live_tv';
 
                     var guideView = Object.assign({}, view);
-                    guideView.Name = Globalize.translate('ButtonGuide');
+                    guideView.Name = globalize.translate('ButtonGuide');
                     guideView.ImageTags = {};
                     guideView.icon = 'dvr';
                     guideView.url = 'livetv.html?tab=1';
@@ -442,7 +629,7 @@
 
         if (!user) {
 
-            showBySelector('.lnkManageOffline', false);
+            showBySelector('.libraryMenuDownloads', false);
             showBySelector('.lnkSyncToOtherDevices', false);
             showBySelector('.userMenuOptions', false);
             return;
@@ -455,9 +642,9 @@
         }
 
         if (user.Policy.EnableContentDownloading && appHost.supports('sync')) {
-            showBySelector('.lnkManageOffline', true);
+            showBySelector('.libraryMenuDownloads', true);
         } else {
-            showBySelector('.lnkManageOffline', false);
+            showBySelector('.libraryMenuDownloads', false);
         }
 
         var userId = Dashboard.getCurrentUserId();
@@ -476,7 +663,7 @@
 
             var html = '';
             html += '<div class="sidebarHeader">';
-            html += Globalize.translate('HeaderMedia');
+            html += globalize.translate('HeaderMedia');
             html += '</div>';
 
             html += items.map(function (i) {
@@ -661,7 +848,7 @@
                 var helpUrl = page.getAttribute('data-helpurl');
 
                 if (helpUrl) {
-                    html += '<a href="' + helpUrl + '" target="_blank" is="emby-linkbutton" class="button-link" style="margin-left:2em;" title="' + Globalize.translate('ButtonHelp') + '"><i class="md-icon">info</i><span>' + Globalize.translate('ButtonHelp') + '</span></a>';
+                    html += '<a href="' + helpUrl + '" target="_blank" is="emby-linkbutton" class="button-link" style="margin-left:2em;" title="' + globalize.translate('ButtonHelp') + '"><i class="md-icon">info</i><span>' + globalize.translate('ButtonHelp') + '</span></a>';
                 }
             }
 
@@ -791,7 +978,7 @@
         }
 
         if (requiresUserRefresh) {
-            ConnectionManager.user(window.ApiClient).then(updateUserInHeader);
+            connectionManager.user(window.ApiClient).then(updateUserInHeader);
         }
     }
 
@@ -895,13 +1082,15 @@
 
     function updateBackButton(page) {
 
-        var backButton = document.querySelector('.headerBackButton');
+        if (!headerBackButton) {
+            headerBackButton = document.querySelector('.headerBackButton');
+        }
 
-        if (backButton) {
+        if (headerBackButton) {
             if (page.getAttribute('data-backbutton') !== 'false' && embyRouter.canGoBack()) {
-                backButton.classList.remove('hide');
+                headerBackButton.classList.remove('hide');
             } else {
-                backButton.classList.add('hide');
+                headerBackButton.classList.add('hide');
             }
         }
     }
@@ -953,7 +1142,7 @@
         loadNavDrawer();
         currentDrawerType = 'library';
 
-        var promise = user ? Promise.resolve(user) : ConnectionManager.user(window.ApiClient);
+        var promise = user ? Promise.resolve(user) : connectionManager.user(window.ApiClient);
 
         promise.then(function (user) {
             refreshLibraryInfoInDrawer(user);
@@ -1000,19 +1189,19 @@
 
     renderHeader();
 
-    events.on(ConnectionManager, 'apiclientcreated', function (e, apiClient) {
+    events.on(connectionManager, 'apiclientcreated', function (e, apiClient) {
         initializeApiClient(apiClient);
     });
 
-    events.on(ConnectionManager, 'localusersignedin', function (e, user) {
+    events.on(connectionManager, 'localusersignedin', function (e, user) {
         currentDrawerType = null;
         setDrawerClass();
-        ConnectionManager.user(ConnectionManager.getApiClient(user.ServerId)).then(function (user) {
+        connectionManager.user(connectionManager.getApiClient(user.ServerId)).then(function (user) {
             updateUserInHeader(user);
         });
     });
 
-    events.on(ConnectionManager, 'localusersignedout', updateUserInHeader);
+    events.on(connectionManager, 'localusersignedout', updateUserInHeader);
     events.on(playbackManager, 'playerchange', updateCastIcon);
 
     setDrawerClass();

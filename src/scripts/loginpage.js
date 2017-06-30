@@ -168,7 +168,9 @@
         }
 
         view.querySelector('#divUsers').addEventListener('click', function (e) {
-            var cardContent = dom.parentWithClass(e.target, 'cardContent');
+
+            var card = dom.parentWithClass(e.target, 'card');
+            var cardContent = card ? card.querySelector('.cardContent') : null;
 
             if (cardContent) {
 

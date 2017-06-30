@@ -577,7 +577,7 @@
 
                     html += '<progress class="transcodingProgress" min="0" max="100" value="' + session.TranscodingInfo.CompletionPercentage.toFixed(1) + '"></progress>';
                 } else {
-                    html += '<progress class="transcodingProgress" min="0" max="100" style="display:none;"></progress>';
+                    html += '<progress class="transcodingProgress hide" min="0" max="100"></progress>';
                 }
 
                 html += '</div>';
@@ -591,10 +591,17 @@
 
                 html += '<div class="sessionCardButtons flex align-items-center justify-content-center">';
 
-                html += '<button is="paper-icon-button-light" class="sessionCardButton btnSessionPlayPause paper-icon-button-light hide"><i class="md-icon">&#xE034;</i></button>';
-                html += '<button is="paper-icon-button-light" class="sessionCardButton btnSessionStop paper-icon-button-light hide"><i class="md-icon">&#xE047;</i></button>';
-                html += '<button is="paper-icon-button-light" class="sessionCardButton btnSessionInfo paper-icon-button-light hide" title="' + globalize.translate('ViewPlaybackInfo') + '"><i class="md-icon">&#xE88E;</i></button>';
-                html += '<button is="paper-icon-button-light" class="sessionCardButton btnSessionSendMessage paper-icon-button-light hide" title="' + globalize.translate('SendMessage') + '"><i class="md-icon">&#xE0C9;</i></button>';
+                var btnCssClass;
+
+                btnCssClass = session.ServerId && session.NowPlayingItem && session.SupportsRemoteControl ? '' : ' hide';
+                html += '<button is="paper-icon-button-light" class="sessionCardButton btnSessionPlayPause paper-icon-button-light ' + btnCssClass + '"><i class="md-icon">&#xE034;</i></button>';
+                html += '<button is="paper-icon-button-light" class="sessionCardButton btnSessionStop paper-icon-button-light ' + btnCssClass + '"><i class="md-icon">&#xE047;</i></button>';
+
+                btnCssClass = session.TranscodingInfo && session.TranscodingInfo.TranscodeReasons && session.TranscodingInfo && session.TranscodingInfo.TranscodeReasons.length ? '' : ' hide';
+                html += '<button is="paper-icon-button-light" class="sessionCardButton btnSessionInfo paper-icon-button-light ' + btnCssClass + '" title="' + globalize.translate('ViewPlaybackInfo') + '"><i class="md-icon">&#xE88E;</i></button>';
+
+                btnCssClass = session.ServerId && session.SupportedCommands.indexOf('DisplayMessage') !== -1 ? '' : ' hide';
+                html += '<button is="paper-icon-button-light" class="sessionCardButton btnSessionSendMessage paper-icon-button-light ' + btnCssClass + '" title="' + globalize.translate('SendMessage') + '"><i class="md-icon">&#xE0C9;</i></button>';
 
                 html += '</div>';
 
@@ -894,12 +901,15 @@
                 $('.playbackProgress', row).hide();
             }
 
+            var transcodingProgress = row.querySelector('.transcodingProgress');
+
             if (session.TranscodingInfo && session.TranscodingInfo.CompletionPercentage) {
 
                 row.classList.add('transcodingSession');
-                $('.transcodingProgress', row).show().val(session.TranscodingInfo.CompletionPercentage);
+                transcodingProgress.value = session.TranscodingInfo.CompletionPercentage;
+                transcodingProgress.classList.remove('hide');
             } else {
-                $('.transcodingProgress', row).hide();
+                transcodingProgress.classList.add('hide');
                 row.classList.remove('transcodingSession');
             }
 

@@ -28,7 +28,6 @@
     height: 1px;
     background: #eaeaea;
     margin: .5em 0;
-    display: none;
 }
 
 .headerUserImage {
@@ -46,6 +45,7 @@
 
 .headerButton {
     flex-shrink: 0;
+    font-size: 108%;
 }
 
 .hideMainDrawer .mainDrawerButton {
@@ -275,11 +275,7 @@ body:not(.dashboardDocument) .btnNotifications {
         justify-content: center;
         margin-top: -3.34em;
         position: relative;
-        top: -.45em;
-    }
-
-    .headerTop {
-        padding: .9em 0;
+        top: -.55em;
     }
 
     .libraryPage:not(.noSecondaryNavPage) {

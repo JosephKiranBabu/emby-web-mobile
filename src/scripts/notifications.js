@@ -50,6 +50,9 @@
 
                     if (summary.UnreadCount) {
                         btnNotificationsInner.classList.add('level' + summary.MaxUnreadNotificationLevel);
+                        btnNotificationsInner.classList.remove('hide');
+                    } else {
+                        btnNotificationsInner.classList.add('hide');
                     }
                 }
             });

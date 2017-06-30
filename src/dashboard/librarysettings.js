@@ -49,6 +49,28 @@
         });
     }
 
+    function alertText(options) {
+        require(['alert'], function (alert) {
+            alert(options);
+        });
+    }
+
+    function onSubmitFail(response) {
+
+        loading.hide();
+
+        if (response && (response.status === 404)) {
+
+
+            alertText('The metadata path entered could not be found. Please ensure the path is valid and try again.');
+        }
+        else if (response && (response.status === 500)) {
+
+
+            alertText('The metadata path entered is not valid. Please ensure the path exists and that Emby server has write access to the folder.');
+        }
+    }
+
     function onSubmit() {
         loading.show();
 
@@ -67,7 +89,7 @@
             config.MetadataNetworkPath = $('#txtMetadataNetworkPath', form).val();
             config.FanartApiKey = $('#txtFanartApiKey', form).val();
 
-            ApiClient.updateServerConfiguration(config).then(Dashboard.processServerConfigurationUpdateResult);
+            ApiClient.updateServerConfiguration(config).then(Dashboard.processServerConfigurationUpdateResult, onSubmitFail);
         });
 
         saveMetadata(form);

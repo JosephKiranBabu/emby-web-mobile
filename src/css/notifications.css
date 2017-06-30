@@ -1,26 +1,24 @@
 ﻿.btnNotifications {
-    text-decoration: none !important;
-    outline: 0 !important;
-    vertical-align: middle;
-    width: auto;
-    margin: 0;
-    padding-top: 0;
-    padding-bottom: 0;
+    position: relative;
+    border-radius: 0;
 }
 
 .btnNotificationsInner {
     color: #fff;
     font-weight: 500;
-    position: relative;
-    border-radius: 100em;
+    position: absolute;
     background: #444;
-    line-height: 1.8em;
-    min-width: 2em;
-    display: inline-flex;
+    top: 0;
+    right: 0;
+    /* padding: .5em; */
+    width: 1.6em;
+    height: 1.6em;
+    z-index: 100000000;
+    display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
-}
+    font-size: 80%;
+    border-radius: 100em;}
 
 .levelNormal {
     background-color: #43A047;

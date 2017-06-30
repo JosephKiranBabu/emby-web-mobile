@@ -86,6 +86,12 @@
         alertText(globalize.translate('sharedcomponents#DefaultErrorMessage'));
     }
 
+    function alertText(text) {
+        alertTextWithOptions({
+            text: text
+        });
+    }
+
     function alertTextWithOptions(options) {
         require(['alert'], function (alert) {
             alert(options);

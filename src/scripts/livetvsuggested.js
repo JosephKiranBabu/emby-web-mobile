@@ -5,66 +5,8 @@
         return !layoutManager.desktop;
     }
 
-    function renderRecordings(elem, recordings, cardOptions) {
-
-        if (recordings.length) {
-            elem.classList.remove('hide');
-        } else {
-            elem.classList.add('hide');
-        }
-
-        var recordingItems = elem.querySelector('.recordingItems');
-
-        if (enableScrollX()) {
-            recordingItems.classList.add('hiddenScrollX');
-            recordingItems.classList.remove('vertical-wrap');
-        } else {
-            recordingItems.classList.remove('hiddenScrollX');
-            recordingItems.classList.add('vertical-wrap');
-        }
-
-        recordingItems.innerHTML = cardBuilder.getCardsHtml(Object.assign({
-            items: recordings,
-            shape: (enableScrollX() ? 'autooverflow' : 'auto'),
-            showTitle: true,
-            showParentTitle: true,
-            coverImage: true,
-            allowBottomPadding: !enableScrollX(),
-            preferThumb: 'auto'
-
-        }, cardOptions || {}));
-
-        imageLoader.lazyChildren(recordingItems);
-    }
-
     function getBackdropShape() {
         return enableScrollX() ? 'overflowBackdrop' : 'backdrop';
-    }
-
-    function renderActiveRecordings(context, promise) {
-
-        promise.then(function (result) {
-
-            // The IsActive param is new, so handle older servers that don't support it
-            if (result.Items.length && result.Items[0].Status != 'InProgress') {
-                result.Items = [];
-            }
-
-            renderRecordings(context.querySelector('#activeRecordings'), result.Items, {
-                shape: enableScrollX() ? 'autooverflow' : 'auto',
-                defaultShape: getBackdropShape(),
-                showParentTitle: false,
-                showParentTitleOrTitle: true,
-                showTitle: false,
-                showAirTime: true,
-                showAirEndTime: true,
-                showChannelName: true,
-                coverImage: true,
-                overlayText: false,
-                centerText: true,
-                overlayMoreButton: true
-            });
-        });
     }
 
     function getPortraitShape() {
@@ -106,14 +48,6 @@
     }
 
     function reload(page, enableFullRender) {
-
-        renderActiveRecordings(page, ApiClient.getLiveTvRecordings({
-            UserId: Dashboard.getCurrentUserId(),
-            IsInProgress: true,
-            Fields: 'CanDelete,PrimaryImageAspectRatio,BasicSyncInfo',
-            EnableTotalRecordCount: false,
-            EnableImageTypes: "Primary,Thumb,Backdrop"
-        }));
 
         if (!enableFullRender) {
             return;

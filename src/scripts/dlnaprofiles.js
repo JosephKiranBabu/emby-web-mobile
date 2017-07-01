@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'libraryMenu', 'listViewStyle'], function ($, loading, libraryMenu) {
+﻿define(['jQuery', 'globalize', 'loading', 'libraryMenu', 'listViewStyle', 'emby-linkbutton'], function ($, globalize, loading, libraryMenu) {
     'use strict';
 
     function loadProfiles(page) {
@@ -43,12 +43,12 @@
 
             html += '<div class="listItem">';
 
-            html += "<a item-icon class='clearLink listItemIconContainer' href='dlnaprofile.html?id=" + profile.Id + "'>";
+            html += "<a is='emby-linkbutton' style='padding:0;margin:0;' data-ripple='false' class='clearLink listItemIconContainer' href='dlnaprofile.html?id=" + profile.Id + "'>";
             html += '<i class="md-icon listItemIcon">dvr</i>';
             html += "</a>";
 
             html += '<div class="listItemBody">';
-            html += "<a class='clearLink' href='dlnaprofile.html?id=" + profile.Id + "'>";
+            html += "<a is='emby-linkbutton' style='padding:0;margin:0;' data-ripple='false' class='clearLink' href='dlnaprofile.html?id=" + profile.Id + "'>";
 
             html += "<div>" + profile.Name + "</div>";
             //html += "<div secondary>" + task.Description + "</div>";
@@ -57,7 +57,7 @@
             html += '</div>';
 
             if (profile.Type == 'User') {
-                html += '<button type="button" is="paper-icon-button-light" class="btnDeleteProfile" data-profileid="' + profile.Id + '" title="' + Globalize.translate('ButtonDelete') + '"><i class="md-icon">delete</i></button>';
+                html += '<button type="button" is="paper-icon-button-light" class="btnDeleteProfile" data-profileid="' + profile.Id + '" title="' + globalize.translate('ButtonDelete') + '"><i class="md-icon">delete</i></button>';
             }
 
             html += '</div>';
@@ -80,7 +80,7 @@
 
         require(['confirm'], function (confirm) {
 
-            confirm(Globalize.translate('MessageConfirmProfileDeletion'), Globalize.translate('HeaderConfirmProfileDeletion')).then(function () {
+            confirm(globalize.translate('MessageConfirmProfileDeletion'), globalize.translate('HeaderConfirmProfileDeletion')).then(function () {
 
                 loading.show();
 
@@ -102,11 +102,11 @@
         return [
         {
             href: 'dlnasettings.html',
-            name: Globalize.translate('TabSettings')
+            name: globalize.translate('TabSettings')
         },
          {
              href: 'dlnaprofiles.html',
-             name: Globalize.translate('TabProfiles')
+             name: globalize.translate('TabProfiles')
          }];
     }
 

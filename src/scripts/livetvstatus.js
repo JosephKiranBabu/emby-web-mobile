@@ -1,13 +1,13 @@
-﻿define(['jQuery', 'scripts/taskbutton', 'dom', 'libraryMenu', 'layoutManager', 'loading', 'listViewStyle', 'flexStyles', 'emby-itemscontainer', 'cardStyle', 'material-icons'], function ($, taskButton, dom, libraryMenu, layoutManager, loading) {
+﻿define(['jQuery', 'globalize', 'scripts/taskbutton', 'dom', 'libraryMenu', 'layoutManager', 'loading', 'listViewStyle', 'flexStyles', 'emby-itemscontainer', 'cardStyle', 'material-icons', 'emby-linkbutton'], function ($, globalize, taskButton, dom, libraryMenu, layoutManager, loading) {
     'use strict';
 
     function resetTuner(page, id) {
 
-        var message = Globalize.translate('MessageConfirmResetTuner');
+        var message = globalize.translate('MessageConfirmResetTuner');
 
         require(['confirm'], function (confirm) {
 
-            confirm(message, Globalize.translate('HeaderResetTuner')).then(function () {
+            confirm(message, globalize.translate('HeaderResetTuner')).then(function () {
 
                 loading.show();
 
@@ -49,24 +49,20 @@
                 if (tuner.Status == 'RecordingTv') {
                     if (tuner.ChannelName) {
 
-                        html += '<a href="itemdetails.html?id=' + tuner.ChannelId + '">';
-                        html += Globalize.translate('StatusRecordingProgram').replace('{0}', tuner.ChannelName);
-                        html += '</a>';
+                        html += globalize.translate('StatusRecordingProgram').replace('{0}', tuner.ChannelName);
                     } else {
 
-                        html += Globalize.translate('StatusRecording');
+                        html += globalize.translate('StatusRecording');
                     }
                 }
                 else if (tuner.Status == 'LiveTv') {
 
                     if (tuner.ChannelName) {
 
-                        html += '<a href="itemdetails.html?id=' + tuner.ChannelId + '">';
-                        html += Globalize.translate('StatusWatchingProgram').replace('{0}', tuner.ChannelName);
-                        html += '</a>';
+                        html += globalize.translate('StatusWatchingProgram').replace('{0}', tuner.ChannelName);
                     } else {
 
-                        html += Globalize.translate('StatusWatching');
+                        html += globalize.translate('StatusWatching');
                     }
                 }
                 else {
@@ -77,7 +73,7 @@
                 html += '</div>';
 
                 if (tuner.CanReset) {
-                    html += '<button type="button" is="paper-icon-button-light" data-tunerid="' + tuner.Id + '" title="' + Globalize.translate('ButtonResetTuner') + '" class="btnResetTuner"><i class="md-icon">refresh</i></button>';
+                    html += '<button type="button" is="paper-icon-button-light" data-tunerid="' + tuner.Id + '" title="' + globalize.translate('ButtonResetTuner') + '" class="btnResetTuner"><i class="md-icon">refresh</i></button>';
                 }
 
                 html += '</div>';
@@ -109,15 +105,15 @@
 
         var serviceUrl = service.HomePageUrl || '#';
 
-        html += '<p><a href="' + serviceUrl + '" target="_blank">' + service.Name + '</a></p>';
+        html += '<p><a is="emby-linkbutton" class="button-link" href="' + serviceUrl + '" target="_blank">' + service.Name + '</a></p>';
 
         var versionHtml = service.Version || 'Unknown';
 
         if (service.HasUpdateAvailable) {
-            versionHtml += ' <a style="margin-left: .25em;" href="' + serviceUrl + '" target="_blank">' + Globalize.translate('LiveTvUpdateAvailable') + '</a>';
+            versionHtml += ' <a style="margin-left: .25em;" is="emby-linkbutton" class="button-link" href="' + serviceUrl + '" target="_blank">' + globalize.translate('LiveTvUpdateAvailable') + '</a>';
         }
         else {
-            versionHtml += '<img src="css/images/checkmarkgreen.png" style="height: 17px; margin-left: 10px; margin-right: 0; position: relative; top: 5px; border-radius:3px;" /> ' + Globalize.translate('LabelVersionUpToDate');
+            versionHtml += '<img src="css/images/checkmarkgreen.png" style="height: 17px; margin-left: 10px; margin-right: 0; position: relative; top: 5px; border-radius:3px;" /> ' + globalize.translate('LabelVersionUpToDate');
         }
 
         html += '<p>' + versionHtml + '</p>';
@@ -136,7 +132,7 @@
             status = '<span style="color:red;">' + status + '</span>';
         }
 
-        html += '<p>' + Globalize.translate('ValueStatus', status) + '</p>';
+        html += '<p>' + globalize.translate('ValueStatus', status) + '</p>';
 
         html += '</div>';
 
@@ -240,11 +236,11 @@
 
     function deleteDevice(page, id) {
 
-        var message = Globalize.translate('MessageConfirmDeleteTunerDevice');
+        var message = globalize.translate('MessageConfirmDeleteTunerDevice');
 
         require(['confirm'], function (confirm) {
 
-            confirm(message, Globalize.translate('HeaderDeleteDevice')).then(function () {
+            confirm(message, globalize.translate('HeaderDeleteDevice')).then(function () {
 
                 loading.show();
 
@@ -299,7 +295,7 @@
 
         }, function () {
             Dashboard.alert({
-                message: Globalize.translate('ErrorAddingTunerDevice')
+                message: globalize.translate('ErrorAddingTunerDevice')
             });
         });
 
@@ -321,7 +317,7 @@
 
                 html += '<div class="listItemBody two-line">';
 
-                html += '<a class="clearLink" href="' + getProviderConfigurationUrl(provider.Type) + '&id=' + provider.Id + '">';
+                html += '<a is="emby-linkbutton" style="display:block;padding:0;margin:0;text-align:left;" class="clearLink" href="' + getProviderConfigurationUrl(provider.Type) + '&id=' + provider.Id + '">';
 
                 html += '<h3 class="listItemBodyText">';
                 html += getProviderName(provider.Type);
@@ -351,12 +347,12 @@
         var items = [];
 
         items.push({
-            name: Globalize.translate('ButtonDelete'),
+            name: globalize.translate('ButtonDelete'),
             id: 'delete'
         });
 
         items.push({
-            name: Globalize.translate('MapChannels'),
+            name: globalize.translate('MapChannels'),
             id: 'map'
         });
 
@@ -396,11 +392,11 @@
 
     function deleteProvider(page, id) {
 
-        var message = Globalize.translate('MessageConfirmDeleteGuideProvider');
+        var message = globalize.translate('MessageConfirmDeleteGuideProvider');
 
         require(['confirm'], function (confirm) {
 
-            confirm(message, Globalize.translate('HeaderDeleteProvider')).then(function () {
+            confirm(message, globalize.translate('HeaderDeleteProvider')).then(function () {
 
                 loading.show();
 
@@ -493,7 +489,7 @@
         });
 
         menuItems.push({
-            name: Globalize.translate('ButtonOther'),
+            name: globalize.translate('ButtonOther'),
             id: 'other'
         });
 
@@ -506,7 +502,7 @@
 
                     if (id == 'other') {
                         Dashboard.alert({
-                            message: Globalize.translate('ForAdditionalLiveTvOptions')
+                            message: globalize.translate('ForAdditionalLiveTvOptions')
                         });
                     } else {
                         Dashboard.navigate(getProviderConfigurationUrl(id));
@@ -526,15 +522,15 @@
         return [
         {
             href: 'livetvstatus.html',
-            name: Globalize.translate('TabDevices')
+            name: globalize.translate('TabDevices')
         },
          {
              href: 'livetvsettings.html',
-             name: Globalize.translate('TabSettings')
+             name: globalize.translate('TabSettings')
          },
          {
              href: 'appservices.html?context=livetv',
-             name: Globalize.translate('TabServices')
+             name: globalize.translate('TabServices')
          }];
     }
 
@@ -543,12 +539,12 @@
         var items = [];
 
         items.push({
-            name: Globalize.translate('ButtonDelete'),
+            name: globalize.translate('ButtonDelete'),
             id: 'delete'
         });
 
         items.push({
-            name: Globalize.translate('ButtonEdit'),
+            name: globalize.translate('ButtonEdit'),
             id: 'edit'
         });
 

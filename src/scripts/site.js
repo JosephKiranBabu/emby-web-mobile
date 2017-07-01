@@ -1175,6 +1175,9 @@ var AppInfo = {};
                     if (item === 'managedownloads') {
                         return 'managedownloads.html';
                     }
+                    if (item === 'manageserver') {
+                        return 'dashboard.html';
+                    }
                     if (item === 'recordedtv') {
                         return 'livetv.html?tab=3&serverId=' + options.serverId;
                     }

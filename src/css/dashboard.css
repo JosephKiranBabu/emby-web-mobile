@@ -333,6 +333,7 @@ div[data-role="controlgroup"] a.ui-btn-active {
 }
 
 .sessionCardButtons {
+    min-height: 2.7em;
 }
 
 .sessionCardButton {

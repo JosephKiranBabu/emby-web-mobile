@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'libraryMenu', 'listViewStyle'], function ($, loading, libraryMenu) {
+﻿define(['loading', 'libraryMenu', 'listViewStyle', 'emby-linkbutton'], function (loading, libraryMenu) {
     'use strict';
 
     function reload(page) {
@@ -29,7 +29,7 @@
                     itemHtml += '<div class="paperList" style="margin-bottom:2em;">';
                 }
 
-                itemHtml += '<a class="clearLink" href="notificationsetting.html?type=' + i.Type + '">';
+                itemHtml += '<a class="clearLink" is="emby-linkbutton" style="display:block;margin:0;padding:0;" data-ripple="false" href="notificationsetting.html?type=' + i.Type + '">';
                 itemHtml += '<div class="listItem">';
 
                 if (i.Enabled) {
@@ -57,7 +57,7 @@
                 html += '</div>';
             }
 
-            $('.notificationList', page).html(html).trigger('create');
+            page.querySelector('.notificationList').innerHTML = html;
 
             loading.hide();
         });

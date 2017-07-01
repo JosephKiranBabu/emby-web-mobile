@@ -46,7 +46,7 @@
             } else {
                 deviceHtml += '<div class="listItemBody two-line">';
             }
-            deviceHtml += '<a class="clearLink" data-ripple="false" style="display:block;text-align:left;" is="emby-linkbutton" href="device.html?id=' + d.Id + '">';
+            deviceHtml += '<a class="clearLink" data-ripple="false" style="display:block;text-align:left;padding:0;margin:0;" is="emby-linkbutton" href="device.html?id=' + d.Id + '">';
 
             deviceHtml += '<div class="listItemBodyText">';
             deviceHtml += d.Name;

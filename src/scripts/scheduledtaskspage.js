@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'events', 'humanedate', 'listViewStyle'], function ($, loading, events) {
+﻿define(['jQuery', 'loading', 'events', 'humanedate', 'listViewStyle', 'emby-linkbutton'], function ($, loading, events) {
     'use strict';
 
     function reloadList(page) {
@@ -53,12 +53,12 @@
 
             html += '<div class="listItem scheduledTaskPaperIconItem" data-status="' + task.State + '">';
 
-            html += "<a item-icon class='clearLink listItemIconContainer' href='scheduledtask.html?id=" + task.Id + "'>";
+            html += "<a is='emby-linkbutton' style='margin:0;padding:0;' class='clearLink listItemIconContainer' href='scheduledtask.html?id=" + task.Id + "'>";
             html += '<i class="md-icon listItemIcon">schedule</i>';
             html += "</a>";
 
             html += '<div class="listItemBody two-line">';
-            html += "<a class='clearLink' href='scheduledtask.html?id=" + task.Id + "'>";
+            html += "<a class='clearLink' style='margin:0;padding:0;display:block;text-align:left;' is='emby-linkbutton' href='scheduledtask.html?id=" + task.Id + "'>";
 
             html += "<h3 class='listItemBodyText'>" + task.Name + "</h3>";
             //html += "<div secondary>" + task.Description + "</div>";

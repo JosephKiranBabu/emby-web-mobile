@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'humanedate', 'paper-icon-button-light', 'cardStyle', 'emby-linkbutton'], function ($, loading) {
+﻿define(['jQuery', 'loading', 'humanedate', 'paper-icon-button-light', 'cardStyle', 'emby-linkbutton', 'indicators'], function ($, loading) {
     'use strict';
 
     function deleteUser(page, id) {
@@ -130,9 +130,8 @@
         html += '<div class="' + imageClass + '" style="background-image:url(\'' + imgUrl + '\');">';
 
         if (user.ConnectUserId && addConnectIndicator) {
-            html += '<div class="cardIndicators">';
-            html += '<div class="playedIndicator" title="' + Globalize.translate('TooltipLinkedToEmbyConnect') + '"><i class="md-icon playedIndicatorIcon indicatorIcon">cloud</i></div>';
-            html += "</div>";
+
+            html += '<div class="cardIndicators squareCardIndicators"><div title="' + Globalize.translate('TooltipLinkedToEmbyConnect') + '" class="playedIndicator indicator"><i class="md-icon indicatorIcon">cloud</i></div></div>';
         }
 
         html += "</div>";

@@ -847,15 +847,15 @@
     }
 
     .layout-tv .padded-left {
-        padding-left: 5%;
+        padding-left: 4%;
     }
 
     .layout-tv .padded-right {
-        padding-right: 5%;
+        padding-right: 4%;
     }
 
     .layout-tv .padded-left-withalphapicker {
-        padding-right: 5%;
+        padding-left: 5%;
     }
 
     .layout-tv .padded-right-withalphapicker {

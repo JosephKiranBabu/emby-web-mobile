@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'libraryMenu'], function ($, loading, libraryMenu) {
+﻿define(['loading', 'libraryMenu'], function (loading, libraryMenu) {
     'use strict';
 
     function reloadList(page) {
@@ -64,7 +64,7 @@
 
             PluginCatalog.renderCatalog({
 
-                catalogElement: $('.catalog', page),
+                catalogElement: page.querySelector('.catalog'),
                 availablePlugins: availablePlugins,
                 installedPlugins: installedPlugins,
                 categories: categories,
@@ -75,8 +75,8 @@
         });
     }
 
-    $(document).on('pagebeforeshow pageshow', "#appServicesPage", function () {
-
+    function onPageShow() {
+        
         // This needs both events for the helpurl to get done at the right time
 
         var page = this;
@@ -95,8 +95,13 @@
             libraryMenu.setTitle(Globalize.translate('TitleNotifications'));
             page.setAttribute('data-helpurl', 'https://github.com/MediaBrowser/Wiki/wiki/Notifications');
         }
+    }
 
-    }).on('pageshow', "#appServicesPage", function () {
+    pageIdOn('pagebeforeshow', 'appServicesPage', onPageShow);
+
+    pageIdOn('pageshow', 'appServicesPage', onPageShow);
+
+    pageIdOn('pageshow', 'appServicesPage', function () {
 
         var page = this;
 

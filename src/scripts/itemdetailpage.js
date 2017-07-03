@@ -1294,7 +1294,8 @@
                         highlight: false,
                         action: 'none',
                         infoButton: true,
-                        imagePlayButton: true
+                        imagePlayButton: true,
+                        includeParentInfoInTitle: false
                     });
                 }
             }

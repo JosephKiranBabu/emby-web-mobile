@@ -413,9 +413,6 @@
             query.EnableDirectPlay = enableDirectPlay;
         }
 
-        if (enableDirectPlay !== false) {
-            query.ForceDirectPlayRemoteMediaSource = true;
-        }
         if (enableDirectStream != null) {
             query.EnableDirectStream = enableDirectStream;
         }
@@ -433,6 +430,9 @@
         }
         if (maxBitrate) {
             query.MaxStreamingBitrate = maxBitrate;
+        }
+        if (player.enableMediaProbe && !player.enableMediaProbe(item)) {
+            query.EnableMediaProbe = false;
         }
 
         // lastly, enforce player overrides for special situations

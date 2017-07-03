@@ -218,6 +218,14 @@ define(['browser', 'layoutManager', 'dom', 'focusManager', 'ResizeObserver', 'sc
             return transform ? 'scrollanimate' : 'scroll';
         };
 
+        self.getScrollSlider = function () {
+            return slideeElement;
+        };
+
+        self.getScrollFrame = function () {
+            return frame;
+        };
+
         function nativeScrollTo(container, pos, immediate) {
 
             if (!immediate && container.scrollTo) {
@@ -642,8 +650,22 @@ define(['browser', 'layoutManager', 'dom', 'focusManager', 'ResizeObserver', 'sc
             return self;
         };
 
-        function onResize() {
-            load(false);
+        var contentRect = {};
+
+        function onResize(entries) {
+
+            var entry = entries[0];
+
+            if (entry) {
+
+                var newRect = entry.contentRect;
+                if (newRect.width !== contentRect.width || newRect.height !== contentRect.height) {
+
+                    contentRect = newRect;
+
+                    load(false);
+                }
+            }
         }
 
         function resetScroll() {
@@ -701,13 +723,13 @@ define(['browser', 'layoutManager', 'dom', 'focusManager', 'ResizeObserver', 'sc
 
             if (!transform) {
                 if (o.horizontal) {
-                    if (layoutManager.desktop) {
+                    if (layoutManager.desktop && !o.hideScrollbar) {
                         nativeScrollElement.classList.add('smoothScrollX');
                     } else {
                         nativeScrollElement.classList.add('hiddenScrollX');
                     }
                 } else {
-                    if (layoutManager.desktop) {
+                    if (layoutManager.desktop && !o.hideScrollbar) {
                         nativeScrollElement.classList.add('smoothScrollY');
                     } else {
                         nativeScrollElement.classList.add('hiddenScrollY');

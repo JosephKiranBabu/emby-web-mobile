@@ -1165,6 +1165,8 @@
         }
         else if (item.Type == "Season") {
 
+            fields += ',Overview';
+
             // Use dedicated episodes endpoint
             promise = ApiClient.getEpisodes(item.SeriesId, {
 
@@ -1253,6 +1255,8 @@
 
                 if (item.Type === 'Episode') {
                     childrenItemsContainer.classList.add('darkScroller');
+                } else {
+                    isList = true;
                 }
 
                 scrollX = item.Type == "Episode";
@@ -1264,7 +1268,7 @@
 
                     return;
 
-                } else {
+                } else if (item.Type === 'Episode') {
                     html = cardBuilder.getCardsHtml({
                         items: result.Items,
                         shape: getThumbShape(scrollX),
@@ -1277,6 +1281,20 @@
                         overlayPlayButton: true,
                         allowBottomPadding: !scrollX,
                         includeParentInfoInTitle: false
+                    });
+
+                } else if (item.Type === 'Season') {
+
+                    html = listView.getListViewHtml({
+                        items: result.Items,
+                        showIndexNumber: false,
+                        enableOverview: true,
+                        imageSize: 'large',
+                        enableSideMediaInfo: false,
+                        highlight: false,
+                        action: 'none',
+                        infoButton: true,
+                        imagePlayButton: true
                     });
                 }
             }

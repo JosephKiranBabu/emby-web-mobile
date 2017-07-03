@@ -159,17 +159,6 @@
         return html;
     }
 
-    function onWebSocketMessage(e, msg) {
-        if (msg.MessageType == "ScheduledTasksInfo") {
-
-            var tasks = msg.Data;
-
-            var page = $($.mobile.activePage)[0];
-
-            updateTasks(page, tasks);
-        }
-    }
-
     function updateTasks(page, tasks) {
         for (var i = 0, length = tasks.length; i < length; i++) {
 
@@ -214,55 +203,58 @@
         item.setAttribute('data-status', state);
     }
 
-    function onWebSocketConnectionOpen() {
+    return function (view, params) {
 
-        var page = $($.mobile.activePage)[0];
+        var pollInterval;
+        function onPollIntervalFired() {
 
-        startInterval();
-        reloadList(page);
-    }
-
-    var pollInterval;
-    function onPollIntervalFired() {
-
-        var page = $($.mobile.activePage)[0];
-
-        if (!ApiClient.isWebSocketOpen()) {
-            reloadList(page);
+            if (!ApiClient.isWebSocketOpen()) {
+                reloadList(view);
+            }
         }
-    }
 
-    function startInterval() {
-        if (ApiClient.isWebSocketOpen()) {
-            ApiClient.sendWebSocketMessage("ScheduledTasksInfoStart", "1000,1000");
+        function startInterval() {
+            if (ApiClient.isWebSocketOpen()) {
+                ApiClient.sendWebSocketMessage("ScheduledTasksInfoStart", "1000,1000");
+            }
+            if (pollInterval) {
+                clearInterval(pollInterval);
+            }
+            pollInterval = setInterval(onPollIntervalFired, 5000);
         }
-        if (pollInterval) {
-            clearInterval(pollInterval);
+
+        function stopInterval() {
+            if (ApiClient.isWebSocketOpen()) {
+                ApiClient.sendWebSocketMessage("ScheduledTasksInfoStop");
+            }
+            if (pollInterval) {
+                clearInterval(pollInterval);
+            }
         }
-        pollInterval = setInterval(onPollIntervalFired, 5000);
-    }
 
-    function stopInterval() {
-        if (ApiClient.isWebSocketOpen()) {
-            ApiClient.sendWebSocketMessage("ScheduledTasksInfoStop");
+        function onWebSocketMessage(e, msg) {
+            if (msg.MessageType == "ScheduledTasksInfo") {
+
+                var tasks = msg.Data;
+
+                updateTasks(view, tasks);
+            }
         }
-        if (pollInterval) {
-            clearInterval(pollInterval);
+
+        function onWebSocketConnectionOpen() {
+
+            startInterval();
+            reloadList(view);
         }
-    }
 
-    $(document).on('pageinit', "#scheduledTasksPage", function () {
-
-        var page = this;
-
-        $('.divScheduledTasks', page).on('click', '.btnStartTask', function () {
+        $('.divScheduledTasks', view).on('click', '.btnStartTask', function () {
 
             var button = this;
             var id = button.getAttribute('data-taskid');
             ApiClient.startScheduledTask(id).then(function () {
 
                 updateTaskButton(button, "Running");
-                reloadList(page);
+                reloadList(view);
             });
 
         }).on('click', '.btnStopTask', function () {
@@ -272,30 +264,27 @@
             ApiClient.stopScheduledTask(id).then(function () {
 
                 updateTaskButton(button, "");
-                reloadList(page);
+                reloadList(view);
             });
         });
 
-    }).on('pageshow', "#scheduledTasksPage", function () {
+        view.addEventListener('viewbeforehide', function () {
 
-        var page = this;
+            events.off(ApiClient, "websocketmessage", onWebSocketMessage);
+            events.off(ApiClient, "websocketopen", onWebSocketConnectionOpen);
+            stopInterval();
+        });
 
-        loading.show();
+        view.addEventListener('viewshow', function () {
 
-        startInterval();
+            loading.show();
 
-        reloadList(page);
+            startInterval();
 
-        events.on(ApiClient, "websocketmessage", onWebSocketMessage);
-        events.on(ApiClient, "websocketopen", onWebSocketConnectionOpen);
+            reloadList(view);
 
-    }).on('pagebeforehide', "#scheduledTasksPage", function () {
-
-        var page = this;
-
-        events.off(ApiClient, "websocketmessage", onWebSocketMessage);
-        events.off(ApiClient, "websocketopen", onWebSocketConnectionOpen);
-        stopInterval();
-    });
-
+            events.on(ApiClient, "websocketmessage", onWebSocketMessage);
+            events.on(ApiClient, "websocketopen", onWebSocketConnectionOpen);
+        });
+    };
 });

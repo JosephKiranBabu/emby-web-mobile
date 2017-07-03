@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'datetime'], function ($, loading, datetime) {
+﻿define(['jQuery', 'loading', 'datetime', 'dom', 'jqmpopup', 'emby-input', 'emby-button', 'emby-select'], function ($, loading, datetime, dom) {
     'use strict';
 
     // Array Remove - By John Resig (MIT Licensed)
@@ -8,27 +8,27 @@
         return this.push.apply(this, rest);
     };
 
-    window.ScheduledTaskPage = {
+    var ScheduledTaskPage = {
 
-        refreshScheduledTask: function () {
+        refreshScheduledTask: function (view) {
             loading.show();
 
             var id = getParameterByName('id');
 
 
-            ApiClient.getScheduledTask(id).then(ScheduledTaskPage.loadScheduledTask);
+            ApiClient.getScheduledTask(id).then(function (task) {
+                ScheduledTaskPage.loadScheduledTask(view, task);
+            });
         },
 
-        loadScheduledTask: function (task) {
+        loadScheduledTask: function (view, task) {
 
-            var page = $($.mobile.activePage)[0];
+            $('.taskName', view).html(task.Name);
 
-            $('.taskName', page).html(task.Name);
-
-            $('#pTaskDescription', page).html(task.Description);
+            $('#pTaskDescription', view).html(task.Description);
 
             require(['listViewStyle'], function () {
-                ScheduledTaskPage.loadTaskTriggers(page, task);
+                ScheduledTaskPage.loadTaskTriggers(view, task);
             });
 
             loading.hide();
@@ -71,7 +71,7 @@
 
                 html += '</div>';
 
-                html += '<button type="button" is="paper-icon-button-light" title="' + Globalize.translate('ButtonDelete') + '" onclick="ScheduledTaskPage.confirmDeleteTrigger(' + i + ');"><i class="md-icon">delete</i></button>';
+                html += '<button class="btnDeleteTrigger" data-index="' + i + '" type="button" is="paper-icon-button-light" title="' + Globalize.translate('ButtonDelete') + '"><i class="md-icon">delete</i></button>';
 
                 html += '</div>';
             }
@@ -136,31 +136,31 @@
             return datetime.getDisplayTime(now);
         },
 
-        showAddTriggerPopup: function () {
+        showAddTriggerPopup: function (view) {
 
-            var page = $.mobile.activePage;
+            $('#selectTriggerType', view).val('DailyTrigger');
 
-            $('#selectTriggerType', page).val('DailyTrigger').trigger('change');
+            view.querySelector('#selectTriggerType').dispatchEvent(new CustomEvent('change', {}));
 
-            $('#popupAddTrigger', page).on("popupafteropen", function () {
+            $('#popupAddTrigger', view).on("popupafteropen", function () {
                 $('#addTriggerForm input:first', this).focus();
             }).popup("open").on("popupafterclose", function () {
 
-                $('#addTriggerForm', page).off("submit");
+                $('#addTriggerForm', view).off("submit");
                 $(this).off("popupafterclose");
             });
         },
 
-        confirmDeleteTrigger: function (index) {
+        confirmDeleteTrigger: function (view, index) {
 
             require(['confirm'], function (confirm) {
                 confirm(Globalize.translate('MessageDeleteTaskTrigger'), Globalize.translate('HeaderDeleteTaskTrigger')).then(function () {
-                    ScheduledTaskPage.deleteTrigger(index);
+                    ScheduledTaskPage.deleteTrigger(view, index);
                 });
             });
         },
 
-        deleteTrigger: function (index) {
+        deleteTrigger: function (view, index) {
 
             loading.show();
 
@@ -173,16 +173,14 @@
 
                 ApiClient.updateScheduledTaskTriggers(task.Id, task.Triggers).then(function () {
 
-                    ScheduledTaskPage.refreshScheduledTask();
+                    ScheduledTaskPage.refreshScheduledTask(view);
 
                 });
 
             });
         },
 
-        refreshTriggerFields: function (triggerType) {
-
-            var page = $.mobile.activePage;
+        refreshTriggerFields: function (page, triggerType) {
 
             if (triggerType == 'DailyTrigger') {
 
@@ -226,9 +224,7 @@
             }
         },
 
-        getTriggerToAdd: function () {
-
-            var page = $.mobile.activePage;
+        getTriggerToAdd: function (page) {
 
             var trigger = {
                 Type: $('#selectTriggerType', page).val()
@@ -260,28 +256,28 @@
         }
     };
 
-    (function () {
+    function fillTimeOfDay(select) {
 
-        function fillTimeOfDay(select) {
+        var options = [];
 
-            var options = [];
+        for (var i = 0; i < 86400000; i += 900000) {
 
-            for (var i = 0; i < 86400000; i += 900000) {
-
-                options.push({
-                    name: ScheduledTaskPage.getDisplayTime(i * 10000),
-                    value: i * 10000
-                });
-            }
-
-            select.innerHTML = options.map(function (o) {
-
-                return '<option value="' + o.value + '">' + o.name + '</option>';
-
-            }).join('');
+            options.push({
+                name: ScheduledTaskPage.getDisplayTime(i * 10000),
+                value: i * 10000
+            });
         }
 
-        function onSubmit() {
+        select.innerHTML = options.map(function (o) {
+
+            return '<option value="' + o.value + '">' + o.name + '</option>';
+
+        }).join('');
+    }
+
+    return function (view, params) {
+
+        function onSubmit(e) {
 
             loading.show();
 
@@ -289,34 +285,45 @@
 
             ApiClient.getScheduledTask(id).then(function (task) {
 
-                task.Triggers.push(ScheduledTaskPage.getTriggerToAdd());
+                task.Triggers.push(ScheduledTaskPage.getTriggerToAdd(view));
 
                 ApiClient.updateScheduledTaskTriggers(task.Id, task.Triggers).then(function () {
 
                     $('#popupAddTrigger').popup('close');
 
-                    ScheduledTaskPage.refreshScheduledTask();
+                    ScheduledTaskPage.refreshScheduledTask(view);
 
                 });
 
             });
 
-            return false;
+            e.preventDefault();
         }
 
-        $(document).on('pageinit', "#scheduledTaskPage", function () {
+        view.querySelector('.addTriggerForm').addEventListener('submit', onSubmit);
 
-            var page = this;
+        fillTimeOfDay(view.querySelector('#selectTimeOfDay'));
 
-            $('.addTriggerForm').off('submit', onSubmit).on('submit', onSubmit);
+        $(view.querySelector('#popupAddTrigger').parentNode).trigger('create');
 
-            fillTimeOfDay(page.querySelector('#selectTimeOfDay'));
-
-        }).on('pageshow', "#scheduledTaskPage", function () {
-
-            ScheduledTaskPage.refreshScheduledTask();
+        view.querySelector('.selectTriggerType').addEventListener('change', function () {
+            ScheduledTaskPage.refreshTriggerFields(view, this.value);
         });
 
-    })();
+        view.querySelector('.btnAddTrigger').addEventListener('click', function () {
+            ScheduledTaskPage.showAddTriggerPopup(view);
+        });
 
+        view.addEventListener('click', function (e) {
+            var btnDeleteTrigger = dom.parentWithClass(e.target, 'btnDeleteTrigger');
+            if (btnDeleteTrigger) {
+                ScheduledTaskPage.confirmDeleteTrigger(view, parseInt(btnDeleteTrigger.getAttribute('data-index')));
+            }
+        });
+
+        view.addEventListener('viewshow', function () {
+
+            ScheduledTaskPage.refreshScheduledTask(view);
+        });
+    };
 });

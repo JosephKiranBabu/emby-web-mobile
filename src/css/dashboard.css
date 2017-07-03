@@ -317,7 +317,14 @@ div[data-role="controlgroup"] a.ui-btn-active {
     outline: none !important;
 }
 
-@media all and (min-width: 26.25em) {
+@media all and (min-width: 40em) {
+
+    .activeSession {
+        width: 100% !important;
+    }
+}
+
+@media all and (min-width: 50em) {
 
     .activeSession {
         width: 50% !important;

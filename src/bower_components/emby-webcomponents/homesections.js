@@ -8,18 +8,16 @@
             case 0:
                 return 'smalllibrarytiles';
             case 1:
-                return 'activerecordings';
-            case 2:
                 return 'resume';
-            case 3:
+            case 2:
                 return 'resumeaudio';
-            case 4:
+            case 3:
                 return 'livetv';
-            case 5:
+            case 4:
                 return 'nextup';
-            case 6:
+            case 5:
                 return 'latestmedia';
-            case 7:
+            case 6:
                 return 'none';
             default:
                 return '';
@@ -112,7 +110,7 @@
     }
 
     function enableScrollX() {
-        return !layoutManager.desktop;
+        return true;
     }
 
     function getSquareShape() {
@@ -346,7 +344,7 @@
 
     function renderLatestSection(elem, apiClient, user, parent) {
 
-        var limit = 12;
+        var limit = 16;
 
         if (enableScrollX()) {
 
@@ -400,7 +398,7 @@
                 html += '</div>';
 
                 if (enableScrollX()) {
-                    html += '<div is="emby-scroller" class="padded-top-focusscale padded-bottom-focusscale" data-mousewheel="false" data-centerfocus="true"><div is="emby-itemscontainer" class="scrollSlider focuscontainer-x padded-left padded-right">';
+                    html += '<div is="emby-scroller" data-mousewheel="false" data-centerfocus="true"><div class="scrollerframe padded-top-focusscale padded-bottom-focusscale"><div is="emby-itemscontainer" class="scrollSlider focuscontainer-x padded-left padded-right">';
                 } else {
                     html += '<div is="emby-itemscontainer" class="itemsContainer padded-left padded-right vertical-wrap focuscontainer-x">';
                 }
@@ -437,6 +435,7 @@
                 });
 
                 if (enableScrollX()) {
+                    html += '</div>';
                     html += '</div>';
                 }
                 html += '</div>';
@@ -499,7 +498,7 @@
                 html += '<h2 class="sectionTitle sectionTitle-cards padded-left">' + globalize.translate('sharedcomponents#HeaderLatestChannelMedia') + '</h2>';
 
                 if (enableScrollX()) {
-                    html += '<div is="emby-scroller" class="padded-top-focusscale padded-bottom-focusscale" data-mousewheel="false" data-centerfocus="true"><div is="emby-itemscontainer" class="scrollSlider focuscontainer-x padded-left padded-right">';
+                    html += '<div is="emby-scroller" data-mousewheel="false" data-centerfocus="true"><div class="scrollerframe padded-top-focusscale padded-bottom-focusscale"><div is="emby-itemscontainer" class="scrollSlider focuscontainer-x padded-left padded-right">';
                 } else {
                     html += '<div is="emby-itemscontainer" class="itemsContainer padded-left padded-right vertical-wrap focuscontainer-x">';
                 }
@@ -515,6 +514,7 @@
                 });
 
                 if (enableScrollX()) {
+                    html += '</div>';
                     html += '</div>';
                 }
             }
@@ -608,6 +608,8 @@
 
         var html = '';
 
+        var scrollX = !layoutManager.desktop;
+
         if (userViews.length) {
 
             html += '<div class="verticalSection">';
@@ -621,9 +623,7 @@
 
             html += '</div>';
 
-            var scrollX = enableScrollX();
-
-            if (enableScrollX()) {
+            if (scrollX) {
                 html += '<div is="emby-scroller" class="padded-top-focusscale padded-bottom-focusscale" data-mousewheel="false" data-centerfocus="true"><div is="emby-itemscontainer" class="scrollSlider focuscontainer-x padded-left padded-right">';
             } else {
                 html += '<div is="emby-itemscontainer" class="itemsContainer padded-left padded-right vertical-wrap focuscontainer-x">';
@@ -640,7 +640,7 @@
                 allowBottomPadding: !scrollX
             });
 
-            if (enableScrollX()) {
+            if (scrollX) {
                 html += '</div>';
             }
             html += '</div>';
@@ -704,7 +704,7 @@
                 html += '<h2 class="sectionTitle sectionTitle-cards padded-left">' + globalize.translate('sharedcomponents#HeaderContinueWatching') + '</h2>';
 
                 if (enableScrollX()) {
-                    html += '<div is="emby-scroller" class="padded-top-focusscale padded-bottom-focusscale" data-mousewheel="false" data-centerfocus="true"><div is="emby-itemscontainer" class="scrollSlider focuscontainer-x padded-left padded-right">';
+                    html += '<div is="emby-scroller" data-mousewheel="false" data-centerfocus="true"><div class="scrollerframe padded-top-focusscale padded-bottom-focusscale"><div is="emby-itemscontainer" class="scrollSlider focuscontainer-x padded-left padded-right">';
                 } else {
                     html += '<div is="emby-itemscontainer" class="itemsContainer padded-left padded-right vertical-wrap focuscontainer-x">';
                 }
@@ -733,6 +733,7 @@
                 });
 
                 if (enableScrollX()) {
+                    html += '</div>';
                     html += '</div>';
                 }
                 html += '</div>';
@@ -784,7 +785,7 @@
                 html += '<h2 class="sectionTitle sectionTitle-cards padded-left">' + globalize.translate('sharedcomponents#HeaderContinueListening') + '</h2>';
 
                 if (enableScrollX()) {
-                    html += '<div is="emby-scroller" class="padded-top-focusscale padded-bottom-focusscale" data-mousewheel="false" data-centerfocus="true"><div is="emby-itemscontainer" class="scrollSlider focuscontainer-x padded-left padded-right">';
+                    html += '<div is="emby-scroller" data-mousewheel="false" data-centerfocus="true"><div class="scrollerframe padded-top-focusscale padded-bottom-focusscale"><div is="emby-itemscontainer" class="scrollSlider focuscontainer-x padded-left padded-right">';
                 } else {
                     html += '<div is="emby-itemscontainer" class="itemsContainer padded-left padded-right vertical-wrap focuscontainer-x">';
                 }
@@ -810,6 +811,7 @@
                 });
 
                 if (enableScrollX()) {
+                    html += '</div>';
                     html += '</div>';
                 }
 
@@ -841,7 +843,7 @@
                 html += '<h2 class="sectionTitle sectionTitle-cards padded-left">' + globalize.translate('sharedcomponents#HeaderActiveRecordings') + '</h2>';
 
                 if (enableScrollX()) {
-                    html += '<div is="emby-scroller" class="padded-top-focusscale padded-bottom-focusscale" data-mousewheel="false" data-centerfocus="true"><div is="emby-itemscontainer" class="scrollSlider focuscontainer-x padded-left padded-right">';
+                    html += '<div is="emby-scroller" data-mousewheel="false" data-centerfocus="true"><div class="scrollerframe padded-top-focusscale padded-bottom-focusscale"><div is="emby-itemscontainer" class="scrollSlider focuscontainer-x padded-left padded-right">';
                 } else {
                     html += '<div is="emby-itemscontainer" class="itemsContainer padded-left padded-right vertical-wrap focuscontainer-x">';
                 }
@@ -873,6 +875,7 @@
 
                 if (enableScrollX()) {
                     html += '</div>';
+                    html += '</div>';
                 }
 
                 html += '</div>';
@@ -897,7 +900,7 @@
 
             userId: apiClient.getCurrentUserId(),
             IsAiring: true,
-            limit: enableScrollX() ? 18 : 8,
+            limit: enableScrollX() ? 24 : 8,
             ImageTypeLimit: 1,
             EnableImageTypes: "Primary,Thumb,Backdrop",
             EnableTotalRecordCount: false,
@@ -917,7 +920,7 @@
                 html += '</div>';
 
                 if (enableScrollX()) {
-                    html += '<div is="emby-scroller" class="padded-top-focusscale padded-bottom-focusscale" data-mousewheel="false" data-centerfocus="true">';
+                    html += '<div is="emby-scroller" class="padded-top-focusscale padded-bottom-focusscale" data-mousewheel="false" data-centerfocus="true" data-scrollbuttons="false">';
                     html += '<div class="scrollSlider padded-left padded-right padded-top focuscontainer-x">';
                 }
                 else {
@@ -982,7 +985,7 @@
                 html += '</div>';
 
                 if (enableScrollX()) {
-                    html += '<div is="emby-scroller" class="padded-top-focusscale padded-bottom-focusscale" data-mousewheel="false" data-centerfocus="true"><div is="emby-itemscontainer" class="scrollSlider focuscontainer-x padded-left padded-right">';
+                    html += '<div is="emby-scroller" data-mousewheel="false" data-centerfocus="true"><div class="scrollerframe padded-top-focusscale padded-bottom-focusscale"><div is="emby-itemscontainer" class="scrollSlider focuscontainer-x padded-left padded-right">';
                 } else {
                     html += '<div is="emby-itemscontainer" class="itemsContainer padded-left padded-right vertical-wrap focuscontainer-x">';
                 }
@@ -1007,6 +1010,7 @@
                 });
 
                 if (enableScrollX()) {
+                    html += '</div>';
                     html += '</div>';
                 }
 
@@ -1058,7 +1062,7 @@
                 html += '</div>';
 
                 if (enableScrollX()) {
-                    html += '<div is="emby-scroller" class="padded-top-focusscale padded-bottom-focusscale" data-mousewheel="false" data-centerfocus="true"><div is="emby-itemscontainer" class="scrollSlider focuscontainer-x padded-left padded-right">';
+                    html += '<div is="emby-scroller" data-mousewheel="false" data-centerfocus="true"><div class="scrollerframe padded-top-focusscale padded-bottom-focusscale"><div is="emby-itemscontainer" class="scrollSlider focuscontainer-x padded-left padded-right">';
                 } else {
                     html += '<div is="emby-itemscontainer" class="itemsContainer padded-left padded-right vertical-wrap focuscontainer-x">';
                 }
@@ -1083,6 +1087,7 @@
                 });
 
                 if (enableScrollX()) {
+                    html += '</div>';
                     html += '</div>';
                 }
 
@@ -1155,7 +1160,7 @@
                 html += '</div>';
 
                 if (enableScrollX()) {
-                    html += '<div is="emby-scroller" class="padded-top-focusscale padded-bottom-focusscale" data-mousewheel="false" data-centerfocus="true"><div is="emby-itemscontainer" class="scrollSlider focuscontainer-x padded-left padded-right">';
+                    html += '<div is="emby-scroller" data-mousewheel="false" data-centerfocus="true"><div class="scrollerframe padded-top-focusscale padded-bottom-focusscale"><div is="emby-itemscontainer" class="scrollSlider focuscontainer-x padded-left padded-right">';
                 } else {
                     html += '<div is="emby-itemscontainer" class="itemsContainer padded-left padded-right vertical-wrap focuscontainer-x">';
                 }
@@ -1172,6 +1177,7 @@
                 });
 
                 if (enableScrollX()) {
+                    html += '</div>';
                     html += '</div>';
                 }
                 html += '</div>';
@@ -1213,7 +1219,7 @@
             }
 
             if (enableScrollX()) {
-                html += '<div is="emby-scroller" class="padded-top-focusscale padded-bottom-focusscale" data-mousewheel="false" data-centerfocus="true"><div is="emby-itemscontainer" class="scrollSlider focuscontainer-x padded-left padded-right">';
+                html += '<div is="emby-scroller" data-mousewheel="false" data-centerfocus="true"><div class="scrollerframe padded-top-focusscale padded-bottom-focusscale"><div is="emby-itemscontainer" class="scrollSlider focuscontainer-x padded-left padded-right">';
             } else {
                 html += '<div is="emby-itemscontainer" class="itemsContainer padded-left padded-right vertical-wrap focuscontainer-x">';
             }
@@ -1236,6 +1242,7 @@
             });
 
             if (enableScrollX()) {
+                html += '</div>';
                 html += '</div>';
             }
 

@@ -12,7 +12,6 @@
         };
 
         if (params.type == 'Recordings') {
-            query.IsInProgress = false;
 
             if (params.groupid) {
                 query.GroupId = params.groupid;

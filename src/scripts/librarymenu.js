@@ -301,11 +301,11 @@
             html += globalize.translate('HeaderAdmin');
             html += '</div>';
 
-            html += '<a class="sidebarLink lnkMediaFolder lnkManageServer" data-itemid="dashboard" onclick="return LibraryMenu.onLinkClicked(event, this);" href="dashboard.html"><span class="sidebarLinkText">' + globalize.translate('ButtonManageServer') + '</span></a>';
-            html += '<a class="sidebarLink lnkMediaFolder editorViewMenu" data-itemid="editor" onclick="return LibraryMenu.onLinkClicked(event, this);" href="edititemmetadata.html"><span class="sidebarLinkText">' + globalize.translate('MetadataManager') + '</span></a>';
+            html += '<a class="sidebarLink lnkMediaFolder lnkManageServer" data-itemid="dashboard" onclick="return LibraryMenu.onLinkClicked(event, this);" href="dashboard.html"><i class="md-icon sidebarLinkIcon">settings</i><span class="sidebarLinkText">' + globalize.translate('ButtonManageServer') + '</span></a>';
+            html += '<a class="sidebarLink lnkMediaFolder editorViewMenu" data-itemid="editor" onclick="return LibraryMenu.onLinkClicked(event, this);" href="edititemmetadata.html"><i class="md-icon sidebarLinkIcon">folder</i><span class="sidebarLinkText">' + globalize.translate('MetadataManager') + '</span></a>';
 
             if (!layoutManager.mobile) {
-                html += '<a class="sidebarLink lnkMediaFolder" data-itemid="reports" onclick="return LibraryMenu.onLinkClicked(event, this);" href="reports.html"><span class="sidebarLinkText">' + globalize.translate('ButtonReports') + '</span></a>';
+                html += '<a class="sidebarLink lnkMediaFolder" data-itemid="reports" onclick="return LibraryMenu.onLinkClicked(event, this);" href="reports.html"><i class="md-icon sidebarLinkIcon">&#xE896;</i><span class="sidebarLinkText">' + globalize.translate('ButtonReports') + '</span></a>';
             }
             html += '</div>';
         }
@@ -315,17 +315,17 @@
         html += '<div class="sidebarDivider"></div>';
 
         if (user.localUser) {
-            html += '<a class="sidebarLink lnkMediaFolder lnkMySettings" onclick="return LibraryMenu.onLinkClicked(event, this);" href="mypreferencesmenu.html"><span class="sidebarLinkText">' + globalize.translate('ButtonSettings') + '</span></a>';
+            html += '<a class="sidebarLink lnkMediaFolder lnkMySettings" onclick="return LibraryMenu.onLinkClicked(event, this);" href="mypreferencesmenu.html"><i class="md-icon sidebarLinkIcon">settings</i><span class="sidebarLinkText">' + globalize.translate('ButtonSettings') + '</span></a>';
         }
 
-        html += '<a class="sidebarLink lnkMediaFolder lnkSyncToOtherDevices" data-itemid="syncotherdevices" onclick="return LibraryMenu.onLinkClicked(event, this);" href="mysync.html"><span class="sidebarLinkText">' + globalize.translate('SyncToOtherDevices') + '</span></a>';
+        html += '<a class="sidebarLink lnkMediaFolder lnkSyncToOtherDevices" data-itemid="syncotherdevices" onclick="return LibraryMenu.onLinkClicked(event, this);" href="mysync.html"><i class="md-icon sidebarLinkIcon">file_download</i><span class="sidebarLinkText">' + globalize.translate('DownloadToOtherDevices') + '</span></a>';
 
         if (Dashboard.isConnectMode()) {
-            html += '<a class="sidebarLink lnkMediaFolder" data-itemid="selectserver" onclick="return LibraryMenu.onLinkClicked(event, this);" href="selectserver.html?showuser=1"><span class="sidebarLinkText">' + globalize.translate('ButtonSelectServer') + '</span></a>';
+            html += '<a class="sidebarLink lnkMediaFolder" data-itemid="selectserver" onclick="return LibraryMenu.onLinkClicked(event, this);" href="selectserver.html?showuser=1"><i class="md-icon sidebarLinkIcon">cast_connected</i><span class="sidebarLinkText">' + globalize.translate('ButtonSelectServer') + '</span></a>';
         }
 
         if (user.localUser) {
-            html += '<a class="sidebarLink lnkMediaFolder" data-itemid="logout" onclick="return LibraryMenu.onLogoutClicked(this);" href="#"><span class="sidebarLinkText">' + globalize.translate('ButtonSignOut') + '</span></a>';
+            html += '<a class="sidebarLink lnkMediaFolder" data-itemid="logout" onclick="return LibraryMenu.onLogoutClicked(this);" href="#"><i class="md-icon sidebarLinkIcon">exit_to_app</i><span class="sidebarLinkText">' + globalize.translate('ButtonSignOut') + '</span></a>';
         }
 
         html += '</div>';

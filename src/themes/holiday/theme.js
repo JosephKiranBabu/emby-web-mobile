@@ -1,4 +1,4 @@
-﻿define(['appSettings', 'backdrop', 'browser', 'globalize', 'require', 'events', 'paper-icon-button-light'], function (appSettings, backdrop, browser, globalize, require, events) {
+﻿define(['appSettings', 'backdrop', 'browser', 'globalize', 'require', 'events', 'dom', 'paper-icon-button-light'], function (appSettings, backdrop, browser, globalize, require, events, dom) {
     'use strict';
 
     var lastSound = 0;
@@ -19,7 +19,7 @@
             require(['css!./style.css']);
 
             if (!page.classList.contains('itemDetailPage')) {
-                setBackdrop(page);
+                setBackdrop();
             }
 
             playThemeMusic();
@@ -83,15 +83,12 @@
         stopSnowflakes();
     }
 
-    function setBackdrop(page) {
+    function setBackdrop() {
 
-        if (!page.classList.contains('itemDetailPage')) {
-
-            if (getHolidayTheme() == 'christmas') {
-                backdrop.setBackdrop('https://raw.githubusercontent.com/MediaBrowser/Emby.Resources/master/themes/holiday/bgc.jpg');
-            } else {
-                backdrop.setBackdrop('https://raw.githubusercontent.com/MediaBrowser/Emby.Resources/master/themes/holiday/bg.jpg');
-            }
+        if (getHolidayTheme() == 'christmas') {
+            backdrop.setBackdrop('https://raw.githubusercontent.com/MediaBrowser/Emby.Resources/master/themes/holiday/bgc.jpg');
+        } else {
+            backdrop.setBackdrop('https://raw.githubusercontent.com/MediaBrowser/Emby.Resources/master/themes/holiday/bg.jpg');
         }
     }
 
@@ -154,11 +151,11 @@
                             break;
                         case 'joy':
                             setHolidayTheme('');
-                            setBackdrop($.mobile.activePage);
+                            setBackdrop();
                             break;
                         case 'christmas':
                             setHolidayTheme('christmas');
-                            setBackdrop($.mobile.activePage);
+                            setBackdrop();
                             break;
                         default:
                             break;

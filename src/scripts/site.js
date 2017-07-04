@@ -1781,7 +1781,8 @@ var AppInfo = {};
             path: '/dashboard.html',
             dependencies: [],
             autoFocus: false,
-            roles: 'admin'
+            roles: 'admin',
+            controller: 'scripts/dashboardpage'
         });
 
         defineRoute({

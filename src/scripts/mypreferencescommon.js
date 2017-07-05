@@ -16,6 +16,7 @@
 
             page.querySelector('.lnkDisplayPreferences').setAttribute('href', 'mypreferencesdisplay.html?userId=' + userId);
             page.querySelector('.lnkLanguagePreferences').setAttribute('href', 'mypreferenceslanguages.html?userId=' + userId);
+            page.querySelector('.lnkSubtitleSettings').setAttribute('href', 'mypreferencessubtitles.html?userId=' + userId);
             page.querySelector('.lnkHomeScreenPreferences').setAttribute('href', 'mypreferenceshome.html?userId=' + userId);
             page.querySelector('.lnkMyProfile').setAttribute('href', 'myprofile.html?userId=' + userId);
             page.querySelector('.lnkSync').setAttribute('href', 'mysyncsettings.html?userId=' + userId);

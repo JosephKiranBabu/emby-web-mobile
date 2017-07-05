@@ -866,6 +866,8 @@ var AppInfo = {};
 
         define("headroom", [embyWebComponentsBowerPath + "/headroom/headroom"], returnFirstDependency);
 
+        define("subtitleAppearanceHelper", [embyWebComponentsBowerPath + "/subtitlesettings/subtitleappearancehelper"], returnFirstDependency);
+        define("subtitleSettings", [embyWebComponentsBowerPath + "/subtitlesettings/subtitlesettings"], returnFirstDependency);
         define("homescreenSettings", [embyWebComponentsBowerPath + "/homescreensettings/homescreensettings"], returnFirstDependency);
         define("homescreenSettingsDialog", [embyWebComponentsBowerPath + "/homescreensettings/homescreensettingsdialog"], returnFirstDependency);
 
@@ -2091,10 +2093,18 @@ var AppInfo = {};
 
         defineRoute({
             path: '/mypreferenceshome.html',
-            dependencies: ['emby-checkbox', 'emby-button', 'emby-select'],
+            dependencies: [],
             autoFocus: false,
             transition: 'fade',
             controller: 'scripts/mypreferenceshome'
+        });
+
+        defineRoute({
+            path: '/mypreferencessubtitles.html',
+            dependencies: [],
+            autoFocus: false,
+            transition: 'fade',
+            controller: 'scripts/mypreferencessubtitles'
         });
 
         defineRoute({

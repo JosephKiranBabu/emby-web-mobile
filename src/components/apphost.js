@@ -252,6 +252,24 @@ define(['appStorage', 'browser'], function (appStorage, browser) {
         return false;
     }
 
+    function cueSupported() {
+
+        try {
+            var video = document.createElement("video");
+            var style = document.createElement("style");
+            style.textContent = "video::cue {background: inherit}";
+            document.body.appendChild(style);
+            document.body.appendChild(video);
+            var cue = window.getComputedStyle(video, "::cue").background;
+            document.body.removeChild(style);
+            document.body.removeChild(video);
+            return !!(cue.length);
+        } catch (err) {
+            console.log('Error detecting cue support:' + err);
+            return false;
+        }
+    }
+
     var supportedFeatures = function () {
 
         var features = [
@@ -334,6 +352,10 @@ define(['appStorage', 'browser'], function (appStorage, browser) {
 
         features.push('otherapppromotions');
         features.push('targetblank');
+
+        if (!browser.orsay && !browser.tizen && !browser.msie && (browser.firefox || browser.ps4 || browser.edge || cueSupported())) {
+            features.push('subtitleappearancesettings');
+        }
 
         return features;
     }();

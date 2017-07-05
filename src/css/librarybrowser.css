@@ -839,18 +839,10 @@
 @media all and (min-width: 1280px) {
 
     .padded-left {
-        padding-left: 3.2%;
-    }
-
-    .padded-right {
-        padding-right: 3.2%;
-    }
-
-    .layout-tv .padded-left {
         padding-left: 4%;
     }
 
-    .layout-tv .padded-right {
+    .padded-right {
         padding-right: 4%;
     }
 

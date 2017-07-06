@@ -1,4 +1,4 @@
-﻿define(['subtitleSettings', 'userSettingsBuilder', 'dom', 'globalize', 'loading', 'apphost', 'listViewStyle'], function (SubtitleSettings, userSettingsBuilder, dom, globalize, loading, appHost) {
+﻿define(['subtitleSettings', 'userSettingsBuilder'], function (SubtitleSettings, userSettingsBuilder) {
     'use strict';
 
     return function (view, params) {
@@ -18,8 +18,7 @@
                     element: view.querySelector('.settingsContainer'),
                     userSettings: userSettings,
                     enableSaveButton: !AppInfo.enableAutoSave,
-                    enableSaveConfirmation: !AppInfo.enableAutoSave,
-                    enableSubtitleAppearance: appHost.supports('subtitleappearancesettings')
+                    enableSaveConfirmation: !AppInfo.enableAutoSave
                 });
             }
 

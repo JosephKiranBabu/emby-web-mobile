@@ -1,4 +1,4 @@
-define(['appStorage', 'browser'], function (appStorage, browser) {
+define(['appSettings', 'browser'], function (appSettings, browser) {
     'use strict';
 
     function getBaseProfileOptions(item) {
@@ -65,7 +65,7 @@ define(['appStorage', 'browser'], function (appStorage, browser) {
 
                 // Streaming only, allow in-app ass decoding. Streaming only because there is no automatic retry to transcoding for offline media
                 // Don't use in-app ass decoding if it's a playback retry (automatic switch from direct play to transcoding)
-                if (item && !options.isRetry) {
+                if (item && !options.isRetry && appSettings.get('subtitleburnin') !== 'allcomplexformats') {
                     if (!browser.orsay && !browser.tizen) {
                         // libjass not working here
                         profile.SubtitleProfiles.push({
@@ -117,13 +117,13 @@ define(['appStorage', 'browser'], function (appStorage, browser) {
 
     function getDeviceId() {
         var key = '_deviceId2';
-        var deviceId = appStorage.getItem(key);
+        var deviceId = appSettings.get(key);
 
         if (deviceId) {
             return Promise.resolve(deviceId);
         } else {
             return generateDeviceId().then(function (deviceId) {
-                appStorage.setItem(key, deviceId);
+                appSettings.set(key, deviceId);
                 return deviceId;
             });
         }
@@ -236,7 +236,7 @@ define(['appStorage', 'browser'], function (appStorage, browser) {
             return false;
         }
 
-        var savedResult = appStorage.getItem(htmlMediaAutoplayAppStorageKey);
+        var savedResult = appSettings.get(htmlMediaAutoplayAppStorageKey);
         if (savedResult === 'true') {
             return true;
         }
@@ -357,17 +357,21 @@ define(['appStorage', 'browser'], function (appStorage, browser) {
             features.push('subtitleappearancesettings');
         }
 
+        if (!browser.orsay && !browser.tizen) {
+            features.push('subtitleburnsettings');
+        }
+
         return features;
     }();
 
     if (supportedFeatures.indexOf('htmlvideoautoplay') === -1 && supportsHtmlMediaAutoplay() !== false) {
         require(['autoPlayDetect'], function (autoPlayDetect) {
             autoPlayDetect.supportsHtmlMediaAutoplay().then(function () {
-                appStorage.setItem(htmlMediaAutoplayAppStorageKey, 'true');
+                appSettings.set(htmlMediaAutoplayAppStorageKey, 'true');
                 supportedFeatures.push('htmlvideoautoplay');
                 supportedFeatures.push('htmlaudioautoplay');
             }, function () {
-                appStorage.setItem(htmlMediaAutoplayAppStorageKey, 'false');
+                appSettings.set(htmlMediaAutoplayAppStorageKey, 'false');
             });
         });
     }

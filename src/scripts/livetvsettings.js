@@ -120,7 +120,8 @@
                             $('#txtRecordingPath', page).val(path);
                         }
                         picker.close();
-                    }
+                    },
+                    validateWriteable: true
                 });
             });
         });
@@ -139,7 +140,8 @@
                             $('#txtMovieRecordingPath', page).val(path);
                         }
                         picker.close();
-                    }
+                    },
+                    validateWriteable: true
                 });
             });
         });
@@ -158,7 +160,8 @@
                             $('#txtSeriesRecordingPath', page).val(path);
                         }
                         picker.close();
-                    }
+                    },
+                    validateWriteable: true
                 });
             });
         });

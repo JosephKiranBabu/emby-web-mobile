@@ -78,6 +78,7 @@
                         }
                         picker.close();
                     },
+                    validateWriteable: true,
 
                     header: Globalize.translate('HeaderSelectUploadPath')
                 });

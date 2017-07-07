@@ -144,6 +144,7 @@
                         }
                         picker.close();
                     },
+                    validateWriteable: true,
 
                     header: Globalize.translate('HeaderSelectMetadataPath'),
 

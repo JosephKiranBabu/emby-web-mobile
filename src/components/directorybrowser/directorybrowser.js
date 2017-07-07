@@ -172,6 +172,52 @@
         return html;
     }
 
+    function alertText(text) {
+        alertTextWithOptions({
+            text: text
+        });
+    }
+
+    function alertTextWithOptions(options) {
+        require(['alert'], function (alert) {
+            alert(options);
+        });
+    }
+
+    function validatePath(path, validateWriteable, apiClient) {
+
+        return apiClient.ajax({
+
+            type: 'POST',
+            url: apiClient.getUrl("Environment/ValidatePath"),
+            data: {
+                ValidateWriteable: validateWriteable,
+                Path: path
+            }
+
+        }).then(function (result) {
+
+            return Promise.resolve();
+
+        }, function (response) {
+
+            if (response) {
+
+                if (response.status === 404) {
+
+                    //alertText('The path entered could not be found. Please ensure the path is valid and try again.');
+                    //return Promise.reject();
+                }
+                if (response.status === 500) {
+
+                    alertText('Emby Server requires write access to this folder. Please ensure write access and try again.');
+                    return Promise.reject();
+                }
+            }
+            return Promise.resolve();
+        });
+    }
+
     function initEditor(content, options, fileOptions) {
 
         content.addEventListener("click", function (e) {
@@ -212,7 +258,11 @@
 
                 var networkSharePath = this.querySelector('#txtNetworkPath');
                 networkSharePath = networkSharePath ? networkSharePath.value : null;
-                options.callback(this.querySelector('#txtDirectoryPickerPath').value, networkSharePath);
+                var path = this.querySelector('#txtDirectoryPickerPath').value;
+                validatePath(path, options.validateWriteable, ApiClient).then(function () {
+
+                    options.callback(path, networkSharePath);
+                });
             }
 
             e.preventDefault();

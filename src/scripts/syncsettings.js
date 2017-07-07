@@ -63,7 +63,8 @@
                             $('#txtSyncTempPath', page).val(path);
                         }
                         picker.close();
-                    }
+                    },
+                    validateWriteable: true
                 });
             });
         });

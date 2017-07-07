@@ -212,11 +212,11 @@ define(['appSettings', 'events', 'browser'], function (appsettings, events, brow
         return JSON.parse(this.get(key, false) || '{}');
     };
 
-    UserSettings.prototype.setSubtitleAppearanceSettings = function (key, value) {
+    UserSettings.prototype.setSubtitleAppearanceSettings = function (value, key) {
 
         key = key || 'localplayersubtitleappearance3';
 
-        this.set(key, JSON.stringify(value));
+        this.set(key, JSON.stringify(value), false);
     };
 
     return UserSettings;

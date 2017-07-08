@@ -1,35 +1,61 @@
-﻿define(['jQuery', 'loading', 'libraryMenu', 'fnchecked', 'emby-checkbox'], function ($, loading, libraryMenu) {
+﻿define(['loading', 'libraryMenu', 'globalize', 'emby-checkbox'], function (loading, libraryMenu, globalize) {
     'use strict';
 
-    function onSubmit() {
+    function onSubmit(e) {
+
         var form = this;
         var localAddress = form.querySelector('#txtLocalAddress').value;
-        var enableUpnp = $('#chkEnableUpnp', form).checked();
+        var enableUpnp = form.querySelector('#chkEnableUpnp').checked;
 
         confirmSelections(localAddress, enableUpnp, function () {
 
-            loading.show();
+            var enableHttps = form.querySelector('#chkEnableHttps').checked;
+            var certPath = form.querySelector('#txtCertificatePath').value || null;
 
-            ApiClient.getServerConfiguration().then(function (config) {
+            validateHttps(enableHttps, certPath).then(function () {
 
-                config.HttpServerPortNumber = $('#txtPortNumber', form).val();
-                config.PublicPort = $('#txtPublicPort', form).val();
-                config.PublicHttpsPort = $('#txtPublicHttpsPort', form).val();
-                config.EnableHttps = $('#chkEnableHttps', form).checked();
-                config.HttpsPortNumber = $('#txtHttpsPort', form).val();
-                config.EnableUPnP = enableUpnp;
-                config.WanDdns = $('#txtDdns', form).val();
-                config.CertificatePath = $('#txtCertificatePath', form).val() || null;
-                config.CertificatePassword = $('#txtCertPassword', form).val() || null;
+                loading.show();
 
-                config.LocalNetworkAddresses = localAddress ? [localAddress] : [];
+                ApiClient.getServerConfiguration().then(function (config) {
 
-                ApiClient.updateServerConfiguration(config).then(Dashboard.processServerConfigurationUpdateResult, Dashboard.processErrorResponse);
+                    config.HttpServerPortNumber = form.querySelector('#txtPortNumber').value;
+                    config.PublicPort = form.querySelector('#txtPublicPort').value;
+                    config.PublicHttpsPort = form.querySelector('#txtPublicHttpsPort').value;
+                    config.EnableHttps = enableHttps;
+                    config.HttpsPortNumber = form.querySelector('#txtHttpsPort').value;
+                    config.EnableUPnP = enableUpnp;
+                    config.WanDdns = form.querySelector('#txtDdns').value;
+                    config.CertificatePath = certPath;
+                    config.CertificatePassword = form.querySelector('#txtCertPassword').value || null;
+
+                    config.LocalNetworkAddresses = localAddress ? [localAddress] : [];
+
+                    ApiClient.updateServerConfiguration(config).then(Dashboard.processServerConfigurationUpdateResult, Dashboard.processErrorResponse);
+                });
             });
         });
 
         // Disable default form submission
-        return false;
+        e.preventDefault();
+    }
+
+    function validateHttps(enableHttps, certPath) {
+
+        if (!enableHttps || certPath) {
+            return Promise.resolve();
+        }
+
+        return new Promise(function (resolve, reject) {
+
+            require(['alert'], function (alert) {
+
+                alert({
+                    title: globalize.translate('TitleHostingSettings'),
+                    text: globalize.translate('HttpsRequiresCert')
+
+                }).then(reject, reject);
+            });
+        });
     }
 
     function confirmSelections(localAddress, enableUpnp, callback) {
@@ -38,8 +64,8 @@
 
             require(['alert'], function (alert) {
                 alert({
-                    title: Globalize.translate('TitleHostingSettings'),
-                    text: Globalize.translate('SettingsWarning')
+                    title: globalize.translate('TitleHostingSettings'),
+                    text: globalize.translate('SettingsWarning')
                 }).then(callback);
             });
 
@@ -52,11 +78,11 @@
         return [
         {
             href: 'dashboardhosting.html',
-            name: Globalize.translate('TabHosting')
+            name: globalize.translate('TabHosting')
         },
          {
              href: 'serversecurity.html',
-             name: Globalize.translate('TabSecurity')
+             name: globalize.translate('TabSecurity')
          }];
     }
 
@@ -66,25 +92,25 @@
 
         function loadPage(page, config) {
 
-            $('#txtPortNumber', page).val(config.HttpServerPortNumber);
-            $('#txtPublicPort', page).val(config.PublicPort);
-            $('#txtPublicHttpsPort', page).val(config.PublicHttpsPort);
+            page.querySelector('#txtPortNumber').value = config.HttpServerPortNumber;
+            page.querySelector('#txtPublicPort').value = config.PublicPort;
+            page.querySelector('#txtPublicHttpsPort').value = config.PublicHttpsPort;
 
             page.querySelector('#txtLocalAddress').value = config.LocalNetworkAddresses[0] || '';
 
             var chkEnableHttps = page.querySelector('#chkEnableHttps');
             chkEnableHttps.checked = config.EnableHttps;
 
-            $('#txtHttpsPort', page).val(config.HttpsPortNumber);
+            page.querySelector('#txtHttpsPort').value = config.HttpsPortNumber;
 
-            $('#txtDdns', page).val(config.WanDdns || '');
+            page.querySelector('#txtDdns').value = config.WanDdns || '';
 
             var txtCertificatePath = page.querySelector('#txtCertificatePath');
             txtCertificatePath.value = config.CertificatePath || '';
 
             page.querySelector('#txtCertPassword').value = config.CertificatePassword || '';
 
-            $('#chkEnableUpnp', page).checked(config.EnableUPnP);
+            page.querySelector('#chkEnableUpnp').checked = config.EnableUPnP;
 
             onCertPathChange.call(txtCertificatePath);
 
@@ -100,7 +126,7 @@
             }
         }
 
-        $('#btnSelectCertPath', view).on("click.selectDirectory", function () {
+        view.querySelector('#btnSelectCertPath').addEventListener("click", function () {
 
             require(['directorybrowser'], function (directoryBrowser) {
 
@@ -114,17 +140,17 @@
                     callback: function (path) {
 
                         if (path) {
-                            $('#txtCertificatePath', view).val(path);
+                            view.querySelector('#txtCertificatePath').value = path;
                         }
                         picker.close();
                     },
 
-                    header: Globalize.translate('HeaderSelectCertificatePath')
+                    header: globalize.translate('HeaderSelectCertificatePath')
                 });
             });
         });
 
-        $('.dashboardHostingForm').off('submit', onSubmit).on('submit', onSubmit);
+        view.querySelector('.dashboardHostingForm').addEventListener('submit', onSubmit);
 
         view.querySelector('#txtCertificatePath').addEventListener('change', onCertPathChange);
 

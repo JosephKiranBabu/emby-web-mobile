@@ -674,6 +674,9 @@ define(['browser', 'require', 'events', 'apphost', 'loading', 'dom', 'playbackMa
                 rendererSettings.enableSvg = false;
             }
 
+            // probably safer to just disable everywhere
+            rendererSettings.enableSvg = false;
+
             require(['libjass'], function (libjass) {
 
                 libjass.ASS.fromUrl(getTextTrackUrl(track, serverId)).then(function (ass) {

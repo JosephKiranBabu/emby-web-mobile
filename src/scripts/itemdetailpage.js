@@ -1374,7 +1374,7 @@
             page.querySelector('#childrenTitle').innerHTML = globalize.translate('HeaderItems');
         }
 
-        if (item.Type == "MusicAlbum") {
+        if (item.Type == "MusicAlbum" || item.Type == "Season") {
             page.querySelector('.childrenSectionHeader', page).classList.add('hide');
         } else {
             page.querySelector('.childrenSectionHeader', page).classList.remove('hide');

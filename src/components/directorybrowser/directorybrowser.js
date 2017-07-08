@@ -205,8 +205,10 @@
 
                 if (response.status === 404) {
 
-                    //alertText('The path entered could not be found. Please ensure the path is valid and try again.');
-                    //return Promise.reject();
+                    if (apiClient.isMinServerVersion('3.2.22.7')) {
+                        alertText('The path could not be found. Please ensure the path is valid and try again.');
+                        return Promise.reject();
+                    }
                 }
                 if (response.status === 500) {
 

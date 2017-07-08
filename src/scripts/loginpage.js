@@ -243,7 +243,7 @@
 
             apiClient.getJSON(apiClient.getUrl('Branding/Configuration')).then(function (options) {
 
-                view.querySelector('.disclaimer').innerHTML = options.LoginDisclaimer || '';
+                view.querySelector('.disclaimer').textContent = options.LoginDisclaimer || '';
             });
 
             if (Dashboard.isConnectMode()) {

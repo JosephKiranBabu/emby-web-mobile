@@ -2489,15 +2489,6 @@ var AppInfo = {};
 
         if (Dashboard.isRunningInCordova() && browser.android) {
 
-            // use the html audio player if flac is supported
-            if (document.createElement('audio').canPlayType('audio/flac').replace(/no/, '') &&
-                document.createElement('audio').canPlayType('audio/ogg; codecs="opus"').replace(/no/, '')) {
-                window.VlcAudio = true;
-
-            } else {
-                window.VlcAudio = true;
-            }
-
             // Needed for video
             list.push('cordova/vlcplayer');
 

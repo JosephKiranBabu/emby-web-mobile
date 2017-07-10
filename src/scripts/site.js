@@ -892,7 +892,6 @@ var AppInfo = {};
         define("programStyles", ['css!' + embyWebComponentsBowerPath + "/guide/programs"], returnFirstDependency);
         define("guide-settings-dialog", [embyWebComponentsBowerPath + "/guide/guide-settings"], returnFirstDependency);
         define("syncDialog", [embyWebComponentsBowerPath + "/sync/sync"], returnFirstDependency);
-        define("syncToggle", [embyWebComponentsBowerPath + "/sync/synctoggle"], returnFirstDependency);
         define("syncJobEditor", [embyWebComponentsBowerPath + "/sync/syncjobeditor"], returnFirstDependency);
         define("syncJobList", [embyWebComponentsBowerPath + "/sync/syncjoblist"], returnFirstDependency);
 

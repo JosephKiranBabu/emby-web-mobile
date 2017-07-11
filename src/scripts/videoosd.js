@@ -354,6 +354,26 @@
             elem.innerHTML = html || '';
         }
 
+        function shouldEnableProgressByTimeOfDay(item) {
+
+            if (item.Type === 'TvChannel') {
+                return true;
+            }
+
+            if (item.Type === 'Recording' && item.StartDate && item.EndDate) {
+
+                var endDate = datetime.parseISO8601Date(item.EndDate).getTime();
+                var startDate = datetime.parseISO8601Date(item.StartDate).getTime();
+                var now = new Date().getTime();
+
+                if (now <= endDate && now >= startDate) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         function updateNowPlayingInfo(player, state) {
 
             var item = state.NowPlayingItem;
@@ -375,7 +395,7 @@
                 return;
             }
 
-            enableProgressByTimeOfDay = item.Type === 'TvChannel';
+            enableProgressByTimeOfDay = shouldEnableProgressByTimeOfDay(item);
             getDisplayItem(item).then(updateDisplayItem);
 
             nowPlayingVolumeSlider.disabled = false;

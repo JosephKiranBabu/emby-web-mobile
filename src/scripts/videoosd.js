@@ -871,7 +871,7 @@
             currentRuntimeTicks = playbackManager.duration(player);
 
             var currentTime = playbackManager.currentTime(player);
-            updateTimeDisplay(currentTime, currentRuntimeTicks, playbackManager.playbackStartTime(player));
+            updateTimeDisplay(currentTime, currentRuntimeTicks, playbackManager.playbackStartTime(player), playbackManager.getBufferedRanges(player));
 
             refreshProgramInfoIfNeeded(player);
             showComingUpNextIfNeeded(player, currentTime, currentRuntimeTicks);
@@ -988,7 +988,7 @@
             var nowPlayingItem = state.NowPlayingItem || {};
 
             playbackStartTimeTicks = playState.PlaybackStartTimeTicks;
-            updateTimeDisplay(playState.PositionTicks, nowPlayingItem.RunTimeTicks, playState.PlaybackStartTimeTicks);
+            updateTimeDisplay(playState.PositionTicks, nowPlayingItem.RunTimeTicks, playState.PlaybackStartTimeTicks, playState.BufferedRanges);
 
             updateNowPlayingInfo(player, state);
 
@@ -1013,7 +1013,12 @@
             updateFullscreenIcon();
         }
 
-        function updateTimeDisplay(positionTicks, runtimeTicks, playbackStartTimeTicks) {
+        function getDisplayPercentByTimeOfDay(programStartDateMs, programRuntimeMs, currentTimeMs) {
+
+            return ((currentTimeMs - programStartDateMs) / programRuntimeMs) * 100;;
+        }
+
+        function updateTimeDisplay(positionTicks, runtimeTicks, playbackStartTimeTicks, bufferedRanges) {
 
             if (enableProgressByTimeOfDay) {
 
@@ -1024,10 +1029,26 @@
                         var currentTimeMs = (playbackStartTimeTicks + (positionTicks || 0)) / 10000;
                         var programRuntimeMs = programEndDateMs - programStartDateMs;
 
-                        nowPlayingPositionSlider.value = ((currentTimeMs - programStartDateMs) / programRuntimeMs) * 100;
+                        nowPlayingPositionSlider.value = getDisplayPercentByTimeOfDay(programStartDateMs, programRuntimeMs, currentTimeMs);
+                        console.log('buffered ranges: ' + JSON.stringify(bufferedRanges));
+                        if (bufferedRanges.length) {
+
+                            var rangeStart = getDisplayPercentByTimeOfDay(programStartDateMs, programRuntimeMs, (playbackStartTimeTicks + (bufferedRanges[0].start || 0)) / 10000);
+                            var rangeEnd = getDisplayPercentByTimeOfDay(programStartDateMs, programRuntimeMs, (playbackStartTimeTicks + (bufferedRanges[0].end || 0)) / 10000);
+
+                            nowPlayingPositionSlider.setBufferedRanges([
+                            {
+                                start: rangeStart,
+                                end: rangeEnd
+                            }]);
+
+                        } else {
+                            nowPlayingPositionSlider.setBufferedRanges([]);
+                        }
 
                     } else {
                         nowPlayingPositionSlider.value = 0;
+                        nowPlayingPositionSlider.setBufferedRanges([]);
                     }
                 }
 
@@ -1054,6 +1075,10 @@
                     } else {
                         endsAtText.innerHTML = '';
                     }
+                }
+
+                if (nowPlayingPositionSlider) {
+                    nowPlayingPositionSlider.setBufferedRanges(bufferedRanges, runtimeTicks, positionTicks);
                 }
 
                 updateTimeText(nowPlayingPositionText, positionTicks);

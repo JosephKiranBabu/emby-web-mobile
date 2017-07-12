@@ -1090,7 +1090,7 @@ var AppInfo = {};
             };
         });
 
-        define("embyRouter", [embyWebComponentsBowerPath + '/router'], function (embyRouter) {
+        define("embyRouter", [embyWebComponentsBowerPath + '/router', 'itemHelper'], function (embyRouter, itemHelper) {
 
             embyRouter.showLocalLogin = function (apiClient, serverId, manualLogin) {
                 Dashboard.navigate('login.html?serverid=' + serverId);
@@ -1235,7 +1235,7 @@ var AppInfo = {};
                     return 'channels.html';
                 }
 
-                if (context != 'folders') {
+                if (context !== 'folders' && !itemHelper.isLocalItem(item)) {
                     if (item.CollectionType == 'movies') {
                         url = 'movies.html?topParentId=' + item.Id;
 

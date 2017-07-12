@@ -1,5 +1,6 @@
 {
     "HttpsRequiresCert": "Per abilitare https come indirizzo esterno, sar\u00e0 necessario fornire un certificato SSL attendibile, ad esempio Lets Encrypt.",
+    "HeaderLatestDownloadedVideos": "Latest Downloaded Videos",
     "LabelPrevious": "Precedente",
     "LabelFinish": "Finito",
     "LabelNext": "Prossimo",

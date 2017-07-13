@@ -65,22 +65,13 @@
         }
 
         if (enableWidthWithTransform == null) {
-            enableWidthWithTransform = browser.supportsCssAnimation();
+            //enableWidthWithTransform = browser.supportsCssAnimation();
         }
 
         this.setAttribute('data-embyslider', 'true');
 
         this.classList.add('mdl-slider');
         this.classList.add('mdl-js-slider');
-
-        if (!this.classList.contains('slider-medium-thumb')) {
-            if (layoutManager.mobile) {
-                this.classList.add('slider-large-thumb');
-            }
-            else if (layoutManager.tv) {
-                this.classList.add('slider-small-thumb');
-            }
-        }
 
         if (browser.noFlex) {
             this.classList.add('slider-no-webkit-thumb');
@@ -96,6 +87,7 @@
 
         if (!supportsNativeProgressStyle) {
             htmlToInsert += '<div class="mdl-slider__background-flex">';
+            htmlToInsert += '<div class="mdl-slider__background-flex-inner">';
 
             // the more of these, the more ranges we can display
             htmlToInsert += '<div class="mdl-slider__background-upper"></div>';
@@ -106,6 +98,7 @@
                 htmlToInsert += '<div class="mdl-slider__background-lower"></div>';
             }
 
+            htmlToInsert += '</div>';
             htmlToInsert += '</div>';
         }
 

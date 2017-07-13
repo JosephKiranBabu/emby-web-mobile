@@ -1015,7 +1015,7 @@
 
         function getDisplayPercentByTimeOfDay(programStartDateMs, programRuntimeMs, currentTimeMs) {
 
-            return ((currentTimeMs - programStartDateMs) / programRuntimeMs) * 100;;
+            return ((currentTimeMs - programStartDateMs) / programRuntimeMs) * 100;
         }
 
         function updateTimeDisplay(positionTicks, runtimeTicks, playbackStartTimeTicks, bufferedRanges) {

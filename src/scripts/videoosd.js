@@ -988,7 +988,7 @@
             var nowPlayingItem = state.NowPlayingItem || {};
 
             playbackStartTimeTicks = playState.PlaybackStartTimeTicks;
-            updateTimeDisplay(playState.PositionTicks, nowPlayingItem.RunTimeTicks, playState.PlaybackStartTimeTicks, playState.BufferedRanges);
+            updateTimeDisplay(playState.PositionTicks, nowPlayingItem.RunTimeTicks, playState.PlaybackStartTimeTicks, playbackManager.getBufferedRanges(player));
 
             updateNowPlayingInfo(player, state);
 

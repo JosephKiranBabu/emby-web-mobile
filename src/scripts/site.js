@@ -47,28 +47,6 @@ var Dashboard = {
         return window.appMode == 'cordova';
     },
 
-    onRequestFail: function (e, data) {
-
-        if (data.status == 401) {
-
-            if (data.errorCode == "ParentalControl") {
-
-                var currentView = ViewManager.currentView();
-                // Bounce to the login screen, but not if a password entry fails, obviously
-                if (currentView && !currentView.classList.contains('.standalonePage')) {
-
-                    Dashboard.alert({
-                        message: Globalize.translate('MessageLoggedOutParentalControl'),
-                        callback: function () {
-                            Dashboard.logout(false);
-                        }
-                    });
-                }
-
-            }
-        }
-    },
-
     getCurrentUser: function () {
 
         return window.ApiClient.getCurrentUser();
@@ -499,9 +477,6 @@ var AppInfo = {};
         }
 
         apiClient.normalizeImageOptions = Dashboard.normalizeImageOptions;
-
-        Events.off(apiClient, 'requestfail', Dashboard.onRequestFail);
-        Events.on(apiClient, 'requestfail', Dashboard.onRequestFail);
     }
 
     function onApiClientCreated(e, newApiClient) {
@@ -542,12 +517,6 @@ var AppInfo = {};
             }
             return localApiClient;
         };
-
-        //events.on(connectionManager, 'apiclientcreated', function (e, newApiClient) {
-
-        //    //$(newApiClient).on("websocketmessage", Dashboard.onWebSocketMessageReceived).on('requestfail', Dashboard.onRequestFail);
-        //    newApiClient.normalizeImageOptions = normalizeImageOptions;
-        //});
 
         // Use this instead of the event because it will fire and wait for the promise before firing events to all listeners
         connectionManager.onLocalUserSignedIn = function (user) {
@@ -1092,7 +1061,7 @@ var AppInfo = {};
 
         define("embyRouter", [embyWebComponentsBowerPath + '/router', 'itemHelper'], function (embyRouter, itemHelper) {
 
-            embyRouter.showLocalLogin = function (apiClient, serverId, manualLogin) {
+            embyRouter.showLocalLogin = function (serverId, manualLogin) {
                 Dashboard.navigate('login.html?serverid=' + serverId);
             };
 
@@ -1115,6 +1084,11 @@ var AppInfo = {};
                 } else {
                     Dashboard.navigate('login.html');
                 }
+            };
+
+            embyRouter.showConnectLogin = function () {
+
+                Dashboard.navigate('connectlogin.html');
             };
 
             embyRouter.showSettings = function () {

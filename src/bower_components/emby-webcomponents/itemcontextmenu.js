@@ -101,15 +101,6 @@ define(['apphost', 'globalize', 'connectionManager', 'itemHelper', 'embyRouter',
             }
         }
 
-        if (options.sync !== false) {
-            if (itemHelper.canSync(user, item)) {
-                commands.push({
-                    name: globalize.translate('sharedcomponents#DownloadToOtherDevice'),
-                    id: 'sync'
-                });
-            }
-        }
-
         if (itemHelper.canEdit(user, item)) {
 
             if (options.edit !== false && item.Type !== 'SeriesTimer') {
@@ -191,7 +182,7 @@ define(['apphost', 'globalize', 'connectionManager', 'itemHelper', 'embyRouter',
 
             if (item.Type !== 'Timer' && item.Type !== 'SeriesTimer' && item.Type !== 'Program' && item.Type !== 'TvChannel' && !(item.Type === 'Recording' && item.Status !== 'Completed')) {
                 commands.push({
-                    name: globalize.translate('sharedcomponents#Refresh'),
+                    name: globalize.translate('sharedcomponents#RefreshMetadata'),
                     id: 'refresh'
                 });
             }
@@ -225,6 +216,15 @@ define(['apphost', 'globalize', 'connectionManager', 'itemHelper', 'embyRouter',
                 commands.push({
                     name: globalize.translate('sharedcomponents#Shuffle'),
                     id: 'shuffle'
+                });
+            }
+        }
+
+        if (options.sync !== false) {
+            if (itemHelper.canSync(user, item)) {
+                commands.push({
+                    name: globalize.translate('sharedcomponents#Sync'),
+                    id: 'sync'
                 });
             }
         }

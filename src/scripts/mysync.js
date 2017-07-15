@@ -19,6 +19,7 @@
 
         var mySyncJobList = new syncJobList({
             isLocalSync: params.mode === 'offline',
+            enableRemoteSyncManagement: false,
             serverId: ApiClient.serverId(),
             userId: params.mode === 'offline' ? null : ApiClient.getCurrentUserId(),
             element: view.querySelector('.syncActivity'),

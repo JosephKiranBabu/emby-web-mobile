@@ -224,13 +224,6 @@
                 });
             }
 
-            if (user.Policy.EnableContentDownloading) {
-                menuItems.push({
-                    name: globalize.translate('sharedcomponents#DownloadToOtherDevice'),
-                    id: 'sync'
-                });
-            }
-
             menuItems.push({
                 name: globalize.translate('sharedcomponents#GroupVersions'),
                 id: 'groupvideos',
@@ -248,9 +241,16 @@
             });
 
             menuItems.push({
-                name: globalize.translate('sharedcomponents#Refresh'),
+                name: globalize.translate('sharedcomponents#RefreshMetadata'),
                 id: 'refresh'
             });
+
+            if (user.Policy.EnableContentDownloading) {
+                menuItems.push({
+                    name: globalize.translate('sharedcomponents#Sync'),
+                    id: 'sync'
+                });
+            }
 
             require(['actionsheet'], function (actionsheet) {
 

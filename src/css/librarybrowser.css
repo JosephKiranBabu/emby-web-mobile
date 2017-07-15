@@ -746,7 +746,7 @@
 }
 
 .sectionTitle-cards {
-    margin-left: .15em;
+    margin-left: .2em;
 }
 
 .verticalSection .sectionTitle {
@@ -816,19 +816,27 @@
 
 @media all and (min-width: 600px) {
 
-    .padded-left-withalphapicker {
+    .padded-left {
         padding-left: 3%;
     }
 
-    .padded-right-withalphapicker {
+    .padded-right {
         padding-right: 3%;
     }
 }
 
 @media all and (min-width: 800px) {
 
+    .padded-left {
+        padding-left: 3.2%;
+    }
+
+    .padded-right {
+        padding-right: 3.2%;
+    }
+
     .layout-tv .padded-left-withalphapicker {
-        padding-right: 4.4%;
+        padding-left: 4.4%;
     }
 
     .layout-tv .padded-right-withalphapicker {
@@ -839,11 +847,11 @@
 @media all and (min-width: 1280px) {
 
     .padded-left {
-        padding-left: 4%;
+        padding-left: 3.8%;
     }
 
     .padded-right {
-        padding-right: 4%;
+        padding-right: 3.8%;
     }
 
     .layout-tv .padded-left-withalphapicker {

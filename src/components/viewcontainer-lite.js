@@ -19,7 +19,7 @@ define(['browser', 'dom', 'layoutManager', 'css!bower_components/emby-webcompone
             return false;
         }
         // Seeing portions of pages cut off with crosswalk webview
-        if (window.MainActivity && window.MainActivity.getChromeVersion() <= 53) {
+        if (navigator.userAgent.toLowerCase().indexOf('crosswalk') !== -1) {
             return false;
         }
 

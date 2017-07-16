@@ -696,7 +696,7 @@
 }
 
 .verticalSection {
-    margin-bottom: 2.5em;
+    margin-bottom: 2.3em;
 }
 
 .layout-tv .verticalSection {
@@ -847,11 +847,11 @@
 @media all and (min-width: 1280px) {
 
     .padded-left {
-        padding-left: 3.8%;
+        padding-left: 3.7%;
     }
 
     .padded-right {
-        padding-right: 3.8%;
+        padding-right: 3.7%;
     }
 
     .layout-tv .padded-left-withalphapicker {

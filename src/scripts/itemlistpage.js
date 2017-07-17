@@ -79,7 +79,7 @@
                apiClient.getItem(userId, query.ParentId) :
                apiClient.getRootFolder(userId);
 
-            var itemsPromise = ApiClapiClientient.getItems(userId, query);
+            var itemsPromise = apiClient.getItems(userId, query);
 
             Promise.all([parentItemPromise, itemsPromise]).then(function (responses) {
 

@@ -1070,7 +1070,8 @@
 
                 var href = embyRouter.getRouteUrl(item.Studios[0], {
                     context: context,
-                    itemType: 'Studio'
+                    itemType: 'Studio',
+                    serverId: item.ServerId
                 });
                 html += ' on <a class="textlink button-link" is="emby-linkbutton" href="' + href + '">' + item.Studios[0].Name + '</a>';
             }
@@ -1491,7 +1492,8 @@
 
                     item.Studios[i].Type = 'Studio';
                     var href = embyRouter.getRouteUrl(item.Studios[0], {
-                        context: context
+                        context: context,
+                        serverId: item.ServerId
                     });
                     html += '<a class="textlink button-link" is="emby-linkbutton" href="' + href + '">' + item.Studios[i].Name + '</a>';
                 }

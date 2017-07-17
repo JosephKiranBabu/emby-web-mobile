@@ -49,7 +49,7 @@ var Dashboard = {
 
     getCurrentUser: function () {
 
-        return window.ApiClient.getCurrentUser();
+        return window.ApiClient.getCurrentUser(false);
     },
 
     serverAddress: function () {

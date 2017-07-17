@@ -73,7 +73,7 @@
             loading.show();
 
             var query = getQuery();
-            var userId = Dashboard.getCurrentUserId();
+            var userId = apiClient.getCurrentUserId();
 
             var parentItemPromise = query.ParentId ?
                apiClient.getItem(userId, query.ParentId) :

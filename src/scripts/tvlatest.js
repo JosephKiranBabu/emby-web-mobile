@@ -10,7 +10,7 @@
 
         loading.show();
 
-        var userId = Dashboard.getCurrentUserId();
+        var userId = ApiClient.getCurrentUserId();
 
         var parentId = params.topParentId;
 

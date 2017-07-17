@@ -43,7 +43,7 @@
             loading.show();
             var query = getQuery();
 
-            return ApiClient.getGenres(Dashboard.getCurrentUserId(), query);
+            return ApiClient.getGenres(ApiClient.getCurrentUserId(), query);
         }
 
         function reloadItems(context, promise) {

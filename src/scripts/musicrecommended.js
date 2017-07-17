@@ -20,7 +20,7 @@
 
         loading.show();
 
-        var userId = Dashboard.getCurrentUserId();
+        var userId = ApiClient.getCurrentUserId();
 
         var options = {
             IncludeItemTypes: "Audio",
@@ -78,7 +78,7 @@
             EnableTotalRecordCount: false
         };
 
-        ApiClient.getItems(Dashboard.getCurrentUserId(), options).then(function (result) {
+        ApiClient.getItems(ApiClient.getCurrentUserId(), options).then(function (result) {
 
             var elem = page.querySelector('#recentlyPlayed');
 
@@ -132,7 +132,7 @@
             EnableTotalRecordCount: false
         };
 
-        ApiClient.getItems(Dashboard.getCurrentUserId(), options).then(function (result) {
+        ApiClient.getItems(ApiClient.getCurrentUserId(), options).then(function (result) {
 
             var elem = page.querySelector('#topPlayed');
 
@@ -178,7 +178,7 @@
 
         require(['components/favoriteitems'], function (favoriteItems) {
 
-            favoriteItems.render(tabContent, Dashboard.getCurrentUserId(), parentId, ['favoriteArtists', 'favoriteAlbums', 'favoriteSongs']);
+            favoriteItems.render(tabContent, ApiClient.getCurrentUserId(), parentId, ['favoriteArtists', 'favoriteAlbums', 'favoriteSongs']);
 
         });
     }
@@ -383,7 +383,7 @@
 
                 if (parentId) {
 
-                    ApiClient.getItem(Dashboard.getCurrentUserId(), parentId).then(function (item) {
+                    ApiClient.getItem(ApiClient.getCurrentUserId(), parentId).then(function (item) {
 
                         view.setAttribute('data-title', item.Name);
                         libraryMenu.setTitle(item.Name);

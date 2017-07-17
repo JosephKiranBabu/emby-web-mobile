@@ -190,7 +190,7 @@
 
             backdrop.setBackdrops([item]);
 
-            ApiClient.getItem(Dashboard.getCurrentUserId(), item.Id).then(function (fullItem) {
+            ApiClient.getItem(ApiClient.getCurrentUserId(), item.Id).then(function (fullItem) {
 
                 var userData = fullItem.UserData || {};
                 var likes = userData.Likes == null ? '' : userData.Likes;
@@ -457,7 +457,7 @@
 
             return playbackManager.getPlaylist(player);
 
-            return ApiClient.getItems(Dashboard.getCurrentUserId(), {
+            return ApiClient.getItems(ApiClient.getCurrentUserId(), {
 
                 SortBy: "SortName",
                 SortOrder: "Ascending",

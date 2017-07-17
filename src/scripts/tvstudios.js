@@ -37,7 +37,7 @@
 
         loading.show();
 
-        return ApiClient.getStudios(Dashboard.getCurrentUserId(), query);
+        return ApiClient.getStudios(ApiClient.getCurrentUserId(), query);
     }
     function reloadItems(context, params, promise) {
 

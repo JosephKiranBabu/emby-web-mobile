@@ -72,7 +72,7 @@
 
             var query = getQuery(page);
 
-            ApiClient.getItems(Dashboard.getCurrentUserId(), query).then(function (result) {
+            ApiClient.getItems(ApiClient.getCurrentUserId(), query).then(function (result) {
 
                 // Scroll back up so they can see the results from the beginning
                 window.scrollTo(0, 0);

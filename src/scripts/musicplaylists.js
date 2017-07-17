@@ -44,7 +44,7 @@
             loading.show();
             var query = getQuery();
 
-            return ApiClient.getItems(Dashboard.getCurrentUserId(), query);
+            return ApiClient.getItems(ApiClient.getCurrentUserId(), query);
         }
 
 

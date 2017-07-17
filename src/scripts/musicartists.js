@@ -71,8 +71,8 @@
             var query = getQuery(page);
 
             var promise = self.mode == 'albumartists' ?
-                ApiClient.getAlbumArtists(Dashboard.getCurrentUserId(), query) :
-                ApiClient.getArtists(Dashboard.getCurrentUserId(), query);
+                ApiClient.getAlbumArtists(ApiClient.getCurrentUserId(), query) :
+                ApiClient.getArtists(ApiClient.getCurrentUserId(), query);
 
             promise.then(function (result) {
 

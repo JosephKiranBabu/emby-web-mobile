@@ -66,7 +66,7 @@
 
                 Limit: 24,
                 Fields: "PrimaryImageAspectRatio,SeriesInfo,DateCreated,BasicSyncInfo",
-                UserId: Dashboard.getCurrentUserId(),
+                UserId: ApiClient.getCurrentUserId(),
                 ImageTypeLimit: 1,
                 EnableImageTypes: "Primary,Backdrop,Thumb",
                 EnableTotalRecordCount: false
@@ -135,7 +135,7 @@
                 EnableTotalRecordCount: false
             };
 
-            ApiClient.getItems(Dashboard.getCurrentUserId(), options).then(function (result) {
+            ApiClient.getItems(ApiClient.getCurrentUserId(), options).then(function (result) {
 
                 if (result.Items.length) {
                     view.querySelector('#resumableSection').classList.remove('hide');
@@ -330,7 +330,7 @@
 
             if (msg.MessageType === "UserDataChanged") {
 
-                if (msg.Data.UserId == Dashboard.getCurrentUserId()) {
+                if (msg.Data.UserId == ApiClient.getCurrentUserId()) {
 
                     renderedTabs = [];
                 }
@@ -348,7 +348,7 @@
 
                 if (parentId) {
 
-                    ApiClient.getItem(Dashboard.getCurrentUserId(), parentId).then(function (item) {
+                    ApiClient.getItem(ApiClient.getCurrentUserId(), parentId).then(function (item) {
 
                         view.setAttribute('data-title', item.Name);
                         libraryMenu.setTitle(item.Name);

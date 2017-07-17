@@ -8,7 +8,7 @@
 
         var apiClient = connectionManager.getApiClient(serverId);
 
-        var userId = Dashboard.getCurrentUserId();
+        var userId = apiClient.getCurrentUserId();
 
         var playedIndicator = card.querySelector('.playedIndicator');
         var playedIndicatorHtml = playedIndicator ? playedIndicator.innerHTML : null;

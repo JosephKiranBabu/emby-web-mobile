@@ -263,25 +263,25 @@
             var id = params.genreId || params.musicGenreId || params.studioId || params.artistId || params.personId || params.parentId;
 
             if (id) {
-                return apiClient.getItem(Dashboard.getCurrentUserId(), id);
+                return apiClient.getItem(apiClient.getCurrentUserId(), id);
             }
 
             var name = params.genre;
 
             if (name) {
-                return apiClient.getGenre(name, Dashboard.getCurrentUserId());
+                return apiClient.getGenre(name, apiClient.getCurrentUserId());
             }
 
             name = params.musicgenre;
 
             if (name) {
-                return apiClient.getMusicGenre(name, Dashboard.getCurrentUserId());
+                return apiClient.getMusicGenre(name, apiClient.getCurrentUserId());
             }
 
             name = params.gamegenre;
 
             if (name) {
-                return apiClient.getGameGenre(name, Dashboard.getCurrentUserId());
+                return apiClient.getGameGenre(name, apiClient.getCurrentUserId());
             }
 
             return null;

@@ -9,7 +9,7 @@
 
             Limit: 48,
             Fields: "AirTime,UserData",
-            UserId: Dashboard.getCurrentUserId(),
+            UserId: ApiClient.getCurrentUserId(),
             ImageTypeLimit: 1,
             EnableImageTypes: "Primary,Backdrop,Banner,Thumb",
             EnableTotalRecordCount: false

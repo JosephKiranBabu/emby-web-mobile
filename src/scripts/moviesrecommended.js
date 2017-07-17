@@ -191,7 +191,7 @@
 
         var parentId = params.topParentId;
 
-        var userId = Dashboard.getCurrentUserId();
+        var userId = ApiClient.getCurrentUserId();
 
         console.log('loadSuggestionsTab');
         loadResume(tabContent, userId, parentId);
@@ -392,7 +392,7 @@
 
                 if (parentId) {
 
-                    ApiClient.getItem(Dashboard.getCurrentUserId(), parentId).then(function (item) {
+                    ApiClient.getItem(ApiClient.getCurrentUserId(), parentId).then(function (item) {
 
                         view.setAttribute('data-title', item.Name);
                         libraryMenu.setTitle(item.Name);

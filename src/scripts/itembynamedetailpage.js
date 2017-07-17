@@ -1,4 +1,4 @@
-﻿define(['listView', 'cardBuilder', 'imageLoader', 'libraryBrowser', 'emby-itemscontainer', 'emby-linkbutton'], function (listView, cardBuilder, imageLoader, libraryBrowser) {
+﻿define(['connectionManager', 'listView', 'cardBuilder', 'imageLoader', 'libraryBrowser', 'emby-itemscontainer', 'emby-linkbutton'], function (connectionManager, listView, cardBuilder, imageLoader, libraryBrowser) {
     'use strict';
 
     function renderItems(page, item) {
@@ -401,7 +401,8 @@
                 query.Fields += "," + fields;
             }
 
-            return ApiClient.getItems(Dashboard.getCurrentUserId(), query);
+            var apiClient = connectionManager.getApiClient(item.ServerId);
+            return apiClient.getItems(apiClient.getCurrentUserId(), query);
 
         };
 

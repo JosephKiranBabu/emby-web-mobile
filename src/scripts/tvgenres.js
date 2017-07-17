@@ -43,7 +43,7 @@
             loading.show();
             var query = getQuery();
 
-            return ApiClient.getGenres(Dashboard.getCurrentUserId(), query);
+            return ApiClient.getGenres(ApiClient.getCurrentUserId(), query);
         }
 
         function enableScrollX() {
@@ -95,7 +95,7 @@
                 ParentId: params.topParentId
             };
 
-            ApiClient.getItems(Dashboard.getCurrentUserId(), query).then(function (result) {
+            ApiClient.getItems(ApiClient.getCurrentUserId(), query).then(function (result) {
 
                 var supportsImageAnalysis = appHost.supports('imageanalysis');
 

@@ -6,7 +6,7 @@
         var id = params.id;
 
         if (id) {
-            return apiClient.getItem(Dashboard.getCurrentUserId(), id);
+            return apiClient.getItem(apiClient.getCurrentUserId(), id);
         }
 
         if (params.seriesTimerId) {
@@ -16,25 +16,25 @@
         var name = params.genre;
 
         if (name) {
-            return apiClient.getGenre(name, Dashboard.getCurrentUserId());
+            return apiClient.getGenre(name, apiClient.getCurrentUserId());
         }
 
         name = params.musicgenre;
 
         if (name) {
-            return apiClient.getMusicGenre(name, Dashboard.getCurrentUserId());
+            return apiClient.getMusicGenre(name, apiClient.getCurrentUserId());
         }
 
         name = params.gamegenre;
 
         if (name) {
-            return apiClient.getGameGenre(name, Dashboard.getCurrentUserId());
+            return apiClient.getGameGenre(name, apiClient.getCurrentUserId());
         }
 
         name = params.musicartist;
 
         if (name) {
-            return apiClient.getArtist(name, Dashboard.getCurrentUserId());
+            return apiClient.getArtist(name, apiClient.getCurrentUserId());
         }
         else {
             throw new Error('Invalid request');
@@ -910,7 +910,8 @@
             return;
         }
 
-        connectionManager.getApiClient(item.ServerId).getItems(Dashboard.getCurrentUserId(), {
+        var apiClient = connectionManager.getApiClient(item.ServerId);
+        apiClient.getItems(apiClient.getCurrentUserId(), {
 
             IncludeItemTypes: "MusicAlbum",
             ArtistIds: item.AlbumArtists[0].Id,
@@ -977,9 +978,10 @@
         }
 
         var shape = item.Type == "MusicAlbum" || item.Type == "MusicArtist" ? getSquareShape() : getPortraitShape();
+        var apiClient = connectionManager.getApiClient(item.ServerId);
 
         var options = {
-            userId: Dashboard.getCurrentUserId(),
+            userId: apiClient.getCurrentUserId(),
             limit: item.Type == "MusicAlbum" || item.Type == "MusicArtist" ? 8 : 10,
             fields: "PrimaryImageAspectRatio,UserData,CanDelete"
         };
@@ -992,7 +994,7 @@
             options.limit = 12;
         }
 
-        connectionManager.getApiClient(item.ServerId).getSimilarItems(item.Id, options).then(function (result) {
+        apiClient.getSimilarItems(item.Id, options).then(function (result) {
 
             if (!result.Items.length) {
 
@@ -1129,7 +1131,7 @@
             query.Limit = limit;
             query.Fields = fields;
 
-            return apiClient.getItems(Dashboard.getCurrentUserId(), query);
+            return apiClient.getItems(apiClient.getCurrentUserId(), query);
         };
     }
 
@@ -1150,10 +1152,10 @@
             query.SortBy = "SortName";
         }
 
-        var userId = Dashboard.getCurrentUserId();
-        var promise;
-
         var apiClient = connectionManager.getApiClient(item.ServerId);
+
+        var userId = apiClient.getCurrentUserId();
+        var promise;
 
         if (item.Type == "Series") {
 
@@ -1208,7 +1210,7 @@
             query.SortBy = 'ProductionYear,SortName';
         }
 
-        promise = promise || apiClient.getItems(Dashboard.getCurrentUserId(), query);
+        promise = promise || apiClient.getItems(apiClient.getCurrentUserId(), query);
 
         promise.then(function (result) {
 
@@ -1410,9 +1412,10 @@
     function renderSeriesSchedule(page, item, user) {
 
         return;
-        connectionManager.getApiClient(item.ServerId).getLiveTvPrograms({
+        var apiClient = connectionManager.getApiClient(item.ServerId);
+        apiClient.getLiveTvPrograms({
 
-            UserId: Dashboard.getCurrentUserId(),
+            UserId: apiClient.getCurrentUserId(),
             HasAired: false,
             SortBy: "StartDate",
             EnableTotalRecordCount: false,
@@ -1773,7 +1776,8 @@
             return;
         }
 
-        connectionManager.getApiClient(item.ServerId).getThemeMedia(Dashboard.getCurrentUserId(), item.Id, true).then(function (result) {
+        var apiClient = connectionManager.getApiClient(item.ServerId);
+        apiClient.getThemeMedia(apiClient.getCurrentUserId(), item.Id, true).then(function (result) {
 
             var themeSongs = result.ThemeSongsResult.OwnerId == item.Id ?
                 result.ThemeSongsResult.Items :
@@ -2157,7 +2161,8 @@
 
         if (item.Type === 'Program') {
 
-            connectionManager.getApiClient(item.ServerId).getLiveTvChannel(item.ChannelId, Dashboard.getCurrentUserId()).then(function (channel) {
+            var apiClient = connectionManager.getApiClient(item.ServerId);
+            apiClient.getLiveTvChannel(item.ChannelId, apiClient.getCurrentUserId()).then(function (channel) {
 
                 playbackManager.play({
                     items: [channel]
@@ -2189,7 +2194,7 @@
         loading.show();
 
         var apiClient = params.serverId ? connectionManager.getApiClient(params.serverId) : ApiClient;
-        instance.promises = [getPromise(apiClient, params), Dashboard.getCurrentUser()];
+        instance.promises = [getPromise(apiClient, params), apiClient.getCurrentUser()];
     }
 
     function finishReload(instance, page, params) {
@@ -2344,7 +2349,7 @@
         view.addEventListener('click', function (e) {
 
             if (dom.parentWithClass(e.target, 'moreScenes')) {
-                Dashboard.getCurrentUser().then(function (user) {
+                apiClient.getCurrentUser().then(function (user) {
                     renderScenes(view, currentItem, user);
                 });
             }
@@ -2352,7 +2357,7 @@
                 renderCast(view, currentItem, params.context);
             }
             else if (dom.parentWithClass(e.target, 'moreSpecials')) {
-                Dashboard.getCurrentUser().then(function (user) {
+                apiClient.getCurrentUser().then(function (user) {
                     renderSpecials(view, currentItem, user);
                 });
             }
@@ -2396,7 +2401,7 @@
 
             if (msg.MessageType === "UserDataChanged") {
 
-                if (currentItem && msg.Data.UserId == Dashboard.getCurrentUserId()) {
+                if (currentItem && msg.Data.UserId == apiClient.getCurrentUserId()) {
 
                     var key = currentItem.UserData.Key;
 
@@ -2411,7 +2416,7 @@
 
                         reloadPlayButtons(view, currentItem);
 
-                        Dashboard.getCurrentUser().then(function (user) {
+                        apiClient.getCurrentUser().then(function (user) {
 
                             refreshImage(view, currentItem, user);
                         });

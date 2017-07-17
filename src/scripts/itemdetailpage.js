@@ -278,7 +278,7 @@
 
         renderSeriesTimerEditor(page, item, apiClient, user);
 
-        renderImage(page, item, user);
+        renderImage(page, item, apiClient, user);
         renderLogo(page, item, apiClient);
 
         setInitialCollapsibleState(page, item, context, user);
@@ -290,7 +290,7 @@
             backdrop.clear();
         }
 
-        libraryBrowser.renderDetailPageBackdrop(page, item, imageLoader, indicators);
+        libraryBrowser.renderDetailPageBackdrop(page, item, apiClient, imageLoader, indicators);
 
         libraryMenu.setTransparentMenu(true);
 
@@ -497,11 +497,11 @@
         }
     }
 
-    function renderImage(page, item, user) {
+    function renderImage(page, item, apiClient, user) {
 
         var container = page.querySelector('.detailImageContainer');
 
-        libraryBrowser.renderDetailImage(page, container, item, user.Policy.IsAdministrator && item.MediaType != 'Photo', imageLoader, indicators);
+        libraryBrowser.renderDetailImage(page, container, item, apiClient, user.Policy.IsAdministrator && item.MediaType != 'Photo', imageLoader, indicators);
     }
 
     function refreshDetailImageUserData(elem, item) {

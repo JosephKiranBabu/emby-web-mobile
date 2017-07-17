@@ -21,7 +21,7 @@
 
         libraryBrowser.renderName(item, $('.itemName', page)[0], false);
         libraryBrowser.renderParentName(item, $('.parentName', page)[0]);
-        libraryBrowser.renderDetailPageBackdrop(page, item, imageLoader, indicators);
+        libraryBrowser.renderDetailPageBackdrop(page, item, ApiClient, imageLoader, indicators);
 
         renderImage(page, item);
 
@@ -59,7 +59,7 @@
     }
 
     function renderImage(page, item) {
-        libraryBrowser.renderDetailImage(page, page.querySelector('.detailImageContainer'), item, false, imageLoader, indicators);
+        libraryBrowser.renderDetailImage(page, page.querySelector('.detailImageContainer'), item, ApiClient, false, imageLoader, indicators);
     }
 
     $(document).on('pageinit', "#publicSharedItemPage", function () {

@@ -472,7 +472,7 @@
             });
         },
 
-        renderDetailImage: function (page, elem, item, editable, imageLoader, indicators) {
+        renderDetailImage: function (page, elem, item, apiClient, editable, imageLoader, indicators) {
 
             var preferThumb = false;
 
@@ -503,7 +503,7 @@
 
             if (preferThumb && imageTags.Thumb) {
 
-                url = ApiClient.getScaledImageUrl(item.Id, {
+                url = apiClient.getScaledImageUrl(item.Id, {
                     type: "Thumb",
                     maxHeight: imageHeight,
                     tag: item.ImageTags.Thumb
@@ -512,7 +512,7 @@
             }
             else if (imageTags.Primary) {
 
-                url = ApiClient.getScaledImageUrl(item.Id, {
+                url = apiClient.getScaledImageUrl(item.Id, {
                     type: "Primary",
                     maxHeight: imageHeight,
                     tag: item.ImageTags.Primary
@@ -521,7 +521,7 @@
             }
             else if (item.BackdropImageTags && item.BackdropImageTags.length) {
 
-                url = ApiClient.getScaledImageUrl(item.Id, {
+                url = apiClient.getScaledImageUrl(item.Id, {
                     type: "Backdrop",
                     maxHeight: imageHeight,
                     tag: item.BackdropImageTags[0]
@@ -530,7 +530,7 @@
             }
             else if (imageTags.Thumb) {
 
-                url = ApiClient.getScaledImageUrl(item.Id, {
+                url = apiClient.getScaledImageUrl(item.Id, {
                     type: "Thumb",
                     maxHeight: imageHeight,
                     tag: item.ImageTags.Thumb
@@ -539,7 +539,7 @@
             }
             else if (imageTags.Disc) {
 
-                url = ApiClient.getScaledImageUrl(item.Id, {
+                url = apiClient.getScaledImageUrl(item.Id, {
                     type: "Disc",
                     maxHeight: imageHeight,
                     tag: item.ImageTags.Disc
@@ -548,7 +548,7 @@
             }
             else if (item.AlbumId && item.AlbumPrimaryImageTag) {
 
-                url = ApiClient.getScaledImageUrl(item.AlbumId, {
+                url = apiClient.getScaledImageUrl(item.AlbumId, {
                     type: "Primary",
                     maxHeight: imageHeight,
                     tag: item.AlbumPrimaryImageTag
@@ -557,7 +557,7 @@
             }
             else if (item.SeriesId && item.SeriesPrimaryImageTag) {
 
-                url = ApiClient.getScaledImageUrl(item.SeriesId, {
+                url = apiClient.getScaledImageUrl(item.SeriesId, {
                     type: "Primary",
                     maxHeight: imageHeight,
                     tag: item.SeriesPrimaryImageTag
@@ -565,7 +565,7 @@
             }
             else if (item.ParentPrimaryImageItemId && item.ParentPrimaryImageTag) {
 
-                url = ApiClient.getScaledImageUrl(item.ParentPrimaryImageItemId, {
+                url = apiClient.getScaledImageUrl(item.ParentPrimaryImageItemId, {
                     type: "Primary",
                     maxHeight: imageHeight,
                     tag: item.ParentPrimaryImageTag
@@ -631,7 +631,7 @@
             }
         },
 
-        renderDetailPageBackdrop: function (page, item, imageLoader, indicators) {
+        renderDetailPageBackdrop: function (page, item, apiClient, imageLoader, indicators) {
 
             var screenWidth = screen.availWidth;
 
@@ -645,7 +645,7 @@
 
             if (useThumbImage && item.ImageTags && item.ImageTags.Thumb) {
 
-                imgUrl = ApiClient.getScaledImageUrl(item.Id, {
+                imgUrl = apiClient.getScaledImageUrl(item.Id, {
                     type: "Thumb",
                     index: 0,
                     maxWidth: screenWidth,
@@ -658,7 +658,7 @@
             }
             else if (usePrimaryImage && item.ImageTags && item.ImageTags.Primary) {
 
-                imgUrl = ApiClient.getScaledImageUrl(item.Id, {
+                imgUrl = apiClient.getScaledImageUrl(item.Id, {
                     type: "Primary",
                     index: 0,
                     maxWidth: screenWidth,
@@ -671,7 +671,7 @@
             }
             else if (item.BackdropImageTags && item.BackdropImageTags.length) {
 
-                imgUrl = ApiClient.getScaledImageUrl(item.Id, {
+                imgUrl = apiClient.getScaledImageUrl(item.Id, {
                     type: "Backdrop",
                     index: 0,
                     maxWidth: screenWidth,
@@ -684,7 +684,7 @@
             }
             else if (item.ParentBackdropItemId && item.ParentBackdropImageTags && item.ParentBackdropImageTags.length) {
 
-                imgUrl = ApiClient.getScaledImageUrl(item.ParentBackdropItemId, {
+                imgUrl = apiClient.getScaledImageUrl(item.ParentBackdropItemId, {
                     type: 'Backdrop',
                     index: 0,
                     tag: item.ParentBackdropImageTags[0],
@@ -697,7 +697,7 @@
             }
             else if (item.ImageTags && item.ImageTags.Thumb) {
 
-                imgUrl = ApiClient.getScaledImageUrl(item.Id, {
+                imgUrl = apiClient.getScaledImageUrl(item.Id, {
                     type: "Thumb",
                     index: 0,
                     maxWidth: screenWidth,

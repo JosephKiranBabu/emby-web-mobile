@@ -696,7 +696,7 @@
 }
 
 .verticalSection {
-    margin-bottom: 2.3em;
+    margin-bottom: 2.1em;
 }
 
 .layout-tv .verticalSection {
@@ -746,7 +746,7 @@
 }
 
 .sectionTitle-cards {
-    margin-left: .2em;
+    margin-left: .3em;
 }
 
 .verticalSection .sectionTitle {
@@ -847,11 +847,11 @@
 @media all and (min-width: 1280px) {
 
     .padded-left {
-        padding-left: 3.7%;
+        padding-left: 3.5%;
     }
 
     .padded-right {
-        padding-right: 3.7%;
+        padding-right: 3.5%;
     }
 
     .layout-tv .padded-left-withalphapicker {

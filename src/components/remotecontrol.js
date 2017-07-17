@@ -190,7 +190,9 @@
 
             backdrop.setBackdrops([item]);
 
-            ApiClient.getItem(ApiClient.getCurrentUserId(), item.Id).then(function (fullItem) {
+            var apiClient = connectionManager.getApiClient(item.ServerId);
+
+            apiClient.getItem(apiClient.getCurrentUserId(), item.Id).then(function (fullItem) {
 
                 var userData = fullItem.UserData || {};
                 var likes = userData.Likes == null ? '' : userData.Likes;

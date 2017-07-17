@@ -138,9 +138,6 @@
                 name: globalize.translate('TabFavorites')
             },
             {
-                name: globalize.translate('TabUpcoming')
-            },
-            {
                 name: globalize.translate('ButtonSearch')
             }];
     }
@@ -178,7 +175,7 @@
 
                 viewTabs.addEventListener('beforetabchange', onBeforeTabChange);
                 viewTabs.addEventListener('tabchange', onTabChange);
-                libraryBrowser.configurePaperLibraryTabs(view, viewTabs, view.querySelectorAll('.pageTabContent'), [0, 1, 2, 3], true);
+                libraryBrowser.configurePaperLibraryTabs(view, viewTabs, view.querySelectorAll('.pageTabContent'), [0, 1, 2], true);
 
                 if (!viewTabs.triggerBeforeTabChange) {
                     viewTabs.addEventListener('ready', function () {
@@ -208,9 +205,6 @@
                     depends.push('scripts/homefavorites');
                     break;
                 case 2:
-                    depends.push('scripts/tvupcoming');
-                    break;
-                case 3:
                     depends.push('scripts/searchtab');
                     break;
                 default:
@@ -230,7 +224,7 @@
                     if (index === 0) {
                         controller = self;
                     }
-                    else if (index === 3) {
+                    else if (index === 2) {
                         controller = new controllerFactory(view, tabContent, {});
                     } else {
                         controller = new controllerFactory(view, params, tabContent);

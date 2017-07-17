@@ -1,9 +1,12 @@
-﻿define(['dom', 'embyRouter'], function (dom, embyRouter) {
+﻿define(['dom', 'embyRouter', 'connectionManager'], function (dom, embyRouter, connectionManager) {
     'use strict';
 
     function onGroupedCardClick(e, card) {
 
         var itemId = card.getAttribute('data-id');
+        var serverId = card.getAttribute('data-serverid');
+
+        var apiClient = connectionManager.getApiClient(serverId);
 
         var userId = Dashboard.getCurrentUserId();
 
@@ -24,14 +27,14 @@
             return;
         }
 
-        ApiClient.getJSON(ApiClient.getUrl('Users/' + userId + '/Items/Latest', options)).then(function (items) {
+        apiClient.getJSON(apiClient.getUrl('Users/' + userId + '/Items/Latest', options)).then(function (items) {
 
             if (items.length == 1) {
                 embyRouter.showItem(items[0]);
                 return;
             }
 
-            var url = 'itemdetails.html?id=' + itemId;
+            var url = 'itemdetails.html?id=' + itemId + '&serverId=' + serverId;
 
             Dashboard.navigate(url);
         });

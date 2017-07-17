@@ -1,4 +1,4 @@
-﻿define(['events', 'layoutManager', 'loading', 'libraryMenu', 'libraryBrowser', 'alphaPicker', 'listView', 'cardBuilder', 'imageLoader', 'emby-itemscontainer'], function (events, layoutManager, loading, libraryMenu, libraryBrowser, alphaPicker, listView, cardBuilder, imageLoader) {
+﻿define(['events', 'layoutManager', 'loading', 'libraryMenu', 'libraryBrowser', 'connectionManager', 'alphaPicker', 'listView', 'cardBuilder', 'imageLoader', 'emby-itemscontainer'], function (events, layoutManager, loading, libraryMenu, libraryBrowser, connectionManager, alphaPicker, listView, cardBuilder, imageLoader) {
     'use strict';
 
     return function (view, params) {
@@ -7,6 +7,7 @@
 
         var data;
         var self = this;
+        var apiClient = connectionManager.getApiClient(params.serverId);
 
         function getPageData() {
             var pageData = data;
@@ -75,10 +76,10 @@
             var userId = Dashboard.getCurrentUserId();
 
             var parentItemPromise = query.ParentId ?
-               ApiClient.getItem(userId, query.ParentId) :
-               ApiClient.getRootFolder(userId);
+               apiClient.getItem(userId, query.ParentId) :
+               apiClient.getRootFolder(userId);
 
-            var itemsPromise = ApiClient.getItems(userId, query);
+            var itemsPromise = ApiClapiClientient.getItems(userId, query);
 
             Promise.all([parentItemPromise, itemsPromise]).then(function (responses) {
 
@@ -331,7 +332,7 @@
 
             require(['collectionEditor'], function (collectionEditor) {
 
-                var serverId = ApiClient.serverInfo().Id;
+                var serverId = params.serverId;
                 new collectionEditor().show({
                     items: [],
                     serverId: serverId

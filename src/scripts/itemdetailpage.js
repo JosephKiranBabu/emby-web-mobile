@@ -1,40 +1,40 @@
 ﻿define(['loading', 'embyRouter', 'layoutManager', 'connectionManager', 'cardBuilder', 'datetime', 'mediaInfo', 'backdrop', 'listView', 'itemContextMenu', 'itemHelper', 'dom', 'indicators', 'apphost', 'imageLoader', 'libraryMenu', 'globalize', 'browser', 'events', 'scrollHelper', 'playbackManager', 'libraryBrowser', 'scrollStyles', 'emby-itemscontainer', 'emby-checkbox', 'emby-linkbutton', 'emby-playstatebutton', 'emby-ratingbutton', 'emby-downloadbutton'], function (loading, embyRouter, layoutManager, connectionManager, cardBuilder, datetime, mediaInfo, backdrop, listView, itemContextMenu, itemHelper, dom, indicators, appHost, imageLoader, libraryMenu, globalize, browser, events, scrollHelper, playbackManager, libraryBrowser) {
     'use strict';
 
-    function getPromise(params) {
+    function getPromise(apiClient, params) {
 
         var id = params.id;
 
         if (id) {
-            return ApiClient.getItem(Dashboard.getCurrentUserId(), id);
+            return apiClient.getItem(Dashboard.getCurrentUserId(), id);
         }
 
         if (params.seriesTimerId) {
-            return ApiClient.getLiveTvSeriesTimer(params.seriesTimerId);
+            return apiClient.getLiveTvSeriesTimer(params.seriesTimerId);
         }
 
         var name = params.genre;
 
         if (name) {
-            return ApiClient.getGenre(name, Dashboard.getCurrentUserId());
+            return apiClient.getGenre(name, Dashboard.getCurrentUserId());
         }
 
         name = params.musicgenre;
 
         if (name) {
-            return ApiClient.getMusicGenre(name, Dashboard.getCurrentUserId());
+            return apiClient.getMusicGenre(name, Dashboard.getCurrentUserId());
         }
 
         name = params.gamegenre;
 
         if (name) {
-            return ApiClient.getGameGenre(name, Dashboard.getCurrentUserId());
+            return apiClient.getGameGenre(name, Dashboard.getCurrentUserId());
         }
 
         name = params.musicartist;
 
         if (name) {
-            return ApiClient.getArtist(name, Dashboard.getCurrentUserId());
+            return apiClient.getArtist(name, Dashboard.getCurrentUserId());
         }
         else {
             throw new Error('Invalid request');
@@ -124,10 +124,10 @@
         return html;
     }
 
-    function renderSeriesTimerSchedule(page, seriesTimerId) {
+    function renderSeriesTimerSchedule(page, apiClient, seriesTimerId) {
 
-        ApiClient.getLiveTvTimers({
-            UserId: ApiClient.getCurrentUserId(),
+        apiClient.getLiveTvTimers({
+            UserId: apiClient.getCurrentUserId(),
             ImageTypeLimit: 1,
             EnableImageTypes: "Primary,Backdrop,Thumb",
             SortBy: "StartDate",
@@ -151,7 +151,7 @@
         });
     }
 
-    function renderSeriesTimerEditor(page, item, user) {
+    function renderSeriesTimerEditor(page, item, apiClient, user) {
 
         if (item.Type !== 'SeriesTimer') {
             return;
@@ -164,7 +164,7 @@
         }
 
         require(['seriesRecordingEditor'], function (seriesRecordingEditor) {
-            seriesRecordingEditor.embed(item, ApiClient.serverId(), {
+            seriesRecordingEditor.embed(item, apiClient.serverId(), {
                 context: page.querySelector('.seriesRecordingEditor')
             });
         });
@@ -172,7 +172,7 @@
         page.querySelector('.seriesTimerScheduleSection').classList.remove('hide');
         hideAll(page, 'btnCancelSeriesTimer', true);
 
-        renderSeriesTimerSchedule(page, item.Id);
+        renderSeriesTimerSchedule(page, apiClient, item.Id);
     }
 
     function reloadPlayButtons(page, item) {
@@ -274,10 +274,12 @@
 
         window.scrollTo(0, 0);
 
-        renderSeriesTimerEditor(page, item, user);
+        var apiClient = connectionManager.getApiClient(item.ServerId);
+
+        renderSeriesTimerEditor(page, item, apiClient, user);
 
         renderImage(page, item, user);
-        renderLogo(page, item, ApiClient);
+        renderLogo(page, item, apiClient);
 
         setInitialCollapsibleState(page, item, context, user);
         renderDetails(page, item, context);
@@ -533,7 +535,7 @@
             return;
         }
 
-        ApiClient.getNextUpEpisodes({
+        connectionManager.getApiClient(item.ServerId).getNextUpEpisodes({
 
             SeriesId: item.Id,
             UserId: user.Id
@@ -744,7 +746,7 @@
         for (i = 0, length = artist.length; i < length; i++) {
             if (item.ArtistItems && item.ArtistItems.length && item.Type != "MusicAlbum") {
                 artist[i].classList.remove('hide');
-                artist[i].innerHTML = getArtistLinksHtml(item.ArtistItems, context);
+                artist[i].innerHTML = getArtistLinksHtml(item.ArtistItems, item.ServerId, context);
             } else {
                 artist[i].classList.add('hide');
             }
@@ -845,7 +847,7 @@
         page.querySelector('.photoInfoContent').innerHTML = html;
     }
 
-    function getArtistLinksHtml(artists, context) {
+    function getArtistLinksHtml(artists, serverId, context) {
 
         var html = [];
 
@@ -853,7 +855,7 @@
 
             var artist = artists[i];
 
-            html.push('<a class="textlink" href="itemdetails.html?id=' + artist.Id + '">' + artist.Name + '</a>');
+            html.push('<a class="textlink" href="itemdetails.html?serverId=' + serverId + '&id=' + artist.Id + '">' + artist.Name + '</a>');
 
         }
 
@@ -908,7 +910,7 @@
             return;
         }
 
-        ApiClient.getItems(Dashboard.getCurrentUserId(), {
+        connectionManager.getApiClient(item.ServerId).getItems(Dashboard.getCurrentUserId(), {
 
             IncludeItemTypes: "MusicAlbum",
             ArtistIds: item.AlbumArtists[0].Id,
@@ -990,7 +992,7 @@
             options.limit = 12;
         }
 
-        ApiClient.getSimilarItems(item.Id, options).then(function (result) {
+        connectionManager.getApiClient(item.ServerId).getSimilarItems(item.Id, options).then(function (result) {
 
             if (!result.Items.length) {
 
@@ -1103,7 +1105,7 @@
         }
     }
 
-    function getEpisodesFunction(seriesId, query) {
+    function getEpisodesFunction(apiClient, seriesId, query) {
 
         query = Object.assign({}, query);
 
@@ -1113,13 +1115,11 @@
             query.Limit = limit;
             query.Fields = fields;
 
-            return ApiClient.getEpisodes(seriesId, query);
-
+            return apiClient.getEpisodes(seriesId, query);
         };
-
     }
 
-    function getAlbumSongsFunction(query) {
+    function getAlbumSongsFunction(apiClient, query) {
 
         query = Object.assign({}, query);
 
@@ -1129,10 +1129,8 @@
             query.Limit = limit;
             query.Fields = fields;
 
-            return ApiClient.getItems(Dashboard.getCurrentUserId(), query);
-
+            return apiClient.getItems(Dashboard.getCurrentUserId(), query);
         };
-
     }
 
     var _childrenItemsFunction = null;
@@ -1155,9 +1153,11 @@
         var userId = Dashboard.getCurrentUserId();
         var promise;
 
+        var apiClient = connectionManager.getApiClient(item.ServerId);
+
         if (item.Type == "Series") {
 
-            promise = ApiClient.getSeasons(item.Id, {
+            promise = apiClient.getSeasons(item.Id, {
 
                 userId: userId,
                 Fields: fields
@@ -1168,14 +1168,14 @@
             fields += ',Overview';
 
             // Use dedicated episodes endpoint
-            promise = ApiClient.getEpisodes(item.SeriesId, {
+            promise = apiClient.getEpisodes(item.SeriesId, {
 
                 seasonId: item.Id,
                 userId: userId,
                 Fields: fields
             });
 
-            _childrenItemsFunction = getEpisodesFunction(item.SeriesId, {
+            _childrenItemsFunction = getEpisodesFunction(apiClient, item.SeriesId, {
 
                 seasonId: item.Id,
                 userId: userId,
@@ -1185,14 +1185,14 @@
         else if (item.Type == "Episode" && item.SeriesId && item.SeasonId) {
 
             // Use dedicated episodes endpoint
-            promise = ApiClient.getEpisodes(item.SeriesId, {
+            promise = apiClient.getEpisodes(item.SeriesId, {
 
                 seasonId: item.SeasonId,
                 userId: userId,
                 Fields: fields
             });
 
-            _childrenItemsFunction = getEpisodesFunction(item.SeriesId, {
+            _childrenItemsFunction = getEpisodesFunction(apiClient, item.SeriesId, {
 
                 seasonId: item.SeasonId,
                 userId: userId,
@@ -1201,14 +1201,14 @@
         }
         else if (item.Type == "MusicAlbum") {
 
-            _childrenItemsFunction = getAlbumSongsFunction(query);
+            _childrenItemsFunction = getAlbumSongsFunction(apiClient, query);
         }
         else if (item.Type == "MusicArtist") {
 
             query.SortBy = 'ProductionYear,SortName';
         }
 
-        promise = promise || ApiClient.getItems(Dashboard.getCurrentUserId(), query);
+        promise = promise || apiClient.getItems(Dashboard.getCurrentUserId(), query);
 
         promise.then(function (result) {
 
@@ -1410,7 +1410,7 @@
     function renderSeriesSchedule(page, item, user) {
 
         return;
-        ApiClient.getLiveTvPrograms({
+        connectionManager.getApiClient(item.ServerId).getLiveTvPrograms({
 
             UserId: Dashboard.getCurrentUserId(),
             HasAired: false,
@@ -1557,15 +1557,10 @@
                     param = 'genreId';
                     paramValue = genres[i].Id;
                 } else {
-                    param = item.Type == "Audio" || item.Type == "MusicArtist" || item.Type == "MusicAlbum" || item.Type == "MusicVideo" ? "musicgenre" : "genre";
-
-                    if (item.MediaType == "Game") {
-                        param = "gamegenre";
-                    }
-                    paramValue = ApiClient.encodeName(genres[i].Name);
+                    continue;
                 }
 
-                var url = "secondaryitems.html?type=" + type + "&" + param + "=" + paramValue;
+                var url = "secondaryitems.html?type=" + type + "&" + param + "=" + paramValue + '&serverId=' + item.ServerId;
 
                 html += '<a class="textlink button-link" is="emby-linkbutton" href="' + url + '">' + genres[i].Name + '</a>';
             }
@@ -1684,7 +1679,7 @@
             options.limit = limit;
         }
 
-        ApiClient.getCriticReviews(item.Id, options).then(function (result) {
+        connectionManager.getApiClient(item.ServerId).getCriticReviews(item.Id, options).then(function (result) {
 
             if (result.TotalRecordCount) {
                 page.querySelector('#criticReviewsCollapsible').classList.remove('hide');
@@ -1778,7 +1773,7 @@
             return;
         }
 
-        ApiClient.getThemeMedia(Dashboard.getCurrentUserId(), item.Id, true).then(function (result) {
+        connectionManager.getApiClient(item.ServerId).getThemeMedia(Dashboard.getCurrentUserId(), item.Id, true).then(function (result) {
 
             var themeSongs = result.ThemeSongsResult.OwnerId == item.Id ?
                 result.ThemeSongsResult.Items :
@@ -1825,7 +1820,7 @@
 
     function renderMusicVideos(page, item, user) {
 
-        ApiClient.getItems(user.Id, {
+        connectionManager.getApiClient(item.ServerId).getItems(user.Id, {
 
             SortBy: "SortName",
             SortOrder: "Ascending",
@@ -1852,7 +1847,7 @@
 
     function renderAdditionalParts(page, item, user) {
 
-        ApiClient.getAdditionalVideoParts(user.Id, item.Id).then(function (result) {
+        connectionManager.getApiClient(item.ServerId).getAdditionalVideoParts(user.Id, item.Id).then(function (result) {
 
             if (result.Items.length) {
 
@@ -2084,7 +2079,7 @@
 
     function renderSpecials(page, item, user, limit) {
 
-        ApiClient.getSpecialFeatures(user.Id, item.Id).then(function (specials) {
+        connectionManager.getApiClient(item.ServerId).getSpecialFeatures(user.Id, item.Id).then(function (specials) {
 
             var specialsContent = page.querySelector('#specialsContent');
             specialsContent.innerHTML = getVideosHtml(specials, user, limit, "moreSpecials");
@@ -2162,7 +2157,7 @@
 
         if (item.Type === 'Program') {
 
-            ApiClient.getLiveTvChannel(item.ChannelId, Dashboard.getCurrentUserId()).then(function (channel) {
+            connectionManager.getApiClient(item.ServerId).getLiveTvChannel(item.ChannelId, Dashboard.getCurrentUserId()).then(function (channel) {
 
                 playbackManager.play({
                     items: [channel]
@@ -2193,7 +2188,8 @@
 
         loading.show();
 
-        instance.promises = [getPromise(params), Dashboard.getCurrentUser()];
+        var apiClient = params.serverId ? connectionManager.getApiClient(params.serverId) : ApiClient;
+        instance.promises = [getPromise(apiClient, params), Dashboard.getCurrentUser()];
     }
 
     function finishReload(instance, page, params) {
@@ -2215,7 +2211,7 @@
         });
     }
 
-    function splitVersions(instance, page, params) {
+    function splitVersions(instance, page, apiClient, params) {
 
         require(['confirm'], function (confirm) {
 
@@ -2223,9 +2219,9 @@
 
                 loading.show();
 
-                ApiClient.ajax({
+                apiClient.ajax({
                     type: "DELETE",
-                    url: ApiClient.getUrl("Videos/" + params.id + "/AlternateSources")
+                    url: apiClient.getUrl("Videos/" + params.id + "/AlternateSources")
 
                 }).then(function () {
 
@@ -2299,6 +2295,7 @@
     return function (view, params) {
 
         var self = this;
+        var apiClient = params.serverId ? connectionManager.getApiClient(params.serverId) : ApiClient;
 
         function onPlayTrailerClick() {
             playTrailer(view);
@@ -2311,7 +2308,7 @@
         function onMoreCommandsClick() {
             var button = this;
 
-            connectionManager.getApiClient(currentItem.ServerId).getCurrentUser().then(function (user) {
+            apiClient.getCurrentUser().then(function (user) {
                 itemContextMenu.show(getContextMenuOptions(currentItem, user, button)).then(function (result) {
 
                     if (result.deleted) {
@@ -2339,7 +2336,7 @@
 
         view.querySelector('.btnSplitVersions').addEventListener('click', function () {
 
-            splitVersions(self, view, params);
+            splitVersions(self, view, apiClient, params);
         });
 
         bindAll(view, '.btnMoreCommands', 'click', onMoreCommandsClick);
@@ -2428,14 +2425,14 @@
             var page = this;
             beginReload(self, page, params);
 
-            events.on(ApiClient, 'websocketmessage', onWebSocketMessage);
+            events.on(apiClient, 'websocketmessage', onWebSocketMessage);
         });
 
         view.addEventListener('viewshow', function () {
             var page = this;
             finishReload(self, page, params);
 
-            events.on(ApiClient, 'websocketmessage', onWebSocketMessage);
+            events.on(apiClient, 'websocketmessage', onWebSocketMessage);
         });
 
         view.addEventListener('viewbeforehide', function () {
@@ -2443,7 +2440,7 @@
             currentItem = null;
             self.currentRecordingFields = null;
 
-            events.off(ApiClient, 'websocketmessage', onWebSocketMessage);
+            events.off(apiClient, 'websocketmessage', onWebSocketMessage);
             libraryMenu.setTransparentMenu(false);
         });
     };

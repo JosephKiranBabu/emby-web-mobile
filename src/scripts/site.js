@@ -1194,10 +1194,11 @@ var AppInfo = {};
                 // Handle search hints
                 var id = item.Id || item.ItemId;
                 var itemType = item.Type || (options ? options.itemType : null);
+                var serverId = item.ServerId || options.serverId;
 
                 if (itemType == "SeriesTimer") {
                     //return "livetvseriestimer.html?id=" + id;
-                    return "itemdetails.html?seriesTimerId=" + id;
+                    return "itemdetails.html?seriesTimerId=" + id + '&serverId=' + serverId;
                 }
 
                 if (item.CollectionType == 'livetv') {
@@ -1223,7 +1224,7 @@ var AppInfo = {};
                     }
 
                     if (item.CollectionType == 'boxsets') {
-                        return 'itemlist.html?topParentId=' + item.Id + '&parentId=' + item.Id;
+                        return 'itemlist.html?topParentId=' + item.Id + '&parentId=' + item.Id + '&serverId=' + serverId;
                     }
 
                     if (item.CollectionType == 'tvshows') {
@@ -1243,7 +1244,7 @@ var AppInfo = {};
                     }
 
                     if (item.CollectionType == 'games') {
-                        return id ? "itemlist.html?parentId=" + id : "#";
+                        return id ? "itemlist.html?parentId=" + id + '&serverId=' + serverId : "#";
                         //return 'gamesrecommended.html?topParentId=' + item.Id;
                     }
                     if (item.CollectionType == 'playlists') {
@@ -1255,41 +1256,41 @@ var AppInfo = {};
                 }
                 else if (item.IsFolder) {
                     if (itemType != "BoxSet" && itemType != "Series") {
-                        return id ? "itemlist.html?parentId=" + id : "#";
+                        return id ? "itemlist.html?parentId=" + id + '&serverId=' + serverId : "#";
                     }
                 }
 
                 if (itemType == 'CollectionFolder') {
-                    return 'itemlist.html?topParentId=' + item.Id + '&parentId=' + item.Id;
+                    return 'itemlist.html?topParentId=' + item.Id + '&parentId=' + item.Id + '&serverId=' + serverId;
                 }
 
                 if (itemType == "PhotoAlbum") {
-                    return "itemlist.html?context=photos&parentId=" + id;
+                    return "itemlist.html?context=photos&parentId=" + id + '&serverId=' + serverId;
                 }
                 if (itemType == "Playlist") {
-                    return "itemdetails.html?id=" + id;
+                    return "itemdetails.html?id=" + id + '&serverId=' + serverId;
                 }
                 if (itemType == "TvChannel") {
-                    return "itemdetails.html?id=" + id;
+                    return "itemdetails.html?id=" + id + '&serverId=' + serverId;
                 }
                 if (itemType == "Channel") {
-                    return "channelitems.html?id=" + id;
+                    return "channelitems.html?id=" + id + '&serverId=' + serverId;
                 }
                 if ((item.IsFolder && item.SourceType == 'Channel') || itemType == 'ChannelFolderItem') {
                     return "channelitems.html?id=" + item.ChannelId + '&folderId=' + item.Id;
                 }
                 if (itemType == "Program") {
-                    return "itemdetails.html?id=" + id;
+                    return "itemdetails.html?id=" + id + '&serverId=' + serverId;
                 }
 
                 if (itemType == "BoxSet") {
-                    return "itemdetails.html?id=" + id;
+                    return "itemdetails.html?id=" + id + '&serverId=' + serverId;
                 }
                 if (itemType == "MusicAlbum") {
-                    return "itemdetails.html?id=" + id;
+                    return "itemdetails.html?id=" + id + '&serverId=' + serverId;
                 }
                 if (itemType == "GameSystem") {
-                    return "itemdetails.html?id=" + id;
+                    return "itemdetails.html?id=" + id + '&serverId=' + serverId;
                 }
                 if (itemType == "Genre") {
                     var type;
@@ -1305,18 +1306,18 @@ var AppInfo = {};
                             break;
                     }
 
-                    url = "secondaryitems.html?type=" + type + "&genreId=" + id;
+                    url = "secondaryitems.html?type=" + type + "&genreId=" + id + '&serverId=' + serverId;
                     if (topParentId) {
                         url += "&parentId=" + topParentId;
                     }
                     return url;
                 }
                 if (itemType == "MusicGenre") {
-                    return "itemdetails.html?id=" + id;
+                    return "itemdetails.html?id=" + id + '&serverId=' + serverId;
                 }
                 if (itemType == "GameGenre") {
 
-                    url = "secondaryitems.html?type=Game&genreId=" + id;
+                    url = "secondaryitems.html?type=Game&genreId=" + id + '&serverId=' + serverId;
                     if (topParentId) {
                         url += "&parentId=" + topParentId;
                     }
@@ -1337,34 +1338,34 @@ var AppInfo = {};
                             break;
                     }
 
-                    url = "secondaryitems.html?type=" + type + "&studioId=" + id;
+                    url = "secondaryitems.html?type=" + type + "&studioId=" + id + '&serverId=' + serverId;
                     if (topParentId) {
                         url += "&parentId=" + topParentId;
                     }
                     return url;
                 }
                 if (itemType == "Person") {
-                    return "itemdetails.html?id=" + id;
+                    return "itemdetails.html?id=" + id + '&serverId=' + serverId;
                 }
                 if (itemType == "Recording") {
-                    return "itemdetails.html?id=" + id;
+                    return "itemdetails.html?id=" + id + '&serverId=' + serverId;
                 }
 
                 if (itemType == "MusicArtist") {
-                    return "itemdetails.html?id=" + id;
+                    return "itemdetails.html?id=" + id + '&serverId=' + serverId;
                 }
 
                 var contextSuffix = context ? ('&context=' + context) : '';
 
                 if (itemType == "Series" || itemType == "Season" || itemType == "Episode") {
-                    return "itemdetails.html?id=" + id + contextSuffix;
+                    return "itemdetails.html?id=" + id + contextSuffix + '&serverId=' + serverId;
                 }
 
                 if (item.IsFolder) {
-                    return id ? "itemlist.html?parentId=" + id : "#";
+                    return id ? "itemlist.html?parentId=" + id + '&serverId=' + serverId : "#";
                 }
 
-                return "itemdetails.html?id=" + id;
+                return "itemdetails.html?id=" + id + '&serverId=' + serverId;
             };
 
             function showItem(item, serverId, options) {

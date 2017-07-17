@@ -5,7 +5,7 @@
 
         var data = {};
 
-        var apiClient = params.serverId ? connectionManager.getApiClient(params.serverId) : ApiClient;
+        var apiClient = connectionManager.getApiClient(params.serverId);
 
         function addCurrentItemToQuery(query, item) {
 

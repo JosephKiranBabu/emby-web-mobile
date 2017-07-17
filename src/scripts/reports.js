@@ -99,16 +99,16 @@
                 var id = rRow.Id;
                 if (rItem.Id)
                     id = rItem.Id;
-                html += '<a is="emby-linkbutton" href="itemdetails.html?id=' + id + '">' + rItem.Name + '</a>';
+                html += '<a is="emby-linkbutton" href="itemdetails.html?serverId=' + rItem.ServerId + '&id=' + id + '">' + rItem.Name + '</a>';
                 break;
             case "Edit":
                 html += '<a is="emby-linkbutton" href="edititemmetadata.html?id=' + rRow.Id + '">' + rItem.Name + '</a>';
                 break;
             case "List":
-                html += '<a is="emby-linkbutton" href="itemlist.html?id=' + rRow.Id + '">' + rItem.Name + '</a>';
+                html += '<a is="emby-linkbutton" href="itemlist.html?serverId=' + rItem.ServerId + '&id=' + rRow.Id + '">' + rItem.Name + '</a>';
                 break;
             case "ItemByNameDetails":
-                html += '<a is="emby-linkbutton" href="itemdetails.html?id=' + rItem.Id + '&context=' + rRow.RowType + '">' + rItem.Name + '</a>';
+                html += '<a is="emby-linkbutton" href="itemdetails.html?serverId=' + rItem.ServerId + '&id=' + rItem.Id + '&context=' + rRow.RowType + '">' + rItem.Name + '</a>';
                 break;
             case "EmbeddedImage":
                 if (rRow.HasEmbeddedImage) {

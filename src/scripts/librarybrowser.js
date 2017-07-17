@@ -168,7 +168,7 @@
             });
         },
 
-        getArtistLinksHtml: function (artists, cssClass) {
+        getArtistLinksHtml: function (artists, serverId, cssClass) {
 
             var html = [];
 
@@ -179,7 +179,7 @@
                 var artist = artists[i];
 
                 var css = cssClass ? (' class="' + cssClass + '"') : '';
-                html.push('<a' + css + ' is="emby-linkbutton" href="itemdetails.html?id=' + artist.Id + '">' + artist.Name + '</a>');
+                html.push('<a' + css + ' is="emby-linkbutton" href="itemdetails.html?serverId=' + serverId + '&id=' + artist.Id + '">' + artist.Name + '</a>');
 
             }
 
@@ -232,9 +232,9 @@
             var contextParam = context ? ('&context=' + context) : '';
 
             if (item.AlbumArtists) {
-                html.push(libraryBrowser.getArtistLinksHtml(item.AlbumArtists, "detailPageParentLink"));
+                html.push(libraryBrowser.getArtistLinksHtml(item.AlbumArtists, item.ServerId, "detailPageParentLink"));
             } else if (item.ArtistItems && item.ArtistItems.length && item.Type == "MusicVideo") {
-                html.push(libraryBrowser.getArtistLinksHtml(item.ArtistItems, "detailPageParentLink"));
+                html.push(libraryBrowser.getArtistLinksHtml(item.ArtistItems, item.ServerId, "detailPageParentLink"));
             } else if (item.SeriesName && item.Type == "Episode") {
 
                 html.push('<a class="detailPageParentLink button-link" is="emby-linkbutton" href="itemdetails.html?id=' + item.SeriesId + contextParam + '">' + item.SeriesName + '</a>');

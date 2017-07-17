@@ -77,7 +77,7 @@
 
                 if (!layoutManager.tv && options.Limit && result.Items.length >= options.Limit) {
 
-                    var href = "secondaryitems.html?type=" + section.types + "&filters=IsFavorite";
+                    var href = "secondaryitems.html?serverId=" + ApiClient.serverId() + "&type=" + section.types + "&filters=IsFavorite";
 
                     html += '<a is="emby-linkbutton" href="' + href + '" class="more button-flat button-flat-mini sectionTitleTextButton">';
                     html += '<h2 class="sectionTitle sectionTitle-cards">';

@@ -322,22 +322,22 @@
     function getMoreItemsHref(item, type) {
 
         if (item.Type == 'Genre' || item.Type == 'MusicGenre' || item.Type == 'GameGenre') {
-            return 'secondaryitems.html?type=' + type + '&genreId=' + item.Id;
+            return 'secondaryitems.html?type=' + type + '&genreId=' + item.Id + '&serverId=' + item.ServerId;
         }
 
         if (item.Type == 'Studio') {
-            return 'secondaryitems.html?type=' + type + '&studioId=' + item.Id;
+            return 'secondaryitems.html?type=' + type + '&studioId=' + item.Id + '&serverId=' + item.ServerId;
         }
 
         if (item.Type == 'MusicArtist') {
-            return 'secondaryitems.html?type=' + type + '&artistId=' + item.Id;
+            return 'secondaryitems.html?type=' + type + '&artistId=' + item.Id + '&serverId=' + item.ServerId;
         }
 
         if (item.Type == 'Person') {
-            return 'secondaryitems.html?type=' + type + '&personId=' + item.Id;
+            return 'secondaryitems.html?type=' + type + '&personId=' + item.Id + '&serverId=' + item.ServerId;
         }
 
-        return 'secondaryitems.html?type=' + type + '&parentId=' + item.Id;
+        return 'secondaryitems.html?type=' + type + '&parentId=' + item.Id + '&serverId=' + item.ServerId;
     }
 
     function addCurrentItemToQuery(query, item) {

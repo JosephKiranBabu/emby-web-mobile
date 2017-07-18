@@ -1148,6 +1148,9 @@ var AppInfo = {};
                     if (item === 'downloads') {
                         return 'offline/offline.html';
                     }
+                    if (item === 'downloadsettings') {
+                        return 'mysyncsettings.html';
+                    }
                     if (item === 'managedownloads') {
                         return 'managedownloads.html';
                     }

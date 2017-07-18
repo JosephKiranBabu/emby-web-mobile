@@ -1,5 +1,5 @@
-﻿define(['datetime', 'jQuery', 'events', 'dom', 'globalize', 'loading', 'connectionManager', 'playMethodHelper', 'libraryBrowser', 'humanedate', 'cardStyle', 'listViewStyle', 'emby-linkbutton', 'flexStyles', 'buttonenabled', 'emby-button'],
-    function (datetime, $, events, dom, globalize, loading, connectionManager, playMethodHelper, libraryBrowser) {
+﻿define(['datetime', 'jQuery', 'events', 'dom', 'globalize', 'loading', 'connectionManager', 'playMethodHelper', 'libraryBrowser', 'cardBuilder', 'imageLoader', 'humanedate', 'listViewStyle', 'emby-linkbutton', 'flexStyles', 'buttonenabled', 'emby-button', 'emby-itemscontainer'],
+    function (datetime, $, events, dom, globalize, loading, connectionManager, playMethodHelper, libraryBrowser, cardBuilder, imageLoader) {
         'use strict';
 
         function onConnectionHelpClick(e) {
@@ -1568,6 +1568,47 @@
 
         });
 
+        function refreshActiveRecordings(view, apiClient) {
+
+            apiClient.getLiveTvRecordings({
+                UserId: Dashboard.getCurrentUserId(),
+                IsInProgress: true,
+                Fields: 'CanDelete,PrimaryImageAspectRatio',
+                EnableTotalRecordCount: false,
+                EnableImageTypes: "Primary,Thumb,Backdrop"
+
+            }).then(function (result) {
+
+                var itemsContainer = view.querySelector('.activeRecordingItems');
+
+                if (!result.Items.length) {
+                    view.querySelector('.activeRecordingsSection').classList.add('hide');
+                    itemsContainer.innerHTML = '';
+                    return;
+                }
+
+                view.querySelector('.activeRecordingsSection').classList.remove('hide');
+
+                var cardLayout = false;
+
+                itemsContainer.innerHTML = cardBuilder.getCardsHtml({
+
+                    items: result.Items,
+                    shape: 'auto',
+                    defaultShape: 'backdrop',
+                    showTitle: true,
+                    showParentTitle: true,
+                    coverImage: true,
+                    cardLayout: cardLayout,
+                    centerText: !cardLayout,
+                    preferThumb: 'auto',
+                    overlayText: false
+                });
+
+                imageLoader.lazyChildren(itemsContainer);
+            });
+        }
+
         return function (view, params) {
 
 
@@ -1620,6 +1661,8 @@
                 if (apiClient && !AppInfo.isNativeApp) {
                     showWelcomeIfNeeded(page, apiClient);
                 }
+
+                refreshActiveRecordings(view, apiClient);
             });
 
             view.addEventListener('viewbeforehide', function () {

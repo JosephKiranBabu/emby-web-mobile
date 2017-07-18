@@ -350,7 +350,7 @@
 
             updatePageStyle(view, params);
 
-            view.querySelector('.btnOfflineText').innerHTML = globalize.translate('sharedcomponents#HeaderDownloadedMedia');
+            view.querySelector('.btnOfflineText').innerHTML = globalize.translate('sharedcomponents#HeaderMyDownloads');
 
             if (appHost.supports('sync')) {
                 view.querySelector('.btnOffline').classList.remove('hide');

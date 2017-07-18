@@ -696,7 +696,7 @@
 }
 
 .verticalSection {
-    margin-bottom: 2.1em;
+    margin-bottom: 2em;
 }
 
 .layout-tv .verticalSection {
@@ -785,17 +785,6 @@
     padding-right: 2%;
 }
 
-@media all and (min-height: 500px) {
-
-    .padded-left-withalphapicker {
-        padding-left: 6%;
-    }
-
-    .padded-right-withalphapicker {
-        padding-right: 6%;
-    }
-}
-
 .padded-top {
     padding-top: 1em;
 }
@@ -812,6 +801,17 @@
 .layout-tv .padded-bottom-focusscale {
     padding-bottom: 1.6em;
     margin-bottom: -1.6em;
+}
+
+@media all and (min-height: 500px) {
+
+    .padded-left-withalphapicker {
+        padding-left: 6%;
+    }
+
+    .padded-right-withalphapicker {
+        padding-right: 6%;
+    }
 }
 
 @media all and (min-width: 600px) {
@@ -834,6 +834,20 @@
     .padded-right {
         padding-right: 3.2%;
     }
+}
+
+@media all and (min-width: 1280px) {
+
+    .padded-left {
+        padding-left: 3.4%;
+    }
+
+    .padded-right {
+        padding-right: 3.4%;
+    }
+}
+
+@media all and (min-width: 800px) {
 
     .layout-tv .padded-left-withalphapicker {
         padding-left: 4.4%;
@@ -845,14 +859,6 @@
 }
 
 @media all and (min-width: 1280px) {
-
-    .padded-left {
-        padding-left: 3.5%;
-    }
-
-    .padded-right {
-        padding-right: 3.5%;
-    }
 
     .layout-tv .padded-left-withalphapicker {
         padding-left: 5%;

@@ -300,8 +300,8 @@
         });
 
         function goBack() {
-            require(['embyRouter'], function (embyRouter) {
-                embyRouter.back();
+            require(['appRouter'], function (appRouter) {
+                appRouter.back();
             });
         }
 

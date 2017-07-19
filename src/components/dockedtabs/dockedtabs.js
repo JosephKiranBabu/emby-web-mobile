@@ -1,4 +1,4 @@
-﻿define(['apphost', 'connectionManager', 'events', 'globalize', 'browser', 'require', 'dom', 'embyRouter', 'emby-tabs'], function (appHost, connectionManager, events, globalize, browser, require, dom, embyRouter) {
+﻿define(['apphost', 'connectionManager', 'events', 'globalize', 'browser', 'require', 'dom', 'appRouter', 'emby-tabs'], function (appHost, connectionManager, events, globalize, browser, require, dom, appRouter) {
     'use strict';
 
     // Make sure this is pulled in after button and tab css

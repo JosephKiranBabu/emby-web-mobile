@@ -1,4 +1,4 @@
-﻿define(['layoutManager', 'loading', 'libraryBrowser', 'cardBuilder', 'lazyLoader', 'apphost', 'globalize', 'embyRouter', 'dom', 'emby-linkbutton'], function (layoutManager, loading, libraryBrowser, cardBuilder, lazyLoader, appHost, globalize, embyRouter, dom) {
+﻿define(['layoutManager', 'loading', 'libraryBrowser', 'cardBuilder', 'lazyLoader', 'apphost', 'globalize', 'appRouter', 'dom', 'emby-linkbutton'], function (layoutManager, loading, libraryBrowser, cardBuilder, lazyLoader, appHost, globalize, appRouter, dom) {
     'use strict';
 
     return function (view, params, tabContent) {
@@ -171,7 +171,7 @@
                     html += '<div class="verticalSection">';
 
                     html += '<div class="sectionTitleContainer padded-left">';
-                    html += '<a is="emby-linkbutton" href="' + embyRouter.getRouteUrl(item, {
+                    html += '<a is="emby-linkbutton" href="' + appRouter.getRouteUrl(item, {
                         context: 'tvshows',
                         parentId: params.topParentId
                     }) + '" class="more button-flat button-flat-mini sectionTitleTextButton btnMoreFromGenre' + item.Id + '">';

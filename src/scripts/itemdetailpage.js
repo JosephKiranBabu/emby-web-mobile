@@ -1,4 +1,4 @@
-﻿define(['loading', 'embyRouter', 'layoutManager', 'connectionManager', 'cardBuilder', 'datetime', 'mediaInfo', 'backdrop', 'listView', 'itemContextMenu', 'itemHelper', 'dom', 'indicators', 'apphost', 'imageLoader', 'libraryMenu', 'globalize', 'browser', 'events', 'scrollHelper', 'playbackManager', 'libraryBrowser', 'scrollStyles', 'emby-itemscontainer', 'emby-checkbox', 'emby-linkbutton', 'emby-playstatebutton', 'emby-ratingbutton', 'emby-downloadbutton'], function (loading, embyRouter, layoutManager, connectionManager, cardBuilder, datetime, mediaInfo, backdrop, listView, itemContextMenu, itemHelper, dom, indicators, appHost, imageLoader, libraryMenu, globalize, browser, events, scrollHelper, playbackManager, libraryBrowser) {
+﻿define(['loading', 'appRouter', 'layoutManager', 'connectionManager', 'cardBuilder', 'datetime', 'mediaInfo', 'backdrop', 'listView', 'itemContextMenu', 'itemHelper', 'dom', 'indicators', 'apphost', 'imageLoader', 'libraryMenu', 'globalize', 'browser', 'events', 'scrollHelper', 'playbackManager', 'libraryBrowser', 'scrollStyles', 'emby-itemscontainer', 'emby-checkbox', 'emby-linkbutton', 'emby-playstatebutton', 'emby-ratingbutton', 'emby-downloadbutton'], function (loading, appRouter, layoutManager, connectionManager, cardBuilder, datetime, mediaInfo, backdrop, listView, itemContextMenu, itemHelper, dom, indicators, appHost, imageLoader, libraryMenu, globalize, browser, events, scrollHelper, playbackManager, libraryBrowser) {
     'use strict';
 
     function getPromise(apiClient, params) {
@@ -1068,7 +1068,7 @@
 
                 var context = inferContext(item);
 
-                var href = embyRouter.getRouteUrl(item.Studios[0], {
+                var href = appRouter.getRouteUrl(item.Studios[0], {
                     context: context,
                     itemType: 'Studio',
                     serverId: item.ServerId
@@ -1491,7 +1491,7 @@
                 } else {
 
                     item.Studios[i].Type = 'Studio';
-                    var href = embyRouter.getRouteUrl(item.Studios[0], {
+                    var href = appRouter.getRouteUrl(item.Studios[0], {
                         context: context,
                         serverId: item.ServerId
                     });
@@ -2319,7 +2319,7 @@
                 itemContextMenu.show(getContextMenuOptions(currentItem, user, button)).then(function (result) {
 
                     if (result.deleted) {
-                        embyRouter.goHome();
+                        appRouter.goHome();
 
                     } else if (result.updated) {
                         reload(self, view, params);

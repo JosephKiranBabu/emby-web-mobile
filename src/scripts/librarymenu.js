@@ -1,4 +1,4 @@
-﻿define(['layoutManager', 'connectionManager', 'events', 'viewManager', 'libraryBrowser', 'embyRouter', 'apphost', 'playbackManager', 'browser', 'globalize', 'paper-icon-button-light', 'material-icons', 'scrollStyles', 'flexStyles'], function (layoutManager, connectionManager, events, viewManager, libraryBrowser, embyRouter, appHost, playbackManager, browser, globalize) {
+﻿define(['layoutManager', 'connectionManager', 'events', 'viewManager', 'libraryBrowser', 'appRouter', 'apphost', 'playbackManager', 'browser', 'globalize', 'paper-icon-button-light', 'material-icons', 'scrollStyles', 'flexStyles'], function (layoutManager, connectionManager, events, viewManager, libraryBrowser, appRouter, appHost, playbackManager, browser, globalize) {
     'use strict';
 
     var enableLibraryNavDrawer = layoutManager.desktop;
@@ -74,7 +74,7 @@
 
     function onBackClick() {
 
-        embyRouter.back();
+        appRouter.back();
     }
 
     function updateUserInHeader(user) {
@@ -223,7 +223,7 @@
 
     function getItemHref(item, context) {
 
-        return embyRouter.getRouteUrl(item, {
+        return appRouter.getRouteUrl(item, {
             context: context
         });
     }
@@ -1087,7 +1087,7 @@
         }
 
         if (headerBackButton) {
-            if (page.getAttribute('data-backbutton') !== 'false' && embyRouter.canGoBack()) {
+            if (page.getAttribute('data-backbutton') !== 'false' && appRouter.canGoBack()) {
                 headerBackButton.classList.remove('hide');
             } else {
                 headerBackButton.classList.add('hide');

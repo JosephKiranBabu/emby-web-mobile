@@ -1,4 +1,4 @@
-﻿define(['appSettings', 'dom', 'browser', 'datetime', 'embyRouter', 'events', 'scrollStyles'], function (appSettings, dom, browser, datetime, embyRouter, events) {
+﻿define(['appSettings', 'dom', 'browser', 'datetime', 'appRouter', 'events', 'scrollStyles'], function (appSettings, dom, browser, datetime, appRouter, events) {
     'use strict';
 
     function fadeInRight(elem) {
@@ -216,7 +216,7 @@
                 });
 
                 if (linkToElement) {
-                    nameElem.innerHTML = '<a class="detailPageParentLink button-link" is="emby-linkbutton" href="' + embyRouter.getRouteUrl(item, {
+                    nameElem.innerHTML = '<a class="detailPageParentLink button-link" is="emby-linkbutton" href="' + appRouter.getRouteUrl(item, {
                         context: context
                     }) + '">' + name + '</a>';
                 } else {

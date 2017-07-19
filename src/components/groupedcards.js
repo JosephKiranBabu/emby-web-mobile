@@ -1,4 +1,4 @@
-﻿define(['dom', 'embyRouter', 'connectionManager'], function (dom, embyRouter, connectionManager) {
+﻿define(['dom', 'appRouter', 'connectionManager'], function (dom, appRouter, connectionManager) {
     'use strict';
 
     function onGroupedCardClick(e, card) {
@@ -30,7 +30,7 @@
         apiClient.getJSON(apiClient.getUrl('Users/' + userId + '/Items/Latest', options)).then(function (items) {
 
             if (items.length == 1) {
-                embyRouter.showItem(items[0]);
+                appRouter.showItem(items[0]);
                 return;
             }
 

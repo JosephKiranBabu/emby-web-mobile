@@ -142,8 +142,8 @@ var Dashboard = {
 
         return new Promise(function (resolve, reject) {
 
-            require(['embyRouter'], function (embyRouter) {
-                return embyRouter.show(url).then(resolve, reject);
+            require(['appRouter'], function (appRouter) {
+                return appRouter.show(url).then(resolve, reject);
             });
         });
     },
@@ -1003,7 +1003,6 @@ var AppInfo = {};
         define("userSettingsBuilder", [embyWebComponentsBowerPath + "/usersettings/usersettingsbuilder"], returnFirstDependency);
 
         define("material-icons", ['css!' + embyWebComponentsBowerPath + '/fonts/material-icons/style'], returnFirstDependency);
-        define("robotoFont", ['css!fonts/roboto/style'], returnFirstDependency);
         define("scrollStyles", ['css!' + embyWebComponentsBowerPath + '/scrollstyles'], returnFirstDependency);
 
         define("navdrawer", ['components/navdrawer/navdrawer'], returnFirstDependency);
@@ -1031,7 +1030,7 @@ var AppInfo = {};
         define("inputmanager", ['inputManager'], returnFirstDependency);
 
         // alias
-        define("historyManager", ['embyRouter'], returnFirstDependency);
+        define("historyManager", ['appRouter'], returnFirstDependency);
 
         define("headroom-window", ['headroom'], createWindowHeadroom);
         define("appFooter-shared", ['appFooter'], createSharedAppFooter);
@@ -1042,8 +1041,8 @@ var AppInfo = {};
             return {
                 loadUserSkin: function () {
 
-                    require(['embyRouter'], function (embyRouter) {
-                        embyRouter.goHome();
+                    require(['appRouter'], function (appRouter) {
+                        appRouter.goHome();
                     });
                 }
             };
@@ -1059,17 +1058,17 @@ var AppInfo = {};
             };
         });
 
-        define("embyRouter", [embyWebComponentsBowerPath + '/router', 'itemHelper'], function (embyRouter, itemHelper) {
+        define("appRouter", [embyWebComponentsBowerPath + '/router', 'itemHelper'], function (appRouter, itemHelper) {
 
-            embyRouter.showLocalLogin = function (serverId, manualLogin) {
+            appRouter.showLocalLogin = function (serverId, manualLogin) {
                 Dashboard.navigate('login.html?serverid=' + serverId);
             };
 
-            embyRouter.showVideoOsd = function () {
+            appRouter.showVideoOsd = function () {
                 return Dashboard.navigate('videoosd.html');
             };
 
-            embyRouter.showSelectServer = function () {
+            appRouter.showSelectServer = function () {
                 if (Dashboard.isConnectMode()) {
                     Dashboard.navigate('selectserver.html');
                 } else {
@@ -1077,7 +1076,7 @@ var AppInfo = {};
                 }
             };
 
-            embyRouter.showWelcome = function () {
+            appRouter.showWelcome = function () {
 
                 if (Dashboard.isConnectMode()) {
                     Dashboard.navigate('connectlogin.html?mode=welcome');
@@ -1086,52 +1085,52 @@ var AppInfo = {};
                 }
             };
 
-            embyRouter.showConnectLogin = function () {
+            appRouter.showConnectLogin = function () {
 
                 Dashboard.navigate('connectlogin.html');
             };
 
-            embyRouter.showSettings = function () {
+            appRouter.showSettings = function () {
                 Dashboard.navigate('mypreferencesmenu.html');
             };
 
-            embyRouter.showGuide = function () {
+            appRouter.showGuide = function () {
                 Dashboard.navigate('livetv.html?tab=1');
             };
 
-            embyRouter.goHome = function () {
+            appRouter.goHome = function () {
                 Dashboard.navigate('home.html');
             };
 
-            embyRouter.showSearch = function () {
+            appRouter.showSearch = function () {
                 Dashboard.navigate('search.html');
             };
 
-            embyRouter.showLiveTV = function () {
+            appRouter.showLiveTV = function () {
                 Dashboard.navigate('livetv.html');
             };
 
-            embyRouter.showRecordedTV = function () {
+            appRouter.showRecordedTV = function () {
                 Dashboard.navigate('livetv.html?tab=3');
             };
 
-            embyRouter.showFavorites = function () {
+            appRouter.showFavorites = function () {
                 Dashboard.navigate('home.html?tab=1');
             };
 
-            embyRouter.showSettings = function () {
+            appRouter.showSettings = function () {
                 Dashboard.navigate('mypreferencesmenu.html');
             };
 
-            embyRouter.showNowPlaying = function () {
+            appRouter.showNowPlaying = function () {
                 Dashboard.navigate('nowplaying.html');
             };
 
-            embyRouter.setTitle = function (title) {
+            appRouter.setTitle = function (title) {
                 LibraryMenu.setTitle(title);
             };
 
-            embyRouter.getRouteUrl = function (item, options) {
+            appRouter.getRouteUrl = function (item, options) {
 
                 if (!item) {
                     throw new Error('item cannot be null');
@@ -1376,7 +1375,7 @@ var AppInfo = {};
                     require(['connectionManager'], function (connectionManager) {
                         var apiClient = connectionManager.currentApiClient();
                         apiClient.getItem(apiClient.getCurrentUserId(), item).then(function (item) {
-                            embyRouter.showItem(item, options);
+                            appRouter.showItem(item, options);
                         });
                     });
                 } else {
@@ -1385,13 +1384,13 @@ var AppInfo = {};
                         options = arguments[1];
                     }
 
-                    embyRouter.show('/' + embyRouter.getRouteUrl(item, options), { item: item });
+                    appRouter.show('/' + appRouter.getRouteUrl(item, options), { item: item });
                 }
             }
 
-            embyRouter.showItem = showItem;
+            appRouter.showItem = showItem;
 
-            return embyRouter;
+            return appRouter;
         });
     }
 
@@ -2567,7 +2566,7 @@ var AppInfo = {};
         var deps = [];
 
         deps.push('apphost');
-        deps.push('embyRouter');
+        deps.push('appRouter');
 
         if (browserInfo.iOS) {
             document.documentElement.classList.add('smallerFontSize');
@@ -2655,12 +2654,6 @@ var AppInfo = {};
 
             if (navigator.mediaSession) {
                 postInitDependencies.push('mediaSession');
-            }
-
-            // Prefer custom font over Segoe if on desktop windows
-            if (!browserInfo.mobile && navigator.userAgent.toLowerCase().indexOf('windows') != -1) {
-                //postInitDependencies.push('opensansFont');
-                postInitDependencies.push('robotoFont');
             }
 
             postInitDependencies.push('bower_components/emby-webcomponents/input/api');

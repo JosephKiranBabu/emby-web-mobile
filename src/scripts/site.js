@@ -830,6 +830,8 @@ var AppInfo = {};
         define("searchFields", [embyWebComponentsBowerPath + "/search/searchfields"], returnFirstDependency);
         define("searchResults", [embyWebComponentsBowerPath + "/search/searchresults"], returnFirstDependency);
 
+        define("upNextDialog", [embyWebComponentsBowerPath + "/upnextdialog/upnextdialog"], returnFirstDependency);
+
         define("fullscreen-doubleclick", [embyWebComponentsBowerPath + "/fullscreen/fullscreen-doubleclick"], returnFirstDependency);
         define("fullscreenManager", [embyWebComponentsBowerPath + "/fullscreen/fullscreenmanager", 'events'], returnFirstDependency);
 

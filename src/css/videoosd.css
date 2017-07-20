@@ -1,7 +1,6 @@
 ﻿.osdHeader {
     padding-bottom: 3vh;
-    transition: transform 300ms ease-out, opacity 300ms ease-out;
-    will-change: transform;
+    transition: opacity 300ms ease-out;
     position: relative;
     z-index: 1;
     background-color: rgba(0, 0, 0, .3);
@@ -11,17 +10,11 @@
 }
 
 .osdHeader-hidden {
-    transform: translate3d(0,-100%,0);
     opacity: 0;
 }
 
 .osdHeader .headerButton:not(.headerBackButton) {
     display: none;
-}
-
-.osdHeader-hidden {
-    transform: translate3d(0,-100%,0);
-    opacity: 0;
 }
 
 .chapterThumbContainer {
@@ -122,10 +115,6 @@
 .osdTimeText {
     margin-left: 1em;
     user-select: none;
-}
-
-.mouseIdle .videoOsdBottom .volumeButtons {
-    display: none;
 }
 
 .osdPoster {

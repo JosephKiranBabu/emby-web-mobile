@@ -419,7 +419,7 @@
 
             console.log("Reconnect attempt failed to " + url);
 
-            if (currentRetryCount < 5) {
+            if (currentRetryCount < 4) {
 
                 var newConnectionMode = switchConnectionMode(instance, connectionMode);
 

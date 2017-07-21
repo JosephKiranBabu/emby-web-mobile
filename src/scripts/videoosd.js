@@ -595,7 +595,7 @@
                 case 'left':
                     if (currentVisibleMenu === 'osd') {
                         showOsd();
-                    } else {
+                    } else if (!currentVisibleMenu) {
                         e.preventDefault();
                         playbackManager.rewind();
                     }
@@ -603,7 +603,7 @@
                 case 'right':
                     if (currentVisibleMenu === 'osd') {
                         showOsd();
-                    } else {
+                    } else if (!currentVisibleMenu) {
                         e.preventDefault();
                         playbackManager.fastForward();
                     }
@@ -778,6 +778,7 @@
             var player = this;
 
             onStateChanged.call(player, e, state);
+            resetUpNextDialog();
         }
 
         function resetUpNextDialog() {
@@ -839,6 +840,7 @@
         function releaseCurrentPlayer() {
 
             destroyStats();
+            resetUpNextDialog();
 
             var player = currentPlayer;
 
@@ -854,8 +856,6 @@
 
                 currentPlayer = null;
             }
-
-            resetUpNextDialog();
         }
 
         function onTimeUpdate(e) {
@@ -915,10 +915,6 @@
         }
 
         function showComingUpNext(player, timeRemainingTicks, endTimeMs) {
-
-            if (currentVisibleMenu) {
-                return;
-            }
 
             require(['upNextDialog'], function (UpNextDialog) {
 

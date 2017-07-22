@@ -1,8 +1,12 @@
-﻿define(['jQuery', 'loading'], function ($, loading) {
+﻿define(['loading', 'connectHelper', 'globalize', 'dashboardcss', 'emby-input', 'emby-button'], function (loading, connectHelper, globalize) {
     'use strict';
 
     function getApiClient() {
         return ApiClient;
+    }
+
+    function nextWizardPage() {
+        Dashboard.navigate('wizardlibrary.html');
     }
 
     function onUpdateUserComplete(result) {
@@ -14,17 +18,14 @@
             var msgKey = result.UserLinkResult.IsPending ? 'MessagePendingEmbyAccountAdded' : 'MessageEmbyAccountAdded';
 
             Dashboard.alert({
-                message: Globalize.translate(msgKey),
-                title: Globalize.translate('HeaderEmbyAccountAdded'),
+                message: globalize.translate(msgKey),
+                title: globalize.translate('HeaderEmbyAccountAdded'),
 
-                callback: function () {
-                    Dashboard.navigate('wizardlibrary.html');
-                }
-
+                callback: nextWizardPage
             });
 
         } else {
-            Dashboard.navigate('wizardlibrary.html');
+            nextWizardPage();
         }
     }
 
@@ -46,46 +47,23 @@
             url: apiClient.getUrl('Startup/User'),
             dataType: 'json'
 
-        }).then(onUpdateUserComplete, function () {
+        }).then(onUpdateUserComplete, function (response) {
 
-            showEmbyConnectErrorMessage(form.querySelector('#txtConnectUserName').value);
+            var statusCode = response ? response.status : 0;
+            connectHelper.showLinkUserErrorMessage(form.querySelector('#txtConnectUserName').value);
         });
     }
 
-    function showEmbyConnectErrorMessage(username) {
-
-        var msg;
-
-        if (username) {
-
-            msg = Globalize.translate('ErrorAddingEmbyConnectAccount1', '<a href="https://emby.media/connect" target="_blank">https://emby.media/connect</a>');
-            msg += '<br/><br/>' + Globalize.translate('ErrorAddingEmbyConnectAccount2', 'apps@emby.media');
-
-        } else {
-            msg = Globalize.translate('DefaultErrorMessage');
-        }
-
-        Dashboard.alert({
-
-            message: msg
-
-        });
-    }
-
-    function onSubmit() {
+    function onSubmit(e) {
         var form = this;
 
         submit(form);
 
+        e.preventDefault();
         return false;
     }
 
-    $(document).on('pageinit', "#wizardUserPage", function () {
-
-        $('.wizardUserForm').off('submit', onSubmit).on('submit', onSubmit);
-
-    }).on('pageshow', "#wizardUserPage", function () {
-
+    function onViewShow() {
         loading.show();
 
         var page = this;
@@ -99,6 +77,12 @@
 
             loading.hide();
         });
-    });
+    }
 
+    return function (view, params) {
+
+        view.querySelector('.wizardUserForm').addEventListener('submit', onSubmit);
+
+        view.addEventListener('viewshow', onViewShow);
+    };
 });

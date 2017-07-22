@@ -1657,7 +1657,12 @@ var AppInfo = {};
 
         document.title = Globalize.translateDocument(document.title, 'core');
 
-        require(['apphost'], function (appHost) {
+        var deps = [
+            'apphost',
+            'css!css/librarybrowser'
+        ];
+
+        require(deps, function (appHost) {
 
             loadPlugins([], appHost, browserInfo).then(onAppReady);
         });
@@ -2416,6 +2421,7 @@ var AppInfo = {};
         defineRoute({
             path: '/wizarduser.html',
             dependencies: ['dashboardcss', 'emby-input'],
+            controller: 'scripts/wizarduserpage',
             autoFocus: false,
             anonymous: true
         });

@@ -15,6 +15,12 @@
         }
     }
 
+    function syncNow() {
+        require(['localsync'], function (localSync) {
+            localSync.sync();
+        });
+    }
+
     function cancelJob(listInstance, id) {
 
         require(['confirm'], function (confirm) {
@@ -37,6 +43,10 @@
                     type: 'DELETE'
 
                 }).then(function () {
+
+                    if (listInstance.options.isLocalSync) {
+                        syncNow();
+                    }
 
                     fetchData(listInstance);
                 });
@@ -379,8 +389,11 @@
             // edit job
             require(['syncJobEditor'], function (syncJobEditor) {
                 syncJobEditor.show({
+
                     serverId: listInstance.options.serverId,
-                    jobId: jobId
+                    jobId: jobId,
+                    isLocalSync: listInstance.options.isLocalSync
+
                 }).then(function () {
                     fetchData(listInstance);
                 });

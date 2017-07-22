@@ -238,6 +238,8 @@
             } else if (item.SeriesName && item.Type == "Episode") {
 
                 html.push('<a class="detailPageParentLink button-link" is="emby-linkbutton" href="itemdetails.html?id=' + item.SeriesId + contextParam + '">' + item.SeriesName + '</a>');
+            } else if (item.IsSeries || item.EpisodeTitle) {
+                html.push(item.Name);
             }
 
             if (item.SeriesName && item.Type == "Season") {
@@ -248,6 +250,10 @@
 
                 html.push('<a class="detailPageParentLink button-link" is="emby-linkbutton" href="itemdetails.html?id=' + item.SeasonId + contextParam + '">' + item.SeasonName + '</a>');
 
+            } else if (item.ParentIndexNumber != null && item.IsSeries) {
+
+                html.push(item.SeasonName || ('S' + item.ParentIndexNumber));
+
             } else if (item.Album && item.Type == "Audio" && (item.AlbumId || item.ParentId)) {
                 html.push('<a class="detailPageParentLink button-link" is="emby-linkbutton" href="itemdetails.html?id=' + (item.AlbumId || item.ParentId) + contextParam + '">' + item.Album + '</a>');
 
@@ -256,9 +262,7 @@
 
             } else if (item.Album) {
                 html.push(item.Album);
-            } else if (item.IsSeries || item.EpisodeTitle) {
-                html.push(item.Name);
-            }
+            } 
 
             if (html.length) {
                 parentNameElem.classList.remove('hide');

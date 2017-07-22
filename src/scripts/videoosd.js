@@ -124,13 +124,15 @@
             var player = currentPlayer;
             if (player) {
 
+                var deltaY = data.currentDeltaY;
+
                 var windowSize = dom.getWindowSize();
 
                 if (supportsBrightnessChange && data.clientX < (windowSize.innerWidth / 2)) {
-                    doBrightnessTouch(data.deltaY, player, windowSize.innerHeight);
+                    doBrightnessTouch(deltaY, player, windowSize.innerHeight);
                     return;
                 }
-                doVolumeTouch(data.deltaY, player, windowSize.innerHeight);
+                doVolumeTouch(deltaY, player, windowSize.innerHeight);
             }
         }
 

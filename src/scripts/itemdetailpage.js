@@ -284,7 +284,7 @@
         setInitialCollapsibleState(page, item, context, user);
         renderDetails(page, item, context);
 
-        if (dom.getWindowSize().innerWidth >= 800) {
+        if (dom.getWindowSize().innerWidth >= 1000) {
             backdrop.setBackdrops([item]);
         } else {
             backdrop.clear();

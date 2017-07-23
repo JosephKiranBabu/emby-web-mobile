@@ -57,6 +57,7 @@
 
                 page.querySelector('.chkPlayDefaultAudioTrack').checked = user.Configuration.PlayDefaultAudioTrack || false;
                 page.querySelector('.chkEnableCinemaMode').checked = userSettingsInstance.enableCinemaMode();
+                page.querySelector('.chkEnableNextVideoOverlay').checked = userSettingsInstance.enableNextVideoInfoOverlay();
                 page.querySelector('.chkExternalVideoPlayer').checked = appSettings.enableExternalPlayers();
 
                 require(['qualityoptions'], function (qualityoptions) {
@@ -129,8 +130,11 @@
             user.Configuration.SubtitleMode = page.querySelector('#selectSubtitlePlaybackMode').value;
             user.Configuration.PlayDefaultAudioTrack = page.querySelector('.chkPlayDefaultAudioTrack').checked;
             user.Configuration.EnableNextEpisodeAutoPlay = page.querySelector('.chkEpisodeAutoPlay').checked;
+
             if (userSettingsLoaded) {
                 userSettingsInstance.enableCinemaMode(page.querySelector('.chkEnableCinemaMode').checked);
+
+                userSettingsInstance.enableNextVideoInfoOverlay(page.querySelector('.chkEnableNextVideoOverlay').checked);
 
                 if (userId === Dashboard.getCurrentUserId()) {
                     refreshGlobalUserSettings();

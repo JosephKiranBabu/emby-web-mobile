@@ -571,7 +571,6 @@ var AppInfo = {};
                             var apiClient = new apiClientFactory(Dashboard.serverAddress(), appInfo.appName, appInfo.appVersion, appInfo.deviceName, appInfo.deviceId, window.devicePixelRatio);
                             apiClient.enableAutomaticNetworking = false;
                             connectionManager.addApiClient(apiClient);
-                            require(['css!' + apiClient.getUrl('Branding/Css')]);
                             window.ApiClient = apiClient;
                             localApiClient = apiClient;
                             console.log('loaded ApiClient singleton');
@@ -1005,6 +1004,9 @@ var AppInfo = {};
         define("userSettingsBuilder", [embyWebComponentsBowerPath + "/usersettings/usersettingsbuilder"], returnFirstDependency);
 
         define("material-icons", ['css!' + embyWebComponentsBowerPath + '/fonts/material-icons/style'], returnFirstDependency);
+        define("systemFontsCss", ['css!' + embyWebComponentsBowerPath + '/fonts/fonts'], returnFirstDependency);
+        define("systemFontsSizedCss", ['css!' + embyWebComponentsBowerPath + '/fonts/fonts.sized'], returnFirstDependency);
+
         define("scrollStyles", ['css!' + embyWebComponentsBowerPath + '/scrollstyles'], returnFirstDependency);
 
         define("navdrawer", ['components/navdrawer/navdrawer'], returnFirstDependency);
@@ -1658,9 +1660,24 @@ var AppInfo = {};
         document.title = Globalize.translateDocument(document.title, 'core');
 
         var deps = [
-            'apphost',
-            'css!css/librarybrowser'
+            'apphost'
         ];
+
+        if (browserInfo.tv && !browserInfo.android) {
+
+            console.log("Using system fonts with explicit sizes");
+            // This is a stylesheet in shared components designed to rely on system default fonts
+            // It also provides font sizes at various resolutions because the system default sizes may not be appropiate
+            deps.push('systemFontsSizedCss');
+
+        } else {
+
+            console.log("Using default fonts");
+            // This is a stylesheet in shared components designed to use system default fonts
+            deps.push('systemFontsCss');
+        }
+
+        deps.push('css!css/librarybrowser');
 
         require(deps, function (appHost) {
 
@@ -2685,6 +2702,12 @@ var AppInfo = {};
 
             if (appHost.supports('sync')) {
                 initLocalSyncEvents();
+            }
+
+            if (!Dashboard.isConnectMode()) {
+                if (window.ApiClient) {
+                    require(['css!' + ApiClient.getUrl('Branding/Css')]);
+                }
             }
         });
     }

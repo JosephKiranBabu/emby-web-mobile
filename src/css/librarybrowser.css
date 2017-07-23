@@ -83,7 +83,7 @@
     border: 0;
     display: flex;
     flex-direction: column;
-    background-color: #101010;
+    background-color: #121212;
     color: #ccc;
 }
 
@@ -341,8 +341,7 @@ body:not(.dashboardDocument) .btnNotifications {
 }
 
 .background-theme-b .backgroundContainer, .dialog.background-theme-b {
-    background-color: #121314;
-    background-color: #181818;
+    background-color: #191919;
 }
 
     .background-theme-b .backgroundContainer.withBackdrop {

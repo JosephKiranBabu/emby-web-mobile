@@ -198,6 +198,25 @@
 
         }
 
+        function filterSessions(sessions) {
+
+            var list = [];
+
+            for (var i = 0, length = sessions.length; i < length; i++) {
+
+                var session = sessions[i];
+
+                // strip out devices that don't currently have a logged in user
+                if (!session.NowPlayingItem && !session.UserId) {
+                    continue;
+                }
+
+                list.push(session);
+            }
+
+            return list;
+        }
+
         window.DashboardPage = {
 
             newsStartIndex: 0,
@@ -406,6 +425,8 @@
             },
 
             renderInfo: function (page, sessions, forceUpdate) {
+
+                sessions = filterSessions(sessions);
 
                 DashboardPage.renderActiveConnections(page, sessions);
                 DashboardPage.renderPluginUpdateInfo(page, forceUpdate);

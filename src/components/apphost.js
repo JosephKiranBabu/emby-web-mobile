@@ -228,7 +228,7 @@ define(['appSettings', 'browser'], function (appSettings, browser) {
     var htmlMediaAutoplayAppStorageKey = 'supportshtmlmediaautoplay0';
     function supportsHtmlMediaAutoplay() {
 
-        if (browser.edgeUwp || browser.tv || browser.ps4 || browser.xboxOne) {
+        if (browser.edgeUwp || browser.tizen || browser.web0S || browser.orsay || browser.operaTv || browser.ps4 || browser.xboxOne) {
             return true;
         }
 

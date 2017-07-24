@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'libraryMenu', 'emby-linkbutton'], function ($, loading, libraryMenu) {
+﻿define(['jQuery', 'loading', 'libraryMenu', 'globalize', 'emby-linkbutton'], function ($, loading, libraryMenu, globalize) {
     'use strict';
 
     function populateHistory(packageInfo, page) {
@@ -72,7 +72,7 @@
 
                 regStatus += "<p style='color:green;'>";
 
-                regStatus += Globalize.translate('MessageFeatureIncludedWithSupporter');
+                regStatus += globalize.translate('MessageFeatureIncludedWithSupporter');
 
             } else {
 
@@ -81,11 +81,11 @@
 
                 if (expDateTime <= nowTime) {
                     regStatus += "<p style='color:red;'>";
-                    regStatus += Globalize.translate('MessageTrialExpired');
+                    regStatus += globalize.translate('MessageTrialExpired');
                 } else if (expDateTime > new Date(1970, 1, 1).getTime()) {
 
                     regStatus += "<p style='color:blue;'>";
-                    regStatus += Globalize.translate('MessageTrialWillExpireIn').replace('{0}', Math.round(expDateTime - nowTime) / (86400000));
+                    regStatus += globalize.translate('MessageTrialWillExpireIn').replace('{0}', Math.round(expDateTime - nowTime) / (86400000));
                 }
             }
 
@@ -105,7 +105,7 @@
                     $('#featureName', page).val(pkg.name);
                     $('#amount', page).val(pkg.price);
 
-                    $('#regPrice', page).html("<h3>" + Globalize.translate('ValuePriceUSD').replace('{0}', "$" + pkg.price.toFixed(2)) + "</h3>");
+                    $('#regPrice', page).html("<h3>" + globalize.translate('ValuePriceUSD').replace('{0}', "$" + pkg.price.toFixed(2)) + "</h3>");
                     $('#ppButton', page).hide();
 
                     var url = "https://mb3admin.com/admin/service/user/getPayPalEmail?id=" + pkg.owner;
@@ -167,7 +167,7 @@
             $("#btnInstallDiv", page).addClass('hide');
             $("#pSelectVersion", page).addClass('hide');
 
-            var msg = Globalize.translate('MessageInstallPluginFromApp');
+            var msg = globalize.translate('MessageInstallPluginFromApp');
             $("#nonServerMsg", page).html(msg).show();
         }
 
@@ -202,7 +202,7 @@
 
         if (installedPlugin) {
 
-            var currentVersionText = Globalize.translate('MessageYouHaveVersionInstalled').replace('{0}', '<strong>' + installedPlugin.Version + '</strong>');
+            var currentVersionText = globalize.translate('MessageYouHaveVersionInstalled').replace('{0}', '<strong>' + installedPlugin.Version + '</strong>');
             $('#pCurrentVersion', page).show().html(currentVersionText);
 
         } else {
@@ -210,6 +210,12 @@
         }
 
         loading.hide();
+    }
+
+    function alertText(options) {
+        require(['alert'], function (alert) {
+            alert(options);
+        });
     }
 
     function performInstallation(page, packageName, guid, updateClass, version) {
@@ -227,6 +233,8 @@
                 ApiClient.installPlugin(packageName, guid, updateClass, version).then(function () {
 
                     loading.hide();
+
+                    alertText(globalize.translate('PluginInstalledMessage'));
                 });
             }
         };
@@ -235,14 +243,14 @@
 
             loading.hide();
 
-            var msg = Globalize.translate('MessagePluginInstallDisclaimer');
+            var msg = globalize.translate('MessagePluginInstallDisclaimer');
             msg += '<br/>';
             msg += '<br/>';
-            msg += Globalize.translate('PleaseConfirmPluginInstallation');
+            msg += globalize.translate('PleaseConfirmPluginInstallation');
 
             require(['confirm'], function (confirm) {
 
-                confirm(msg, Globalize.translate('HeaderConfirmPluginInstallation')).then(function () {
+                confirm(msg, globalize.translate('HeaderConfirmPluginInstallation')).then(function () {
 
                     alertCallback(true);
                 }, function () {
@@ -263,21 +271,21 @@
 
         if (context == 'sync') {
             page.setAttribute('data-helpurl', 'https://github.com/MediaBrowser/Wiki/wiki/Sync');
-            libraryMenu.setTitle(Globalize.translate('TitleSync'));
+            libraryMenu.setTitle(globalize.translate('TitleSync'));
         }
         else if (context == 'livetv') {
 
-            libraryMenu.setTitle(Globalize.translate('TitleLiveTV'));
+            libraryMenu.setTitle(globalize.translate('TitleLiveTV'));
             page.setAttribute('data-helpurl', 'https://github.com/MediaBrowser/Wiki/wiki/Live%20TV');
         }
         else if (context == 'notifications') {
 
-            libraryMenu.setTitle(Globalize.translate('TitleNotifications'));
+            libraryMenu.setTitle(globalize.translate('TitleNotifications'));
             page.setAttribute('data-helpurl', 'https://github.com/MediaBrowser/Wiki/wiki/Notifications');
         }
         else {
             page.setAttribute('data-helpurl', 'https://github.com/MediaBrowser/Wiki/wiki/Plugins');
-            libraryMenu.setTitle(Globalize.translate('TitlePlugins'));
+            libraryMenu.setTitle(globalize.translate('TitlePlugins'));
         }
     }
 
@@ -307,8 +315,8 @@
                     loading.hide();
 
                     Dashboard.alert({
-                        message: Globalize.translate('MessageAlreadyInstalled'),
-                        title: Globalize.translate('HeaderPluginInstallation')
+                        message: globalize.translate('MessageAlreadyInstalled'),
+                        title: globalize.translate('HeaderPluginInstallation')
                     });
                 } else {
                     performInstallation(page, name, guid, vals[1], version);

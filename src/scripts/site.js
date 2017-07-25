@@ -1040,16 +1040,16 @@ var AppInfo = {};
         define("appFooter-shared", ['appFooter'], createSharedAppFooter);
 
         // mock this for now. not used in this app
-        define("skinManager", [], function () {
+        define("skinManager", [embyWebComponentsBowerPath + "/skinmanager"], function (skinManager) {
 
-            return {
-                loadUserSkin: function () {
+            skinManager.loadUserSkin = function () {
 
-                    require(['appRouter'], function (appRouter) {
-                        appRouter.goHome();
-                    });
-                }
+                require(['appRouter'], function (appRouter) {
+                    appRouter.goHome();
+                });
             };
+            window.SkinManager = skinManager;
+            return skinManager;
         });
 
         define("connectionManager", [], function () {
@@ -2827,12 +2827,14 @@ pageClassOn('viewshow', "page", function () {
     var currentTheme = page.classList.contains('ui-body-a') ? 'a' : 'b';
     var docElem = document.documentElement;
 
-    if (currentTheme == 'a') {
+    if (currentTheme === 'a') {
         docElem.classList.add('background-theme-a');
         docElem.classList.remove('background-theme-b');
+        SkinManager.setTheme('theme-light');
     } else {
         docElem.classList.add('background-theme-b');
         docElem.classList.remove('background-theme-a');
+        SkinManager.setTheme('theme-dark');
     }
 
     Dashboard.ensureHeader(page);

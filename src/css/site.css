@@ -25,7 +25,6 @@ html {
     padding: 0;
     height: 100%;
     line-height: 1.35;
-    color: #333;
 }
 
 .smallerFontSize {
@@ -85,31 +84,6 @@ body {
 
 h1 a:hover {
     text-decoration: underline;
-}
-
-.ui-body-b a.accent {
-    color: #52B54B !important;
-}
-
-.ui-body-a .paperList {
-    background-color: #fff;
-}
-
-.ui-body-a [is="emby-select"] {
-    border-color: #ccc !important;
-}
-
-.ui-body-a [is="emby-input"], .ui-body-a [is="emby-textarea"] {
-    background: none;
-    border-color: #ccc !important;
-}
-
-.ui-body-a .secondaryText {
-    color: #ccc;
-}
-
-.ui-body-b .secondaryText {
-    color: #aaa;
 }
 
 div[data-role='page'] {
@@ -173,14 +147,6 @@ div[data-role='page'] {
     .fieldDescription + .fieldDescription {
         margin-top: .3em;
     }
-
-.background-theme-a .backgroundContainer {
-    background-color: #f6f6f6;
-}
-
-.dialog.background-theme-a {
-    background-color: #f0f0f0;
-}
 
 div[data-role="content"] {
     border-width: 0;
@@ -258,32 +224,4 @@ div[data-role="content"] {
     padding: 1.6em;
     text-align: center;
     color: #bbb;
-}
-
-.ui-body-a .emby-collapsible-button {
-    border-color: #ddd;
-}
-
-.ui-body-a .collapseContent {
-    background-color: #fff;
-}
-
-.ui-body-a .inputLabelUnfocused, .ui-body-a .textareaLabel {
-    color: #555;
-}
-
-.ui-body-a .inputLabelFocused, .ui-body-a .textareaLabelFocused, .ui-body-a .selectLabelFocused {
-    color: green;
-}
-
-.ui-body-a .selectLabelUnfocused, .ui-body-a .paperListLabel, .ui-body-a .fieldDescription {
-    color: #555;
-}
-
-.ui-body-a .visualCardBox {
-    background-color: #fff;
-}
-
-.ui-body-a .listItem .secondary {
-    color: #737373;
 }

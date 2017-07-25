@@ -1025,11 +1025,7 @@ var AppInfo = {};
 
         define("fnchecked", ['legacy/fnchecked'], returnFirstDependency);
 
-        define("dialogHelper", [embyWebComponentsBowerPath + "/dialoghelper/dialoghelper"], function (dialoghelper) {
-
-            dialoghelper.setOnOpen(onDialogOpen);
-            return dialoghelper;
-        });
+        define("dialogHelper", [embyWebComponentsBowerPath + "/dialoghelper/dialoghelper"], returnFirstDependency);
 
         define("inputmanager", ['inputManager'], returnFirstDependency);
 
@@ -1410,14 +1406,6 @@ var AppInfo = {};
         };
 
         return appSettings;
-    }
-
-    function onDialogOpen(dlg) {
-        if (!dlg.classList.contains('background-theme-a') && !dlg.classList.contains('actionSheet')) {
-
-            dlg.classList.add('background-theme-b');
-            dlg.classList.add('ui-body-b');
-        }
     }
 
     function defineResizeObserver() {
@@ -2816,7 +2804,6 @@ pageClassOn('viewinit', "page", function () {
     }
 
     page.classList.add("ui-page");
-    page.classList.add("ui-body-" + current);
 });
 
 pageClassOn('viewshow', "page", function () {
@@ -2824,16 +2811,12 @@ pageClassOn('viewshow', "page", function () {
 
     var page = this;
 
-    var currentTheme = page.classList.contains('ui-body-a') ? 'a' : 'b';
+    var currentTheme = page.getAttribute('data-theme');
     var docElem = document.documentElement;
 
     if (currentTheme === 'a') {
-        docElem.classList.add('background-theme-a');
-        docElem.classList.remove('background-theme-b');
         SkinManager.setTheme('theme-light');
     } else {
-        docElem.classList.add('background-theme-b');
-        docElem.classList.remove('background-theme-a');
         SkinManager.setTheme('theme-dark');
     }
 

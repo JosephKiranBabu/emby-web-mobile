@@ -53,6 +53,7 @@
         html += '<div class="headerTabs sectionTabs hide">';
         html += '</div>';
 
+        skinHeader.classList.add('skinHeader-withBackground');
         skinHeader.innerHTML = html;
 
         btnHome = skinHeader.querySelector('.headerAppsButton');

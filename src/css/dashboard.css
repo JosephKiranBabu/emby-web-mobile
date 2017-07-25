@@ -13,10 +13,6 @@
         margin: .25em;
     }
 
-.ui-body-a .listItem-shaded:nth-child(even) {
-    background: #f8f8f8;
-}
-
 /*
  * Gradient Shadow
  */
@@ -136,11 +132,6 @@ progress {
         height: 2.2em;
     }
 
-/* Links */
-.ui-body-a a {
-    color: green;
-}
-
 div[data-role="controlgroup"] a[data-role='button'] {
     display: inline-block !important;
     margin: 0 !important;
@@ -178,20 +169,6 @@ div[data-role="controlgroup"] a.ui-btn-active {
         height: 2.1em;
         vertical-align: middle;
     }
-
-.ulForm {
-    margin: -1em !important;
-    margin-bottom: 1.4em !important;
-}
-
-    .ulForm li:not(.ui-li-divider) {
-        background: none;
-        border: 0 !important;
-    }
-
-.popup .ulForm {
-    margin-bottom: 0 !important;
-}
 
 .content-primary {
     padding-top: 6em;

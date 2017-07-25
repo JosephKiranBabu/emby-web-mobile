@@ -2,7 +2,7 @@
     display: block;
     margin: 0;
     margin-bottom: 0 !important;
-    border: 1px solid currentcolor;
+    border-style: solid;
     border-width: 0 0 1px 0;
     /* Prefixed box-sizing rules necessary for older browsers */
     -webkit-box-sizing: border-box;
@@ -52,13 +52,9 @@
     display: block;
 }
 
-.selectLabelFocused {
-    color: #52B54B;
-}
-
 .emby-select-selectionbar {
     height: 2px;
-    transform: scale(.01, 1);
+    transform: scale(0, 1);
     transition: transform .25s ease-out;
     position: relative;
     top: -1px;
@@ -68,6 +64,5 @@
 }
 
 .emby-select:focus + .emby-select-selectionbar {
-    background-color: #52B54B;
     transform: none;
 }

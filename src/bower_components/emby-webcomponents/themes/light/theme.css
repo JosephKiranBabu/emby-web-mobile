@@ -2,16 +2,16 @@ html {
     color: #333;
 }
 
+a, button, input, select, textarea {
+    outline: 0 !important;
+}
+
 .emby-textarea, .emby-input, .emby-collapsible-button, .emby-select {
     border-color: #ccc;
 }
 
 .collapseContent {
     background-color: #fff;
-}
-
-a.accent, .button-link {
-    color: green !important;
 }
 
 .secondaryText {
@@ -24,6 +24,10 @@ a.accent, .button-link {
 
 .inputLabelFocused, .textareaLabelFocused, .selectLabelFocused {
     color: green;
+}
+
+.checkboxOutline {
+    border-color: #444;
 }
 
 .paperList, .visualCardBox {
@@ -110,8 +114,8 @@ a.accent, .button-link {
 }
 
 .visualCardBox .cardText-secondary {
-    color: inherit;
-    opacity: .5;
+    color: #000;
+    opacity: .6;
 }
 
 .actionSheetMenuItem:hover {
@@ -173,6 +177,23 @@ a.accent, .button-link {
     background: #f8f8f8;
 }
 
-.emby-select-selectionbar, .emby-textarea-selectionbar {
+.emby-select-selectionbar, .emby-textarea-selectionbar, .emby-input-selectionbar {
     background-color: #52B54B;
+}
+
+.progressring-spiner {
+    border-color: #52B54B;
+}
+
+.fab {
+    background-color: #fff;
+    color: #222;
+}
+
+.button-link {
+    color: green;
+}
+
+.button-flat-accent {
+    color: green;
 }

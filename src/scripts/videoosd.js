@@ -902,7 +902,7 @@
                 var endTime = new Date().getTime() + Math.floor(timeRemainingTicks / 10000);
 
                 if (currentTimeTicks >= showAtTicks && runtimeTicks >= minRuntimeTicks && timeRemainingTicks >= minTimeRemainingTicks) {
-                    showComingUpNext(player, timeRemainingTicks, endTime);
+                    showComingUpNext(player, endTime);
                 }
             }
         }
@@ -916,7 +916,7 @@
             }, 500);
         }
 
-        function showComingUpNext(player, timeRemainingTicks, endTimeMs) {
+        function showComingUpNext(player, endTimeMs) {
 
             require(['upNextDialog'], function (UpNextDialog) {
 
@@ -927,12 +927,9 @@
                 currentVisibleMenu = 'upnext';
                 comingUpNextDisplayed = true;
 
-                var countdownTicks = Math.min(timeRemainingTicks, (11 * 1000 * 10000));
-
                 currentUpNextDialog = new UpNextDialog({
                     parent: view.querySelector('.upNextContainer'),
                     player: player,
-                    countdownMs: Math.floor(countdownTicks / 10000),
                     endTimeMs: endTimeMs
                 });
 

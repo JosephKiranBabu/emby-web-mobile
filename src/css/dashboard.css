@@ -13,6 +13,13 @@
         margin: .25em;
     }
 
+
+
+.dashboardDocument .backgroundContainer {
+    background-color: #f6f6f6;
+    /*background-image: linear-gradient(to bottom,#C2D4DE, #EBFAFE, #E3DCD4, #CED6D8, #C0D3DA);*/
+}
+
 /*
  * Gradient Shadow
  */

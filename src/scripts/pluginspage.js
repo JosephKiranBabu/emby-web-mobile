@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'libraryMenu', 'cardStyle', 'emby-linkbutton'], function ($, loading, libraryMenu) {
+﻿define(['loading', 'libraryMenu', 'dom', 'cardStyle', 'emby-linkbutton'], function (loading, libraryMenu, dom) {
     'use strict';
 
     function deletePlugin(page, uniqueid, name) {
@@ -31,13 +31,19 @@
 
     function getPluginCardHtml(plugin, pluginConfigurationPages) {
 
-        var configPage = $.grep(pluginConfigurationPages, function (pluginConfigurationPage) {
+        var configPage = pluginConfigurationPages.filter(function (pluginConfigurationPage) {
             return pluginConfigurationPage.PluginId == plugin.Id;
         })[0];
 
         var html = '';
 
-        var disallowPlugins = AppInfo.isNativeApp;
+        var allowedPluginConfigs = [
+            '14f5f69e-4c8d-491b-8917-8e90e8317530',
+            'e711475e-efad-431b-8527-033ba9873a34',
+            'dc372f99-4e0e-4c6b-8c18-2b887ca4530c'
+        ];
+
+        var disallowPlugins = AppInfo.isNativeApp && allowedPluginConfigs.indexOf((plugin.Id || '').toLowerCase()) === -1;
         var configPageUrl = configPage ? Dashboard.getConfigurationPageUrl(configPage.Name) : null;
 
         var href = configPage && !disallowPlugins ?
@@ -130,6 +136,8 @@
 
         }).join('');
 
+        var installedPluginsElement = page.querySelector('.installedPlugins');
+
         if (!plugins.length) {
 
             if (showNoPluginsMessage) {
@@ -147,22 +155,12 @@
                 html += '</div>';
             }
 
-            $('.installedPlugins', page).html(html);
+            installedPluginsElement.innerHTML = html;
         } else {
 
-            var elem = $('.installedPlugins', page).addClass('itemsContainer').addClass('vertical-wrap').html(html);
-
-            $('.noConfigPluginCard', elem).on('click', function () {
-                showNoConfigurationMessage();
-            });
-
-            $('.connectModePluginCard', elem).on('click', function () {
-                showConnectMessage();
-            });
-
-            $('.btnCardMenu', elem).on('click', function () {
-                showPluginMenu(page, this);
-            });
+            installedPluginsElement.classList.add('itemsContainer');
+            installedPluginsElement.classList.add('vertical-wrap');
+            installedPluginsElement.innerHTML = html;
         }
 
         loading.hide();
@@ -170,10 +168,10 @@
 
     function showPluginMenu(page, elem) {
 
-        var card = $(elem).parents('.card');
-        var id = card.attr('data-id');
-        var name = card.attr('data-name');
-        var configHref = $('.cardContent', card).attr('href');
+        var card = dom.parentWithClass(elem, 'card');
+        var id = card.getAttribute('data-id');
+        var name = card.getAttribute('data-name');
+        var configHref = card.querySelector('.cardContent').getAttribute('href');
 
         var menuItems = [];
 
@@ -237,7 +235,28 @@
          }];
     }
 
-    $(document).on('pageshow', "#pluginsPage", function () {
+    function onInstalledPluginsClick(e) {
+
+        if (dom.parentWithClass(e.target, 'noConfigPluginCard')) {
+            showNoConfigurationMessage();
+        }
+        else if (dom.parentWithClass(e.target, 'connectModePluginCard')) {
+            showConnectMessage();
+        }
+        else {
+            var btnCardMenu = dom.parentWithClass(e.target, 'btnCardMenu');
+            if (btnCardMenu) {
+                showPluginMenu(dom.parentWithClass(btnCardMenu, 'page'), btnCardMenu);
+            }
+        }
+    }
+
+    pageIdOn('pageinit', "pluginsPage", function () {
+
+        this.querySelector('.installedPlugins').addEventListener('click', onInstalledPluginsClick);
+    });
+
+    pageIdOn('pageshow', "pluginsPage", function () {
 
         libraryMenu.setTabs('plugins', 0, getTabs);
         reloadList(this);

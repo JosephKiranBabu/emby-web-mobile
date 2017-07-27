@@ -129,7 +129,7 @@ var Dashboard = {
 
         if (Dashboard.isConnectMode()) {
 
-            return "pluginconfigurationpage?name=" + encodeURIComponent(name);
+            return "configurationpageext?name=" + encodeURIComponent(name);
         } else {
 
             return "configurationpage?name=" + encodeURIComponent(name);
@@ -2436,7 +2436,7 @@ var AppInfo = {};
         if (Dashboard.isConnectMode()) {
 
             defineRoute({
-                path: '/pluginconfigurationpage',
+                path: '/configurationpageext',
                 dependencies: [],
                 autoFocus: false,
                 enableCache: false,

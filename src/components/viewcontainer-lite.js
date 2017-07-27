@@ -26,6 +26,36 @@ define(['browser', 'dom', 'layoutManager', 'css!bower_components/emby-webcompone
         return browser.supportsCssAnimation();
     }
 
+    function setControllerClass(view, options) {
+
+        if (options.controllerFactory) {
+            return Promise.resolve();
+        }
+
+        var controllerUrl = view.getAttribute('data-controller');
+        if (!controllerUrl) {
+            return Promise.resolve();
+        }
+
+        if (controllerUrl.indexOf('__plugin/') === 0) {
+            controllerUrl = controllerUrl.substring('__plugin/'.length);
+        }
+
+        controllerUrl = Dashboard.getConfigurationPageUrl(controllerUrl);
+
+        return getRequirePromise([controllerUrl]).then(function (ControllerFactory) {
+            options.controllerFactory = ControllerFactory;
+        });
+    }
+
+    function getRequirePromise(deps) {
+
+        return new Promise(function (resolve, reject) {
+
+            require(deps, resolve);
+        });
+    }
+
     function loadView(options) {
 
         if (options.cancel) {
@@ -48,7 +78,7 @@ define(['browser', 'dom', 'layoutManager', 'css!bower_components/emby-webcompone
         var dependencies = typeof (newView) == 'string' ? null : newView.getAttribute('data-require');
         dependencies = dependencies ? dependencies.split(',') : [];
 
-        var isPluginpage = options.url.toLowerCase().indexOf('/configurationpage?') != -1;
+        var isPluginpage = options.url.toLowerCase().indexOf('/configurationpage') != -1;
 
         if (isPluginpage) {
             dependencies.push('jqmpopup');
@@ -122,33 +152,35 @@ define(['browser', 'dom', 'layoutManager', 'css!bower_components/emby-webcompone
                 var animatable = view;
                 allPages[pageIndex] = view;
 
-                if (onBeforeChange) {
-                    onBeforeChange(view, false, options);
-                }
-
-                beforeAnimate(allPages, pageIndex, selected);
-                // animate here
-                animate(animatable, previousAnimatable, options.transition, options.isBack).then(function () {
-
-                    selectedPageIndex = pageIndex;
-                    currentUrls[pageIndex] = options.url;
-                    if (!options.cancel && previousAnimatable) {
-                        afterAnimate(allPages, pageIndex);
+                setControllerClass(view, options).then(function () {
+                    if (onBeforeChange) {
+                        onBeforeChange(view, false, options);
                     }
 
-                    // Temporary hack
-                    // If a view renders UI in viewbeforeshow the lazy image loader will think the images aren't visible and won't load images
-                    // The views need to be updated to start loading data in beforeshow, but not render until show
-                    if (!window.IntersectionObserver) {
-                        document.dispatchEvent(new CustomEvent('scroll', {}));
-                    }
+                    beforeAnimate(allPages, pageIndex, selected);
+                    // animate here
+                    animate(animatable, previousAnimatable, options.transition, options.isBack).then(function () {
 
-                    if (window.$) {
-                        $.mobile = $.mobile || {};
-                        $.mobile.activePage = view;
-                    }
+                        selectedPageIndex = pageIndex;
+                        currentUrls[pageIndex] = options.url;
+                        if (!options.cancel && previousAnimatable) {
+                            afterAnimate(allPages, pageIndex);
+                        }
 
-                    resolve(view);
+                        // Temporary hack
+                        // If a view renders UI in viewbeforeshow the lazy image loader will think the images aren't visible and won't load images
+                        // The views need to be updated to start loading data in beforeshow, but not render until show
+                        if (!window.IntersectionObserver) {
+                            document.dispatchEvent(new CustomEvent('scroll', {}));
+                        }
+
+                        if (window.$) {
+                            $.mobile = $.mobile || {};
+                            $.mobile.activePage = view;
+                        }
+
+                        resolve(view);
+                    });
                 });
             });
         });
@@ -350,31 +382,33 @@ define(['browser', 'dom', 'layoutManager', 'css!bower_components/emby-webcompone
                 var selected = selectedPageIndex;
                 var previousAnimatable = selected == -1 ? null : allPages[selected];
 
-                if (onBeforeChange) {
-                    onBeforeChange(view, true, options);
-                }
-
-                beforeAnimate(allPages, index, selected);
-
-                animatable.classList.remove('hide');
-
-                return animate(animatable, previousAnimatable, options.transition, options.isBack).then(function () {
-
-                    selectedPageIndex = index;
-                    if (!options.cancel && previousAnimatable) {
-                        afterAnimate(allPages, index);
+                return setControllerClass(view, options).then(function () {
+                    if (onBeforeChange) {
+                        onBeforeChange(view, true, options);
                     }
 
-                    // Temporary hack
-                    // If a view renders UI in viewbeforeshow the lazy image loader will think the images aren't visible and won't load images
-                    // The views need to be updated to start loading data in beforeshow, but not render until show
-                    document.dispatchEvent(new CustomEvent('scroll', {}));
+                    beforeAnimate(allPages, index, selected);
 
-                    if (window.$) {
-                        $.mobile = $.mobile || {};
-                        $.mobile.activePage = view;
-                    }
-                    return view;
+                    animatable.classList.remove('hide');
+
+                    return animate(animatable, previousAnimatable, options.transition, options.isBack).then(function () {
+
+                        selectedPageIndex = index;
+                        if (!options.cancel && previousAnimatable) {
+                            afterAnimate(allPages, index);
+                        }
+
+                        // Temporary hack
+                        // If a view renders UI in viewbeforeshow the lazy image loader will think the images aren't visible and won't load images
+                        // The views need to be updated to start loading data in beforeshow, but not render until show
+                        document.dispatchEvent(new CustomEvent('scroll', {}));
+
+                        if (window.$) {
+                            $.mobile = $.mobile || {};
+                            $.mobile.activePage = view;
+                        }
+                        return view;
+                    });
                 });
             }
         }

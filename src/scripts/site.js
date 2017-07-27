@@ -126,7 +126,14 @@ var Dashboard = {
     },
 
     getConfigurationPageUrl: function (name) {
-        return "configurationpage?name=" + encodeURIComponent(name);
+
+        if (Dashboard.isConnectMode()) {
+
+            return "pluginconfigurationpage?name=" + encodeURIComponent(name);
+        } else {
+
+            return "configurationpage?name=" + encodeURIComponent(name);
+        }
     },
 
     navigate: function (url, preserveQueryString) {
@@ -1548,7 +1555,6 @@ var AppInfo = {};
 
         define("livetvcss", ['css!css/livetv.css'], returnFirstDependency);
         define("detailtablecss", ['css!css/detailtable.css'], returnFirstDependency);
-        define("autoorganizetablecss", ['css!css/autoorganizetable.css'], returnFirstDependency);
 
         define("buttonenabled", ["legacy/buttonenabled"], returnFirstDependency);
 
@@ -1708,24 +1714,7 @@ var AppInfo = {};
 
         defineRoute({
             path: '/autoorganizelog.html',
-            dependencies: ['scripts/taskbutton', 'autoorganizetablecss'],
-            controller: 'dashboard/autoorganizelog',
-            roles: 'admin'
-        });
-
-        defineRoute({
-            path: '/autoorganizesmart.html',
-            dependencies: ['emby-button'],
-            controller: 'dashboard/autoorganizesmart',
-            autoFocus: false,
-            roles: 'admin'
-        });
-
-        defineRoute({
-            path: '/autoorganizetv.html',
-            dependencies: ['emby-checkbox', 'emby-input', 'emby-button', 'emby-select', 'emby-collapse'],
-            controller: 'dashboard/autoorganizetv',
-            autoFocus: false,
+            dependencies: [],
             roles: 'admin'
         });
 
@@ -2444,14 +2433,28 @@ var AppInfo = {};
             enableMediaControl: false
         });
 
-        defineRoute({
-            path: '/configurationpage',
-            dependencies: ['jQuery'],
-            autoFocus: false,
-            enableCache: false,
-            enableContentQueryString: true,
-            roles: 'admin'
-        });
+        if (Dashboard.isConnectMode()) {
+
+            defineRoute({
+                path: '/pluginconfigurationpage',
+                dependencies: [],
+                autoFocus: false,
+                enableCache: false,
+                enableContentQueryString: true,
+                roles: 'admin',
+                contentPath: getPluginPageContentPath
+            });
+        } else {
+
+            defineRoute({
+                path: '/configurationpage',
+                dependencies: [],
+                autoFocus: false,
+                enableCache: false,
+                enableContentQueryString: true,
+                roles: 'admin'
+            });
+        }
 
         defineRoute({
             path: '/',
@@ -2459,6 +2462,10 @@ var AppInfo = {};
             autoFocus: false,
             dependencies: []
         });
+    }
+
+    function getPluginPageContentPath() {
+        return ApiClient.getUrl('web/ConfigurationPage');
     }
 
     function loadPlugins(externalPlugins, appHost, browser, shell) {
@@ -2821,4 +2828,13 @@ pageClassOn('viewshow', "page", function () {
     }
 
     Dashboard.ensureHeader(page);
+});
+
+pageClassOn('viewbeforeshow', 'libraryFileOrganizerLogPage', function () {
+
+    ApiClient.getJSON(ApiClient.getUrl('Library/FileOrganizations/SmartMatches')).then(function () {
+
+
+        Dashboard.navigate(Dashboard.getConfigurationPageUrl('AutoOrganizeLog'));
+    });
 });

@@ -339,13 +339,13 @@
         }
     }
 
-    function refreshDashboardInfoInDrawer(page, user) {
+    function refreshDashboardInfoInDrawer(apiClient) {
 
         currentDrawerType = 'admin';
         loadNavDrawer();
 
         if (!navDrawerScrollContainer.querySelector('.adminDrawerLogo')) {
-            createDashboardMenu(page);
+            createDashboardMenu(apiClient);
         } else {
             updateDashboardMenuSelectedItem();
         }
@@ -382,7 +382,7 @@
         }
     }
 
-    function getToolsMenuLinks() {
+    function getToolsMenuLinks(apiClient) {
 
         return [{
             name: globalize.translate('TabServer')
@@ -529,7 +529,7 @@
         return menuHtml;
     }
 
-    function getToolsMenuHtml() {
+    function getToolsMenuHtml(apiClient) {
 
         var items = getToolsMenuLinks();
 
@@ -559,14 +559,14 @@
         return menuHtml;
     }
 
-    function createDashboardMenu() {
+    function createDashboardMenu(apiClient) {
         var html = '';
 
         html += '<a class="adminDrawerLogo clearLink" is="emby-linkbutton" href="home.html" style="text-align:left;">'
         html += '<img src="css/images/logoblack.png" />';
         html += '</a>';
 
-        html += getToolsMenuHtml();
+        html += getToolsMenuHtml(apiClient);
 
         html = html.split('href=').join('onclick="return LibraryMenu.onLinkClicked(event, this);" href=');
 
@@ -1005,12 +1005,13 @@
         }
 
         var isDashboardPage = page.classList.contains('type-interior');
+        var apiClient = ApiClient;
 
         if (isDashboardPage) {
             if (mainDrawerButton) {
                 mainDrawerButton.classList.remove('hide');
             }
-            refreshDashboardInfoInDrawer(page);
+            refreshDashboardInfoInDrawer(apiClient);
         } else {
 
             if (mainDrawerButton) {

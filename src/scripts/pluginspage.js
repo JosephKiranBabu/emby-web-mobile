@@ -37,10 +37,10 @@
 
         var html = '';
 
-        var isConnectMode = Dashboard.isConnectMode();
+        var disallowPlugins = AppInfo.isNativeApp;
         var configPageUrl = configPage ? Dashboard.getConfigurationPageUrl(configPage.Name) : null;
 
-        var href = configPage && !isConnectMode ?
+        var href = configPage && !disallowPlugins ?
             configPageUrl :
             null;
 
@@ -57,7 +57,7 @@
         else if (!configPageUrl) {
             html += '<div class="cardContent noConfigPluginCard noHoverEffect">';
         }
-        else if (isConnectMode) {
+        else if (disallowPlugins) {
             html += '<div class="cardContent connectModePluginCard">';
         }
         else {

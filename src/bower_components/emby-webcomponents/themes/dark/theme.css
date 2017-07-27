@@ -14,6 +14,25 @@ html {
     background-color: #121212;
 }
 
+    .skinHeader-withBackground::after {
+        position: absolute;
+        right: 0px;
+        bottom: -.36em;
+        left: 0px;
+        width: 100%;
+        height: .36em;
+        content: "";
+        transition: opacity 0.4s;
+        pointer-events: none;
+        box-shadow: inset 0 .36em 0.432em -0.216em rgba(0, 0, 0, 0.4);
+        will-change: opacity;
+        opacity: 0;
+    }
+
+    .skinHeader-withBackground.headroom--pinned::after {
+        opacity: 1;
+    }
+
 @supports ( (backdrop-filter: blur(1.5em)) or (-webkit-backdrop-filter: blur(1.5em)) ) {
 
     .skinHeader-blurred {
@@ -89,7 +108,7 @@ html {
     opacity: .5;
 }
 
-.listItemBody .secondary, .nowPlayingBarSecondaryText {
+.listItem .secondary, .nowPlayingBarSecondaryText {
     color: #999;
 }
 
@@ -197,4 +216,26 @@ html {
 
 .emby-checkbox:checked + span + span + .checkboxOutline > .checkboxOutlineTick {
     background-color: #52B54B;
+}
+
+/* indicators */
+.itemProgressBarForeground {
+    background-color: #52B54B;
+}
+
+.itemProgressBarForeground-recording {
+    background-color: #CB272A;
+}
+
+.countIndicator {
+    background: #52B54B;
+}
+
+.playedIndicator {
+    background: #52B54B;
+}
+
+.fullSyncIndicator {
+    background: #52B54B;
+    color: #fff;
 }

@@ -195,3 +195,16 @@ html {
 .button-flat-accent {
     color: green;
 }
+
+.mediaInfoText {
+    color: #333;
+    background: #fff;
+}
+
+.starIcon {
+    color: #CB272A;
+}
+
+.mediaInfoTimerIcon {
+    color: #CB272A;
+}

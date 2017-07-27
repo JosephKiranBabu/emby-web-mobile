@@ -172,3 +172,16 @@ html {
 .button-flat-accent {
     color: #52B54B;
 }
+
+.mediaInfoText {
+    color: #ddd;
+    background: rgba(170,170,190, .2);
+}
+
+.starIcon {
+    color: #CB272A;
+}
+
+.mediaInfoTimerIcon {
+    color: #CB272A;
+}

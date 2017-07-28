@@ -1,4 +1,4 @@
-﻿define(['jQuery', 'loading', 'humanedate', 'paper-icon-button-light', 'cardStyle', 'emby-linkbutton', 'indicators'], function ($, loading) {
+﻿define(['loading', 'dom', 'humanedate', 'paper-icon-button-light', 'cardStyle', 'emby-linkbutton', 'indicators'], function (loading, dom) {
     'use strict';
 
     function deleteUser(page, id) {
@@ -8,7 +8,7 @@
         require(['confirm'], function (confirm) {
 
             confirm({
-                
+
                 title: Globalize.translate('DeleteUser'),
                 text: msg,
                 confirmText: Globalize.translate('ButtonDelete'),
@@ -29,8 +29,8 @@
 
     function showUserMenu(elem) {
 
-        var card = $(elem).parents('.card')[0];
-        var page = $(card).parents('.page')[0];
+        var card = dom.parentWithClass(elem, 'card');
+        var page = dom.parentWithClass(card, 'page');
         var userId = card.getAttribute('data-userid');
 
         var menuItems = [];
@@ -198,22 +198,16 @@
 
     function renderUsersIntoElement(elem, users, addConnectIndicator) {
 
-        var html = getUserSectionHtml(users, addConnectIndicator);
-
-        elem.html(html);
-
-        $('.btnUserMenu', elem).on('click', function () {
-            showUserMenu(this);
-        });
+        elem.innerHTML = getUserSectionHtml(users, addConnectIndicator);
     }
 
     function renderUsers(page, users) {
 
-        renderUsersIntoElement($('.localUsers', page), users.filter(function (u) {
+        renderUsersIntoElement(page.querySelector('.localUsers'), users.filter(function (u) {
             return u.ConnectLinkType != 'Guest';
         }), true);
 
-        renderUsersIntoElement($('.connectUsers', page), users.filter(function (u) {
+        renderUsersIntoElement(page.querySelector('.connectUsers'), users.filter(function (u) {
             return u.ConnectLinkType == 'Guest';
         }));
     }
@@ -230,8 +224,8 @@
 
         require(['actionsheet'], function (actionsheet) {
 
-            var card = $(elem).parents('.card')[0];
-            var page = $(elem).parents('.page')[0];
+            var card = dom.parentWithClass(elem, 'card');
+            var page = dom.parentWithClass(card, 'page');
             var id = card.getAttribute('data-id');
 
             actionsheet.show({
@@ -305,18 +299,14 @@
     function renderPendingGuests(page, users) {
 
         if (users.length) {
-            $('.sectionPendingGuests', page).show();
+            page.querySelector('.sectionPendingGuests').classList.remove('hide');
         } else {
-            $('.sectionPendingGuests', page).hide();
+            page.querySelector('.sectionPendingGuests').classList.add('hide');
         }
 
         var html = users.map(getPendingUserHtml).join('');
 
-        var elem = $('.pending', page).html(html);
-
-        $('.btnUserMenu', elem).on('click', function () {
-            showPendingUserMenu(this);
-        });
+        page.querySelector('.pending').innerHTML = html;
     }
 
     function cancelAuthorization(page, id) {
@@ -356,7 +346,7 @@
     }
 
     function showLinkUser(page, userId) {
-        
+
         require(['components/guestinviter/connectlink'], function (connectlink) {
 
             connectlink.show().then(function () {
@@ -384,21 +374,43 @@
         });
     }
 
-    $(document).on('pageinit', "#userProfilesPage", function () {
+    pageIdOn('pageinit', "userProfilesPage", function() {
 
         var page = this;
 
-        $('.btnInvite', page).on('click', function () {
+        page.querySelector('.btnInvite').addEventListener('click', function() {
 
             showInvitePopup(page);
         });
 
-        $('.btnAddUser', page).on('click', function () {
+        page.querySelector('.btnAddUser').addEventListener('click', function() {
 
             Dashboard.navigate('usernew.html');
         });
 
-    }).on('pagebeforeshow', "#userProfilesPage", function () {
+        page.querySelector('.btnAddUser').addEventListener('click', function () {
+
+            Dashboard.navigate('usernew.html');
+        });
+
+        page.querySelector('.localUsers').addEventListener('click', function (e) {
+
+            var btnUserMenu = dom.parentWithClass(e.target, 'btnUserMenu');
+            if (btnUserMenu) {
+                showUserMenu(btnUserMenu);
+            }
+        });
+
+        page.querySelector('.pending').addEventListener('click', function (e) {
+
+            var btnUserMenu = dom.parentWithClass(e.target, 'btnUserMenu');
+            if (btnUserMenu) {
+                showPendingUserMenu(btnUserMenu);
+            }
+        });
+    });
+    
+    pageIdOn('pagebeforeshow', "userProfilesPage", function () {
 
         var page = this;
 

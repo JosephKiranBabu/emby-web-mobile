@@ -24,9 +24,8 @@
     display: none !important;
 }
 
-.sidebarDivider {
+.navMenuDivider {
     height: 1px;
-    background: #eaeaea;
     margin: .5em 0;
 }
 
@@ -117,26 +116,18 @@
     background-color: #f2f2f2 !important;
 }
 
-.sidebarLink {
+.navMenuOption {
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: inherit !important;
+    color: inherit;
     font-weight: normal !important;
     vertical-align: middle;
     padding: 1em 0 1em 2.4em;
     flex-grow: 1;
 }
 
-    .sidebarLink:hover {
-        background: #f2f2f2;
-    }
-
-    .sidebarLink.selectedSidebarLink {
-        background: #f2f2f2 !important;
-    }
-
-.sidebarLinkIcon {
+.navMenuOptionIcon {
     margin-right: 1em;
     flex-shrink: 0;
 }
@@ -151,24 +142,6 @@ body:not(.dashboardDocument) .btnNotifications {
     display: none !important;
 }
 
-.darkDrawer {
-    background-color: #1c1c1f !important;
-    color: #ccc;
-}
-
-    .darkDrawer .sidebarDivider {
-        background: #262626 !important;
-    }
-
-    .darkDrawer .sidebarLink:hover {
-        background: #252528;
-    }
-
-    .darkDrawer .sidebarLink.selectedSidebarLink, .darkDrawer .selectedMediaFolder {
-        background: #252528 !important;
-        color: #52B54B !important;
-    }
-
 .dashboardDocument .skinBody {
     transition: left ease-in-out 0.3s, padding ease-in-out 0.3s;
     position: absolute;
@@ -180,7 +153,7 @@ body:not(.dashboardDocument) .btnNotifications {
 
 @media all and (max-width: 40em) {
 
-    .sidebarLink {
+    .navMenuOption {
         font-size: 110%;
     }
 }
@@ -974,7 +947,7 @@ body:not(.dashboardDocument) .btnNotifications {
 }
 
 .verticalSection {
-    margin-bottom: 2em;
+    margin-bottom: 1.9em;
 }
 
 .layout-tv .verticalSection {

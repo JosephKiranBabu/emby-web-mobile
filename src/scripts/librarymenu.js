@@ -272,22 +272,22 @@
 
         html += '<div style="height:.5em;"></div>';
 
-        //html += '<a class="sidebarLink lnkMediaFolder" href="' + homeHref + '" onclick="return LibraryMenu.onLinkClicked(event, this);"><i class="md-icon sidebarLinkIcon">person</i><span class="sidebarLinkText">' + user.localUser.Name + '</span></a>';
+        //html += '<a class="navMenuOption lnkMediaFolder" href="' + homeHref + '" onclick="return LibraryMenu.onLinkClicked(event, this);"><i class="md-icon navMenuOptionIcon">person</i><span>' + user.localUser.Name + '</span></a>';
 
         var homeHref = window.ApiClient ? 'home.html' : 'selectserver.html?showuser=1';
-        html += '<a class="sidebarLink lnkMediaFolder" href="' + homeHref + '" onclick="return LibraryMenu.onLinkClicked(event, this);"><i class="md-icon sidebarLinkIcon">home</i><span class="sidebarLinkText">' + globalize.translate('ButtonHome') + '</span></a>';
+        html += '<a class="navMenuOption lnkMediaFolder" href="' + homeHref + '" onclick="return LibraryMenu.onLinkClicked(event, this);"><i class="md-icon navMenuOptionIcon">home</i><span>' + globalize.translate('ButtonHome') + '</span></a>';
 
         html += '<div class="libraryMenuDownloads">';
-        html += '<div class="sidebarDivider"></div>';
+        html += '<div class="navMenuDivider"></div>';
         html += '<div class="sidebarHeader">';
         html += globalize.translate('sharedcomponents#HeaderMyDownloads');
         html += '</div>';
-        html += '<a class="sidebarLink lnkMediaFolder" data-itemid="manageoffline" onclick="return LibraryMenu.onLinkClicked(event, this);" href="offline/offline.html"><i class="md-icon sidebarLinkIcon">folder</i><span class="sidebarLinkText">' + globalize.translate('sharedcomponents#Browse') + '</span></a>';
-        html += '<a class="sidebarLink lnkMediaFolder" data-itemid="manageoffline" onclick="return LibraryMenu.onLinkClicked(event, this);" href="managedownloads.html"><i class="md-icon sidebarLinkIcon">edit</i><span class="sidebarLinkText">' + globalize.translate('sharedcomponents#Manage') + '</span></a>';
+        html += '<a class="navMenuOption lnkMediaFolder" data-itemid="manageoffline" onclick="return LibraryMenu.onLinkClicked(event, this);" href="offline/offline.html"><i class="md-icon navMenuOptionIcon">folder</i><span>' + globalize.translate('sharedcomponents#Browse') + '</span></a>';
+        html += '<a class="navMenuOption lnkMediaFolder" data-itemid="manageoffline" onclick="return LibraryMenu.onLinkClicked(event, this);" href="managedownloads.html"><i class="md-icon navMenuOptionIcon">edit</i><span>' + globalize.translate('sharedcomponents#Manage') + '</span></a>';
 
         html += '</div>';
 
-        html += '<div class="sidebarDivider"></div>';
+        html += '<div class="navMenuDivider"></div>';
 
         html += '<div class="libraryMenuOptions">';
         html += '</div>';
@@ -296,37 +296,37 @@
         if (localUser && localUser.Policy.IsAdministrator) {
 
             html += '<div class="adminMenuOptions">';
-            html += '<div class="sidebarDivider"></div>';
+            html += '<div class="navMenuDivider"></div>';
 
             html += '<div class="sidebarHeader">';
             html += globalize.translate('HeaderAdmin');
             html += '</div>';
 
-            html += '<a class="sidebarLink lnkMediaFolder lnkManageServer" data-itemid="dashboard" onclick="return LibraryMenu.onLinkClicked(event, this);" href="dashboard.html"><i class="md-icon sidebarLinkIcon">settings</i><span class="sidebarLinkText">' + globalize.translate('ButtonManageServer') + '</span></a>';
-            html += '<a class="sidebarLink lnkMediaFolder editorViewMenu" data-itemid="editor" onclick="return LibraryMenu.onLinkClicked(event, this);" href="edititemmetadata.html"><i class="md-icon sidebarLinkIcon">folder</i><span class="sidebarLinkText">' + globalize.translate('MetadataManager') + '</span></a>';
+            html += '<a class="navMenuOption lnkMediaFolder lnkManageServer" data-itemid="dashboard" onclick="return LibraryMenu.onLinkClicked(event, this);" href="dashboard.html"><i class="md-icon navMenuOptionIcon">settings</i><span>' + globalize.translate('ButtonManageServer') + '</span></a>';
+            html += '<a class="navMenuOption lnkMediaFolder editorViewMenu" data-itemid="editor" onclick="return LibraryMenu.onLinkClicked(event, this);" href="edititemmetadata.html"><i class="md-icon navMenuOptionIcon">folder</i><span>' + globalize.translate('MetadataManager') + '</span></a>';
 
             if (!layoutManager.mobile) {
-                html += '<a class="sidebarLink lnkMediaFolder" data-itemid="reports" onclick="return LibraryMenu.onLinkClicked(event, this);" href="reports.html"><i class="md-icon sidebarLinkIcon">&#xE896;</i><span class="sidebarLinkText">' + globalize.translate('ButtonReports') + '</span></a>';
+                html += '<a class="navMenuOption lnkMediaFolder" data-itemid="reports" onclick="return LibraryMenu.onLinkClicked(event, this);" href="reports.html"><i class="md-icon navMenuOptionIcon">&#xE896;</i><span>' + globalize.translate('ButtonReports') + '</span></a>';
             }
             html += '</div>';
         }
 
         html += '<div class="userMenuOptions">';
 
-        html += '<div class="sidebarDivider"></div>';
+        html += '<div class="navMenuDivider"></div>';
 
         if (user.localUser) {
-            html += '<a class="sidebarLink lnkMediaFolder lnkMySettings" onclick="return LibraryMenu.onLinkClicked(event, this);" href="mypreferencesmenu.html"><i class="md-icon sidebarLinkIcon">settings</i><span class="sidebarLinkText">' + globalize.translate('ButtonSettings') + '</span></a>';
+            html += '<a class="navMenuOption lnkMediaFolder lnkMySettings" onclick="return LibraryMenu.onLinkClicked(event, this);" href="mypreferencesmenu.html"><i class="md-icon navMenuOptionIcon">settings</i><span>' + globalize.translate('ButtonSettings') + '</span></a>';
         }
 
-        html += '<a class="sidebarLink lnkMediaFolder lnkSyncToOtherDevices" data-itemid="syncotherdevices" onclick="return LibraryMenu.onLinkClicked(event, this);" href="mysync.html"><i class="md-icon sidebarLinkIcon">sync</i><span class="sidebarLinkText">' + globalize.translate('sharedcomponents#Sync') + '</span></a>';
+        html += '<a class="navMenuOption lnkMediaFolder lnkSyncToOtherDevices" data-itemid="syncotherdevices" onclick="return LibraryMenu.onLinkClicked(event, this);" href="mysync.html"><i class="md-icon navMenuOptionIcon">sync</i><span>' + globalize.translate('sharedcomponents#Sync') + '</span></a>';
 
         if (Dashboard.isConnectMode()) {
-            html += '<a class="sidebarLink lnkMediaFolder" data-itemid="selectserver" onclick="return LibraryMenu.onLinkClicked(event, this);" href="selectserver.html?showuser=1"><i class="md-icon sidebarLinkIcon">cast_connected</i><span class="sidebarLinkText">' + globalize.translate('ButtonSelectServer') + '</span></a>';
+            html += '<a class="navMenuOption lnkMediaFolder" data-itemid="selectserver" onclick="return LibraryMenu.onLinkClicked(event, this);" href="selectserver.html?showuser=1"><i class="md-icon navMenuOptionIcon">cast_connected</i><span>' + globalize.translate('ButtonSelectServer') + '</span></a>';
         }
 
         if (user.localUser) {
-            html += '<a class="sidebarLink lnkMediaFolder" data-itemid="logout" onclick="return LibraryMenu.onLogoutClicked(this);" href="#"><i class="md-icon sidebarLinkIcon">exit_to_app</i><span class="sidebarLinkText">' + globalize.translate('ButtonSignOut') + '</span></a>';
+            html += '<a class="navMenuOption lnkMediaFolder" data-itemid="logout" onclick="return LibraryMenu.onLogoutClicked(this);" href="#"><i class="md-icon navMenuOptionIcon">exit_to_app</i><span>' + globalize.translate('ButtonSignOut') + '</span></a>';
         }
 
         html += '</div>';
@@ -353,7 +353,7 @@
 
     function updateDashboardMenuSelectedItem() {
 
-        var links = navDrawerScrollContainer.querySelectorAll('.sidebarLink');
+        var links = navDrawerScrollContainer.querySelectorAll('.navMenuOption');
 
         for (var i = 0, length = links.length; i < length; i++) {
             var link = links[i];
@@ -366,7 +366,7 @@
             }
 
             if (selected) {
-                link.classList.add('selectedSidebarLink');
+                link.classList.add('navMenuOption-selected');
 
                 var title = '';
 
@@ -377,7 +377,7 @@
                 LibraryMenu.setTitle(title);
 
             } else {
-                link.classList.remove('selectedSidebarLink');
+                link.classList.remove('navMenuOption-selected');
             }
         }
     }
@@ -516,13 +516,13 @@
         var menuHtml = '';
         var pageIds = item.pageIds ? item.pageIds.join(',') : '';
         pageIds = pageIds ? (' data-pageids="' + pageIds + '"') : '';
-        menuHtml += '<a class="sidebarLink" href="' + item.href + '"' + pageIds + '>';
+        menuHtml += '<a class="navMenuOption" href="' + item.href + '"' + pageIds + '>';
 
         if (item.icon) {
-            menuHtml += '<i class="md-icon sidebarLinkIcon">' + item.icon + '</i>';
+            menuHtml += '<i class="md-icon navMenuOptionIcon">' + item.icon + '</i>';
         }
 
-        menuHtml += '<span class="sidebarLinkText">';
+        menuHtml += '<span>';
         menuHtml += item.name;
         menuHtml += '</span>';
         menuHtml += '</a>';
@@ -541,7 +541,7 @@
             item = items[i];
 
             if (item.divider) {
-                menuHtml += "<div class='sidebarDivider'></div>";
+                menuHtml += "<div class='navMenuDivider'></div>";
             }
 
             if (item.href) {
@@ -720,14 +720,14 @@
                 icon = i.icon || icon;
 
                 var onclick = i.onclick ? ' function(){' + i.onclick + '}' : 'null';
-                return '<a data-itemid="' + itemId + '" class="lnkMediaFolder sidebarLink" onclick="return LibraryMenu.onLinkClicked(event, this, ' + onclick + ');" href="' + getItemHref(i, i.CollectionType) + '"><i class="md-icon sidebarLinkIcon">' + icon + '</i><span class="sectionName">' + i.Name + '</span></a>';
+                return '<a data-itemid="' + itemId + '" class="lnkMediaFolder navMenuOption" onclick="return LibraryMenu.onLinkClicked(event, this, ' + onclick + ');" href="' + getItemHref(i, i.CollectionType) + '"><i class="md-icon navMenuOptionIcon">' + icon + '</i><span class="sectionName">' + i.Name + '</span></a>';
 
             }).join('');
 
             libraryMenuOptions.innerHTML = html;
             var elem = libraryMenuOptions;
 
-            var sidebarLinks = elem.querySelectorAll('.sidebarLink');
+            var sidebarLinks = elem.querySelectorAll('.navMenuOption');
             for (var i = 0, length = sidebarLinks.length; i < length; i++) {
                 sidebarLinks[i].removeEventListener('click', onSidebarLinkClick);
                 sidebarLinks[i].addEventListener('click', onSidebarLinkClick);
@@ -923,30 +923,30 @@
             var itemId = lnkMediaFolder.getAttribute('data-itemid');
 
             if (isChannelsPage && itemId == 'channels') {
-                lnkMediaFolder.classList.add('selectedMediaFolder');
+                lnkMediaFolder.classList.add('navMenuOption-selected');
             }
             else if (isLiveTvPage && itemId == 'livetv') {
-                lnkMediaFolder.classList.add('selectedMediaFolder');
+                lnkMediaFolder.classList.add('navMenuOption-selected');
             }
             else if (isEditorPage && itemId == 'editor') {
-                lnkMediaFolder.classList.add('selectedMediaFolder');
+                lnkMediaFolder.classList.add('navMenuOption-selected');
             }
             else if (isReportsPage && itemId == 'reports') {
-                lnkMediaFolder.classList.add('selectedMediaFolder');
+                lnkMediaFolder.classList.add('navMenuOption-selected');
             }
             else if (isMySyncPage && itemId == 'manageoffline' && window.location.href.toString().indexOf('mode=offline') != -1) {
 
-                lnkMediaFolder.classList.add('selectedMediaFolder');
+                lnkMediaFolder.classList.add('navMenuOption-selected');
             }
             else if (isMySyncPage && itemId == 'syncotherdevices' && window.location.href.toString().indexOf('mode=offline') == -1) {
 
-                lnkMediaFolder.classList.add('selectedMediaFolder');
+                lnkMediaFolder.classList.add('navMenuOption-selected');
             }
             else if (id && itemId == id) {
-                lnkMediaFolder.classList.add('selectedMediaFolder');
+                lnkMediaFolder.classList.add('navMenuOption-selected');
             }
             else {
-                lnkMediaFolder.classList.remove('selectedMediaFolder');
+                lnkMediaFolder.classList.remove('navMenuOption-selected');
             }
         }
     }
@@ -1027,7 +1027,7 @@
             }
         }
 
-        setDrawerClass(page);
+        loadNavDrawer();
 
         updateViewMenuBar(page);
 
@@ -1116,29 +1116,6 @@
         initializeApiClient(window.ApiClient);
     }
 
-    function setDrawerClass(page) {
-
-        var admin = false;
-
-        if (!page) {
-            page = viewManager.currentView();
-        }
-
-        if (page && page.classList.contains('type-interior')) {
-            admin = true;
-        }
-
-        loadNavDrawer();
-
-        if (admin) {
-            navDrawerElement.classList.add('adminDrawer');
-            navDrawerElement.classList.remove('darkDrawer');
-        } else {
-            navDrawerElement.classList.add('darkDrawer');
-            navDrawerElement.classList.remove('adminDrawer');
-        }
-    }
-
     function refreshLibraryDrawer(user) {
 
         loadNavDrawer();
@@ -1197,7 +1174,7 @@
 
     events.on(connectionManager, 'localusersignedin', function (e, user) {
         currentDrawerType = null;
-        setDrawerClass();
+        loadNavDrawer();
         connectionManager.user(connectionManager.getApiClient(user.ServerId)).then(function (user) {
             updateUserInHeader(user);
         });
@@ -1206,7 +1183,7 @@
     events.on(connectionManager, 'localusersignedout', updateUserInHeader);
     events.on(playbackManager, 'playerchange', updateCastIcon);
 
-    setDrawerClass();
+    loadNavDrawer();
 
     return LibraryMenu;
 });

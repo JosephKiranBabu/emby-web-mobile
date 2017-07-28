@@ -88,10 +88,6 @@ progress {
     }
 }
 
-.dashboardDocument .lnkMySync {
-    display: none !important;
-}
-
 .dashboardDocument .dashboardEntryHeaderButton {
     display: none !important;
 }
@@ -100,26 +96,9 @@ progress {
     display: none !important;
 }
 
-.dashboardDocument .headerVoiceButton {
-    display: none !important;
-}
-
 .dashboardDocument .btnCast, .dashboardDocument .headerSelectedPlayer {
     display: none !important;
 }
-
-.adminDrawer {
-    background: #fff !important;
-}
-
-    .adminDrawer .sidebarLink:hover {
-        color: #00897B !important;
-    }
-
-    .adminDrawer .sidebarLink.selectedSidebarLink {
-        background: #52B54B !important;
-        color: #fff !important;
-    }
 
 .adminDrawerLogo {
     padding: 1.5em 1em 1.2em;
